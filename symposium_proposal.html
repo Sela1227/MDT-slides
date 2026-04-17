@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Symposium on GU Oncology - Proposal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sage: #8FA68E;
+            --sage-light: #B8C5B7;
+            --sage-dark: #6B7B6A;
+            --charcoal: #2C3531;
+            --warm-white: #FEFCFA;
+            --stone: #F5F3F0;
+            --mist: #E8E6E3;
+            --ocean: #7A9CC6;
+            --ocean-light: #A4BDDC;
+            --text-primary: #2C3531;
+            --text-secondary: #5A6B5D;
+            --text-muted: #8B9A8E;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--warm-white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .presentation {
+            max-width: 100vw;
+        }
+
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--sage-light) 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(100px, -100px);
+        }
+
+        /* Cover Slide */
+        .cover {
+            background: linear-gradient(135deg, var(--sage-dark) 0%, var(--charcoal) 100%);
+            color: var(--warm-white);
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .cover::before {
+            background: radial-gradient(circle, var(--ocean) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 300px;
+            height: 150px;
+            background: var(--sage);
+            opacity: 0.1;
+            border-radius: 100%;
+            transform: translate(-150px, 75px);
+        }
+
+        .eyebrow {
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sage-light);
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .main-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title .highlight {
+            color: var(--sage-light);
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: var(--mist);
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        .date-venue {
+            font-size: 16px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .presenter {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            text-align: right;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Content Slides */
+        .content-slide {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .slide-header {
+            margin-bottom: 60px;
+        }
+
+        .slide-number {
+            font-size: 12px;
+            color: var(--sage);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .slide-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 36px;
+            color: var(--charcoal);
+            font-weight: 400;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--sage);
+        }
+
+        .slide-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        /* Dr. Hsu Profile */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--sage-light), var(--sage));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 64px;
+            font-weight: 300;
+            margin: 0 auto 32px;
+        }
+
+        .profile-meta {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-name {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .profile-title {
+            color: var(--sage-dark);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .profile-institution {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .expertise-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .expertise-item {
+            background: var(--stone);
+            padding: 24px;
+            border-radius: 8px;
+            border-left: 4px solid var(--sage);
+        }
+
+        .expertise-label {
+            font-size: 12px;
+            color: var(--sage-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .expertise-text {
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Conference Topics */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .topic-card {
+            background: var(--warm-white);
+            border: 1px solid var(--mist);
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(44, 53, 49, 0.1);
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sage), var(--ocean));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .topic-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .topic-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .keynote-highlight {
+            background: linear-gradient(135deg, var(--sage-light), var(--sage));
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .keynote-highlight .topic-title,
+        .keynote-highlight .topic-description {
+            color: white;
+        }
+
+        .keynote-highlight::before {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Benefits Section */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--sage-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+            color: white;
+        }
+
+        .benefit-content h4 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .benefit-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .call-to-action {
+            margin-top: 60px;
+            padding: 40px;
+            background: var(--stone);
+            border-radius: 16px;
+            text-align: center;
+            border-left: 6px solid var(--sage);
+        }
+
+        .cta-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .cta-text {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .timeline-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Navigation dots */
+        .slide-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--sage);
+            opacity: 1;
+            transform: scale(1.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+            
+            .main-title {
+                font-size: 36px;
+            }
+            
+            .profile-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide-nav {
+                display: none;
+            }
+        }
+
+        /* Animation */
+        .slide {
+            opacity: 0;
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .slide {
+                page-break-after: always;
+                min-height: 100vh;
+            }
+            
+            .slide-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Cover -->
+        <section class="slide cover">
+            <div class="eyebrow">PROPOSAL · 提案</div>
+            <h1 class="main-title">
+                International Symposium<br>
+                on <span class="highlight">Genitourinary Oncology</span>
+            </h1>
+            <p class="subtitle">
+                放射線治療的新角色、新疆界、新未來<br>
+                New Roles, New Frontiers, New Future of Radiation Therapy
+            </p>
+            <div class="date-venue">
+                <div>2026年下半年（具體日期待與 Dr. Hsu 確認）</div>
+                <div>濱秀國際會議廳</div>
+            </div>
+            <div class="presenter">
+                彰濱秀傳紀念醫院<br>
+                放射腫瘤科<br>
+                <strong>林伯儒 主任</strong>
+            </div>
+        </section>
+
+        <!-- Slide 2: Dr. Hsu Profile -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">02 / KEYNOTE SPEAKER</div>
+                <h2 class="slide-title">國際級主講者</h2>
+                <p class="slide-subtitle">邀請 UCSF 放射腫瘤權威專家蒞台分享前沿治療經驗</p>
+            </div>
+
+            <div class="profile-section">
+                <div>
+                    <div class="profile-avatar">J.H</div>
+                    <div class="profile-meta">
+                        <h3 class="profile-name">Dr. I-Chow "Joe" Hsu</h3>
+                        <div class="profile-title">Professor</div>
+                        <div class="profile-institution">University of California San Francisco<br>Department of Radiation Oncology</div>
+                    </div>
+                </div>
+
+                <div class="expertise-grid">
+                    <div class="expertise-item">
+                        <div class="expertise-label">Academic Position</div>
+                        <div class="expertise-text">
+                            UCSF 放射腫瘤科教授，國際知名 HDR 近接治療權威專家。美國放射學院（ACR）及美國放射腫瘤學會（ASTRO）Fellow。
+                        </div>
+                    </div>
+
+                    <div class="expertise-item">
+                        <div class="expertise-label">Clinical Expertise</div>
+                        <div class="expertise-text">
+                            專精於 HDR Brachytherapy、攝護腺癌治療、泌尿生殖系統腫瘤放射治療。擁有豐富的 Stereotactic Radiotherapy 經驗。
+                        </div>
+                    </div>
+
+                    <div class="expertise-item">
+                        <div class="expertise-label">Research Leadership</div>
+                        <div class="expertise-text">
+                            現任 RTOG 近接治療委員會主席，主持 NRG Oncology/RTOG 0321 Phase II 臨床試驗（攝護腺癌 HDR + 體外放射治療長期追蹤）。
+                        </div>
+                    </div>
+
+                    <div class="expertise-item">
+                        <div class="expertise-label">Academic Impact</div>
+                        <div class="expertise-text">
+                            發表超過 240 篇學術論文，被引用近 5,000 次。約翰霍普金斯醫學院畢業，哥倫比亞大學放射腫瘤科住院醫師訓練。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Conference Scope -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">03 / PROGRAM OVERVIEW</div>
+                <h2 class="slide-title">會議範圍與主題設定</h2>
+                <p class="slide-subtitle">以泌尿道癌症為主軸，展示體系設備優勢與跨科整合能力</p>
+            </div>
+
+            <div class="topics-grid">
+                <div class="topic-card keynote-highlight">
+                    <h4 class="topic-title">Keynote Address by Dr. Hsu</h4>
+                    <p class="topic-description">
+                        UCSF 攝護腺癌 HDR Brachytherapy 與 SBRT 臨床經驗分享<br>
+                        <em>50分鐘專題演講 + 設備參觀交流</em>
+                    </p>
+                </div>
+
+                <div class="topic-card">
+                    <h4 class="topic-title">攝護腺癌精準治療</h4>
+                    <p class="topic-description">
+                        結合 Versa HD 先進技術的 IMRT/VMAT 治療策略與劑量分次最佳化
+                    </p>
+                </div>
+
+                <div class="topic-card">
+                    <h4 class="topic-title">腦轉移立體定位</h4>
+                    <p class="topic-description">
+                        ZAP-X 系統於泌尿道癌腦轉移病灶的 Stereotactic Radiosurgery 精準治療應用
+                    </p>
+                </div>
+
+                <div class="topic-card">
+                    <h4 class="topic-title">免疫治療整合</h4>
+                    <p class="topic-description">
+                        泌尿道癌症免疫檢查點抑制劑與放射治療的協同效應探討
+                    </p>
+                </div>
+
+                <div class="topic-card">
+                    <h4 class="topic-title">攝護腺癌微創手術</h4>
+                    <p class="topic-description">
+                        HUGO 機械手臂於攝護腺癌根治術的精準應用與術後放療整合照護
+                    </p>
+                </div>
+
+                <div class="topic-card">
+                    <h4 class="topic-title">Ra-223 標靶治療</h4>
+                    <p class="topic-description">
+                        骨轉移性攝護腺癌的核醫放射治療與多專科團隊整合照護模式
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; padding: 24px; background: var(--stone); border-radius: 8px;">
+                <strong style="color: var(--sage-dark);">設備展示重點：</strong> Versa HD (攝護腺癌IMRT) + ZAP-X (腦轉移SRS) + HUGO (微創手術) + Ra-223 (骨轉移標靶)，展現完整泌尿腫瘤治療能量
+            </div>
+        </section>
+
+        <!-- Slide 4: Benefits & Approval -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">04 / STRATEGIC VALUE</div>
+                <h2 class="slide-title">投資效益與核准請求</h2>
+                <p class="slide-subtitle">提升學術品牌，深化跨科合作，展現體系治療實力</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌟</div>
+                    <div class="benefit-content">
+                        <h4>國際學術聲望</h4>
+                        <p>秀傳體系首次國際研討會，與 UCSF 建立學術連結，提升放射腫瘤科在業界地位</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">🤝</div>
+                    <div class="benefit-content">
+                        <h4>跨科整合深化</h4>
+                        <p>強化泌尿科與放腫科 MDT 合作，建立以病人為中心的完整照護模式</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-content">
+                        <h4>設備效益最大化</h4>
+                        <p>透過國際專家指導，提升 Versa HD、ZAP-X 等高階設備使用效率與技術水準</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-content">
+                        <h4>業務成長契機</h4>
+                        <p>配合攝護腺癌篩檢政策，建立治療端競爭優勢，預期帶動病例轉介與收益成長</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="call-to-action">
+                <h3 class="cta-title">敬請核准立即啟動</h3>
+                <p class="cta-text">
+                    為確保 Dr. Hsu 行程安排與活動品質，建議儘速核准後立即展開邀請程序。
+                    詳細預算與執行計畫將另案呈核。
+                </p>
+                <div class="timeline-note">
+                    <strong>預定執行時程：</strong><br>
+                    2026年5月 - 核准後立即啟動 Dr. Hsu 邀請程序<br>
+                    2026年6-7月 - 其他講師確認、議程規劃、學分申請<br>
+                    2026年8-9月 - 宣傳材料製作、媒體邀請、設備展示準備<br>
+                    2026年10月 - 活動舉辦（具體日期配合 Dr. Hsu 行程）
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Navigation -->
+    <div class="slide-nav">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+    </div>
+
+    <script>
+        // Smooth scroll navigation
+        const dots = document.querySelectorAll('.nav-dot');
+        const slides = document.querySelectorAll('.slide');
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                slides[index].scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                updateActiveDot(index);
+            });
+        });
+
+        function updateActiveDot(activeIndex) {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        }
+
+        // Update active dot on scroll
+        window.addEventListener('scroll', () => {
+            let current = 0;
+            slides.forEach((slide, index) => {
+                const rect = slide.getBoundingClientRect();
+                if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                    current = index;
+                }
+            });
+            updateActiveDot(current);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const current = document.querySelector('.nav-dot.active');
+            const currentIndex = Array.from(dots).indexOf(current);
+            
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentIndex < slides.length - 1) {
+                    dots[currentIndex + 1].click();
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    dots[currentIndex - 1].click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
