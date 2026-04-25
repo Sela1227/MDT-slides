@@ -1,0 +1,2545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>《黑白大廚》完整卡片樣張 v1.21 - 全 218 張</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    background: #1a1a1a;
+    color: white;
+    padding: 40px 20px;
+    line-height: 1.4;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #fff;
+    letter-spacing: 4px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 1.1em;
+    color: #888;
+    margin-bottom: 30px;
+    font-style: italic;
+  }
+
+  .stats-bar {
+    text-align: center;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid #F59E0B;
+    padding: 15px;
+    margin-bottom: 40px;
+    color: #fbbf24;
+    border-radius: 8px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 1.8em;
+    color: #F59E0B;
+    margin: 60px 0 30px 0;
+    padding: 15px;
+    border-top: 2px solid #F59E0B;
+    border-bottom: 2px solid #F59E0B;
+    background: rgba(245,158,11,0.1);
+  }
+
+  .subsection-title {
+    text-align: center;
+    font-size: 1.3em;
+    margin: 30px 0 15px 0;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+  }
+  .subsection-china { background: linear-gradient(90deg, #991B1B, #DC2626); }
+  .subsection-japan { background: linear-gradient(90deg, #1E3A8A, #2563EB); }
+  .subsection-italy { background: linear-gradient(90deg, #166534, #16A34A); }
+
+  .tier-title {
+    text-align: center;
+    font-size: 1em;
+    color: #888;
+    margin: 20px 0 10px 0;
+    letter-spacing: 3px;
+  }
+
+  .cards-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  /* ============ 卡片基本樣式 ============ */
+  /* 統一卡片尺寸:加寬到 260px,讓長名稱有空間 */
+  .card {
+    width: 260px;
+    height: 380px;
+    border-radius: 12px;
+    padding: 12px;
+    position: relative;
+    background: white;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    color: #222;
+    overflow: hidden;
+  }
+
+  /* 菜系顏色(料理卡專用) */
+  .china { border: 5px solid #DC2626; }
+  .china .card-bg { background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); }
+  .japan { border: 5px solid #1E3A8A; }
+  .japan .card-bg { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); }
+  .italy { border: 5px solid #65A30D; }
+  .italy .card-bg { background: linear-gradient(135deg, #f7fee7 0%, #ecfccb 100%); }
+  .chef-card { border: 5px solid #F59E0B; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+  .guest-card { border: 5px solid #7c3aed; background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%); }
+  .ability-card { border: 5px solid #10b981; background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%); }
+
+  .card-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+  }
+
+  /* ============ 料理卡 (使用 Grid 固定每區塊位置) ============ */
+  /*
+    料理卡固定佈局:
+    第 1 列: 標題區 (中文名 + 份量徽章)        56px
+    第 2 列: 副標題 (英文 · 日文)              22px
+    第 3 列: 插畫區                            120px
+    第 4 列: 配方                              30px
+    第 5 列: 屬性方塊 (4 格)                   42px
+    第 6 列: 引言 (上邊框)                     48px
+    --------------------------------
+    總計: 56+22+120+30+42+48 = 318 + gap = 約 340px (留白給張數標)
+  */
+  .dish-card {
+    display: grid;
+    grid-template-rows: 28px 22px 120px 30px 42px 1fr;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  .dish-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dish-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dish-name {
+    font-size: 1.25em;
+    font-weight: 900;
+    color: #111;
+    line-height: 1.1;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dish-name-sub {
+    font-size: 0.72em;
+    color: #555;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .portion-badge {
+    flex-shrink: 0;
+    background: #111;
+    color: #F59E0B;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 0.72em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .dish-illustration {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    background: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(0,0,0,0.15);
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .illustration-emoji {
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .illustration-note {
+    font-size: 0.18em;
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding: 0 6px;
+    line-height: 1.3;
+  }
+
+  .dish-count {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.72em;
+    font-weight: bold;
+    z-index: 3;
+  }
+
+  .dish-recipe {
+    background: rgba(0,0,0,0.06);
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .recipe-label {
+    font-size: 0.72em;
+    color: #666;
+    font-weight: bold;
+  }
+
+  .recipe-icons {
+    font-size: 1.15em;
+    letter-spacing: 2px;
+  }
+
+  .dish-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .stat-box {
+    background: rgba(0,0,0,0.08);
+    padding: 4px 2px;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stat-label {
+    font-size: 0.65em;
+    color: #555;
+    line-height: 1;
+  }
+
+  .stat-value {
+    font-size: 1em;
+    font-weight: bold;
+    color: #111;
+    line-height: 1.2;
+  }
+
+  .stat-highlight { background: rgba(220,38,38,0.2); }
+  .stat-highlight-umami { background: rgba(30,58,138,0.2); }
+  .stat-highlight-full { background: rgba(146,64,14,0.2); }
+  .stat-highlight-sweet { background: rgba(236,72,153,0.2); }
+
+  .flavor-text {
+    font-size: 0.72em;
+    font-style: italic;
+    color: #555;
+    text-align: center;
+    padding: 6px 4px 0 4px;
+    border-top: 1px dashed rgba(0,0,0,0.2);
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ============ 主廚卡 (Grid 統一佈局) ============ */
+  /*
+    主廚卡固定佈局:
+    第 1 列: TIER 小標籤             18px
+    第 2 列: 主廚中文名               28px
+    第 3 列: 主廚副標題 (英文/日文)    20px
+    第 4 列: 插畫區                  110px
+    第 5 列: 被動技能                  60px
+    第 6 列: 開局技能                  40px
+    第 7 列: 菜系精通表 (3 格)         32px
+  */
+  .chef-card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+  /* 主廚卡固定高度的元素 */
+  .chef-card-grid .chef-tier-label { height: 18px; flex-shrink: 0; }
+  .chef-card-grid .chef-name { height: 28px; flex-shrink: 0; display: flex; align-items: center; }
+  .chef-card-grid .chef-name-sub { height: 20px; flex-shrink: 0; display: flex; align-items: center; }
+  .chef-card-grid .chef-illustration { height: 110px; flex-shrink: 0; }
+  /* 被動和開局自然撐開,中間沒空隙 */
+  .chef-card-grid .chef-section { flex-shrink: 0; }
+  /* mastery-table 用 margin-top: auto 推到卡片底部 */
+  .chef-card-grid .mastery-table { height: 32px; flex-shrink: 0; margin-top: auto; }
+
+  .chef-card-grid > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .chef-tier-label {
+    font-size: 0.7em;
+    color: #92400e;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-align: left;
+  }
+
+  .chef-name {
+    font-size: 1.18em;
+    font-weight: 900;
+    color: #111;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.5px;
+  }
+
+  .chef-name-sub {
+    font-size: 0.7em;
+    color: #555;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .chef-illustration {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 3.5em;
+    background: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(0,0,0,0.15);
+  }
+
+  .chef-section {
+    font-size: 0.74em;
+    line-height: 1.35;
+    background: rgba(146,64,14,0.07);
+    padding: 5px 7px;
+    border-radius: 5px;
+  }
+
+  .chef-section-title {
+    font-weight: bold;
+    color: #92400e;
+    margin-right: 4px;
+  }
+
+  .mastery-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .mastery-cell {
+    background: rgba(0,0,0,0.08);
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.78em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ============ 客人卡 (Grid 統一佈局) ============ */
+  /*
+    客人卡固定佈局:
+    第 1 列: 中文名 + 小費徽章        30px
+    第 2 列: 英文/日文副標題           20px
+    第 3 列: 插畫區                  120px
+    第 4 列: 需求                     50px
+    第 5 列: 食量+難度                 32px
+    第 6 列: 引言                     1fr
+  */
+  .guest-card-grid {
+    display: grid;
+    grid-template-rows: 30px 20px 120px 50px 32px 1fr;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  .guest-card-grid > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .guest-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .guest-name {
+    font-size: 1.2em;
+    font-weight: 900;
+    color: #111;
+    line-height: 1.1;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tip-badge {
+    flex-shrink: 0;
+    background: #F59E0B;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.82em;
+    white-space: nowrap;
+  }
+
+  .guest-name-sub {
+    font-size: 0.7em;
+    color: #555;
+    font-style: italic;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .guest-illustration {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 3.5em;
+    background: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(0,0,0,0.15);
+  }
+
+  .guest-req {
+    background: rgba(124,58,237,0.15);
+    padding: 6px 8px;
+    border-radius: 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .req-label {
+    font-size: 0.65em;
+    color: #6d28d9;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .req-value {
+    color: #111;
+    font-weight: bold;
+    font-size: 0.85em;
+    line-height: 1.2;
+    margin-top: 2px;
+  }
+
+  .guest-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .guest-stat {
+    background: rgba(0,0,0,0.08);
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.78em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ============ 能力卡 (Grid 統一佈局) ============ */
+  /*
+    能力卡固定佈局:
+    第 1 列: 名稱                    32px
+    第 2 列: 副標題 (英文)           18px
+    第 3 列: 插畫區                  100px
+    第 4 列: 效果                     1fr (最少 110px)
+    第 5 列: 引言                    36px
+  */
+  .ability-card-grid {
+    display: grid;
+    grid-template-rows: 32px 18px 100px 1fr 36px;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  .ability-card-grid > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ability-name {
+    font-size: 1.3em;
+    font-weight: 900;
+    color: #111;
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ability-name-sub {
+    font-size: 0.72em;
+    color: #555;
+    font-style: italic;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ability-illustration {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 3.2em;
+    background: rgba(255,255,255,0.5);
+    border: 2px dashed rgba(0,0,0,0.15);
+  }
+
+  .ability-effect {
+    background: rgba(16,185,129,0.15);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.78em;
+    line-height: 1.4;
+    color: #111;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ability-effect strong {
+    color: #047857;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.92em;
+    letter-spacing: 1px;
+  }
+
+  /* ============ 資源卡 ============ */
+  .resource-card-small {
+    border: 5px solid #92400e;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    display: grid;
+    grid-template-rows: 1fr 50px 26px 36px 1fr;
+    gap: 6px;
+    align-items: center;
+  }
+  .resource-card-small.vege { border-color:#16a34a; background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%); }
+  .resource-card-small.chili { border-color:#dc2626; background:linear-gradient(135deg,#fef2f2 0%,#fecaca 100%); }
+  .resource-card-small.seafood { border-color:#0284c7; background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); }
+
+  .resource-icon {
+    font-size: 4.5em;
+    text-align: center;
+    line-height: 1;
+    align-self: end;
+  }
+
+  .resource-name {
+    font-size: 1.6em;
+    font-weight: 900;
+    color: #111;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .resource-name-sub {
+    font-size: 0.78em;
+    color: #666;
+    text-align: center;
+    font-style: italic;
+    line-height: 1;
+  }
+
+  .resource-count {
+    text-align: center;
+    background: rgba(0,0,0,0.1);
+    padding: 6px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin: 0 20px;
+  }
+
+  .resource-flavor {
+    padding: 6px;
+    background: rgba(146,64,14,0.1);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.75em;
+    font-style: italic;
+    color: #92400e;
+    margin: 0 8px;
+    align-self: start;
+  }
+  .resource-card-small.vege .resource-flavor { background: rgba(22,163,74,0.1); color:#15803d; }
+  .resource-card-small.chili .resource-flavor { background: rgba(220,38,38,0.1); color:#b91c1c; }
+  .resource-card-small.seafood .resource-flavor { background: rgba(2,132,199,0.1); color:#0369a1; }
+
+  /* ============ 其他 ============ */
+  .card-info {
+    max-width: 900px;
+    margin: 15px auto 30px auto;
+    padding: 12px;
+    background: rgba(245,158,11,0.1);
+    border-left: 3px solid #F59E0B;
+    color: #fbbf24;
+    font-size: 0.85em;
+    border-radius: 4px;
+  }
+
+  /* 列印樣式 */
+  @media print {
+    body { background: white; padding: 0; color: black; }
+    h1, .subtitle, .section-title, .card-info, .stats-bar, .subsection-title, .tier-title { color: black; background: white; }
+    .card { box-shadow: none; page-break-inside: avoid; }
+    .cards-row { gap: 8px; margin-bottom: 8px; }
+  }
+
+  /* 設計改進說明條 */
+  .design-note {
+    max-width: 900px;
+    margin: 20px auto 30px auto;
+    padding: 14px 20px;
+    background: rgba(16,185,129,0.1);
+    border-left: 4px solid #10b981;
+    color: #6ee7b7;
+    font-size: 0.9em;
+    border-radius: 6px;
+    line-height: 1.6;
+  }
+  .design-note strong { color: #10b981; }
+</style>
+</head>
+<body>
+
+<h1>🍳 黑白大廚 · 完整卡片樣張</h1>
+<div class="subtitle">Version 1.21 · Complete Card Samples · All 218 Cards</div>
+
+<div class="stats-bar">
+  <strong>📊 總計配件 218 張卡片</strong><br>
+  📕 主廚卡 5 · 📙 客人卡 12 · 📗 料理卡 91 · 📘 能力卡 20 · 📕 資源卡 90
+</div>
+
+<div class="design-note">
+  <strong>✨ v2 版面改進:</strong>
+  ① 卡片寬度從 240px → 260px,讓中/英/日三語名稱完整顯示;
+  ② 中文名與副標題(英·日)分為兩行,長名稱不再截斷;
+  ③ 所有同類卡片(料理/主廚/客人/能力)使用 CSS Grid 固定行高,
+  <strong>每張同類卡片的「插畫位置、屬性方塊、引言」位置完全對齊</strong>;
+  ④ 份量/小費/星級徽章寬度固定,讓出名稱空間。
+</div>
+
+<!-- ============ 主廚卡 ============ -->
+<div class="section-title">📕 主廚卡 (5 張)</div>
+
+<div class="cards-row">
+
+<div class="card chef-card">
+<div class="chef-card-grid">
+  <div class="chef-tier-label">⚡ CHEF · 速攻型</div>
+  <div class="chef-name">⚡ 快刀手 · 李師傅</div>
+  <div class="chef-name-sub">Master Lee · スピードシェフ</div>
+  <div class="chef-illustration">
+    <div>⚡🔪</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[手持雙刀、動作殘影]</div>
+  </div>
+  <div class="chef-section"><span class="chef-section-title">【被動】</span>配方資源 -1(最低 1)。打出一般料理被接受時,從資源區獲得 1 張資源</div>
+  <div class="chef-section"><span class="chef-section-title">【開局】</span>起手抽 8 張</div>
+  <div class="mastery-table">
+    <div class="mastery-cell" style="background:rgba(220,38,38,0.22);">🥢 🌟</div>
+    <div class="mastery-cell" style="background:rgba(30,58,138,0.15);">🍣 ○</div>
+    <div class="mastery-cell" style="background:rgba(101,163,13,0.18);">🍝 ○</div>
+  </div>
+</div>
+</div>
+
+<div class="card chef-card">
+<div class="chef-card-grid">
+  <div class="chef-tier-label">🔥 CHEF · 爆發型</div>
+  <div class="chef-name">🔥 爆炒大師 · 金師傅</div>
+  <div class="chef-name-sub">Master Kim · 爆炒の達人</div>
+  <div class="chef-illustration">
+    <div>🔥🍳</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[拋鍋火焰、紅頭巾]</div>
+  </div>
+  <div class="chef-section"><span class="chef-section-title">【被動】</span>每放 1 張 🌶️ 到宣告料理上,該料理辣屬性額外 +1</div>
+  <div class="chef-section"><span class="chef-section-title">【開局】</span>起手抽 7 張 + 🌶️🌶️</div>
+  <div class="mastery-table">
+    <div class="mastery-cell" style="background:rgba(220,38,38,0.22);">🥢 🌟</div>
+    <div class="mastery-cell" style="background:rgba(30,58,138,0.10);">🍣 △</div>
+    <div class="mastery-cell" style="background:rgba(101,163,13,0.22);">🍝 🌟</div>
+  </div>
+</div>
+</div>
+
+<div class="card chef-card">
+<div class="chef-card-grid">
+  <div class="chef-tier-label">🍲 CHEF · 穩定型</div>
+  <div class="chef-name">🍲 家常阿嬤 · 陳奶奶</div>
+  <div class="chef-name-sub">Granny Chen · おばあちゃんの味</div>
+  <div class="chef-illustration">
+    <div>🍲👵</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[慈祥奶奶、熱湯]</div>
+  </div>
+  <div class="chef-section"><span class="chef-section-title">【被動】</span>日式料理 +1 分/張,主打額外 +1(主打 +2、一般 +1、招牌 +1)</div>
+  <div class="chef-section"><span class="chef-section-title">【開局】</span>起手抽 7 張 + 自選 2 張資源</div>
+  <div class="mastery-table">
+    <div class="mastery-cell" style="background:rgba(220,38,38,0.18);">🥢 🌟</div>
+    <div class="mastery-cell" style="background:rgba(30,58,138,0.20);">🍣 ○</div>
+    <div class="mastery-cell" style="background:rgba(101,163,13,0.20);">🍝 🌟</div>
+  </div>
+</div>
+</div>
+
+<div class="card chef-card">
+<div class="chef-card-grid">
+  <div class="chef-tier-label">👑 CHEF · 抽牌型</div>
+  <div class="chef-name">👑 米其林 · Chef Michel</div>
+  <div class="chef-name-sub">Michelin Star · ミシュラン</div>
+  <div class="chef-illustration">
+    <div>👑🍽️</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[優雅法國廚、金邊眼鏡]</div>
+  </div>
+  <div class="chef-section"><span class="chef-section-title">【被動】</span>打出「主打 或 招牌」料理時,立即抽 1 張主牌</div>
+  <div class="chef-section"><span class="chef-section-title">【開局】</span>看主牌庫頂 8 張,選 6 張加入起手</div>
+  <div class="mastery-table">
+    <div class="mastery-cell" style="background:rgba(220,38,38,0.10);">🥢 △</div>
+    <div class="mastery-cell" style="background:rgba(30,58,138,0.22);">🍣 🌟</div>
+    <div class="mastery-cell" style="background:rgba(101,163,13,0.22);">🍝 🌟</div>
+  </div>
+</div>
+</div>
+
+<div class="card chef-card">
+<div class="chef-card-grid">
+  <div class="chef-tier-label">🍝 CHEF · 調度型</div>
+  <div class="chef-name">🍝 義大利媽媽 · Maria</div>
+  <div class="chef-name-sub">Nonna Maria · イタリアンマンマ</div>
+  <div class="chef-illustration">
+    <div>🍝👵</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[義大利奶奶、紅白圍裙]</div>
+  </div>
+  <div class="chef-section"><span class="chef-section-title">【被動】</span>打出義式料理時,從資源展示區送 1 張任意資源到手牌</div>
+  <div class="chef-section"><span class="chef-section-title">【開局】</span>起手 🥬🥬 + 從義式池抽 1 張料理</div>
+  <div class="mastery-table">
+    <div class="mastery-cell" style="background:rgba(220,38,38,0.15);">🥢 ○</div>
+    <div class="mastery-cell" style="background:rgba(30,58,138,0.10);">🍣 △</div>
+    <div class="mastery-cell" style="background:rgba(101,163,13,0.22);">🍝 🌟</div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<!-- ============ 客人卡 ============ -->
+<div class="section-title">📙 客人卡 (12 張)</div>
+
+<div class="cards-row">
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">🌶️ 夜市老闆</div>
+    <div class="tip-badge">3 分/張</div>
+  </div>
+  <div class="guest-name-sub">Night Market Vendor · 屋台店主</div>
+  <div class="guest-illustration">
+    <div>🌶️🍺</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[頭巾、油膩圍裙]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">辣 ≥ 3,飽足 ≥ 3</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 3 道</div>
+    <div class="guest-stat">⭐⭐⭐</div>
+  </div>
+  <div class="flavor-text">「辣!要飽!我下午還要擺攤!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">😤 嗜辣狂魔</div>
+    <div class="tip-badge">4 分/張</div>
+  </div>
+  <div class="guest-name-sub">Spicy Maniac · 辛党マニア</div>
+  <div class="guest-illustration">
+    <div>🌶️😤</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[重金屬T恤、辣椒刺青]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">辣 ≥ 5,飽足 ≥ 2</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 3 道</div>
+    <div class="guest-stat">⭐⭐⭐⭐</div>
+  </div>
+  <div class="flavor-text">「不辣?那就不是食物!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">🍰 甜點控</div>
+    <div class="tip-badge">3 分/張</div>
+  </div>
+  <div class="guest-name-sub">Dessert Lover · スイーツ女子</div>
+  <div class="guest-illustration">
+    <div>🥗🍰</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[粉色頭髮、小熊耳朵]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">甜 ≥ 4,飽足 ≤ 2</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 2 道</div>
+    <div class="guest-stat">⭐⭐</div>
+  </div>
+  <div class="flavor-text">「甜點是幸福的化身~」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">💼 加班上班族</div>
+    <div class="tip-badge">2 分/張</div>
+  </div>
+  <div class="guest-name-sub">Overtime Worker · 残業サラリーマン</div>
+  <div class="guest-illustration">
+    <div>💼😵</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[白襯衫、黑眼圈]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">屬總 ≥ 4 + 飽 ≥ 3;辣 ≥ 2 +1</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 2 道</div>
+    <div class="guest-stat">⭐⭐</div>
+  </div>
+  <div class="flavor-text">「快一點!我還要回公司!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">🎬 吃播主</div>
+    <div class="tip-badge">2 分/張</div>
+  </div>
+  <div class="guest-name-sub">Mukbanger · 大食い配信者</div>
+  <div class="guest-illustration">
+    <div>🎬🍔</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[環形燈、誇張吃相]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">飽足 ≥ 3</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 5 道</div>
+    <div class="guest-stat">⭐⭐</div>
+  </div>
+  <div class="flavor-text">「哇!訂閱我頻道!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">🍴 挑食小朋友</div>
+    <div class="tip-badge">3 分/張</div>
+  </div>
+  <div class="guest-name-sub">Picky Kid · 偏食キッズ</div>
+  <div class="guest-illustration">
+    <div>🍴😠</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[小男孩、橘色圍兜]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">甜 ≥ 3,辣 = 0</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 2 道</div>
+    <div class="guest-stat">⭐⭐⭐</div>
+  </div>
+  <div class="flavor-text">「我不要辣的!要甜的!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">📷 觀光客</div>
+    <div class="tip-badge">2 分/張</div>
+  </div>
+  <div class="guest-name-sub">Tourist · 観光客</div>
+  <div class="guest-illustration">
+    <div>🎨📷</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[外國臉孔、相機]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">每張菜系不同</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 3 道</div>
+    <div class="guest-stat">⭐⭐⭐</div>
+  </div>
+  <div class="flavor-text">「Wow!我要發 IG!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">🎤 饕客評論家</div>
+    <div class="tip-badge">5 分/張</div>
+  </div>
+  <div class="guest-name-sub">Food Critic · グルメ評論家</div>
+  <div class="guest-illustration">
+    <div>🎤📝</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[山羊鬍、筆記本]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">只吃招牌 + 鮮 ≥ 3</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 3 道</div>
+    <div class="guest-stat">⭐⭐⭐⭐</div>
+  </div>
+  <div class="flavor-text">「我只給真正的大師打分」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">🍺 宵夜大叔</div>
+    <div class="tip-badge">3 分/張</div>
+  </div>
+  <div class="guest-name-sub">Late-night Uncle · 夜食おじさん</div>
+  <div class="guest-illustration">
+    <div>🥩🍺</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[短褲拖鞋、白背心]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">飽足 ≥ 4</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 3 道</div>
+    <div class="guest-stat">⭐⭐</div>
+  </div>
+  <div class="flavor-text">「半夜肚子餓,越油越好!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">💃 辣妹</div>
+    <div class="tip-badge">2 分/張</div>
+  </div>
+  <div class="guest-name-sub">Spicy Girl · ギャル</div>
+  <div class="guest-illustration">
+    <div>🌶️💅</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[豹紋外套、紅挑染]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">辣 ≥ 3</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 2 道</div>
+    <div class="guest-stat">⭐</div>
+  </div>
+  <div class="flavor-text">「不夠辣~味道要夠嗆!」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">👔 西裝大叔</div>
+    <div class="tip-badge">2 分/張</div>
+  </div>
+  <div class="guest-name-sub">Suited Man · スーツの紳士</div>
+  <div class="guest-illustration">
+    <div>👔🍷</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[灰西裝、高級手錶]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">辣 ≤ 4,飽足 ≥ 2</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 4 道</div>
+    <div class="guest-stat">⭐⭐</div>
+  </div>
+  <div class="flavor-text">「明天有會議,不能太辣」</div>
+</div>
+</div>
+<div class="card guest-card">
+<div class="guest-card-grid">
+  <div class="guest-header-row">
+    <div class="guest-name">📖 文青</div>
+    <div class="tip-badge">3 分/張</div>
+  </div>
+  <div class="guest-name-sub">Hipster · 文系男子</div>
+  <div class="guest-illustration">
+    <div>💁📖</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[圓框眼鏡、亞麻襯衫]</div>
+  </div>
+  <div class="guest-req">
+    <span class="req-label">需求</span>
+    <span class="req-value">辣 ≤ 2,飽足 ≤ 3</span>
+  </div>
+  <div class="guest-stats">
+    <div class="guest-stat">食量 2 道</div>
+    <div class="guest-stat">⭐⭐⭐</div>
+  </div>
+  <div class="flavor-text">「食物要有靈魂」</div>
+</div>
+</div>
+</div>
+
+<!-- ============ 料理卡 91 張 ============ -->
+<div class="section-title">📗 料理卡 (91 張)</div>
+
+<div class="subsection-title subsection-china">🥢 中華料理 · 30 張(15 種)</div>
+
+<div class="tier-title">━━━ 一般料理 ⭐(8 種 16 張) ━━━</div>
+<div class="cards-row">
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍳 蛋炒飯</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Egg Fried Rice · 卵チャーハン</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍳</div>
+    <div class="illustration-note">[金黃炒飯配蔥花]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「粒粒分明,蛋香四溢」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍲 蛋花湯</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Egg Drop Soup · 卵スープ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍲</div>
+    <div class="illustration-note">[清湯中金黃蛋絮]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「清甜如雲,溫暖胃袋」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥟 小籠包</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Xiao Long Bao · 小籠包</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥟</div>
+    <div class="illustration-note">[竹籠蒸屜小籠包]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「薄皮包著一口湯,小心燙口!」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 麻婆豆腐</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Mapo Tofu · マーボー豆腐</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[紅油浸潤豆腐塊]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「麻辣鮮香,四川姑娘手藝」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥒 涼拌黃瓜</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Cold Cucumber · 冷やしキュウリ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥒</div>
+    <div class="illustration-note">[拍碎黃瓜淋紅油]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">2</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「清爽開胃,夏日必備」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍜 陽春麵</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Plain Noodles · 陽春麺</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍜</div>
+    <div class="illustration-note">[清湯麵條配蔥花]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「最樸素的滋味,最深的懷念」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥘 糖醋里肌</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Sweet Sour Pork · 酢豚</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥘</div>
+    <div class="illustration-note">[金黃酥脆里肌淋亮紅醬]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「酸甜開胃,小朋友的最愛」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥬 蒜泥白肉</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Garlic Pork · ニンニク豚</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥬</div>
+    <div class="illustration-note">[薄切白肉片配辣油]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「肥瘦相間,蒜香開胃」</div>
+</div>
+</div>
+</div>
+
+<div class="tier-title">━━━ 主打料理 ⭐⭐(4 種 9 張) ━━━</div>
+<div class="cards-row">
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🐷 紅燒肉</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Red Braised Pork · 豚の角煮</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🐷</div>
+    <div class="illustration-note">[琥珀色三層肉塊]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">4</div></div>
+  </div>
+  <div class="flavor-text">「肥而不膩,入口即化」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🔥 宮保雞丁</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Kung Pao Chicken · 宮保鶏丁</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🔥</div>
+    <div class="illustration-note">[紅油雞丁配花生]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">4</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「辣中有甜,花生增脆」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍤 椒鹽蝦</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Salt Pepper Shrimp · 椒塩海老</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍤</div>
+    <div class="illustration-note">[酥脆蝦殼撒椒鹽]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🌶️🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">5</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「酥脆香辣,下酒神器」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥩 黑胡椒牛柳</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Black Pepper Beef · 黒胡椒牛</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥩</div>
+    <div class="illustration-note">[鐵板滋滋牛柳條]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「鐵板熱燙,黑椒辛香」</div>
+</div>
+</div>
+</div>
+
+<div class="tier-title">━━━ 招牌料理 ⭐⭐⭐(3 種 5 張) ━━━</div>
+<div class="cards-row">
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🦆 北京烤鴨</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Peking Duck · 北京ダック</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🦆</div>
+    <div class="illustration-note">[金棕烤鴨配薄餅蔥絲]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🥬🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">2</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">4</div></div>
+  </div>
+  <div class="flavor-text">「皮脆肉嫩,國宴經典」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌋 麻辣火鍋</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Mala Hot Pot · 麻辣火鍋</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌋</div>
+    <div class="illustration-note">[紅油沸騰九宮格]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🌶️🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">6</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「先麻、後辣、再是幸福」</div>
+</div>
+</div>
+<div class="card china"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🐷 東坡肉</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Dongpo Pork · 東坡肉</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🐷</div>
+    <div class="illustration-note">[方正五花肉、草繩紮緊]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">6</div></div>
+  </div>
+  <div class="flavor-text">「宋代文人的飲食極致」</div>
+</div>
+</div>
+</div>
+
+<div class="subsection-title subsection-japan">🍣 日本料理 · 30 張(15 種)</div>
+
+<div class="tier-title">━━━ 一般料理 ⭐(8 種 16 張) ━━━</div>
+<div class="cards-row">
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍣 鮭魚壽司</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Salmon Sushi · 鮭寿司</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍣</div>
+    <div class="illustration-note">[橘粉鮭魚握壽司]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「大海的鮮甜在舌尖綻放」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍜 味噌湯</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Miso Soup · 味噌汁</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍜</div>
+    <div class="illustration-note">[黑漆碗中濁黃味噌湯]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「一碗暖湯,喚醒清晨的胃」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍱 玉子燒</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Tamagoyaki · 玉子焼き</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍱</div>
+    <div class="illustration-note">[金黃層層蛋捲]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「層層卷起的甜蜜」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍙 飯糰</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Onigiri · おにぎり</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍙</div>
+    <div class="illustration-note">[三角飯糰裹海苔]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「手中一握,便當記憶」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍢 關東煮</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Oden · おでん</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍢</div>
+    <div class="illustration-note">[深棕高湯泡各式食材]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「冬夜便利商店的慰藉」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥚 茶碗蒸</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Chawanmushi · 茶碗蒸し</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥚</div>
+    <div class="illustration-note">[陶盅滑嫩蛋羹]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「如鏡面般光滑」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍢 烤雞串</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Yakitori · 焼き鳥</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍢</div>
+    <div class="illustration-note">[炭火烤雞串撒芝麻]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「居酒屋人氣王」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍶 天婦羅</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Tempura · 天ぷら</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍶</div>
+    <div class="illustration-note">[酥脆金黃天婦羅]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「一咬即碎的完美」</div>
+</div>
+</div>
+</div>
+
+<div class="tier-title">━━━ 主打料理 ⭐⭐(5 種 9 張) ━━━</div>
+<div class="cards-row">
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🐟 生魚片拼盤</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Sashimi · 刺身盛り合わせ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🐟</div>
+    <div class="illustration-note">[多色生魚片配冰塊]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🐟🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">4</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「原味就是最好的調味」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍜 豚骨拉麵</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Tonkotsu Ramen · 豚骨ラーメン</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍜</div>
+    <div class="illustration-note">[乳白濃湯配叉燒半熟蛋]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">4</div></div>
+  </div>
+  <div class="flavor-text">「熬煮一整晚的靈魂」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🔥 炙燒鮪魚</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Seared Tuna · 鮪のタタキ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🔥</div>
+    <div class="illustration-note">[外焦內紅鮪魚配紫蘇]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">4</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「外燙內涼,辣醬激發鮮」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 地獄拉麵</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Hell Ramen · 地獄ラーメン</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[血紅湯底配辣椒警告圖]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🐟🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">5</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「挑戰者請簽免責聲明」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥩 和牛丼</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Wagyu Donburi · 和牛丼</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥩</div>
+    <div class="illustration-note">[粉紅和牛配半熟蛋]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「入口即化的油花」</div>
+</div>
+</div>
+</div>
+
+<div class="tier-title">━━━ 招牌料理 ⭐⭐⭐(3 種 5 張) ━━━</div>
+<div class="cards-row">
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍱 懷石料理</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Kaiseki · 懐石料理</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍱</div>
+    <div class="illustration-note">[黑漆盒多格擺盤]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">4</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「四季流轉,盡在一膳」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍣 極上壽司</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Premium Sushi · 極上寿司</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍣</div>
+    <div class="illustration-note">[多彩壽司拼盤]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🐟🐟🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">6</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「二十年功力盡在八貫中」</div>
+</div>
+</div>
+<div class="card japan"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥩 神戶牛排</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Kobe Steak · 神戸牛</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥩</div>
+    <div class="illustration-note">[粉紅油花和牛切片]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">4</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">5</div></div>
+  </div>
+  <div class="flavor-text">「肉中極品,入口即化」</div>
+</div>
+</div>
+</div>
+
+<div class="subsection-title subsection-italy">🍝 義式料理 · 31 張(18 種)</div>
+
+<div class="tier-title">━━━ 一般料理 ⭐(9 種 17 張) ━━━</div>
+<div class="cards-row">
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍝 茄汁義大利麵</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Pomodoro · トマトパスタ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍝</div>
+    <div class="illustration-note">[紅醬麵條配羅勒]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「義大利人的家常味」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍕 瑪格麗特披薩</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Margherita · マルゲリータ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍕</div>
+    <div class="illustration-note">[紅白綠三色披薩]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「義大利王后的致敬之作」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥖 蒜味麵包</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Garlic Bread · ガーリックブレッド</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥖</div>
+    <div class="illustration-note">[金黃酥脆切片法棍]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「奶油蒜香,開胃的序曲」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥗 凱薩沙拉</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Caesar Salad · シーザーサラダ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥗</div>
+    <div class="illustration-note">[蘿蔓生菜配麵包丁起司]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「凱薩大帝般的霸氣」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🧀 起司烤蘑菇</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Cheese Mushroom · チーズマッシュ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🧀</div>
+    <div class="illustration-note">[融化金黃起司配蘑菇]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「起司和菇類的鮮甜流淌」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🥩 肉醬麵</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Bolognese · ボロネーゼ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🥩</div>
+    <div class="illustration-note">[深紅肉醬配寬麵]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">4</div></div>
+  </div>
+  <div class="flavor-text">「慢燉八小時的靈魂」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 香蒜辣油義麵</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Aglio e Olio · ペペロンチーノ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[金黃麵條配辣椒蒜片]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">3</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「最簡單的義大利家常」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🦐 蒜香蝦義麵</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Garlic Shrimp Pasta · 海老パスタ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🦐</div>
+    <div class="illustration-note">[粉橘明蝦配橄欖油麵]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">4</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「海味與陸味的完美融合」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 辣味蒜香義麵</div>
+    <div class="portion-badge">⭐</div>
+  </div>
+  <div class="dish-name-sub">Spicy Aglio · 辛口ペペロンチーノ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[紅色辣椒麵加倍辣]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">4</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">2</div></div>
+  </div>
+  <div class="flavor-text">「加倍的辣椒,加倍的熱情」</div>
+</div>
+</div>
+</div>
+
+<div class="tier-title">━━━ 主打料理 ⭐⭐(6 種 9 張) ━━━</div>
+<div class="cards-row">
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×3</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍕 海鮮披薩</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Seafood Pizza · シーフードピザ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍕</div>
+    <div class="illustration-note">[蝦花枝貽貝配青紅椒]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「陸海邂逅,海風的濃郁」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍖 煎肋排</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Grilled Ribs · グリルドリブ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍖</div>
+    <div class="illustration-note">[焦黑紋路厚實肋排]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥩🥬</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">4</div></div>
+  </div>
+  <div class="flavor-text">「炭火粗獷,肉的原始力量」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍰 提拉米蘇</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Tiramisu · ティラミス</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍰</div>
+    <div class="illustration-note">[分層咖啡色起司可可]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box stat-highlight-sweet"><div class="stat-label">甜</div><div class="stat-value">4</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">飽</div><div class="stat-value">1</div></div>
+  </div>
+  <div class="flavor-text">「Tiramisu:帶我走」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 阿拉比亞塔</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Arrabbiata · アラビアータ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[深紅醬筆管麵配辣椒]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">5</div></div>
+    <div class="stat-box "><div class="stat-label">鮮</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「憤怒的義大利 — 激情澎湃」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 辣味肉醬披薩</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Diavola · ディアボラ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[辣肉腸披薩拉絲起司]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">4</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「Diavola 的意思是『魔鬼』」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🌶️ 辣味千層麵</div>
+    <div class="portion-badge">⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Spicy Lasagna · 辛口ラザニア</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🌶️</div>
+    <div class="illustration-note">[方形焦頂千層麵切面]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥩🥬🌶️</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight"><div class="stat-label">辣</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">2</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">4</div></div>
+  </div>
+  <div class="flavor-text">「南義風情,辣味詩篇」</div>
+</div>
+</div>
+</div>
+
+<div class="tier-title">━━━ 招牌料理 ⭐⭐⭐(3 種 5 張) ━━━</div>
+<div class="cards-row">
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍝 松露燉飯</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Truffle Risotto · トリュフリゾット</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍝</div>
+    <div class="illustration-note">[金燉飯配黑松露薄片]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥬🥩🐟</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">5</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「森林的奢華」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×2</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🍖 全套套餐</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Full Course · フルコース</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🍖</div>
+    <div class="illustration-note">[長盤四道主餐配紅酒]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🥬🥩🥩🐟</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">1</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">3</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">5</div></div>
+  </div>
+  <div class="flavor-text">「一整場味覺的交響樂」</div>
+</div>
+</div>
+<div class="card italy"><div class="card-bg"></div>
+<div class="dish-count">×1</div>
+<div class="dish-card">
+  <div class="dish-header-row">
+    <div class="dish-name">🦞 龍蝦義麵</div>
+    <div class="portion-badge">⭐⭐⭐</div>
+  </div>
+  <div class="dish-name-sub">Lobster Pasta · ロブスターパスタ</div>
+  <div class="dish-illustration">
+    <div class="illustration-emoji">🦞</div>
+    <div class="illustration-note">[紅色龍蝦整隻配白酒醬]</div>
+  </div>
+  <div class="dish-recipe">
+    <span class="recipe-label">配方</span>
+    <span class="recipe-icons">🐟🐟🥬🥩</span>
+  </div>
+  <div class="dish-stats">
+    <div class="stat-box "><div class="stat-label">甜</div><div class="stat-value">0</div></div>
+    <div class="stat-box "><div class="stat-label">辣</div><div class="stat-value">0</div></div>
+    <div class="stat-box stat-highlight-umami"><div class="stat-label">鮮</div><div class="stat-value">6</div></div>
+    <div class="stat-box stat-highlight-full"><div class="stat-label">飽</div><div class="stat-value">3</div></div>
+  </div>
+  <div class="flavor-text">「大海的王與義式的熱情」</div>
+</div>
+</div>
+</div>
+
+<!-- ============ 能力卡 20 張 ============ -->
+<div class="section-title">📘 能力卡 (10 種 × 2 = 20 張)</div>
+
+<div class="cards-row">
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">✨ 來點味精</div>
+  <div class="ability-name-sub">MSG Boost · うま味調味料</div>
+  <div class="ability-illustration">
+    <div>✨🧂</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[廚師撒鹽粒子閃光]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>指定自己宣告中料理,任選屬性 +2</div>
+  <div class="flavor-text">「一點神奇調味,化平凡為驚喜」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🔪 搶食材</div>
+  <div class="ability-name-sub">Steal Ingredient · 食材強奪</div>
+  <div class="ability-illustration">
+    <div>🔪🥩</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[偷偷抓走食材]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>從對手手牌選 1 張資源(攻擊方選)放到自己宣告料理。對手手牌無資源時改從宣告料理上搶</div>
+  <div class="flavor-text">「食材不是你的,就是我的!」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">💥 食材腐敗</div>
+  <div class="ability-name-sub">Spoiled · 食材の腐敗</div>
+  <div class="ability-illustration">
+    <div>💥🦠</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[食材冒綠色黴菌]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>對手手牌棄 2 張資源(對手自選);不足部分從對手宣告料理上棄</div>
+  <div class="flavor-text">「哎呀,放太久了...」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🚪 送客令</div>
+  <div class="ability-name-sub">Goodbye · お引き取り</div>
+  <div class="ability-illustration">
+    <div>🚪👋</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[服務生指向門口]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>指定場上 1 位客人離場(料理留原位給新客人)</div>
+  <div class="flavor-text">「不好意思,該結帳了」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🌶️ 地獄辣椒</div>
+  <div class="ability-name-sub">Hell Pepper · 地獄の唐辛子</div>
+  <div class="ability-illustration">
+    <div>🌶️🔥</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[紅色辣椒冒火焰]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>指定自己宣告中料理,辣屬性 +4</div>
+  <div class="flavor-text">「這是地獄來的辣椒」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🥤 喝飲料</div>
+  <div class="ability-name-sub">Drink · ドリンクタイム</div>
+  <div class="ability-illustration">
+    <div>🥤🍹</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[客人拿飲料豪飲]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>指定客人本回合不怕辣上限,自己宣告中料理甜 +2</div>
+  <div class="flavor-text">「來,喝口壓壓驚!」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🍴 再來一碗</div>
+  <div class="ability-name-sub">One More · おかわり</div>
+  <div class="ability-illustration">
+    <div>🍴🍜</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[空碗舉起、端新碗]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>指定客人食量 +2</div>
+  <div class="flavor-text">「老闆,再來一碗!」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🔄 主廚靈感</div>
+  <div class="ability-name-sub">Chef Inspiration · ひらめき</div>
+  <div class="ability-illustration">
+    <div>🔄💡</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[廚師眼睛發光]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>擇一:A. 棄宣告料理回收所有資源 B. 抽 2 張主牌 C. 拿 2 張資源</div>
+  <div class="flavor-text">「等等,換個做法...」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🍽️ 端錯菜</div>
+  <div class="ability-name-sub">Wrong Order · 注文違い</div>
+  <div class="ability-illustration">
+    <div>🍽️❓</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[服務生放錯桌]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>將對手宣告中料理搬到另一客人面前,打牌者選擇新客人</div>
+  <div class="flavor-text">「請問您的訂單是...?」</div>
+</div>
+</div>
+<div class="card ability-card">
+<div class="ability-card-grid">
+  <div class="ability-name">🐱 招財貓</div>
+  <div class="ability-name-sub">Lucky Cat · 招き猫</div>
+  <div class="ability-illustration">
+    <div>🐱✨</div>
+    <div style="font-size:0.18em;color:#888;font-style:italic;">[金色招財貓舉手光芒]</div>
+  </div>
+  <div class="ability-effect"><strong>效果</strong>檢視客人備位堆,選 1 位放到堆頂(下次補位必翻出),其餘洗回</div>
+  <div class="flavor-text">「運氣,也是料理的一部分」</div>
+</div>
+</div>
+</div>
+
+<!-- ============ 資源卡 90 張 ============ -->
+<div class="section-title">📕 資源卡 (90 張)</div>
+
+<div class="cards-row">
+<div class="card resource-card-small">
+<div class="resource-icon">🥩</div>
+<div class="resource-name">肉</div>
+<div class="resource-name-sub">Meat · ミート</div>
+<div class="resource-count">共 28 張</div>
+<div class="resource-flavor">「新鮮肉品,料理的核心」</div>
+</div>
+<div class="card resource-card-small vege">
+<div class="resource-icon">🥬</div>
+<div class="resource-name">菜</div>
+<div class="resource-name-sub">Vegetable · 野菜</div>
+<div class="resource-count">共 28 張</div>
+<div class="resource-flavor">「大地的禮物,生命的活力」</div>
+</div>
+<div class="card resource-card-small chili">
+<div class="resource-icon">🌶️</div>
+<div class="resource-name">辣椒</div>
+<div class="resource-name-sub">Chili · 唐辛子</div>
+<div class="resource-count">共 18 張</div>
+<div class="resource-flavor">「燃燒的味道,刺激的靈魂」</div>
+</div>
+<div class="card resource-card-small seafood">
+<div class="resource-icon">🐟</div>
+<div class="resource-name">海鮮</div>
+<div class="resource-name-sub">Seafood · 海鮮</div>
+<div class="resource-count">共 16 張</div>
+<div class="resource-flavor">「海洋的鮮甜,純淨的味道」</div>
+</div>
+</div>
+
+<!-- ============ 最後說明 ============ -->
+<div class="card-info" style="margin-top:60px;">
+<strong>📌 完整樣張使用說明</strong><br><br>
+
+本檔案包含 <strong>218 張完整卡片樣張</strong>:<br>
+• 📕 主廚卡 5 張(全部)<br>
+• 📙 客人卡 12 張(全部)<br>
+• 📗 料理卡 91 張(完整 15 種中華、15 種日本、18 種義式;每種顯示 1 張,卡片左上 ×N 標示張數)<br>
+• 📘 能力卡 20 張(10 種每種 × 2,顯示每種 1 張)<br>
+• 📕 資源卡 90 張(4 種類顯示,共 28+28+18+16)<br><br>
+
+<strong>🎨 委託插畫師時,此 HTML 作為:</strong><br>
+• 完整視覺樣張(卡片尺寸、布局、色彩)<br>
+• 每張料理/主廚/客人的插圖參考位置<br>
+• 所有卡片的具體資訊(配方、屬性、風味文字)<br>
+• 可印刷驗證版(Ctrl+P 列印)<br><br>
+
+<strong>📐 建議印刷規格:</strong><br>
+• 卡片尺寸:63mm × 88mm(橋牌卡標準)<br>
+• 出血:各邊 3mm<br>
+• 安全區:邊距 5mm<br>
+• 紙材:300gsm 銅版紙上光<br><br>
+
+<strong>🎯 《黑白大廚》v1.21 · 24 次迭代 · 24 局模擬驗證</strong>
+</div>
+
+</body>
+</html>
+
