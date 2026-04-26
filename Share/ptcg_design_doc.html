@@ -754,6 +754,15 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
   </div>
 
   <div class="toc-section">
+    <div class="toc-section-label">第四部 · 落地</div>
+    <ul class="toc-list">
+      <li><a href="#dsl-workflow"><span class="num">11</span>DSL 編寫工作流 <span class="status-tag status-done">已寫</span></a></li>
+      <li><a href="#roadmap"><span class="num">12</span>整體 Roadmap <span class="status-tag status-done">已寫</span></a></li>
+      <li><a href="#deployment"><span class="num">13</span>部署架構 <span class="status-tag status-done">已寫</span></a></li>
+    </ul>
+  </div>
+
+  <div class="toc-section">
     <div class="toc-section-label">附錄</div>
     <ul class="toc-list">
       <li><a href="#decisions">關鍵決策一覽</a></li>
@@ -763,9 +772,9 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
   </div>
 
   <div class="toc-meta">
-    <div><span class="label">版本：</span>v0.7</div>
+    <div><span class="label">版本：</span>v0.8</div>
     <div><span class="label">更新：</span>2026-04-26</div>
-    <div><span class="label">階段：</span>設計完整，待實作</div>
+    <div><span class="label">階段：</span>設計完整，可執行</div>
   </div>
 </aside>
 
@@ -790,6 +799,22 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
       <div class="item">
         <span class="lbl">Stack</span>
         <span class="val">PostgreSQL + Python</span>
+      </div>
+      <div class="item">
+        <span class="lbl">Timeline</span>
+        <span class="val">~6 個月（全職）</span>
+      </div>
+      <div class="item">
+        <span class="lbl">Monthly Cost</span>
+        <span class="val">USD ~26</span>
+      </div>
+      <div class="item">
+        <span class="lbl">Chapters</span>
+        <span class="val">13 + 3 附錄</span>
+      </div>
+      <div class="item">
+        <span class="lbl">Status</span>
+        <span class="val">設計完整</span>
       </div>
     </div>
   </header>
@@ -2676,6 +2701,679 @@ function preloadDeckImages(deckCardIds) {
     <div class="line"></div>
   </div>
 
+  <!-- ============= Chapter 11 ============= -->
+  <section class="chapter" id="dsl-workflow">
+    <div class="chapter-header">
+      <span class="chapter-num">Chapter 11</span>
+      <h2 class="chapter-title">DSL 編寫工作流</h2>
+      <p class="chapter-lead">1500 張卡的 effect_code 不可能純手寫。LLM 產草稿、自動測試把關、人工驗證——三段式 pipeline 把產能拉到 30–50 卡/小時。</p>
+    </div>
+
+    <h3 class="sub">為什麼不能全自動</h3>
+    <ul>
+      <li><strong>DSL 是新發明的</strong>：LLM 沒看過你的 schema，光說明就要塞一大段。即使如此它也會幻想出不存在的 action 名稱。</li>
+      <li><strong>PTCG 規則語言充滿隱性慣例</strong>：「將牌庫頂的 5 張⋯⋯」背後有「玩家可看牌但對手不能看」的隱含規則。</li>
+      <li><strong>錯誤代價高</strong>：一張 effect_code 寫錯可能造成「永遠卡住」「無限抽牌」「傷害錯誤」這類嚴重 bug。</li>
+    </ul>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">採用策略</span>
+      <p><strong>「LLM 產草稿、人工驗證、自動測試把關」</strong>的三段式 pipeline。LLM 做粗活、自動工具做篩選、人工只看真正需要判斷的。</p>
+    </div>
+
+    <h3 class="sub">整體流程</h3>
+    <div class="tree">輸入：cards 表 (effect_status='pending')
+        │
+        ▼
+┌─────────────────────────────┐
+│  1. LLM Drafting            │
+│     prompt + schema 生成草稿│
+│     output: effect_code     │
+└──────────┬──────────────────┘
+           │
+           ▼
+┌─────────────────────────────┐
+│  2. Schema Validator        │
+│     JSON Schema 自動檢查    │
+│     失敗 → 回到 1 重試      │
+└──────────┬──────────────────┘
+           │ pass
+           ▼
+┌─────────────────────────────┐
+│  3. Static Linter           │
+│     語意檢查（target/cond） │
+│     失敗 → 標審查佇列       │
+└──────────┬──────────────────┘
+           │ pass
+           ▼
+┌─────────────────────────────┐
+│  4. Auto Test Generator     │
+│     對該卡產生 N 個測試 case│
+│     在引擎中跑              │
+│     失敗 → 標審查佇列       │
+└──────────┬──────────────────┘
+           │ pass
+           ▼
+┌─────────────────────────────┐
+│  5. Human Review (Web UI)   │
+│     卡圖+原文+DSL 並列      │
+│     [✓通過][✎修改][✗退回]  │
+└──────────┬──────────────────┘
+           │ approved
+           ▼
+寫回資料庫 effect_status='verified'</div>
+
+    <h3 class="sub">LLM Drafting：Prompt 設計</h3>
+    <p>核心工程。Prompt 結構：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">Prompt 構成</div>
+      <table class="decision-table">
+        <thead><tr><th>區塊</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>系統角色</td><td>「你是 PTCG 卡牌效果的 DSL 編碼專家」</td></tr>
+          <tr><td>DSL Schema</td><td>完整 JSON Schema（所有 action/condition/target/modifier）</td></tr>
+          <tr><td>Few-shot 範例</td><td>8–10 個逐漸複雜的範例，覆蓋常見模式</td></tr>
+          <tr><td>輸入卡片</td><td>卡名、類型、原文、能量需求、基礎傷害</td></tr>
+          <tr><td>輸出要求</td><td>純 JSON、不確定處放 _notes、嚴格遵守 schema</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="subsub">關鍵設計</h4>
+    <ul>
+      <li><strong>強制 JSON 輸出</strong>：用 OpenAI <code>response_format=json_object</code>、Anthropic 的 tool use、或在 prompt 末尾強制。</li>
+      <li><strong><code>_notes</code> 是逃生口</strong>：LLM 遇到模糊不清的卡，與其硬編造，不如在 _notes 寫疑問。讓人工審查能直接看到。</li>
+      <li><strong>Few-shot 動態選擇</strong>：根據輸入卡片特徵（含硬幣？狀態異常？訓練家？）從更大的範例池挑 5–8 個最相關的放 prompt 裡。</li>
+      <li><strong>模型選擇</strong>：複雜卡用最強模型（Claude Opus 4.7、GPT-5、Gemini 2.5 Pro），簡單卡用次一級省成本。</li>
+    </ul>
+
+    <h3 class="sub">Schema Validator</h3>
+    <p>純機械檢查。用 Pydantic 把 DSL Schema 寫成 model：</p>
+    <pre><code>from pydantic import BaseModel, Field
+
+<span class="json-key">class</span> DamageAction(BaseModel):
+    action: Literal[<span class="json-str">"damage"</span>]
+    target: TargetSpec
+    amount: int = Field(ge=<span class="json-num">0</span>)
+    modifiers: list[Modifier] = []
+    ignore_weakness: bool = <span class="json-bool">False</span>
+    ignore_resistance: bool = <span class="json-bool">False</span>
+
+<span class="json-comment"># ... 對應所有 action types</span>
+
+def validate_effect_code(json_data):
+    try:
+        EffectCode.model_validate(json_data)
+        return ValidationResult(ok=<span class="json-bool">True</span>)
+    except ValidationError as e:
+        return ValidationResult(ok=<span class="json-bool">False</span>, errors=e.errors())</code></pre>
+
+    <p><strong>重試策略</strong>：失敗時把錯誤訊息餵回 LLM 要求修正。「自我修復循環」對結構性錯誤非常有效，1–2 次重試內就能修好。設個 3 次上限，超過就標人工。</p>
+
+    <h3 class="sub">Static Linter：語意檢查</h3>
+    <p>Schema validator 只檢查結構，但抓不出「結構對但邏輯怪」的錯誤：</p>
+    <ul>
+      <li><code>target</code> 是 self_active 但 action 是 damage（要傷害自己嗎？）</li>
+      <li><code>coin_flip</code> 沒有 on_heads/on_tails（等於什麼都不做）</li>
+      <li><code>search_deck</code> 後沒有 shuffle_after（違反 PTCG 慣例）</li>
+      <li>引用了 <code>$chosen</code> 但前面沒有 choose action</li>
+    </ul>
+
+    <pre><code>def lint_effect_code(code):
+    warnings = []
+
+    if has_chosen_reference(code) and not has_choose_action(code):
+        warnings.append(LintWarning(
+            code=<span class="json-str">"ORPHAN_CHOSEN"</span>,
+            message=<span class="json-str">"引用了 $chosen 但前面沒有 choose action"</span>,
+            severity=<span class="json-str">"error"</span>
+        ))
+
+    for action in iterate_actions(code):
+        if action[<span class="json-str">"action"</span>] == <span class="json-str">"search_deck"</span> and not action.get(<span class="json-str">"shuffle_after"</span>):
+            warnings.append(LintWarning(
+                code=<span class="json-str">"MISSING_SHUFFLE"</span>,
+                severity=<span class="json-str">"warning"</span>
+            ))
+    return warnings</code></pre>
+
+    <p>規則隨開發累積。一開始 5–10 條，跑一段時間發現「LLM 常犯這個錯」就加新規則。</p>
+
+    <h3 class="sub">Auto Test Generator：跑起來看看</h3>
+    <p>最有效的驗證：<strong>真的把 effect_code 在引擎裡跑，看結果是否合理</strong>。</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">攻擊招式自動測試</div>
+      <table class="decision-table">
+        <thead><tr><th>Test</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>base_damage</td><td>給足能量，驗證造成的傷害數字符合 base_damage</td></tr>
+          <tr><td>weakness</td><td>對手是弱點屬性，驗證傷害 ×2</td></tr>
+          <tr><td>resistance</td><td>對手是抵抗屬性，驗證傷害 -30</td></tr>
+          <tr><td>insufficient_energy</td><td>能量不足時動作被拒絕</td></tr>
+          <tr><td>coin_flip_distribution</td><td>含硬幣的招式跑 100 次，正面率應在 40-60%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>這類自動測試<strong>抓不出所有 bug，但能抓出最常見的低級錯誤</strong>——比 80% 的人工錯誤還多。</p>
+
+    <h3 class="sub">Human Review Web UI</h3>
+    <p>工具鏈最後一站。Flask/FastAPI + 簡單前端的內部工具：</p>
+
+    <div class="tree">┌────────────────────────────────────────────────┐
+│ 審查介面 — M4-001 甲賀忍蛙 ex                  │
+├────────────────────────────────────────────────┤
+│ ┌──────────┐ 原文：                            │
+│ │          │ 招式 1「忍術」                    │
+│ │  卡圖    │ 「擲一個硬幣，正面則對方陷入麻痺」│
+│ │          │                                    │
+│ │          │ ┌─ Linter 警告 ──────────────┐    │
+│ │          │ │ ✓ 結構檢查通過             │    │
+│ └──────────┘ │ ⚠ 自動測試: 硬幣 47/100 OK │    │
+│              │ ℹ LLM Notes: 無疑問         │    │
+│              └──────────────────────────────┘    │
+│                                                  │
+│ 生成的 DSL：                                     │
+│ ┌──────────────────────────────────────────────┐│
+│ │ {                                            ││
+│ │   "effects": [{                              ││
+│ │     "action": "coin_flip",                   ││
+│ │     "on_heads": [{                           ││
+│ │       "action": "add_status",                ││
+│ │       "target": "opponent_active",           ││
+│ │       "status": "paralyzed"                  ││
+│ │     }]                                       ││
+│ │   }]                                         ││
+│ │ }                                            ││
+│ └──────────────────────────────────────────────┘│
+│                                                  │
+│ [✓ 通過] [✎ 修改] [✗ 退回] [→ 跳過]              │
+└────────────────────────────────────────────────┘</div>
+
+    <h4 class="subsub">體驗設計</h4>
+    <ul>
+      <li><strong>並排顯示卡圖與原文</strong>：審查者要快速比對，眼睛不該離開螢幕。</li>
+      <li><strong>鍵盤快捷鍵</strong>：J/K 切換、A 通過、E 修改、R 退回。</li>
+      <li><strong>修改模式內建編輯器</strong>：點「修改」直接在頁面編輯 JSON、Schema 即時驗證、儲存後重跑測試。</li>
+      <li><strong>審查歷史與統計</strong>：每天審查多少張、退回比例、退回原因分類（讓你知道 prompt 該怎麼改）。</li>
+    </ul>
+
+    <h3 class="sub">批次處理與成本估算</h3>
+    <p>跑 1500 張卡的成本估算：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">成本與時程</div>
+      <table class="decision-table">
+        <thead><tr><th>項目</th><th>數值</th></tr></thead>
+        <tbody>
+          <tr><td>簡單卡比例</td><td>60%（純傷害、簡單條件）</td></tr>
+          <tr><td>複雜卡比例</td><td>40%（含特性、訓練家、多階段）</td></tr>
+          <tr><td>簡單卡 token</td><td>input 5K + output 0.5K</td></tr>
+          <tr><td>複雜卡 token</td><td>input 8K + output 2K</td></tr>
+          <tr><td>重試率</td><td>平均 1.3 次</td></tr>
+          <tr><td>API 總成本</td><td>USD 30–80（個人專案完全可承受）</td></tr>
+          <tr><td>LLM 生成時間</td><td>批次跑 2–3 天（含重試）</td></tr>
+          <tr><td>人工審查</td><td>30 卡/小時 × 1500 卡 = 50 小時（一週工作時間）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Vision API 雙重來源</h3>
+    <p>結合 Vision API 的兩條路線：</p>
+    <ul>
+      <li><strong>主流程</strong>：爬蟲抓到的 effect_text + 結構化欄位 → LLM 生成 DSL</li>
+      <li><strong>Vision 路線</strong>（爬蟲失敗或文字錯誤時）：直接餵卡圖 → Vision API 同時抽取 effect_text + 生成 DSL</li>
+    </ul>
+    <p>兩條路線結果可<strong>互相驗證</strong>：同一張卡兩條路產出的 DSL 結構差很多 → 標到人工最高優先級。</p>
+  </section>
+
+  <div class="chapter-divider">
+    <div class="line"></div>
+    <div class="ornament">◆ ◆ ◆</div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ============= Chapter 12 ============= -->
+  <section class="chapter" id="roadmap">
+    <div class="chapter-header">
+      <span class="chapter-num">Chapter 12</span>
+      <h2 class="chapter-title">整體 Roadmap</h2>
+      <p class="chapter-lead">把所有 milestone 拼成一條時間線，找出關鍵路徑。全職 6 個月、業餘 12-18 個月。</p>
+    </div>
+
+    <h3 class="sub">所有 Milestone 攤平</h3>
+
+    <div class="spec-card">
+      <div class="spec-card-label">工作量總覽</div>
+      <table class="decision-table">
+        <thead><tr><th>章節 / Milestone</th><th>預估</th></tr></thead>
+        <tbody>
+          <tr><td>Schema · DDL 建表</td><td>2 天</td></tr>
+          <tr><td>Schema · 索引調優</td><td>1 天</td></tr>
+          <tr><td>Scraper · M1-M3 (M4 PoC)</td><td>8 天</td></tr>
+          <tr><td>Scraper · M4 全 H/I/J</td><td>1 週</td></tr>
+          <tr><td>Scraper · 卡圖批次下載</td><td>2 天</td></tr>
+          <tr><td>DSL Workflow · LLM Pipeline</td><td>1 週</td></tr>
+          <tr><td>DSL Workflow · Linter + AutoTest</td><td>4 天</td></tr>
+          <tr><td>DSL Workflow · Web 審查 UI</td><td>1 週</td></tr>
+          <tr><td>DSL Workflow · 全卡池編碼</td><td>1.5 週審查</td></tr>
+          <tr><td>Engine · M1 純結構</td><td>1 週</td></tr>
+          <tr><td>Engine · M2 完整單回合</td><td>2 週</td></tr>
+          <tr><td>Engine · M3 觸發器</td><td>2 週</td></tr>
+          <tr><td>Engine · M4 edge case</td><td>1 週初版</td></tr>
+          <tr><td>Server · M1 訊息協議</td><td>1 週</td></tr>
+          <tr><td>Server · M2 接引擎</td><td>2 週</td></tr>
+          <tr><td>Server · M3 持久化</td><td>1 週</td></tr>
+          <tr><td>Frontend · M1 靜態渲染</td><td>1 週</td></tr>
+          <tr><td>Frontend · M2 互動原型</td><td>1 週</td></tr>
+          <tr><td>Frontend · M3 接後端</td><td>1 週</td></tr>
+          <tr><td>Frontend · M4 動畫打磨</td><td>2 週</td></tr>
+          <tr><td>Frontend · M5 周邊頁面</td><td>1 週</td></tr>
+          <tr><td>Deployment · 部署架構</td><td>1 週</td></tr>
+          <tr><td><strong>總計</strong></td><td><strong>約 28 週純工作</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">依賴關係圖</h3>
+    <div class="tree">       ┌──────────────┐
+       │ Schema (3d)  │
+       └──────┬───────┘
+              │
+   ┌──────────┴──────────┐
+   ▼                     ▼
+┌──────────────┐  ┌──────────────┐
+│ Scraper      │  │ Engine M1    │
+│ M1-M3 (8d)   │  │ (1w)         │
+└──────┬───────┘  └──────┬───────┘
+       │                 │
+       ▼                 ▼
+┌──────────────┐  ┌──────────────┐
+│ Scraper M4   │  │ Engine M2    │
+│ (1w)         │  │ (2w)         │
+└──────┬───────┘  └──────┬───────┘
+       │                 │
+       │                 ▼
+       │          ┌──────────────┐
+       │          │ Engine M3    │
+       │          │ (2w)         │
+       │          └──────┬───────┘
+       ▼                 │
+┌──────────────┐         │
+│ DSL Workflow │←────────┘
+│ (3w)         │  ← 需要引擎才能跑測試
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ Encode All   │
+│ (1.5w 審查)  │
+└──────┬───────┘
+       │   ┌──────────────┐
+       │   │ Server M1    │ ← 可平行於引擎
+       │   │ (1w 假引擎)  │
+       │   └──────┬───────┘
+       │          ▼
+       └─→┌──────────────┐
+          │ Server M2    │
+          │ (2w 接引擎)  │
+          └──────┬───────┘
+                 ▼
+          ┌──────────────┐  ┌──────────────┐
+          │ Server M3    │  │ Frontend M1  │
+          │ (1w)         │  │ (1w)         │
+          └──────────────┘  └──────┬───────┘
+                                   ▼
+                            ┌──────────────┐
+                            │ Frontend M2-5│
+                            │ (5w)         │
+                            └──────┬───────┘
+                                   ▼
+                            ┌──────────────┐
+                            │ Deployment   │
+                            │ (1w)         │
+                            └──────────────┘</div>
+
+    <h3 class="sub">關鍵路徑</h3>
+    <div class="callout callout-decision">
+      <span class="callout-label">Critical Path</span>
+      <p>Schema → Engine M1 → M2 → M3 → DSL 編碼 → Server M2 → Frontend M3 → M4 → Deployment</p>
+      <p>加總約 <strong>15 週</strong>。資料抓取（Scraper M4）跟 Frontend M1-M2 都可以平行於這條主線。</p>
+    </div>
+
+    <h3 class="sub">推薦的執行階段</h3>
+
+    <h4 class="subsub">Phase 1：資料層完備（第 1-3 週）</h4>
+    <p><strong>目標</strong>：M4 整包入庫、卡圖在本機、Schema 撐住所有型態的卡。</p>
+    <ul>
+      <li>Week 1：建 Schema、跑 Scraper M1-M3 拿 M4</li>
+      <li>Week 2：DSL 工作流的工具骨架 + 手寫 5 張卡的 effect_code 驗證 schema</li>
+      <li>Week 3：Scraper M4 把 H/I/J 全卡池抓下來、批次下載卡圖</li>
+    </ul>
+    <p><em>Phase 1 結束</em>：完整資料庫，能用 SQL 查任何卡片，但還不能對戰。</p>
+
+    <h4 class="subsub">Phase 2：引擎可跑（第 4-9 週）</h4>
+    <p><strong>目標</strong>：能跑通一場最簡單的人機對戰（Python REPL 模擬兩個玩家）。</p>
+    <ul>
+      <li>Week 4-5：Engine M1 + M2，5 張卡能完整互打</li>
+      <li>Week 6-7：Engine M3 觸發器系統 + DSL 工作流跑起來</li>
+      <li>Week 8-9：批次編碼當前環境主流牌組需要的卡（100-200 張）</li>
+    </ul>
+    <p><em>Phase 2 結束</em>：terminal 模擬兩個玩家對戰，看到 GameState 和 Event 流。</p>
+
+    <h4 class="subsub">Phase 3：能玩（第 10-14 週）</h4>
+    <p><strong>目標</strong>：兩個瀏覽器分頁能打一場完整對局。</p>
+    <ul>
+      <li>Week 10：Server M1 訊息協議</li>
+      <li>Week 11-12：Server M2 + Frontend M1（平行）</li>
+      <li>Week 13：Server M3 持久化 + Frontend M2 互動原型</li>
+      <li>Week 14：Frontend M3 接後端、第一場端到端對戰</li>
+    </ul>
+    <p><em>Phase 3 結束</em>：你和你的朋友能用瀏覽器對戰了，但 UI 還很粗糙。</p>
+
+    <h4 class="subsub">Phase 4：好玩（第 15-20 週）</h4>
+    <p><strong>目標</strong>：你的親友圈會主動想再來一局。</p>
+    <ul>
+      <li>Week 15-16：Frontend M4 動畫打磨（最花時間）</li>
+      <li>Week 17：Frontend M5 周邊頁面</li>
+      <li>Week 18：Deployment 完整部署</li>
+      <li>Week 19-20：Bug 修正、效果編碼長尾、體驗微調</li>
+    </ul>
+    <p><em>Phase 4 結束</em>：可以發 LINE 邀親友開戰了。</p>
+
+    <h3 class="sub">風險點與緩衝</h3>
+    <ul>
+      <li><strong>DSL 設計反覆</strong>：寫到第 50 張卡時可能發現 schema 缺陷要 refactor。預留 1 週 buffer。</li>
+      <li><strong>動畫節奏調整</strong>：Frontend M4 看似 2 週，「打磨到順手」常超時。允許延長到 3 週。</li>
+      <li><strong>Edge case 卡片</strong>：1500 張會有 50-100 張用奇怪方式設計，DSL 編碼困難。建議<em>暫時跳過、用「不支援」標記</em>，先讓 90% 跑起來。</li>
+      <li><strong>親友的回饋</strong>：Phase 3 結束就找 1-2 個親友試玩，盡早暴露 UI 問題。</li>
+    </ul>
+
+    <h3 class="sub">最終總時程</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">時程估算</div>
+      <table class="decision-table">
+        <thead><tr><th>Phase</th><th>週數</th><th>累積</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1</td><td>3 週</td><td>3 週</td></tr>
+          <tr><td>Phase 2</td><td>6 週</td><td>9 週</td></tr>
+          <tr><td>Phase 3</td><td>5 週</td><td>14 週</td></tr>
+          <tr><td>Phase 4</td><td>6 週</td><td>20 週</td></tr>
+          <tr><td>緩衝</td><td>4 週</td><td><strong>24 週 ≈ 6 個月</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>全職投入：<strong>6 個月</strong>。業餘開發（每週 10-15 小時）：<strong>12-18 個月</strong>完成 Phase 1-3，Phase 4 滾動式優化。</p>
+
+    <h3 class="sub">能否更快？三種取捨</h3>
+    <ul>
+      <li><strong>捨棄 80/20</strong>：放棄全卡池編碼，只支援 top 4 牌組需要的卡（80-150 張）。省 Phase 2 大半。</li>
+      <li><strong>捨棄美觀</strong>：Frontend M4 動畫從 2 週砍成 3 天，純功能性 UI。能玩，但不好玩。</li>
+      <li><strong>捨棄部分功能</strong>：跳過觀戰、組牌器、好友邀請。省 1-2 週。</li>
+    </ul>
+    <p>最快可玩版本可壓到 <strong>3 個月</strong>，但會犧牲體驗。</p>
+  </section>
+
+  <div class="chapter-divider">
+    <div class="line"></div>
+    <div class="ornament">◆ ◆ ◆</div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ============= Chapter 13 ============= -->
+  <section class="chapter" id="deployment">
+    <div class="chapter-header">
+      <span class="chapter-num">Chapter 13</span>
+      <h2 class="chapter-title">部署架構</h2>
+      <p class="chapter-lead">把這份設計變成真的能讓親友連上來打的系統。單機 VPS + Docker Compose + Caddy 自動 HTTPS。月費約 USD 26。</p>
+    </div>
+
+    <h3 class="sub">目標環境定位</h3>
+    <p>親友圈規模的部署目標：</p>
+    <ul>
+      <li>同時在線：1-10 人</li>
+      <li>同時對局：1-3 場</li>
+      <li>容忍每月偶爾 5-10 分鐘 downtime</li>
+      <li>不需要 CDN / 負載均衡 / 多機冗餘</li>
+    </ul>
+    <p>這些限制大幅簡化部署。<strong>單機 VPS + Docker Compose</strong> 完全足夠。</p>
+
+    <h3 class="sub">伺服器選擇</h3>
+    <p><strong>規格</strong>：4 vCPU + 4GB RAM + 50GB SSD。月費 USD 20-30。</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">VPS 比較</div>
+      <table class="decision-table">
+        <thead><tr><th>供應商</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>Hetzner CX22</td><td>性價比最高，歐洲機房，台灣延遲約 250ms</td></tr>
+          <tr><td>DigitalOcean</td><td>新加坡機房，台灣延遲 60-80ms（推薦）</td></tr>
+          <tr><td>Linode/Akamai</td><td>東京機房，多區域可選</td></tr>
+          <tr><td>AWS Lightsail</td><td>簡化版 EC2，新加坡/東京</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">推薦</span>
+      <p><strong>DigitalOcean Singapore 或 Linode Tokyo</strong>——亞洲節點延遲低，PTCG 講求即時，網路品質直接影響玩家體驗。</p>
+    </div>
+
+    <h3 class="sub">Docker Compose 整體架構</h3>
+    <p>整個系統打包成 docker-compose 五個服務：</p>
+
+    <pre><code><span class="json-comment"># docker-compose.yml 概念示意</span>
+<span class="json-key">version</span>: <span class="json-str">'3.9'</span>
+
+services:
+  <span class="json-key">postgres</span>:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    networks: [internal]
+    restart: unless-stopped
+
+  <span class="json-key">redis</span>:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes: [redis_data:/data]
+    networks: [internal]
+    restart: unless-stopped
+
+  <span class="json-key">backend</span>:
+    build: ./backend
+    depends_on: [postgres, redis]
+    networks: [internal, web]
+    restart: unless-stopped
+
+  <span class="json-key">frontend</span>:
+    build: ./frontend  <span class="json-comment"># vite build → nginx serve</span>
+    networks: [web]
+    restart: unless-stopped
+
+  <span class="json-key">caddy</span>:
+    image: caddy:2-alpine
+    ports: [<span class="json-str">"80:80"</span>, <span class="json-str">"443:443"</span>]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - ./card-images:/srv/card-images:ro
+    networks: [web]
+    restart: unless-stopped
+
+networks:
+  internal:  <span class="json-comment"># postgres, redis, backend</span>
+  web:       <span class="json-comment"># backend, frontend, caddy</span></code></pre>
+
+    <h4 class="subsub">設計重點</h4>
+    <ul>
+      <li><strong>Caddy 當反向代理</strong>而非 nginx。Caddy 自動處理 Let's Encrypt SSL，零設定。</li>
+      <li><strong>雙網路隔離</strong>：internal 給資料庫、web 給對外服務。即使 backend 被入侵，攻擊者也碰不到 postgres/redis。</li>
+      <li><strong>靜態卡圖獨立 mount</strong>：直接給 caddy 服務，不過 backend，省下大量請求負擔。</li>
+      <li><strong>所有服務 restart: unless-stopped</strong>：機器重啟自動拉起所有服務，不用 systemd 額外配置。</li>
+    </ul>
+
+    <h3 class="sub">Caddyfile 配置</h3>
+    <pre><code>ptcg.example.com {
+    handle /static/* {
+        root * /srv
+        file_server
+    }
+
+    handle /card-images/* {
+        root * /srv
+        file_server
+        header Cache-Control <span class="json-str">"public, max-age=31536000"</span>
+    }
+
+    handle /api/* {
+        reverse_proxy backend:8000
+    }
+
+    handle /ws {
+        reverse_proxy backend:8000
+    }
+
+    handle {
+        reverse_proxy frontend:80
+    }
+
+    encode gzip zstd
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 100mb
+            roll_keep 5
+        }
+    }
+}</code></pre>
+
+    <div class="callout callout-info">
+      <span class="callout-label">Caddy 的殺手級功能</span>
+      <p>config 寫 <code>ptcg.example.com</code>，第一次啟動時它<strong>自動向 Let's Encrypt 申請憑證、自動續期</strong>。完全不用 certbot 那套手動流程。</p>
+    </div>
+
+    <h3 class="sub">網域與 DNS</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">三種選擇</div>
+      <table class="decision-table">
+        <thead><tr><th>方案</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>專屬網域</td><td>.xyz 或 .me 一年 USD 5-10。Cloudflare 免費 DNS。</td></tr>
+          <tr><td>免費子網域</td><td>DuckDNS、No-IP。免費但較不穩。</td></tr>
+          <tr><td>Tailscale 內網</td><td>把 server 加入 Tailscale，親友裝 client 即連。完全不用對外 IP、SSL。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">推薦做法</span>
+      <p><strong>Tailscale 主要 + 公網域備用</strong>。Tailscale 給日常親友局用，安全又快速；公網域給「想隨手秀給朋友」的場合。</p>
+    </div>
+
+    <h3 class="sub">CI/CD 與部署流程</h3>
+    <p>親友規模不需要 GitHub Actions 自動部署，但最低自動化還是有：</p>
+    <pre><code><span class="json-comment">#!/bin/bash</span>
+set -e
+
+cd /opt/ptcg && git pull origin main
+
+docker compose build backend frontend
+docker compose up -d backend frontend caddy
+
+sleep <span class="json-num">5</span>
+
+curl -fsS https://ptcg.example.com/api/health || {
+    echo <span class="json-str">"Health check failed!"</span>
+    exit <span class="json-num">1</span>
+}
+
+echo <span class="json-str">"Deploy complete."</span></code></pre>
+
+    <p><strong>回滾策略</strong>：用 git tag 標記版本，部署失敗時 <code>git checkout v1.2.3 && ./deploy.sh</code>。</p>
+
+    <h3 class="sub">資料備份策略</h3>
+    <ul>
+      <li><strong>Postgres 自動備份</strong>：每天凌晨 cron 跑 pg_dump，gzip 壓縮，保留 30 天。</li>
+      <li><strong>異地備份</strong>：rclone 同步到 Backblaze B2（每月 USD 0.005/GB）或第二台 VPS。</li>
+      <li><strong>Redis 不需備份</strong>：對局狀態本來就短暫的。AOF 處理服務重啟恢復。</li>
+      <li><strong>卡圖不需備份</strong>：可從爬蟲重新抓。但備份在 B2 也只有幾 GB。</li>
+    </ul>
+
+    <h3 class="sub">監控與告警</h3>
+    <p>親友規模不需要 Prometheus + Grafana 大套裝，最低觀察必備：</p>
+    <ul>
+      <li><strong>UptimeRobot</strong>：免費，監控 /api/health 每 5 分鐘 ping，掛掉時 Email/Telegram 通知。</li>
+      <li><strong>日誌</strong>：Docker 預設 json-file driver 已夠。<code>docker compose logs -f</code> 看即時。</li>
+      <li><strong>Sentry</strong>：免費 tier (5K events/month)，抓未捕捉異常。對個人專案價值極高。</li>
+      <li><strong>進階</strong>：Loki + Grafana 兩個 docker compose 服務，但一開始不必。</li>
+    </ul>
+
+    <h3 class="sub">安全強化清單</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">最低限度安全措施</div>
+      <table class="decision-table">
+        <thead><tr><th>層級</th><th>措施</th></tr></thead>
+        <tbody>
+          <tr><td>Server</td><td>ufw 防火牆只開 22/80/443、SSH 只允許金鑰、停 password、改 port</td></tr>
+          <tr><td>Server</td><td>fail2ban 封 brute force、unattended-upgrades 自動 apt 更新</td></tr>
+          <tr><td>應用</td><td>環境變數放 .env，永遠不 commit；WebSocket 速率限制；CORS 限制；Pydantic 驗證所有輸入</td></tr>
+          <tr><td>資料庫</td><td>Postgres 不對外暴露 port；Redis 設密碼；備份檔加密儲存</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">運營成本估算</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">月費總和</div>
+      <table class="decision-table">
+        <thead><tr><th>項目</th><th>成本 USD</th></tr></thead>
+        <tbody>
+          <tr><td>VPS (DigitalOcean 4GB)</td><td>24</td></tr>
+          <tr><td>網域</td><td>1（年費攤月）</td></tr>
+          <tr><td>Backblaze B2 備份</td><td>0.5</td></tr>
+          <tr><td>Tailscale</td><td>免費</td></tr>
+          <tr><td>Cloudflare DNS</td><td>免費</td></tr>
+          <tr><td>UptimeRobot</td><td>免費</td></tr>
+          <tr><td>Sentry</td><td>免費 (free tier)</td></tr>
+          <tr><td><strong>總計</strong></td><td><strong>約 26 / 月</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>每年約 USD 300。一個興趣專案能讓親友圈一直玩，這成本完全合理。</p>
+
+    <h3 class="sub">生產上線檢查清單</h3>
+    <p>正式對外之前的最後一輪檢查：</p>
+    <pre><code>□ HTTPS 憑證正常、自動續期已驗證
+□ DNS 解析正確（包含 IPv6 如有）
+□ Postgres 與 Redis 不對外暴露
+□ 環境變數都從 .env 讀，無硬編碼密碼
+□ 卡圖 CDN 快取 header 正確
+□ /api/health 端點存活
+□ WebSocket 在 HTTPS (wss) 下能連
+□ 備份腳本已 cron、能還原驗證過
+□ UptimeRobot 已加監控
+□ Sentry 已收到第一筆 test event
+□ SSH 金鑰登入、密碼登入已關
+□ ufw 防火牆規則生效
+□ 速率限制能擋住 100 req/s 攻擊
+□ 第一場端到端對戰能完整跑完</code></pre>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">最後一步</span>
+      <p>打勾全部過 → 邀請第一個親友來玩。</p>
+    </div>
+  </section>
+
+  <div class="chapter-divider">
+    <div class="line"></div>
+    <div class="ornament">◆ ◆ ◆</div>
+    <div class="line"></div>
+  </div>
+
   <!-- ============= 附錄 ============= -->
   <section class="chapter" id="decisions">
     <div class="chapter-header">
@@ -2720,6 +3418,16 @@ function preloadDeckImages(deckCardIds) {
           <tr><td>卡圖來源</td><td>爬蟲下載到本地 static</td></tr>
           <tr><td>動畫策略</td><td>Event-driven pipeline，inter-event delay 控制節奏</td></tr>
           <tr><td>前端輸入模型</td><td>狀態機（idle / selecting / awaiting_server）</td></tr>
+          <tr><td>DSL 編寫流程</td><td>三段式 pipeline：LLM 草稿 → 自動驗證 → 人工審查</td></tr>
+          <tr><td>LLM 路由策略</td><td>複雜卡用最強模型、簡單卡用次一級省成本</td></tr>
+          <tr><td>專案總時程</td><td>全職 6 個月、業餘 12-18 個月</td></tr>
+          <tr><td>執行階段劃分</td><td>4 phase：資料層、引擎、能玩、好玩</td></tr>
+          <tr><td>部署架構</td><td>單機 VPS + Docker Compose 五服務</td></tr>
+          <tr><td>VPS 供應商</td><td>DigitalOcean Singapore 或 Linode Tokyo</td></tr>
+          <tr><td>反向代理</td><td>Caddy（自動 Let's Encrypt SSL）</td></tr>
+          <tr><td>網域策略</td><td>Tailscale 內網主用 + 公網域備用</td></tr>
+          <tr><td>監控</td><td>UptimeRobot + Sentry（皆免費 tier）</td></tr>
+          <tr><td>每月運營成本</td><td>約 USD 26</td></tr>
         </tbody>
       </table>
     </div>
@@ -2735,15 +3443,15 @@ function preloadDeckImages(deckCardIds) {
     <div class="callout callout-pending">
       <span class="callout-label">資料層待決</span>
       <ol>
-        <li><strong>DSL 編寫工作流</strong>：是純人工撰寫 effect_code，還是設計半自動工具（從 effect_text 用 LLM 提案、人工修正）？M4 約 100 張的工作量人工可承受，更大規模需要工具支援。</li>
-        <li><strong>效果文字的多版本處理</strong>：同名卡在不同擴充包重印時，效果文字有時會微調。是否需要版本欄位？</li>
+        <li><strong>效果文字的多版本處理</strong>：同名卡在不同擴充包重印時，效果文字有時微調。是否需要版本欄位？</li>
+        <li><strong>退環境卡的處理</strong>：第二階段擴充到全卡池時，退環境的卡是否要做引擎支援？</li>
       </ol>
     </div>
 
     <div class="callout callout-pending">
       <span class="callout-label">引擎與伺服器層待決</span>
       <ol>
-        <li><strong>對局時間限制</strong>：是否要加 chess clock（每玩家固定思考時間）？親友局可能不需要，但加了能避免「忘記回合導致 idle timeout」。</li>
+        <li><strong>對局時間限制</strong>：是否要加 chess clock？親友局可能不需要，但加了能避免「忘記回合導致 idle timeout」。</li>
         <li><strong>對局結束後的存檔</strong>：是否所有對局都存一份 replay 到 PostgreSQL？個人專案大概夠用很久，但會有累積成本。</li>
         <li><strong>觀戰加入時機</strong>：嚴格僅對局結束後可觀戰、還是允許隨時加入但延遲視角？</li>
       </ol>
@@ -2753,9 +3461,8 @@ function preloadDeckImages(deckCardIds) {
       <span class="callout-label">前端與部署待決</span>
       <ol>
         <li><strong>音效與配樂</strong>：要不要加？親友局加了有趣味，但要找版權安全的素材。</li>
-        <li><strong>部署目標</strong>：自架 VPS、Cloudflare Tunnel、還是只在內網跑？</li>
-        <li><strong>HTTPS 與網域</strong>：自簽憑證 + Tailscale 比申請正式網域簡單，可考慮。</li>
         <li><strong>玩家帳號</strong>：是否需要註冊系統？親友圈用固定 token + 暱稱可能就夠。</li>
+        <li><strong>Web 審查 UI 的範圍</strong>：是否值得花一週做完整的審查介面，還是用更簡單的 CLI 工具就好？</li>
       </ol>
     </div>
   </section>
@@ -2768,6 +3475,11 @@ function preloadDeckImages(deckCardIds) {
     </div>
 
     <div class="changelog">
+      <div class="changelog-entry">
+        <div class="changelog-date">2026-04-26</div>
+        <div class="changelog-ver">v0.8</div>
+        <div class="changelog-desc">第八輪：完整撰寫第 11 章 DSL 編寫工作流（三段式 pipeline、LLM Prompt 設計、Linter、Auto Test、Web 審查 UI、成本估算）；第 12 章 整體 Roadmap（依賴關係圖、關鍵路徑、4 個 phase 推進、6 個月總時程）；第 13 章 部署架構（Docker Compose、Caddy 自動 HTTPS、Tailscale 內網、備份監控、月費 USD 26）。設計文件至此完整覆蓋從資料層到生產上線。</div>
+      </div>
       <div class="changelog-entry">
         <div class="changelog-date">2026-04-26</div>
         <div class="changelog-ver">v0.7</div>
