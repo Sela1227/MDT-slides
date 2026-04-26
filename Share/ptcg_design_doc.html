@@ -763,6 +763,13 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
   </div>
 
   <div class="toc-section">
+    <div class="toc-section-label">第五部 · 實作</div>
+    <ul class="toc-list">
+      <li><a href="#implementation"><span class="num">14</span>實作日誌 · Phase 1 <span class="status-tag status-done">已完成</span></a></li>
+    </ul>
+  </div>
+
+  <div class="toc-section">
     <div class="toc-section-label">附錄</div>
     <ul class="toc-list">
       <li><a href="#decisions">關鍵決策一覽</a></li>
@@ -772,9 +779,9 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
   </div>
 
   <div class="toc-meta">
-    <div><span class="label">版本：</span>v0.8</div>
+    <div><span class="label">版本：</span>v0.9</div>
     <div><span class="label">更新：</span>2026-04-26</div>
-    <div><span class="label">階段：</span>設計完整，可執行</div>
+    <div><span class="label">階段：</span>Phase 1 完成</div>
   </div>
 </aside>
 
@@ -801,20 +808,20 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
         <span class="val">PostgreSQL + Python</span>
       </div>
       <div class="item">
-        <span class="lbl">Timeline</span>
-        <span class="val">~6 個月（全職）</span>
+        <span class="lbl">Phase 1</span>
+        <span class="val">✓ 完成</span>
       </div>
       <div class="item">
-        <span class="lbl">Monthly Cost</span>
-        <span class="val">USD ~26</span>
+        <span class="lbl">Cards in DB</span>
+        <span class="val">120 張 M4</span>
       </div>
       <div class="item">
         <span class="lbl">Chapters</span>
-        <span class="val">13 + 3 附錄</span>
+        <span class="val">14 + 3 附錄</span>
       </div>
       <div class="item">
-        <span class="lbl">Status</span>
-        <span class="val">設計完整</span>
+        <span class="lbl">Next</span>
+        <span class="val">DSL 工作流 / 引擎 MVP</span>
       </div>
     </div>
   </header>
@@ -1272,8 +1279,13 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
   <section class="chapter" id="scraper">
     <div class="chapter-header">
       <span class="chapter-num">Chapter 06</span>
-      <h2 class="chapter-title">爬蟲架構</h2>
-      <p class="chapter-lead">三步分離、失敗可重跑。先打 M4 PoC、再橫掃整個 Standard 卡池。OCR 當備胎。</p>
+      <h2 class="chapter-title">爬蟲架構 <span class="status-tag status-done">已實作</span></h2>
+      <p class="chapter-lead">三步分離、失敗可重跑。M4 PoC 完成，120 張卡入庫零警告。OCR 備胎沒派上用場。</p>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-label">實作後更新</span>
+      <p>實際跑完 M4 後有兩個重要發現：(1) 不需要 Playwright，<strong>純 httpx + BeautifulSoup 就夠</strong>，因為列表頁的 SSR 階段已包含所需資訊；(2) 解析者夢寐以求的 HTML 結構，所有欄位都有明確 CSS class。完整實作日誌見 <a href="#implementation">第 14 章</a>。</p>
     </div>
 
     <h3 class="sub">技術選型</h3>
@@ -3374,6 +3386,198 @@ echo <span class="json-str">"Deploy complete."</span></code></pre>
     <div class="line"></div>
   </div>
 
+  <!-- ============= Chapter 14 ============= -->
+  <section class="chapter" id="implementation">
+    <div class="chapter-header">
+      <span class="chapter-num">Chapter 14</span>
+      <h2 class="chapter-title">實作日誌 · Phase 1</h2>
+      <p class="chapter-lead">2026-04-26 一個下午，從零到 PostgreSQL 滿載 120 張 M4 卡片。設計與實作雙線並進，記錄真實踩過的坑。</p>
+    </div>
+
+    <h3 class="sub">完成範圍</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">Phase 1 實際產出</div>
+      <table class="decision-table">
+        <thead><tr><th>項目</th><th>狀態</th></tr></thead>
+        <tbody>
+          <tr><td>Step 1 列表爬蟲</td><td>✓ 抓出 M4 全部 120 張 detail URL</td></tr>
+          <tr><td>Step 2 詳情解析</td><td>✓ 7/7 單元測試通過、零警告抓完 120 張</td></tr>
+          <tr><td>Step 3 寫入資料庫</td><td>✓ 96 寶可夢 + 21 訓練家 + 3 能量入庫</td></tr>
+          <tr><td>Step 4 卡圖下載</td><td>✓ 120 張 PNG 全數成功</td></tr>
+          <tr><td>Step 5 圖檔關聯</td><td>✓ local_image_path 寫回 DB，零 missing</td></tr>
+          <tr><td>PostgreSQL 17.9</td><td>✓ 透過 Homebrew 安裝完成、服務跑著</td></tr>
+          <tr><td>Schema DDL</td><td>✓ 7 enum + 7 table + 11 index + 1 view</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">真實時間花費</h3>
+    <p>原本 Roadmap 估 Phase 1 約 3 週，<strong>實際一個下午跑完</strong>。但要說明這個對比有點失真：</p>
+    <ul>
+      <li>有 LLM 全程協作幫寫程式、抓 bug、設計流程</li>
+      <li>單一擴充包（M4）規模小，全 H/I/J 卡池會慢得多</li>
+      <li>沒做 effect_code 編碼工作流（那是另一段 1.5 週）</li>
+      <li>Phase 2 之後的引擎工作量無法這樣壓縮</li>
+    </ul>
+
+    <h3 class="sub">關鍵發現</h3>
+
+    <h4 class="subsub">發現 1：行銷頁說 83 張，實際資料庫 120 張</h4>
+    <p>M4 行銷頁寫「全 83 種＋？？？」，實際爬蟲拉到 120 張。多出來的 37 張是高稀有度版本（SR / SAR / UR / AR）——同一張卡的不同插畫版本。卡號規則：</p>
+    <ul>
+      <li><strong>001/083 ~ 083/083</strong>：主卡池公開卡（detail_id 18421-18503，連續）</li>
+      <li><strong>084/083 ~ 120/083</strong>：高稀有度版本（detail_id 18521-18557，連續）</li>
+      <li>中間 18504-18520 跳號 17 個 → 是其他擴充包/特典卡</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <span class="callout-label">設計啟示</span>
+      <p>同一隻寶可夢可能有多筆卡片紀錄（普通版 + SR 版 + SAR 版）。<strong>不能用名稱當主鍵</strong>，必須用「擴充包-卡號」。這驗證了我們 Schema 設計時用 <code>(expansion_id, collector_number)</code> 做唯一鍵的正確性。</p>
+    </div>
+
+    <h4 class="subsub">發現 2：HTML 結構規律到不像話</h4>
+    <p>原本擔心解析會很複雜，實際上官方台版資料庫的 HTML 是「教科書級的乾淨」：</p>
+    <ul>
+      <li>所有欄位有明確 CSS class（<code>.skillName</code>、<code>.skillCost</code>、<code>.skillDamage</code>...）</li>
+      <li>能量類型用 <code>&lt;img src=".../Grass.png"&gt;</code> 表示，11 種屬性對照表完全一致</li>
+      <li>進化關係用 <code>.evolutionStep</code> 巢狀清單，<code>.active</code> 標記當前卡</li>
+      <li>就連 typo（<code>mainInfomation</code> 少一個 r）都全站一致</li>
+    </ul>
+    <p>所以解析器只要 <code>BeautifulSoup + CSS selector</code> 就搞定，不需要 Playwright 模擬瀏覽器。</p>
+
+    <h4 class="subsub">發現 3：特性與招式藏在同一個容器</h4>
+    <p>這是最容易出 bug 的地方。寶可夢的「特性」和「招式」DOM 結構幾乎一樣（都用 <code>.skill &gt; .skillHeader &gt; .skillName</code>），唯一差別：</p>
+    <ul>
+      <li><strong>招式</strong>：skillName 是純名字、有 skillCost 與 skillDamage</li>
+      <li><strong>特性</strong>：skillName 前綴 <code>[特性]</code>、skillCost 與 skillDamage 為空</li>
+    </ul>
+    <p>判斷依據是「skillName 是否以 <code>[特性]</code> 開頭」。第一版解析器把超級甲賀忍蛙 ex 的特性「必殺手裡劍」誤判為招式，看完真實 HTML 才修對。</p>
+
+    <h4 class="subsub">發現 4：Python 的 falsy 過濾陷阱</h4>
+    <p>第一版 <code>to_dict()</code> 寫成：</p>
+    <pre><code>d = {k: v for k, v in self.__dict__.items() if v is not <span class="json-bool">None</span> and v != [] and v != <span class="json-bool">False</span>}</code></pre>
+    <p>這個 <code>v != False</code> 把 <code>is_basic_energy = False</code>（特殊能量卡）整個過濾掉了，因為 Python 的 <code>0 == False</code>、<code>False == False</code>。導致 3 張特殊能量卡的關鍵欄位消失。</p>
+    <p>修正：明確處理 <code>None</code>、空 <code>list</code>、空 <code>dict</code>，<strong>bool 一律保留</strong>。並加回歸測試 <code>test_to_dict_keeps_false</code>。</p>
+
+    <h3 class="sub">資料品質驗收</h3>
+    <p>跑完所有步驟後的零警告紀錄：</p>
+    <pre><code>寶可夢沒 HP:        0 張
+寶可夢沒屬性:       0 張
+寶可夢沒招式:       0 張
+訓練家沒效果文字:   0 張
+進化卡沒進化來源:   0 張 / 共 49 張
+卡圖下載失敗:       0 張
+卡圖過小:           0 張</code></pre>
+    <p>49 張進化卡（35 張 1 階 + 14 張 2 階）<strong>全部正確抓到 evolves_from</strong>——連高稀有度的 SAR/UR 進化卡都沒漏。</p>
+
+    <h3 class="sub">技術細節落地</h3>
+
+    <div class="spec-card">
+      <div class="spec-card-label">Phase 1 實作的工具棧</div>
+      <table class="decision-table">
+        <thead><tr><th>用途</th><th>選擇</th></tr></thead>
+        <tbody>
+          <tr><td>Python</td><td>3.14.2（python.org installer 安裝）</td></tr>
+          <tr><td>套件管理</td><td>pip + venv（per-project 虛擬環境）</td></tr>
+          <tr><td>HTTP 客戶端</td><td>httpx（非同步友善）</td></tr>
+          <tr><td>HTML 解析</td><td>BeautifulSoup4 + lxml</td></tr>
+          <tr><td>進度顯示</td><td>rich</td></tr>
+          <tr><td>失敗重試</td><td>tenacity</td></tr>
+          <tr><td>資料模型</td><td>dataclass（非 Pydantic，輕量為主）</td></tr>
+          <tr><td>PostgreSQL 客戶端</td><td>psycopg 3.3（不是 2.x）</td></tr>
+          <tr><td>套件管理工具</td><td>Homebrew 5.1.7</td></tr>
+          <tr><td>資料庫</td><td>PostgreSQL 17.9（透過 Homebrew）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">資料庫圖形化工具</h3>
+    <p>PostgreSQL 命令列介面對非開發背景使用者不友善。三個選擇：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">DB GUI 工具比較</div>
+      <table class="decision-table">
+        <thead><tr><th>工具</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DBeaver</strong></td><td>免費、跨平台、功能完整、業界主流。<code>brew install --cask dbeaver-community</code></td></tr>
+          <tr><td>TablePlus</td><td>Mac 原生、介面最美。免費版有限制（同時開兩分頁、查詢限 200 列），完整版 USD 89。</td></tr>
+          <tr><td>pgAdmin</td><td>PostgreSQL 官方推出。功能最齊全但介面較重，個人專案不必。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">推薦</span>
+      <p><strong>DBeaver</strong>——免費完整、雙擊資料表能像 Excel 瀏覽編輯、SQL 編輯器有自動完成、ER 圖可視化。連線設定：Host <code>localhost</code>、Port <code>5432</code>、Database <code>ptcg</code>、Username <code>sela</code>（你的 Mac 帳號）、密碼留空。</p>
+    </div>
+
+    <h3 class="sub">踩過的坑與教訓</h3>
+
+    <h4 class="subsub">坑 1：Mac 沒有 python，只有 python3</h4>
+    <p>macOS 從 12.3 起移除預設 <code>python</code> 命令。所有指令裡 <code>python</code> 都要改成 <code>python3</code>，或者進入 venv 後再用 <code>python</code>（venv 內的 python 命令會指向 3.x）。</p>
+
+    <h4 class="subsub">坑 2：沙箱環境網路有 allowlist</h4>
+    <p>Claude 的沙箱環境只允許特定域名（pypi、github 等），<code>asia.pokemon-card.com</code> 不在列。要實測爬蟲必須在使用者本機跑。設計這層架構時就要意識到「程式邏輯能在沙箱驗證、實際資料抓取要走本機」。</p>
+
+    <h4 class="subsub">坑 3：Markdown 處理會破壞貼上的 SQL</h4>
+    <p>從聊天介面複製含有 <code>p.is_mega</code>、<code>c.id</code> 這類「dot 接小寫」的內容貼進終端機，會被 markdown 處理成 <code>[p.is](http://p.is)_mega</code> 這類連結語法。</p>
+    <p><strong>解法</strong>：永遠走「下載檔案 → mv 到專案目錄」的流程，不要用 cat heredoc 貼大段內容。如果一定要貼，用 <code>nano</code> 編輯器（純文字介面，不解析 markdown）。</p>
+
+    <h4 class="subsub">坑 4：venv 啟動但 pip 跑錯地方</h4>
+    <p>在 venv 啟動的 shell 裡 <code>pip install</code>，套件可能還是裝到系統 Python（如果 PATH 設定有問題）。</p>
+    <p><strong>解法</strong>：用 <code>python -m pip install ...</code>——強制用「當前 python 對應的 pip」，跟 PATH 無關。這是最可靠的寫法。</p>
+
+    <h4 class="subsub">坑 5：psql 的 pager 會卡住</h4>
+    <p><code>\dt</code>、<code>\di</code> 等指令會用 less-like pager 顯示，畫面卡在 <code>:</code> 提示。要按 <code>q</code> 才能離開。</p>
+    <p><strong>一勞永逸</strong>：<code>echo "\\pset pager off" &gt;&gt; ~/.psqlrc</code> 把 pager 關掉。</p>
+
+    <h3 class="sub">輸出檔案清單</h3>
+    <pre><code>~/Documents/Python/PTCG/
+├── db/
+│   └── 001_schema.sql              <span class="json-comment"># DDL（7 enum + 7 table + 11 index + 1 view）</span>
+├── scraper/
+│   ├── venv/                       <span class="json-comment"># Python 虛擬環境</span>
+│   ├── output/
+│   │   ├── m4_index.json           <span class="json-comment"># Step 1 產出（120 張 detail URL）</span>
+│   │   └── m4_details.json         <span class="json-comment"># Step 2 產出（120 張完整解析）</span>
+│   ├── card-images/
+│   │   ├── M4-001.png              <span class="json-comment"># Step 4 下載</span>
+│   │   ├── ...
+│   │   └── M4-120.png
+│   ├── samples/                    <span class="json-comment"># Step 2 開發時用的 6 張 HTML 樣本</span>
+│   ├── scrape_m4_list.py           <span class="json-comment"># Step 1 主程式</span>
+│   ├── parse_detail.py             <span class="json-comment"># Step 2 解析器</span>
+│   ├── step2_scrape_details.py     <span class="json-comment"># Step 2 主程式</span>
+│   ├── step3_load_to_db.py         <span class="json-comment"># Step 3 寫入 DB</span>
+│   ├── step4_download_images.py    <span class="json-comment"># Step 4 下載卡圖</span>
+│   ├── step5_link_images.py        <span class="json-comment"># Step 5 圖檔關聯</span>
+│   ├── test_parser.py              <span class="json-comment"># Step 1 解析測試</span>
+│   ├── test_parse_detail.py        <span class="json-comment"># Step 2 解析測試（7 個 case）</span>
+│   ├── requirements.txt
+│   └── README.md</code></pre>
+
+    <h3 class="sub">下一步路線選擇</h3>
+    <p>Phase 1 完成後，三個方向可選（建議順序 B → A → C）：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">Phase 2 起點</div>
+      <table class="decision-table">
+        <thead><tr><th>選項</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A. 擴大資料</strong></td><td>把 H/I/J 全 Standard 卡池都抓進來。純複用流水線，1-2 天搞定。讓未來引擎開發時有完整素材。</td></tr>
+          <tr><td><strong>B. DSL 編寫工具</strong></td><td>建 LLM pipeline 從 effect_text 自動產出 effect_code。為現役主流牌組的 100-200 張卡編 DSL。是引擎開發的準備工作。</td></tr>
+          <tr><td><strong>C. 引擎核心 MVP</strong></td><td>實作 GameState、Action Validator、最簡單傷害結算。跑「兩隻寶可夢純打傷害」demo。但需要先有少量 effect_code 才能測，所以最好搭配 B。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="chapter-divider">
+    <div class="line"></div>
+    <div class="ornament">◆ ◆ ◆</div>
+    <div class="line"></div>
+  </div>
+
   <!-- ============= 附錄 ============= -->
   <section class="chapter" id="decisions">
     <div class="chapter-header">
@@ -3428,6 +3632,15 @@ echo <span class="json-str">"Deploy complete."</span></code></pre>
           <tr><td>網域策略</td><td>Tailscale 內網主用 + 公網域備用</td></tr>
           <tr><td>監控</td><td>UptimeRobot + Sentry（皆免費 tier）</td></tr>
           <tr><td>每月運營成本</td><td>約 USD 26</td></tr>
+          <tr><td>Phase 1 完成日</td><td>2026-04-26</td></tr>
+          <tr><td>Python 版本</td><td>3.14.2（Mac python.org installer）</td></tr>
+          <tr><td>HTTP 客戶端</td><td>httpx（不是 requests，非同步友善）</td></tr>
+          <tr><td>HTML 解析</td><td>BeautifulSoup4 + lxml（不需要 Playwright）</td></tr>
+          <tr><td>PostgreSQL 客戶端</td><td>psycopg 3.3（不是 2.x）</td></tr>
+          <tr><td>資料模型</td><td>dataclass（輕量）而非 Pydantic</td></tr>
+          <tr><td>卡圖儲存策略</td><td>本地檔案系統 + DB 存相對路徑</td></tr>
+          <tr><td>卡圖檔名規則</td><td>{card_id}.png（如 M4-001.png）</td></tr>
+          <tr><td>DB GUI 工具</td><td>DBeaver Community（免費）</td></tr>
         </tbody>
       </table>
     </div>
@@ -3443,16 +3656,18 @@ echo <span class="json-str">"Deploy complete."</span></code></pre>
     <div class="callout callout-pending">
       <span class="callout-label">資料層待決</span>
       <ol>
-        <li><strong>效果文字的多版本處理</strong>：同名卡在不同擴充包重印時，效果文字有時微調。是否需要版本欄位？</li>
+        <li><strong>能量類型結構化</strong>：目前 energy_cards.provides 只存 raw text，未來要解析成 <code>{"fire": 1}</code> 這類結構（從卡名「燃料【火】能量」抽取屬性）。</li>
+        <li><strong>Rarity 欄位</strong>：DDL 有 rarity 欄位但 Step 3 沒填。實際每張卡的稀有度（C / U / R / SR / SAR / UR）需要從 detail 頁多抓一個欄位。</li>
         <li><strong>退環境卡的處理</strong>：第二階段擴充到全卡池時，退環境的卡是否要做引擎支援？</li>
+        <li><strong>圖鑑編號重複</strong>：同一隻寶可夢的不同卡有同樣的 pokedex_number，這沒問題，但要確認查詢時不會誤判。</li>
       </ol>
     </div>
 
     <div class="callout callout-pending">
       <span class="callout-label">引擎與伺服器層待決</span>
       <ol>
-        <li><strong>對局時間限制</strong>：是否要加 chess clock？親友局可能不需要，但加了能避免「忘記回合導致 idle timeout」。</li>
-        <li><strong>對局結束後的存檔</strong>：是否所有對局都存一份 replay 到 PostgreSQL？個人專案大概夠用很久，但會有累積成本。</li>
+        <li><strong>對局時間限制</strong>：是否要加 chess clock？親友局可能不需要。</li>
+        <li><strong>對局結束後的存檔</strong>：是否所有對局都存一份 replay 到 PostgreSQL？</li>
         <li><strong>觀戰加入時機</strong>：嚴格僅對局結束後可觀戰、還是允許隨時加入但延遲視角？</li>
       </ol>
     </div>
@@ -3465,6 +3680,14 @@ echo <span class="json-str">"Deploy complete."</span></code></pre>
         <li><strong>Web 審查 UI 的範圍</strong>：是否值得花一週做完整的審查介面，還是用更簡單的 CLI 工具就好？</li>
       </ol>
     </div>
+
+    <div class="callout callout-pending">
+      <span class="callout-label">Phase 2 起點選擇</span>
+      <ol>
+        <li><strong>路線決定</strong>：要先做 A（擴大資料）/ B（DSL 工作流）/ C（引擎 MVP）？建議 B → A → C。</li>
+        <li><strong>LLM API 選擇</strong>：Claude / GPT / Gemini？或本地模型？影響 DSL 工作流成本。</li>
+      </ol>
+    </div>
   </section>
 
   <section class="chapter" id="changelog">
@@ -3475,6 +3698,11 @@ echo <span class="json-str">"Deploy complete."</span></code></pre>
     </div>
 
     <div class="changelog">
+      <div class="changelog-entry">
+        <div class="changelog-date">2026-04-26</div>
+        <div class="changelog-ver">v0.9</div>
+        <div class="changelog-desc">第九輪：Phase 1 真實實作完成。新增第 14 章「實作日誌」記錄整個下午的爬蟲開發、PostgreSQL 安裝、資料入庫、卡圖下載、圖檔關聯。120 張 M4 卡片完整入庫，零警告零錯誤。新增 5 個踩坑紀錄與 4 個關鍵發現。附錄 A 補上實作確認的決策（Python 3.14、psycopg 3、DBeaver 等）。附錄 B 加入 Phase 2 起點選擇等新待決事項。</div>
+      </div>
       <div class="changelog-entry">
         <div class="changelog-date">2026-04-26</div>
         <div class="changelog-ver">v0.8</div>
