@@ -747,9 +747,9 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
     <div class="toc-section-label">第三部 · 引擎層</div>
     <ul class="toc-list">
       <li><a href="#gamestate"><span class="num">07</span>遊戲狀態模型</a></li>
-      <li><a href="#executor"><span class="num">08</span>DSL 執行引擎 <span class="status-tag status-pending">待寫</span></a></li>
-      <li><a href="#server"><span class="num">09</span>伺服器架構 <span class="status-tag status-pending">待寫</span></a></li>
-      <li><a href="#frontend"><span class="num">10</span>前端對戰 UI <span class="status-tag status-pending">待寫</span></a></li>
+      <li><a href="#executor"><span class="num">08</span>DSL 執行引擎 <span class="status-tag status-done">已寫</span></a></li>
+      <li><a href="#server"><span class="num">09</span>伺服器架構 <span class="status-tag status-done">已寫</span></a></li>
+      <li><a href="#frontend"><span class="num">10</span>前端對戰 UI <span class="status-tag status-done">已寫</span></a></li>
     </ul>
   </div>
 
@@ -763,9 +763,9 @@ section.chapter:nth-child(3) { animation-delay: 0.15s; }
   </div>
 
   <div class="toc-meta">
-    <div><span class="label">版本：</span>v0.4</div>
+    <div><span class="label">版本：</span>v0.7</div>
     <div><span class="label">更新：</span>2026-04-26</div>
-    <div><span class="label">階段：</span>引擎設計中</div>
+    <div><span class="label">階段：</span>設計完整，待實作</div>
   </div>
 </aside>
 
@@ -1588,41 +1588,1086 @@ state = (
     <div class="line"></div>
   </div>
 
-  <!-- ============= Chapter 08-10 預留 ============= -->
+  <!-- ============= Chapter 08 ============= -->
   <section class="chapter" id="executor">
     <div class="chapter-header">
       <span class="chapter-num">Chapter 08</span>
-      <h2 class="chapter-title">DSL 執行引擎 <span class="status-tag status-pending">下一輪</span></h2>
-      <p class="chapter-lead">事件總線、卡片效果註冊、攻擊結算的完整流程、特殊規則的處理。</p>
+      <h2 class="chapter-title">DSL 執行引擎</h2>
+      <p class="chapter-lead">把資料庫裡的 effect_code 真正跑起來。引擎是純函式：給 GameState + Action + RNG，產出新 GameState + Event 流。</p>
     </div>
-    <div class="callout callout-pending">
-      <span class="callout-label">尚待設計</span>
-      <p>本章將涵蓋：事件總線設計、Effect Executor 解讀 DSL 的流程、攻擊結算（弱點/抵抗/狀態）、觸發器衝突仲裁、無限連鎖防護。</p>
+
+    <h3 class="sub">引擎的職責邊界</h3>
+    <p>釘清楚「該管什麼、不該管什麼」，避免後面職責蔓延。</p>
+    <div class="compare">
+      <div class="compare-col good">
+        <div class="compare-label">引擎該管</div>
+        <ul style="margin: 0;">
+          <li>接收 PlayerAction，驗證合法性</li>
+          <li>解讀 effect_code 產生 Events</li>
+          <li>把 Events 套用到 GameState</li>
+          <li>維護階段流程</li>
+          <li>處理觸發器與連鎖反應</li>
+          <li>寫死規則：弱點/抵抗、狀態異常結算、勝負判定</li>
+        </ul>
+      </div>
+      <div class="compare-col bad">
+        <div class="compare-label">引擎不該管</div>
+        <ul style="margin: 0;">
+          <li>WebSocket 通訊（伺服器層）</li>
+          <li>視角化序列化（伺服器層）</li>
+          <li>隨機數源（接受注入的 RNG）</li>
+          <li>玩家匹配、帳號（外圍系統）</li>
+          <li>UI 動畫（前端）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">設計目標</span>
+      <p>引擎是<strong>純函式式</strong>的：給定 GameState + PlayerAction + RNG seed，產出新 GameState + Event 流。沒有外部依賴、沒有副作用、易於測試、易於重播。</p>
+    </div>
+
+    <h3 class="sub">整體架構</h3>
+    <div class="tree">PlayerAction (玩家動作)
+      │
+      ▼
+┌──────────────────────────┐
+│  Action Validator        │  檢查動作在當前 phase 合法
+│  (合法性檢查)            │  能量夠？支援者用過？
+└─────────┬────────────────┘
+          │ pass
+          ▼
+┌──────────────────────────┐
+│  Action Resolver         │  把 PlayerAction 翻譯成
+│  (動作翻譯)              │  「要執行哪段 effect_code」
+└─────────┬────────────────┘
+          │
+          ▼
+┌──────────────────────────┐
+│  Effect Executor         │  解讀 DSL，產生 Events
+│  (DSL 解讀)              │  ← 核心
+└─────────┬────────────────┘
+          │
+          ▼
+┌──────────────────────────┐
+│  Event Bus               │  事件分派、觸發監聽器、
+│  (事件總線)              │  連鎖反應
+└─────────┬────────────────┘
+          │
+          ▼
+┌──────────────────────────┐
+│  State Reducer           │  把 Events 套用到 GameState
+│  (狀態更新)              │  產出新的 GameState
+└─────────┬────────────────┘
+          │
+          ▼
+┌──────────────────────────┐
+│  Phase Manager           │  檢查階段轉換條件
+│  (流程控制)              │  例：傷害結算後是否擊倒
+└─────────┬────────────────┘
+          │
+          ▼
+new GameState + Event Stream</div>
+
+    <h3 class="sub">Action Validator：合法性檢查</h3>
+    <p>玩家送來的動作第一站，<strong>所有動作都必須通過驗證</strong>。分通用檢查與動作專屬檢查兩層。</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">通用檢查</div>
+      <ul style="margin: 0;">
+        <li>是這個玩家的回合？</li>
+        <li>當前 phase 允不允許這個動作？</li>
+        <li>玩家身份正確、不是冒充？</li>
+      </ul>
+    </div>
+
+    <pre><code><span class="json-comment"># 動作專屬檢查範例</span>
+EvolveAction (進化):
+  - 進化卡在手牌？
+  - 場上有對應的進化來源？
+  - 那隻寶可夢這回合不是剛擺/剛進化？
+  - 不是第一回合？
+
+AttackAction (宣告攻擊):
+  - 出戰寶可夢能量符合招式需求？
+  - 沒有「不能攻擊」flag（睡眠、麻痺、剛 Mega 進化）？
+  - 不是第一回合先手？
+
+PlaySupporterAction (打出支援者):
+  - 本回合還沒打過支援者？
+  - 卡片在手牌？
+  - 不是第一回合的先手？</code></pre>
+
+    <h4 class="subsub">驗證結果結構</h4>
+    <pre><code><span class="json-key">ValidationResult</span>:
+  valid: bool
+  error_code: <span class="json-str">"ENERGY_INSUFFICIENT"</span> | <span class="json-bool">None</span>
+  error_message: <span class="json-str">"出戰寶可夢能量不足"</span> | <span class="json-bool">None</span>
+  context: { needed: <span class="json-num">2</span>, has: <span class="json-num">1</span> } | <span class="json-bool">None</span></code></pre>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">現實考量</span>
+      <p>合法的客戶端 UI 應該根本不該讓玩家發出不合法的動作（按鈕本來就會 disable）。所以伺服器收到不合法動作的<em>真實情境只有兩種</em>：客戶端有 bug，或玩家在用改造客戶端。前者開發階段抓出來，後者就是反作弊。</p>
+    </div>
+
+    <h3 class="sub">Action Resolver：動作翻譯</h3>
+    <p>通過驗證後，把<strong>玩家層級動作</strong>轉成<strong>引擎層級執行</strong>。例如收到 <code>AttackAction</code>，Resolver 從 GameState 找到 source、查資料庫拿 effect_code、建立 ExecutionContext。</p>
+
+    <h4 class="subsub">ExecutionContext：DSL 執行的環境變數</h4>
+    <pre><code><span class="json-key">ExecutionContext</span>:
+  source_instance: uuid           <span class="json-comment"># 誰發起這個效果</span>
+  source_card_id: <span class="json-str">"M4-001"</span>
+  source_player: <span class="json-str">"player_a"</span>
+  trigger_type: <span class="json-str">"on_attack"</span>
+  effect_code: { ... }            <span class="json-comment"># 要執行的 DSL</span>
+
+  <span class="json-comment"># 執行中累積的暫時資料</span>
+  chosen_targets: {}              <span class="json-comment"># 玩家做過的選擇結果</span>
+  rolled_coins: []                <span class="json-comment"># 翻過的硬幣結果</span>
+  damage_dealt: <span class="json-num">0</span>                <span class="json-comment"># 累計傷害（給後續 modifier 用）</span>
+
+  <span class="json-comment"># 連鎖追蹤</span>
+  chain_depth: <span class="json-num">0</span>                 <span class="json-comment"># 防無限連鎖</span>
+  parent_context: <span class="json-bool">None</span></code></pre>
+
+    <p>這個物件貫穿整個 effect 的執行過程。當 DSL 裡寫 <code>target: "$chosen"</code> 時，Executor 從 <code>context.chosen_targets</code> 拿值。</p>
+
+    <h3 class="sub">Effect Executor：DSL 解讀核心</h3>
+    <p>引擎最複雜的部分。每種 action 註冊一個 handler，handler 解讀參數、產生 Events、推到 Event Bus、更新 context。</p>
+
+    <pre><code><span class="json-key">class</span> EffectExecutor:
+    handlers = {
+        <span class="json-str">"damage"</span>: handle_damage,
+        <span class="json-str">"heal"</span>: handle_heal,
+        <span class="json-str">"draw_card"</span>: handle_draw_card,
+        <span class="json-str">"attach_energy"</span>: handle_attach_energy,
+        <span class="json-str">"discard_energy"</span>: handle_discard_energy,
+        <span class="json-str">"search_deck"</span>: handle_search_deck,
+        <span class="json-str">"add_status"</span>: handle_add_status,
+        <span class="json-str">"switch_active"</span>: handle_switch_active,
+        <span class="json-str">"coin_flip"</span>: handle_coin_flip,
+        <span class="json-str">"sequence"</span>: handle_sequence,
+        <span class="json-str">"if"</span>: handle_conditional,
+        <span class="json-str">"choose"</span>: handle_choose,
+        <span class="json-comment"># 對應所有 DSL action</span>
+    }
+
+    def execute(self, context, action_node):
+        action_type = action_node[<span class="json-str">"action"</span>]
+        handler = self.handlers[action_type]
+        return handler(self, context, action_node)</code></pre>
+
+    <h4 class="subsub">handle_damage：傷害處理（弱點/抵抗寫死）</h4>
+    <pre><code>def handle_damage(executor, context, action):
+    targets = resolve_target(context, action[<span class="json-str">"target"</span>])
+    base_amount = action[<span class="json-str">"amount"</span>]
+    modifiers = action.get(<span class="json-str">"modifiers"</span>, [])
+
+    <span class="json-comment"># 1. 計算修飾後的基礎傷害</span>
+    final_amount = base_amount
+    for mod in modifiers:
+        final_amount = apply_modifier(context, final_amount, mod)
+
+    events = []
+    for target in targets:
+        damage_after_wr = final_amount
+
+        <span class="json-comment"># 2. 弱點/抵抗計算（寫死規則）</span>
+        if not action.get(<span class="json-str">"ignore_weakness"</span>):
+            if target.weakness_type == context.source_pokemon.primary_type:
+                damage_after_wr *= <span class="json-num">2</span>      <span class="json-comment"># 朱&紫：弱點 ×2</span>
+
+        if not action.get(<span class="json-str">"ignore_resistance"</span>):
+            if target.resistance_type == context.source_pokemon.primary_type:
+                damage_after_wr -= <span class="json-num">30</span>     <span class="json-comment"># 朱&紫：抵抗 -30</span>
+
+        <span class="json-comment"># 3. 觸發 BEFORE_DAMAGE，讓監聽器修改傷害</span>
+        before_event = BeforeDamageEvent(...)
+        modified = executor.event_bus.emit_modifiable(before_event)
+
+        <span class="json-comment"># 4. 產生最終 DamageDealt Event</span>
+        events.append(DamageDealtEvent(
+            source=context.source_instance,
+            target=target.instance_id,
+            amount=modified.amount,
+            ...
+        ))
+
+    for ev in events:
+        executor.event_bus.dispatch(ev)
+    return events</code></pre>
+
+    <div class="callout callout-info">
+      <span class="callout-label">設計重點</span>
+      <p><strong>弱點/抵抗在引擎裡寫死</strong>，DSL 不需要描述這些。<strong>BEFORE_DAMAGE 事件可被監聽器修改</strong>——某些卡有「對方造成傷害時減 30」這類效果，本質是監聽 BeforeDamageEvent 並修改 amount。需要兩種事件：可修改的（modifiable）與不可修改的（dispatched）。</p>
+    </div>
+
+    <h4 class="subsub">handle_choose：暫停等玩家輸入</h4>
+    <pre><code>def handle_choose(executor, context, action):
+    target_pool = resolve_target(context, action[<span class="json-str">"from"</span>])
+
+    choice = PendingChoice(
+        choice_id=uuid4(),
+        awaiting_player=context.source_player,
+        type=<span class="json-str">"select_pokemon"</span>,
+        from_pool=[t.instance_id for t in target_pool],
+        count=action.get(<span class="json-str">"count"</span>, <span class="json-num">1</span>),
+        optional=action.get(<span class="json-str">"optional"</span>, <span class="json-bool">False</span>),
+        prompt=action.get(<span class="json-str">"prompt"</span>, <span class="json-str">"請選擇"</span>),
+        <span class="json-comment"># 關鍵：保存執行上下文，玩家做完選擇後從這裡接著跑</span>
+        continuation=ContinuationData(
+            context=context,
+            remaining_actions=action.get(<span class="json-str">"then"</span>, []),
+        ),
+    )
+
+    executor.game_state.pending_choices.append(choice)
+
+    <span class="json-comment"># 拋出 SuspendException 讓上層停下來</span>
+    raise ExecutionSuspended(choice_id=choice.choice_id)</code></pre>
+
+    <p>本質上是<strong>手刻的 coroutine</strong>——把同步 DSL 流程變成可中斷可恢復。</p>
+
+    <h3 class="sub">Event Bus：事件總線</h3>
+    <p>讓「卡片之間互相影響」變可能的關鍵元件。兩種分派模式：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">兩種事件分派</div>
+      <table class="decision-table">
+        <thead><tr><th>類型</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>Modifiable</td><td>觸發前可修改：「下次傷害減 30」這類效果。emit_modifiable 回傳監聽器修改後的事件。</td></tr>
+          <tr><td>Dispatched</td><td>已成事實的事件：通知監聽器、Reducer 套用，但事件本身不可改。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="subsub">監聽器註冊：被動效果與特性</h4>
+    <p>寶可夢「特性」常常是被動效果（passive trigger）。當該寶可夢上場時，引擎掃描 abilities，把 passive 監聽器註冊到 Event Bus；離場時自動移除。</p>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">經典 bug 來源</span>
+      <p>「上場時註冊、離場時清理」的生命週期管理很重要——如果忘記清理，已被擊倒的寶可夢的特性還會繼續觸發。這是 TCG 引擎最常見的 bug 之一。</p>
+    </div>
+
+    <h4 class="subsub">觸發順序的仲裁</h4>
+    <p>當多個監聽器同時觸發時，官方規則是「<strong>主動方優先選擇</strong>」。但實作上分兩種情境：</p>
+
+    <div class="compare">
+      <div class="compare-col good">
+        <div class="compare-label">自動排序（90%）</div>
+        <p>監聽器之間沒有實質互動，按固定順序執行結果都一樣。</p>
+        <ol style="margin: 0; font-size: 0.9rem;">
+          <li>主動方的監聽器先</li>
+          <li>同方按上場時間順序</li>
+          <li>同卡多個監聽器按註冊順序</li>
+        </ol>
+      </div>
+      <div class="compare-col bad">
+        <div class="compare-label">玩家裁決（10%）</div>
+        <p>兩個監聽器互相影響、執行順序會改變結果。</p>
+        <ul style="margin: 0; font-size: 0.9rem;">
+          <li>都修改同一事件同一欄位</li>
+          <li>其中一個會讓另一個失效</li>
+        </ul>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">產生 pending_choice 讓主動方選順序。</p>
+      </div>
+    </div>
+
+    <h3 class="sub">State Reducer：套用 Events 到 GameState</h3>
+    <p>設計目標：<strong>只有它能改 GameState</strong>。其他元件只能透過產生 Event、由 Reducer 套用。</p>
+
+    <pre><code>def apply_damage(state, event):
+    target_state = state.players[event.target_player].pokemon_states[event.target]
+    target_state.damage_counters += event.amount
+
+    <span class="json-comment"># 檢查擊倒：注意這裡不直接處理擊倒，而是產生新事件</span>
+    target_card = state.get_card(event.target)
+    if target_state.damage_counters >= target_card.hp:
+        state.pending_events.append(PokemonKnockedOutEvent(
+            target=event.target,
+            caused_by=event.event_id,
+        ))</code></pre>
+
+    <p>注意這個設計：<strong>擊倒不在 apply_damage 裡直接處理</strong>，而是產生新的 PokemonKnockedOutEvent 排到佇列。這讓「擊倒時觸發特性」（許多卡都有）能透過監聽 PokemonKnockedOutEvent 實現。</p>
+
+    <h3 class="sub">Phase Manager：階段流程控制</h3>
+    <p>引擎不只被動回應動作，還主動推進流程。例如玩家點「結束回合」時：</p>
+
+    <div class="tree">turn_end (玩家點按)
+   │
+   ├─ phase = between_turns
+   ├─ 結算狀態異常（毒、燒傷扣血、麻痺/睡眠檢定）
+   ├─ 切換 active_player
+   ├─ phase = turn_start
+   ├─ 觸發 on_turn_start 事件
+   ├─ phase = draw_phase
+   ├─ 強制抽 1 張
+   └─ phase = main_phase （等下個玩家動作）</div>
+
+    <h4 class="subsub">狀態異常結算（寫死規則）</h4>
+    <pre><code>def resolve_between_turns(state):
+    active = state.players[active_player].active_pokemon
+
+    for status in pokemon_states[active].status_conditions:
+        if status.type == <span class="json-str">"poisoned"</span>:
+            <span class="json-comment"># 毒：每回合 10 傷害，猛毒 20</span>
+            damage = <span class="json-num">10</span> * status.intensity
+            emit(StatusDamageEvent(target=active, amount=damage, source=<span class="json-str">"poison"</span>))
+
+        elif status.type == <span class="json-str">"burned"</span>:
+            <span class="json-comment"># 燒傷：20 傷害，丟硬幣正面則解除</span>
+            emit(StatusDamageEvent(target=active, amount=<span class="json-num">20</span>, source=<span class="json-str">"burn"</span>))
+            if rng.random_bool():
+                emit(StatusRemovedEvent(target=active, status=<span class="json-str">"burned"</span>))
+
+        elif status.type == <span class="json-str">"asleep"</span>:
+            <span class="json-comment"># 睡眠：丟硬幣，正面醒來</span>
+            if rng.random_bool():
+                emit(StatusRemovedEvent(target=active, status=<span class="json-str">"asleep"</span>))
+
+        elif status.type == <span class="json-str">"paralyzed"</span>:
+            <span class="json-comment"># 麻痺：回合結束自動解除</span>
+            emit(StatusRemovedEvent(target=active, status=<span class="json-str">"paralyzed"</span>))
+
+        elif status.type == <span class="json-str">"confused"</span>:
+            <span class="json-comment"># 混亂不在 between_turns 處理，攻擊時擲硬幣</span>
+            pass</code></pre>
+
+    <h4 class="subsub">勝負判定</h4>
+    <p>每次 PokemonKnockedOutEvent 後檢查三個條件：</p>
+    <ol>
+      <li>對方拿完所有獎賞卡（all_prizes_taken）</li>
+      <li>對方場上沒有寶可夢（no_pokemon）</li>
+      <li>對方需要抽牌但牌庫空了（deck_out）</li>
+    </ol>
+
+    <h3 class="sub">無限連鎖防護</h3>
+    <p>少數卡的特性互動可能觸發無窮迴圈。實務上加三層防護：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">三層防護</div>
+      <table class="decision-table">
+        <thead><tr><th>機制</th><th>策略</th></tr></thead>
+        <tbody>
+          <tr><td>Hard Limit</td><td>chain_depth 超過 100 直接強制停止並記 log</td></tr>
+          <tr><td>Loop Detection</td><td>50 次以內觸發超過 10 次同樣 effect，懷疑是迴圈</td></tr>
+          <tr><td>Timeout</td><td>整個 Action Resolver 流程設 5 秒上限</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>這類問題 99% 不會發生（卡池設計者會避免），但留著這層防護能保證 server 不會被一張卡搞掛。</p>
+
+    <h3 class="sub">實作 Milestone</h3>
+    <ol>
+      <li><strong>M1：純結構（一週）</strong>—— 五大元件骨架、5 個基礎 Action handler、跑得起最簡單的攻擊。</li>
+      <li><strong>M2：完整單回合（兩週）</strong>—— 補齊所有 handler、Phase Manager、勝負判定。能跑兩隻純傷害寶可夢互打。</li>
+      <li><strong>M3：觸發器系統（兩週）</strong>—— Event Bus 監聽器、Modifiable Events、觸發順序仲裁、Pending Choice。</li>
+      <li><strong>M4：完整化（持續）</strong>—— 補上 effect_code 編碼、連鎖防護、edge case 測試。</li>
+    </ol>
+
+    <div class="callout callout-info">
+      <span class="callout-label">測試驅動開發</span>
+      <p>每個 milestone 都用 TDD：先寫測試（用 Builder API 建 GameState、給 PlayerAction、斷言預期 Events），再實作功能。沒有測試保護，改動一個 handler 就可能弄壞十個地方。</p>
     </div>
   </section>
 
+  <div class="chapter-divider">
+    <div class="line"></div>
+    <div class="ornament">◆ ◆ ◆</div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ============= Chapter 09 ============= -->
   <section class="chapter" id="server">
     <div class="chapter-header">
       <span class="chapter-num">Chapter 09</span>
-      <h2 class="chapter-title">伺服器架構 <span class="status-tag status-pending">下一輪</span></h2>
-      <p class="chapter-lead">權威伺服器、WebSocket 訊息協議、玩家行為驗證、斷線重連。</p>
+      <h2 class="chapter-title">伺服器架構</h2>
+      <p class="chapter-lead">把純函式引擎包成兩個玩家能透過網路即時對戰的服務。FastAPI + WebSocket + Redis，每場對局一個 asyncio task。</p>
     </div>
-    <div class="callout callout-pending">
-      <span class="callout-label">尚待設計</span>
-      <p>本章將涵蓋：FastAPI + WebSocket 架構、訊息協議定義、Match Manager、會話管理、斷線恢復、視角化序列化的實作。</p>
+
+    <h3 class="sub">技術選型</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">伺服器技術棧</div>
+      <table class="decision-table">
+        <thead><tr><th>用途</th><th>選擇</th></tr></thead>
+        <tbody>
+          <tr><td>應用框架</td><td>FastAPI（非同步原生、WebSocket 支援好、Pydantic 整合）</td></tr>
+          <tr><td>WebSocket</td><td>fastapi.WebSocket 內建</td></tr>
+          <tr><td>資料庫</td><td>PostgreSQL + asyncpg</td></tr>
+          <tr><td>對局狀態</td><td>Redis 7+（即時持久化）</td></tr>
+          <tr><td>訊息驗證</td><td>Pydantic（訊息協議型別來源）</td></tr>
+          <tr><td>任務管理</td><td>asyncio（每場對局一個 task）</td></tr>
+          <tr><td>日誌</td><td>structlog（結構化、對局除錯重要）</td></tr>
+        </tbody>
+      </table>
     </div>
+
+    <p>部署面，親友規模一台 VPS（4GB RAM 起跳）綽綽有餘。docker-compose 起 FastAPI + Postgres + Redis 三個服務即可。</p>
+
+    <h3 class="sub">整體架構</h3>
+    <div class="tree">     ┌──────────────┐         ┌──────────────┐
+     │  Player A    │         │  Player B    │
+     └──────┬───────┘         └──────┬───────┘
+            │ WebSocket               │ WebSocket
+╔═══════════▼═════════════════════════▼══════════╗
+║              FastAPI Server                    ║
+║  ┌──────────────────────────────────────────┐ ║
+║  │  Connection Manager                      │ ║
+║  │  - WebSocket 連線生命週期                │ ║
+║  │  - player_id ↔ ws connection            │ ║
+║  └────────────────┬─────────────────────────┘ ║
+║                   │                            ║
+║  ┌────────────────▼─────────────────────────┐ ║
+║  │  Lobby / Matchmaker                      │ ║
+║  │  - 房間建立、邀請                        │ ║
+║  │  - 雙方就緒後建立 Match                  │ ║
+║  └────────────────┬─────────────────────────┘ ║
+║                   │                            ║
+║  ┌────────────────▼─────────────────────────┐ ║
+║  │  Match Manager                           │ ║
+║  │  - 維護所有進行中對局                    │ ║
+║  │  - 每場對局一個 asyncio task             │ ║
+║  └────────────────┬─────────────────────────┘ ║
+║                   │                            ║
+║  ┌────────────────▼─────────────────────────┐ ║
+║  │  Match Session (per match)               │ ║
+║  │  - GameEngine                            │ ║
+║  │  - 訊息進出佇列                          │ ║
+║  │  - View 序列化器                         │ ║
+║  └──┬───────────────────────────────────┬───┘ ║
+║     │                                    │     ║
+║  ┌──▼─────────┐              ┌──────────▼──┐  ║
+║  │  Postgres  │              │   Redis     │  ║
+║  │  卡牌資料  │              │  對局 state │  ║
+║  └────────────┘              └─────────────┘  ║
+╚═══════════════════════════════════════════════╝</div>
+
+    <h3 class="sub">Connection Manager：連線管理</h3>
+    <pre><code><span class="json-key">class</span> ConnectionManager:
+    <span class="json-comment"># player_id → WebSocket</span>
+    player_connections: dict[str, WebSocket]
+
+    <span class="json-comment"># 觀戰連線（一場對局可多人觀戰）</span>
+    spectator_connections: dict[str, set[WebSocket]]
+        <span class="json-comment"># match_id → {WebSocket...}</span>
+
+    <span class="json-comment"># 玩家當下在哪場對局裡</span>
+    player_match: dict[str, str]</code></pre>
+
+    <h4 class="subsub">連線生命週期</h4>
+    <ul>
+      <li><strong>建立</strong>：客戶端開 WebSocket，第一個訊息必須是 Authenticate（player_id + token）。驗證後存進 player_connections。</li>
+      <li><strong>主動斷</strong>：移除 active_connections 但保留 player_match。對局中則標記「等待重連」，啟動 60 秒倒數。</li>
+      <li><strong>意外斷</strong>：同上，60 秒內重連無感。</li>
+      <li><strong>重連</strong>：用同 player_id + token 連回，接到對應 Match Session，推 StateResync（完整當下視角化 GameState + 最近 N 個 Event）。</li>
+    </ul>
+
+    <h3 class="sub">Lobby：房間與配對</h3>
+    <p>親友規模不需要競技配對演算法，只要支援<strong>邀請對戰</strong>：</p>
+    <ol>
+      <li>Player A 開房間 → 取得 room_code (例 "ABCD42")</li>
+      <li>Player A 把 room_code 給 Player B（LINE / Discord）</li>
+      <li>Player B 用 room_code 加入</li>
+      <li>雙方點「準備」+ 上傳 deck_list</li>
+      <li>系統驗證雙方牌組合法</li>
+      <li>建立 Match，雙方進入 setup phase</li>
+    </ol>
+
+    <h4 class="subsub">牌組驗證（lobby 層做）</h4>
+    <pre><code>def validate_deck(deck_list):
+    <span class="json-comment"># 1. 總數 60</span>
+    if len(deck_list) != <span class="json-num">60</span>:
+        return ValidationResult(error=<span class="json-str">"DECK_SIZE_INVALID"</span>)
+
+    <span class="json-comment"># 2. 同名卡 ≤ 4 張（基本能量除外）</span>
+    name_counts = Counter()
+    for card_id in deck_list:
+        card = db.get_card(card_id)
+        if not card.is_basic_energy:
+            name_counts[card.name_zh_tw] += <span class="json-num">1</span>
+    for name, count in name_counts.items():
+        if count > <span class="json-num">4</span>:
+            return ValidationResult(error=f<span class="json-str">"TOO_MANY_{name}"</span>)
+
+    <span class="json-comment"># 3. ACE SPEC 全牌組僅一張</span>
+    ace_specs = [c for c in deck_list if db.get_card(c).is_ace_spec]
+    if len(ace_specs) > <span class="json-num">1</span>:
+        return ValidationResult(error=<span class="json-str">"MULTIPLE_ACE_SPEC"</span>)
+
+    <span class="json-comment"># 4. 所有卡都在 Standard 卡池</span>
+    illegal = [c for c in deck_list if not db.get_card(c).is_standard_legal]
+    if illegal:
+        return ValidationResult(error=<span class="json-str">"ILLEGAL_CARDS"</span>, details=illegal)
+
+    <span class="json-comment"># 5. 至少一張基礎寶可夢</span>
+    has_basic = any(db.get_card(c).stage == <span class="json-str">"basic"</span> for c in deck_list)
+    if not has_basic:
+        return ValidationResult(error=<span class="json-str">"NO_BASIC_POKEMON"</span>)
+
+    return ValidationResult(ok=<span class="json-bool">True</span>)</code></pre>
+
+    <h3 class="sub">Match Session：對局封裝</h3>
+    <p>每場對局是獨立的 asyncio task，封裝引擎、訊息佇列、視角化序列化。</p>
+
+    <pre><code><span class="json-key">class</span> MatchSession:
+    match_id: str
+    players: list[str]
+    engine: GameEngine
+    inbox: asyncio.Queue       <span class="json-comment"># 訊息佇列</span>
+
+    async def run(self):
+        while not self.engine.is_game_over():
+            try:
+                msg = await asyncio.wait_for(self.inbox.get(), timeout=<span class="json-num">600</span>)
+            except asyncio.TimeoutError:
+                await self.abort(<span class="json-str">"idle_timeout"</span>)
+                return
+
+            await self.handle_message(msg)
+
+        await self.finalize()</code></pre>
+
+    <div class="callout callout-info">
+      <span class="callout-label">為什麼用佇列</span>
+      <p>WebSocket 訊息可能來自兩個 connection（A 和 B），但對局狀態只能被一條執行緒改。<strong>佇列確保訊息序列化處理</strong>，不會發生兩個玩家同時改 state 的競態。</p>
+    </div>
+
+    <h4 class="subsub">handle_message 核心流程</h4>
+    <pre><code>async def handle_message(self, msg):
+    <span class="json-comment"># 1. 驗證訊息格式</span>
+    action = self.parse_player_action(msg)
+    if not action:
+        await self.send_error(msg.player_id, <span class="json-str">"INVALID_MESSAGE"</span>)
+        return
+
+    <span class="json-comment"># 2. 丟給引擎</span>
+    try:
+        events = self.engine.process_action(self.state, action)
+    except IllegalActionError as e:
+        await self.send_error(msg.player_id, e.code, e.message)
+        return  <span class="json-comment"># 不合法動作不影響 state</span>
+
+    <span class="json-comment"># 3. 取得新 state</span>
+    self.state = self.engine.current_state
+
+    <span class="json-comment"># 4. 持久化到 Redis</span>
+    await self.persist_state()
+
+    <span class="json-comment"># 5. 視角化後推送給雙方</span>
+    for player_id in self.players:
+        view = self.state.to_view(player_id)
+        view_events = self.filter_events_for(events, player_id)
+        await self.send(player_id, {
+            <span class="json-str">"type"</span>: <span class="json-str">"StateUpdate"</span>,
+            <span class="json-str">"state"</span>: view.serialize(),
+            <span class="json-str">"events"</span>: [e.serialize() for e in view_events],
+        })
+
+    <span class="json-comment"># 6. 推送給觀戰者（全知視角）</span>
+    spectator_view = self.state.to_spectator_view()
+    for ws in self.spectators:
+        await ws.send_json({...})</code></pre>
+
+    <h3 class="sub">Event 過濾：私密資訊處理</h3>
+    <p>不是所有事件都該傳給雙方。每個 Event 帶 visibility 屬性：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">Event Visibility</div>
+      <table class="decision-table">
+        <thead><tr><th>Visibility</th><th>規則</th></tr></thead>
+        <tbody>
+          <tr><td>both</td><td>雙方都看到（如 DamageDealt）</td></tr>
+          <tr><td>card_owner</td><td>只有卡片擁有者看到具體內容（如 CardDrawn 只告訴對手「對方抽了 1 張」）</td></tr>
+          <tr><td>actor_only</td><td>只有觸發者看到（如 CardScry 偷看牌庫頂）</td></tr>
+          <tr><td>spectator_only</td><td>只有觀戰者看到（除錯用）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">訊息協議</h3>
+    <p>兩端通訊用 JSON。所有訊息共同外層：</p>
+    <pre><code>{
+  <span class="json-key">"msg_id"</span>: <span class="json-str">"uuid"</span>,
+  <span class="json-key">"type"</span>: <span class="json-str">"MessageType"</span>,
+  <span class="json-key">"timestamp"</span>: <span class="json-str">"2026-04-26T08:30:00Z"</span>,
+  <span class="json-key">"payload"</span>: { ... }
+}</code></pre>
+
+    <div class="compare">
+      <div class="compare-col good">
+        <div class="compare-label">客戶端 → 伺服器</div>
+        <ul style="margin: 0; font-family: var(--mono); font-size: 0.85rem;">
+          <li>Authenticate</li>
+          <li>JoinRoom / SubmitDeck / ReadyForMatch</li>
+          <li>PlayerAction（核心）</li>
+          <li>ChoiceResponse</li>
+          <li>ConcedeMatch</li>
+          <li>RequestStateResync</li>
+          <li>JoinSpectator / LeaveSpectator</li>
+          <li>Ping</li>
+        </ul>
+      </div>
+      <div class="compare-col good">
+        <div class="compare-label">伺服器 → 客戶端</div>
+        <ul style="margin: 0; font-family: var(--mono); font-size: 0.85rem;">
+          <li>Authenticated</li>
+          <li>RoomState</li>
+          <li>MatchStarted</li>
+          <li>StateUpdate（最頻繁）</li>
+          <li>ChoicePrompt</li>
+          <li>MatchEnded</li>
+          <li>ErrorMessage</li>
+          <li>Ping</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 class="subsub">PlayerAction 範例</h4>
+    <pre><code>{
+  <span class="json-key">"type"</span>: <span class="json-str">"PlayerAction"</span>,
+  <span class="json-key">"payload"</span>: {
+    <span class="json-key">"action_type"</span>: <span class="json-str">"Attack"</span>,
+    <span class="json-key">"attacker_instance"</span>: <span class="json-str">"uuid-2"</span>,
+    <span class="json-key">"attack_index"</span>: <span class="json-num">1</span>
+  }
+}</code></pre>
+
+    <h4 class="subsub">StateUpdate 範例</h4>
+    <pre><code>{
+  <span class="json-key">"type"</span>: <span class="json-str">"StateUpdate"</span>,
+  <span class="json-key">"payload"</span>: {
+    <span class="json-key">"state"</span>: { <span class="json-comment">/* 完整視角化 GameState */</span> },
+    <span class="json-key">"events"</span>: [
+      {<span class="json-key">"type"</span>: <span class="json-str">"DamageDealt"</span>, <span class="json-key">"source"</span>: <span class="json-str">"..."</span>, <span class="json-key">"target"</span>: <span class="json-str">"..."</span>, <span class="json-key">"amount"</span>: <span class="json-num">60</span>},
+      {<span class="json-key">"type"</span>: <span class="json-str">"PokemonKnockedOut"</span>, <span class="json-key">"target"</span>: <span class="json-str">"..."</span>},
+      {<span class="json-key">"type"</span>: <span class="json-str">"PrizeTaken"</span>, <span class="json-key">"by"</span>: <span class="json-str">"..."</span>}
+    ],
+    <span class="json-key">"phase"</span>: <span class="json-str">"main_phase"</span>,
+    <span class="json-key">"active_player"</span>: <span class="json-str">"player_a"</span>
+  }
+}</code></pre>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">設計選擇</span>
+      <p><strong>每次都傳完整視角化 state，而非 diff</strong>。理由：親友規模不需要省頻寬；客戶端不用維護「應用 diff」邏輯；重連與正常更新走同一條路徑。一場對戰 GameState 約 5–20 KB，每秒幾個訊息也才幾十 KB。</p>
+    </div>
+
+    <h3 class="sub">Pending Choice 訊息流</h3>
+    <div class="tree">1. Player A 宣告攻擊 (PlayerAction: Attack)
+2. 伺服器處理，引擎遇到「請選一隻備戰交換」
+3. 引擎暫停，pending_choice 寫進 state
+4. 伺服器發兩種訊息：
+   → A: StateUpdate (events 到目前為止) + ChoicePrompt
+   → B: StateUpdate (events 到目前為止)，無 ChoicePrompt
+5. A 看到 ChoicePrompt，UI 顯示選擇介面
+6. A 送 ChoiceResponse {choice_id, selected: "uuid-bench-2"}
+7. 伺服器恢復引擎執行，從中斷點繼續
+8. 引擎跑完剩下的 actions，產出剩下的 Events
+9. 伺服器再發 StateUpdate 給雙方</div>
+
+    <p><strong>關鍵設計</strong>：ChoicePrompt 是<em>對單一玩家</em>的訊息，不是廣播。對手只看到「對方在思考中」（從 pending_choices 不為空推斷）。</p>
+
+    <h3 class="sub">狀態持久化策略</h3>
+    <p>每個動作後都持久化到 Redis：</p>
+    <pre><code>async def persist_state(self):
+    state_json = self.state.serialize()
+    await redis.set(
+        f<span class="json-str">"match:{self.match_id}:state"</span>,
+        state_json,
+        ex=<span class="json-num">86400</span>  <span class="json-comment"># 24 小時 TTL</span>
+    )
+    await redis.rpush(
+        f<span class="json-str">"match:{self.match_id}:events"</span>,
+        *[ev.serialize() for ev in latest_events]
+    )</code></pre>
+
+    <div class="callout callout-info">
+      <span class="callout-label">為什麼用 Redis 而非 Postgres</span>
+      <p>對局是「短生命週期、高頻率寫入」的特性，Redis 更適合。純記憶體操作對「每個 action 都寫一次」沒壓力。TTL 自動清理結束的對局。對局結束後想存檔（給重播）再從 Redis 拉到 Postgres。</p>
+    </div>
+
+    <h4 class="subsub">伺服器重啟的恢復</h4>
+    <pre><code>async def on_startup():
+    <span class="json-comment"># 從 Redis 找出所有未結束的對局</span>
+    match_keys = await redis.keys(<span class="json-str">"match:*:state"</span>)
+    for key in match_keys:
+        match_id = parse_match_id(key)
+        state = await redis.get(key)
+        session = MatchSession.from_state(match_id, state)
+        match_manager.matches[match_id] = session
+        asyncio.create_task(session.run())</code></pre>
+    <p>讓 <strong>伺服器 crash 不會丟對局</strong>。</p>
+
+    <h3 class="sub">安全與防作弊（最低標）</h3>
+    <ul>
+      <li><strong>所有遊戲邏輯都在伺服器跑</strong>：客戶端只送 PlayerAction，所有結算、隨機、判定都在伺服器。</li>
+      <li><strong>視角化嚴格執行</strong>：對手手牌、雙方牌庫順序、未翻獎賞卡<em>絕對不出現</em>在傳給該玩家的訊息裡。</li>
+      <li><strong>動作合法性伺服器級驗證</strong>：客戶端 disable 攻擊按鈕沒用，伺服器收到還是要重新檢查。</li>
+      <li><strong>Token / Session</strong>：每連線帶 player_id + token。親友規模用固定 token 即可。</li>
+      <li><strong>速率限制</strong>：每玩家每秒最多 10 個訊息。</li>
+    </ul>
+
+    <h3 class="sub">實作 Milestone</h3>
+    <ol>
+      <li><strong>M1：單機版完整協議（一週）</strong>—— FastAPI + WebSocket 骨架、Connection Manager、訊息協議定義、用假引擎驗證訊息流通。</li>
+      <li><strong>M2：接上引擎（兩週）</strong>—— Match Manager、視角化序列化、牌組驗證、Pending Choice 流程。</li>
+      <li><strong>M3：生產就緒（一週）</strong>—— Redis 持久化、斷線重連、速率限制、結構化日誌、Replay 工具。</li>
+    </ol>
   </section>
 
+  <div class="chapter-divider">
+    <div class="line"></div>
+    <div class="ornament">◆ ◆ ◆</div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ============= Chapter 10 ============= -->
   <section class="chapter" id="frontend">
     <div class="chapter-header">
       <span class="chapter-num">Chapter 10</span>
-      <h2 class="chapter-title">前端對戰 UI <span class="status-tag status-pending">下一輪</span></h2>
-      <p class="chapter-lead">場面布局、卡片互動、動畫節奏、玩家輸入時機。</p>
+      <h2 class="chapter-title">前端對戰 UI</h2>
+      <p class="chapter-lead">React + TypeScript + Framer Motion。前端是純渲染層 + 輸入收集器，沒有遊戲邏輯。</p>
     </div>
-    <div class="callout callout-pending">
-      <span class="callout-label">尚待設計</span>
-      <p>本章將涵蓋：場面區域 layout、卡片互動模型（拖曳/點擊）、Event 流驅動的動畫播放、pending_choice 對應的 UI、玩家輸入確認機制。</p>
+
+    <h3 class="sub">前端的職責邊界</h3>
+    <div class="compare">
+      <div class="compare-col good">
+        <div class="compare-label">前端該做</div>
+        <ul style="margin: 0;">
+          <li>把 ViewedState 渲染成可看的場面</li>
+          <li>把 Event 流轉成動畫播放</li>
+          <li>玩家輸入轉成 PlayerAction 訊息</li>
+          <li>處理 ChoicePrompt UI</li>
+          <li>顯示連線狀態、錯誤訊息</li>
+        </ul>
+      </div>
+      <div class="compare-col bad">
+        <div class="compare-label">前端不該做</div>
+        <ul style="margin: 0;">
+          <li>任何遊戲規則判定</li>
+          <li>維護「真實」遊戲狀態</li>
+          <li>做隨機（硬幣是伺服器決定的，前端只演出來）</li>
+        </ul>
+      </div>
     </div>
+
+    <h3 class="sub">技術棧</h3>
+    <div class="spec-card">
+      <div class="spec-card-label">前端技術選型</div>
+      <table class="decision-table">
+        <thead><tr><th>用途</th><th>選擇</th></tr></thead>
+        <tbody>
+          <tr><td>框架</td><td>React 18+ (functional + hooks)</td></tr>
+          <tr><td>語言</td><td>TypeScript (strict mode)</td></tr>
+          <tr><td>動畫</td><td>Framer Motion</td></tr>
+          <tr><td>狀態管理</td><td>Zustand（輕量、無樣板）</td></tr>
+          <tr><td>WebSocket</td><td>原生 API + 一層 wrapper</td></tr>
+          <tr><td>路由</td><td>React Router v6</td></tr>
+          <tr><td>樣式</td><td>Tailwind CSS + CSS Modules（複雜元件）</td></tr>
+          <tr><td>建置</td><td>Vite</td></tr>
+          <tr><td>卡圖</td><td>本地爬下後存 static</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="callout-label">為什麼 Zustand 而非 Redux</span>
+      <p>對局狀態本質是「伺服器推什麼就顯示什麼」，不需要複雜 reducer。Zustand 一個 hook 搞定，樣板少 90%。</p>
+    </div>
+
+    <h3 class="sub">頁面結構</h3>
+    <pre><code>/                    <span class="json-comment"># 首頁（登入、進入大廳）</span>
+/lobby               <span class="json-comment"># 大廳（建房、加入房間）</span>
+/deckbuilder         <span class="json-comment"># 組牌器</span>
+/room/:room_code     <span class="json-comment"># 房間（雙方準備、上傳牌組）</span>
+/match/:match_id     <span class="json-comment"># 對戰場面（核心畫面）</span>
+/match/:match_id/spectate    <span class="json-comment"># 觀戰模式</span></code></pre>
+
+    <h3 class="sub">對戰場面布局</h3>
+    <p>桌面優先（最低 1366×768，目標 1920×1080）。對稱式設計：自己在下、對手在上，戰線在正中央。</p>
+
+    <div class="tree">┌──────────────────────────────────────────────────┐
+│ Top Bar: 對手資訊                       [離開]   │
+├──────────────────────────────────────────────────┤
+│ ┌─對手手牌─┐                  ┌─對手獎賞卡─┐    │
+│ │ 🂠 🂠 🂠  │                  │ 🂠🂠🂠       │    │
+│ └──────────┘                  │ 🂠🂠🂠       │    │
+│                               └────────────┘    │
+│   ┌─對手備戰區──────────────┐                    │
+│   │ [P] [P] [P] [P] [P]     │ 對手牌庫:23張       │
+│   └─────────────────────────┘ 對手棄牌:12張       │
+│                                                  │
+│         ┌─對手出戰位──┐                          │
+│         │     [P]      │   ⚡ 競技場卡（共用）   │
+│         └──────────────┘                          │
+│  ─────────── 戰線 ───────────                     │
+│         ┌─我方出戰位──┐                          │
+│         │     [P]      │                          │
+│         └──────────────┘                          │
+│   ┌─我方備戰區──────────────┐                    │
+│   │ [P] [P] [P] [P] [P]     │ 我方牌庫:31張       │
+│   └─────────────────────────┘ 我方棄牌:8張        │
+│ ┌─我方獎賞卡─┐                                    │
+│ │ 🂠🂠🂠     │                                    │
+│ │ 🂠🂠🂠     │  ┌─動作面板──────────┐             │
+│ └────────────┘  │ [結束回合][撤退]  │             │
+│                 │ [投降]            │             │
+│ ┌────────我方手牌────────────┐                    │
+│ │  🂡 🂢 🂣 🂤 🂥 🂦 🂧  (扇形) │                    │
+│ └─────────────────────────────┘                    │
+└──────────────────────────────────────────────────┘</div>
+
+    <h4 class="subsub">布局重點</h4>
+    <ul>
+      <li><strong>對稱設計</strong>：所有 TCG 數位平台的共識，符合直覺。</li>
+      <li><strong>戰線在正中央</strong>：傷害動畫、能量飛動圍繞這條線。</li>
+      <li><strong>側邊欄資訊區</strong>：牌庫、棄牌、獎賞卡靠側邊（數字資訊大於圖像資訊）。</li>
+      <li><strong>手牌底部扇形展開</strong>：滑鼠 hover 放大、點擊出現操作選單。</li>
+      <li><strong>動作面板右下</strong>：結束回合、撤退這類「與場上單張卡無關」的按鈕。</li>
+    </ul>
+
+    <h3 class="sub">Zustand Store 結構</h3>
+    <pre><code>interface AppState {
+  connection: {
+    status: <span class="json-str">'disconnected'</span> | <span class="json-str">'connecting'</span> | <span class="json-str">'authenticated'</span> | <span class="json-str">'reconnecting'</span>
+    playerId: string | <span class="json-bool">null</span>
+    token: string | <span class="json-bool">null</span>
+  }
+
+  lobby: {
+    currentRoom: Room | <span class="json-bool">null</span>
+  }
+
+  match: {
+    matchId: string | <span class="json-bool">null</span>
+    role: <span class="json-str">'player'</span> | <span class="json-str">'spectator'</span> | <span class="json-bool">null</span>
+    state: ViewedState | <span class="json-bool">null</span>          <span class="json-comment">// 伺服器最新視角化 state</span>
+    pendingEvents: Event[]              <span class="json-comment">// 還沒播放完的動畫</span>
+    activeChoice: ChoicePrompt | <span class="json-bool">null</span>   <span class="json-comment">// 等玩家做的選擇</span>
+    isOpponentThinking: boolean
+  }
+
+  ui: {
+    selectedCard: InstanceID | <span class="json-bool">null</span>
+    hoveredCard: InstanceID | <span class="json-bool">null</span>
+    contextMenu: ContextMenu | <span class="json-bool">null</span>
+    notifications: Notification[]
+  }
+
+  applyStateUpdate: (update: StateUpdate) => <span class="json-bool">void</span>
+  sendAction: (action: PlayerAction) => <span class="json-bool">void</span>
+}</code></pre>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">關鍵設計：state 與 pendingEvents 分離</span>
+      <p>伺服器推的 StateUpdate 包含「最新狀態」與「剛剛發生的事件流」。<strong>不立即把最新狀態渲染</strong>，先把 events 推進 pendingEvents 佇列，由動畫系統依序播放，每播完一個事件才微調渲染中的 state。這讓動畫能「逐步演進」而非「跳到最終結果」。</p>
+    </div>
+
+    <h3 class="sub">動畫系統：Event Animation Pipeline</h3>
+    <p>同一個玩家動作可能產生 5–15 個 Events（攻擊 → 觸發特性 → 連鎖傷害 → 擊倒 → 拿獎賞 → 強制換出戰）。一次顯示完玩家會看不懂，所以要排隊播放。</p>
+
+    <pre><code><span class="json-key">class</span> EventAnimator {
+  queue: Event[] = []
+  isPlaying = <span class="json-bool">false</span>
+
+  enqueue(events) {
+    this.queue.push(...events)
+    if (!this.isPlaying) this.playNext()
+  }
+
+  async playNext() {
+    if (this.queue.length === <span class="json-num">0</span>) {
+      this.isPlaying = <span class="json-bool">false</span>
+      return
+    }
+
+    this.isPlaying = <span class="json-bool">true</span>
+    const event = this.queue.shift()
+
+    await this.animateEvent(event)
+
+    <span class="json-comment">// inter-event 間隔</span>
+    const delay = INTER_EVENT_DELAY[event.type] ?? <span class="json-num">200</span>
+    await sleep(delay)
+
+    this.playNext()
+  }
+
+  async animateEvent(event) {
+    switch (event.type) {
+      case <span class="json-str">'EnergyAttached'</span>:
+        await this.animateEnergyFly(event.from, event.to)
+        store.applyMicroUpdate({ attachEnergy: ... })
+        break
+
+      case <span class="json-str">'DamageDealt'</span>:
+        await this.animateAttackFlash(event.source)
+        await this.animateDamageNumber(event.target, event.amount)
+        store.applyMicroUpdate({ addDamage: ... })
+        break
+
+      case <span class="json-str">'PokemonKnockedOut'</span>:
+        await this.animateKnockout(event.target)
+        store.applyMicroUpdate({ removePokemon: ... })
+        break
+
+      case <span class="json-str">'CoinFlipped'</span>:
+        await this.animateCoinFlip(event.results)
+        break
+    }
+  }
+}</code></pre>
+
+    <h4 class="subsub">Inter-Event Delay 表（節奏感）</h4>
+    <div class="spec-card">
+      <div class="spec-card-label">事件間延遲建議值</div>
+      <table class="decision-table">
+        <thead><tr><th>事件類型</th><th>延遲</th></tr></thead>
+        <tbody>
+          <tr><td>EnergyAttached</td><td>150ms — 快速、輕快</td></tr>
+          <tr><td>DamageDealt</td><td>400ms — 主要事件，要看清楚</td></tr>
+          <tr><td>StatusInflicted</td><td>300ms</td></tr>
+          <tr><td>CardDrawn</td><td>100ms — 可批次連發</td></tr>
+          <tr><td>PokemonKnockedOut</td><td>800ms — 重大事件，給玩家反應時間</td></tr>
+          <tr><td>PrizeTaken</td><td>500ms</td></tr>
+          <tr><td>TurnStarted</td><td>600ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-warning">
+      <span class="callout-label">動畫期間禁止輸入</span>
+      <p>動畫播放中<strong>禁止接受新輸入</strong>（按鈕 disable、卡片不可點）。否則玩家可能在傷害數字還沒跳完時就點下個動作，造成 race condition。技術上用 isAnimating 旗標 gate 所有輸入。提供「快進」按鈕讓 inter-event delay 設為 0。</p>
+    </div>
+
+    <h3 class="sub">卡片元件設計</h3>
+    <pre><code>interface CardComponentProps {
+  instance: ViewedInstance
+  variant: <span class="json-str">'hand'</span> | <span class="json-str">'active'</span> | <span class="json-str">'bench'</span> | <span class="json-str">'discard'</span> | <span class="json-str">'modal'</span>
+  interactive?: boolean
+  onClick?: () => <span class="json-bool">void</span>
+  onContextMenu?: () => <span class="json-bool">void</span>
+}</code></pre>
+
+    <p>每個 variant 控制視覺差異：</p>
+    <ul>
+      <li><strong>hand</strong>：扇形旋轉、hover 放大彈出</li>
+      <li><strong>active</strong>：正中放大、能量符號浮在旁邊、傷害指示物疊在角落</li>
+      <li><strong>bench</strong>：縮小、橫排、能量縮成點</li>
+      <li><strong>discard</strong>：堆疊感、最頂張完整顯示</li>
+      <li><strong>modal</strong>：選擇彈窗中的尺寸，較大但不互動</li>
+    </ul>
+
+    <h4 class="subsub">卡片視覺層</h4>
+    <div class="tree">┌─────────────────────┐
+│ 🌊 100 HP           │  ← 屬性 + HP（左上）
+├─────────────────────┤
+│                     │
+│    [卡圖區]         │  ← 主視覺
+│                     │
+├─────────────────────┤
+│ 招式 1              │
+│ 招式 2              │
+├─────────────────────┤
+│ 弱點 抵抗 撤退      │
+└─────────────────────┘
+
+附加層（疊在卡片上）：
+- 附加能量符號（左下浮動）
+- 傷害指示物（紅色圓圈，右上）
+- 狀態異常 icon（💀🔥⚡💤❓）
+- 「剛 Mega 進化」邊框光暈
+- 選中狀態邊框</div>
+
+    <p>每張卡片是 <code>&lt;motion.div&gt;</code>，用 <code>layoutId</code> 讓 Framer Motion 自動處理「從手牌移到場上」的補間動畫。</p>
+
+    <h3 class="sub">玩家輸入流程：狀態機</h3>
+    <p>PTCG 動作常常是<strong>多步驟選擇</strong>。例如進化：點手牌的妙蛙花 → 提示選目標 → 點場上妙蛙草 → 送出 EvolveAction。</p>
+
+    <pre><code>type InputState =
+  | { mode: <span class="json-str">'idle'</span> }
+  | { mode: <span class="json-str">'selecting_target'</span>, sourceCard: InstanceID, validTargets: InstanceID[] }
+  | { mode: <span class="json-str">'selecting_attack'</span>, activePokemon: InstanceID }
+  | { mode: <span class="json-str">'pending_choice'</span>, choice: ChoicePrompt }
+  | { mode: <span class="json-str">'awaiting_server'</span> }</code></pre>
+
+    <p>每個 mode 控制 UI 行為，點擊卡片時根據當前 mode 決定行為。比 if/else 一堆好維護得多。</p>
+
+    <h3 class="sub">Pending Choice UI</h3>
+    <p>伺服器送來 ChoicePrompt 時，前端按 type 渲染對應介面：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">Choice UI 類型</div>
+      <table class="decision-table">
+        <thead><tr><th>類型</th><th>UI 設計</th></tr></thead>
+        <tbody>
+          <tr><td>select_pokemon</td><td>場上合法目標亮起、玩家直接點擊。「在備戰區選一隻」整個區域邊框發光。</td></tr>
+          <tr><td>choose_from_cards</td><td>彈窗顯示卡片組（牌庫查找結果、棄牌堆中選），拖曳或點擊。</td></tr>
+          <tr><td>coin_flip_result</td><td>硬幣翻動動畫，結果出現後 1 秒自動關閉。玩家不選擇，只看。</td></tr>
+          <tr><td>yes_no</td><td>簡單兩個按鈕。</td></tr>
+          <tr><td>order_triggers</td><td>拖曳排序列表，列出多個將觸發特性，玩家排順序後確認。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">觀戰模式</h3>
+    <p>觀戰者收 StateUpdate，但用獨立的 <code>to_spectator_view()</code> 函式產生視角。三種選擇：</p>
+
+    <div class="spec-card">
+      <div class="spec-card-label">觀戰視角選擇</div>
+      <table class="decision-table">
+        <thead><tr><th>視角</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>全知視角</td><td>看得到雙方手牌、未翻獎賞卡。最有趣，洩漏資訊風險。</td></tr>
+          <tr><td>延遲視角</td><td>狀態延遲 30 秒。職業比賽常用，對親友圈太複雜。</td></tr>
+          <tr><td>遮蔽視角</td><td>和雙方玩家一樣，看不到任何手牌。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-decision">
+      <span class="callout-label">選擇：全知視角</span>
+      <p>親友圈觀戰主要是教學或聊天用，能看雙方手牌學習價值最大。如果擔心作弊，用「對局結束才能加入觀戰」這個簡單規則。</p>
+    </div>
+
+    <p>觀戰者送來的訊息<strong>忽略所有 PlayerAction</strong>，只接受 LeaveSpectator 和 Ping。</p>
+
+    <h3 class="sub">卡圖管理</h3>
+    <p>爬蟲時順便把每張卡的 image_url 下載到本機，命名 <code>{card_id}.png</code>。前端載入策略：</p>
+
+    <pre><code>const CARD_IMAGE_BASE = <span class="json-str">'/static/card-images'</span>
+
+function getCardImageUrl(cardId, hires = <span class="json-bool">false</span>) {
+  const suffix = hires ? <span class="json-str">'_hires'</span> : <span class="json-str">''</span>
+  return `${CARD_IMAGE_BASE}/${cardId}${suffix}.png`
+}
+
+<span class="json-comment">// 對局開始時預載所有牌組圖片</span>
+function preloadDeckImages(deckCardIds) {
+  return Promise.all(
+    Array.from(deckCardIds).map(id => {
+      const img = new Image()
+      img.src = getCardImageUrl(id)
+      return new Promise(resolve => {
+        img.onload = resolve
+        img.onerror = resolve  <span class="json-comment">// 失敗也繼續</span>
+      })
+    })
+  )
+}</code></pre>
+
+    <p><strong>Fallback 圖</strong>：載入失敗用通用「卡背」當 placeholder，不要讓 UI 空著。</p>
+
+    <h3 class="sub">實作 Milestone</h3>
+    <ol>
+      <li><strong>M1：靜態場面渲染（一週）</strong>—— 從假 GameState JSON 渲染完整場面。卡片、手牌、場上、獎賞卡視覺。純前端 mock 資料。</li>
+      <li><strong>M2：互動原型（一週）</strong>—— Zustand store + 輸入狀態機。卡片點擊、選目標、送 PlayerAction。仍 mock 後端但完整輸入流程。</li>
+      <li><strong>M3：接上後端（一週）</strong>—— WebSocket wrapper、訊息協議、StateUpdate 套用、Event 動畫播放、ChoicePrompt 處理。</li>
+      <li><strong>M4：動畫與打磨（兩週）</strong>—— Framer Motion 動畫所有 Event 類型、節奏微調、跳過動畫、視覺打磨。</li>
+      <li><strong>M5：周邊頁面（一週）</strong>—— 大廳、房間、組牌器、觀戰、設定。</li>
+    </ol>
   </section>
 
   <div class="chapter-divider">
@@ -1657,6 +2702,24 @@ state = (
           <tr><td>隨機數策略</td><td>每次即時隨機（伺服器執行）</td></tr>
           <tr><td>引擎架構</td><td>事件驅動（Event-driven）+ Reducer pattern</td></tr>
           <tr><td>狀態同步</td><td>權威伺服器持有完整 state，視角化後傳客戶端</td></tr>
+          <tr><td>引擎純度</td><td>純函式式：純 GameState + Action + RNG → 新 GameState + Events</td></tr>
+          <tr><td>觸發順序仲裁</td><td>多數自動排序（出場順序），衝突時 fallback 給玩家選</td></tr>
+          <tr><td>無限連鎖防護</td><td>三層防護：chain_depth ≤ 100、loop detection、5 秒 timeout</td></tr>
+          <tr><td>不合法動作</td><td>伺服器級驗證、拒絕並回傳錯誤</td></tr>
+          <tr><td>伺服器框架</td><td>FastAPI + WebSocket + asyncio</td></tr>
+          <tr><td>對局狀態存放</td><td>Redis（每動作後即時持久化，TTL 24 小時）</td></tr>
+          <tr><td>每場對局執行緒模型</td><td>每場一個 asyncio task + 訊息佇列</td></tr>
+          <tr><td>訊息格式</td><td>JSON（Pydantic 雙端同步型別）</td></tr>
+          <tr><td>Event 推送</td><td>批次打包：整動作完整跑完一次推一包</td></tr>
+          <tr><td>State 傳輸</td><td>每次傳完整視角化 state（不傳 diff）</td></tr>
+          <tr><td>斷線寬限</td><td>60 秒重連時間</td></tr>
+          <tr><td>觀戰功能</td><td>支援，全知視角（建議僅對局結束後加入）</td></tr>
+          <tr><td>前端框架</td><td>React 18 + TypeScript + Framer Motion</td></tr>
+          <tr><td>前端狀態管理</td><td>Zustand（輕量、無樣板）</td></tr>
+          <tr><td>UI 平台優先</td><td>桌面優先（最低 1366×768），手機僅看不戰</td></tr>
+          <tr><td>卡圖來源</td><td>爬蟲下載到本地 static</td></tr>
+          <tr><td>動畫策略</td><td>Event-driven pipeline，inter-event delay 控制節奏</td></tr>
+          <tr><td>前端輸入模型</td><td>狀態機（idle / selecting / awaiting_server）</td></tr>
         </tbody>
       </table>
     </div>
@@ -1670,12 +2733,29 @@ state = (
     </div>
 
     <div class="callout callout-pending">
-      <span class="callout-label">引擎層待決</span>
+      <span class="callout-label">資料層待決</span>
       <ol>
-        <li><strong>觸發器衝突仲裁</strong>：多卡同時監聽同一事件時的執行順序。建議：多數情況自動依固定順序（出場順序）跑，有衝突時 fallback 給玩家選。</li>
-        <li><strong>無限連鎖防護</strong>：建議加硬上限（同事件鏈最多 100 次觸發強制停止）避免 server crash。</li>
-        <li><strong>不合法狀態處理</strong>：建議伺服器級驗證、拒絕並回傳錯誤。</li>
-        <li><strong>時間限制</strong>：每玩家是否有思考時間（chess clock）？親友局可能不需要。</li>
+        <li><strong>DSL 編寫工作流</strong>：是純人工撰寫 effect_code，還是設計半自動工具（從 effect_text 用 LLM 提案、人工修正）？M4 約 100 張的工作量人工可承受，更大規模需要工具支援。</li>
+        <li><strong>效果文字的多版本處理</strong>：同名卡在不同擴充包重印時，效果文字有時會微調。是否需要版本欄位？</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-pending">
+      <span class="callout-label">引擎與伺服器層待決</span>
+      <ol>
+        <li><strong>對局時間限制</strong>：是否要加 chess clock（每玩家固定思考時間）？親友局可能不需要，但加了能避免「忘記回合導致 idle timeout」。</li>
+        <li><strong>對局結束後的存檔</strong>：是否所有對局都存一份 replay 到 PostgreSQL？個人專案大概夠用很久，但會有累積成本。</li>
+        <li><strong>觀戰加入時機</strong>：嚴格僅對局結束後可觀戰、還是允許隨時加入但延遲視角？</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-pending">
+      <span class="callout-label">前端與部署待決</span>
+      <ol>
+        <li><strong>音效與配樂</strong>：要不要加？親友局加了有趣味，但要找版權安全的素材。</li>
+        <li><strong>部署目標</strong>：自架 VPS、Cloudflare Tunnel、還是只在內網跑？</li>
+        <li><strong>HTTPS 與網域</strong>：自簽憑證 + Tailscale 比申請正式網域簡單，可考慮。</li>
+        <li><strong>玩家帳號</strong>：是否需要註冊系統？親友圈用固定 token + 暱稱可能就夠。</li>
       </ol>
     </div>
   </section>
@@ -1688,6 +2768,21 @@ state = (
     </div>
 
     <div class="changelog">
+      <div class="changelog-entry">
+        <div class="changelog-date">2026-04-26</div>
+        <div class="changelog-ver">v0.7</div>
+        <div class="changelog-desc">第七輪：完整撰寫第 10 章前端對戰 UI（React + TypeScript + Framer Motion 技術棧、場面布局、Zustand store、Event Animation Pipeline、卡片元件 variant、玩家輸入狀態機、Pending Choice UI、觀戰模式、卡圖管理）。一併補上前端 milestone。</div>
+      </div>
+      <div class="changelog-entry">
+        <div class="changelog-date">2026-04-26</div>
+        <div class="changelog-ver">v0.6</div>
+        <div class="changelog-desc">第六輪：完整撰寫第 9 章伺服器架構（FastAPI + WebSocket + Redis 技術棧、Connection Manager、Lobby、Match Session、訊息協議、Event 過濾與視角化、狀態持久化、伺服器重啟恢復、安全防作弊最低標）。</div>
+      </div>
+      <div class="changelog-entry">
+        <div class="changelog-date">2026-04-26</div>
+        <div class="changelog-ver">v0.5</div>
+        <div class="changelog-desc">第五輪：完整撰寫第 8 章 DSL 執行引擎（職責邊界、Action Validator/Resolver/Executor、Event Bus 雙模式、State Reducer、Phase Manager、狀態異常結算、無限連鎖防護）。</div>
+      </div>
       <div class="changelog-entry">
         <div class="changelog-date">2026-04-26</div>
         <div class="changelog-ver">v0.4</div>
