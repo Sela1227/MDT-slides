@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>希格諾科技 SignalPro — 背景情報、資金分析、合作模式評估 v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d1014;
+    --ink-soft: #1a1f26;
+    --paper: #f4efe6;
+    --paper-warm: #ebe3d4;
+    --rule: #2a2f37;
+    --accent: #c8412c;
+    --accent-deep: #962f1f;
+    --gold: #b8924a;
+    --moss: #4a5d3a;
+    --caution: #d97706;
+    --signal-blue: #1e3a5f;
+    --grid: rgba(13, 16, 20, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; font-style: normal !important; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+
+  /* === HEADER === */
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 32px 48px 24px;
+    background: var(--paper);
+    position: relative;
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-soft);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .masthead-top .edition { font-weight: 700; }
+
+  .masthead-top .meta { display: flex; gap: 24px; }
+
+  .masthead-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-top: 28px;
+    color: var(--ink);
+  }
+
+  .masthead-title .accent {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .masthead-sub {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 12px;
+    color: var(--ink-soft);
+    max-width: 800px;
+  }
+
+  .tagline-strip {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .tagline-strip .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+  }
+
+  .tag.warn { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  .tag.caution { background: var(--caution); color: var(--paper); border-color: var(--caution); }
+  .tag.gold { background: var(--gold); color: var(--paper); border-color: var(--gold); }
+  .tag.green { background: var(--moss); color: var(--paper); border-color: var(--moss); }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px;
+  }
+
+  /* === SECTION === */
+  .section-marker {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin: 80px 0 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .section-marker .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 64px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .section-marker .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .section-marker h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .section-marker .text { flex: 1; }
+
+  /* === JAMES REPLY ANALYSIS === */
+  .reply-block {
+    background: var(--paper-warm);
+    border: 2px solid var(--ink);
+    margin: 32px 0;
+    overflow: hidden;
+  }
+
+  .reply-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .reply-header .from {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .reply-header .name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .reply-body {
+    padding: 32px;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.7;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .reply-body p { margin-bottom: 12px; }
+
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  .signal-card {
+    padding: 28px 32px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .signal-card:last-child { border-right: none; }
+
+  .signal-card .signal-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .signal-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .signal-card p {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .signal-card .verdict-line {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  .verdict-line .good { color: var(--moss); font-weight: 700; }
+  .verdict-line .bad { color: var(--accent); font-weight: 700; }
+  .verdict-line .neutral { color: var(--gold); font-weight: 700; }
+
+  /* === DOSSIER === */
+  .dossier {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 2px solid var(--ink);
+    background: var(--paper-warm);
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .dossier::before {
+    content: 'CLASSIFIED · 內部評估';
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+
+  .dossier-side {
+    padding: 40px 32px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .dossier-side:last-child { border-right: none; }
+
+  .dossier h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .dossier .en-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .dossier dl {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px 20px;
+    font-size: 14px;
+  }
+
+  .dossier dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    padding-top: 4px;
+  }
+
+  .dossier dd { font-weight: 500; }
+
+  /* === FUNDING ANALYSIS === */
+  .funding-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .funding-section::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 240px; height: 100%;
+    background:
+      repeating-linear-gradient(45deg,
+        transparent, transparent 10px,
+        rgba(244, 239, 230, 0.04) 10px, rgba(244, 239, 230, 0.04) 20px);
+  }
+
+  .funding-section .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .funding-section h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 8px 0 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .funding-section .lead {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 800px;
+    opacity: 0.9;
+    font-weight: 400;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin: 40px 0 0;
+  }
+
+  .stat {
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+  }
+
+  .stat .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .stat .stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 8px 0;
+  }
+
+  .stat p {
+    font-size: 13px;
+    color: rgba(244, 239, 230, 0.75);
+  }
+
+  /* === BACKER ANALYSIS CARDS === */
+  .backer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 32px 0;
+  }
+
+  .backer-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 28px;
+    position: relative;
+  }
+
+  .backer-card .role {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 14px;
+  }
+
+  .role.listed { background: var(--moss); color: var(--paper); }
+  .role.private { background: var(--gold); color: var(--paper); }
+  .role.foreign { background: var(--signal-blue); color: var(--paper); }
+  .role.distributor { background: #6b5b95; color: var(--paper); }
+
+  .backer-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .backer-card .ticker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .backer-card .role-in-deal {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    background: var(--paper-warm);
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-left: 3px solid var(--accent);
+    font-weight: 500;
+  }
+
+  .backer-card p {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .backer-card .judgement {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+    font-size: 13px;
+  }
+
+  .backer-card .judgement strong {
+    color: var(--accent-deep);
+    font-weight: 700;
+  }
+
+  /* === CAPABILITY MATRIX === */
+  .capability-matrix {
+    border: 2px solid var(--ink);
+    margin: 32px 0;
+    background: var(--paper);
+  }
+
+  .capability-row {
+    display: grid;
+    grid-template-columns: 220px 1fr 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .capability-row:last-child { border-bottom: none; }
+
+  .capability-row.header {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .capability-row > div {
+    padding: 16px 20px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .capability-row > div:last-child { border-right: none; }
+
+  .capability-row.header > div {
+    border-right-color: rgba(244,239,230,0.2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .capability-row .cap-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .capability-row .cap-detail {
+    font-size: 14px;
+  }
+
+  .capability-row .cap-score {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .score-high { color: var(--moss); }
+  .score-mid { color: var(--gold); }
+  .score-low { color: var(--accent); }
+  .score-zero { color: var(--rule); }
+
+  /* === FOUNDER === */
+  .founder-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .founder-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 240px; height: 100%;
+    background:
+      repeating-linear-gradient(45deg,
+        transparent, transparent 10px,
+        rgba(244, 239, 230, 0.04) 10px, rgba(244, 239, 230, 0.04) 20px);
+  }
+
+  .founder-card .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .founder-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 800;
+    margin: 8px 0 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .founder-card .quote {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.5;
+    border-left: 3px solid var(--accent);
+    padding: 8px 0 8px 24px;
+    margin: 24px 0;
+    max-width: 720px;
+  }
+
+  .founder-card .quote-source {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* === TIMELINE === */
+  .timeline {
+    margin: 32px 0;
+    border-left: 2px solid var(--ink);
+    padding-left: 0;
+  }
+
+  .timeline-event {
+    position: relative;
+    padding: 20px 0 20px 40px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -7px; top: 28px;
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+    border-radius: 50%;
+  }
+
+  .timeline-event.major::before {
+    background: var(--ink);
+    width: 16px; height: 16px;
+    left: -9px;
+  }
+
+  .timeline-event .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .timeline-event h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 4px 0 8px;
+  }
+
+  .timeline-event p {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .timeline-event a {
+    color: var(--accent-deep);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent-deep);
+  }
+
+  /* === MEDIA LIST === */
+  .media-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 24px 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .media-item {
+    display: grid;
+    grid-template-columns: 120px 1fr 100px;
+    gap: 24px;
+    align-items: center;
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s;
+  }
+
+  .media-item:hover { background: var(--paper-warm); }
+
+  .media-item .source {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+
+  .media-item .headline {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .media-item .headline a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border 0.2s;
+  }
+
+  .media-item .headline a:hover { border-bottom-color: var(--accent); }
+
+  .media-item .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  /* === COLLAB MODELS === */
+  .collab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  .collab-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 32px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .collab-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .collab-card .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+  }
+
+  .badge.low-risk { background: var(--moss); color: var(--paper); }
+  .badge.med-risk { background: var(--gold); color: var(--paper); }
+  .badge.high-risk { background: var(--accent); color: var(--paper); }
+  .badge.research { background: var(--signal-blue); color: var(--paper); }
+  .badge.lobster { background: #b3424a; color: var(--paper); }
+
+  .collab-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .collab-card .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+
+  .collab-card .content { font-size: 14px; }
+
+  .collab-card .content strong {
+    font-weight: 700;
+    color: var(--accent-deep);
+  }
+
+  .collab-card .specs {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--rule);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .collab-card .specs .spec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .collab-card ul {
+    list-style: none;
+    margin: 12px 0;
+  }
+
+  .collab-card ul li {
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .collab-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* === CALLOUT === */
+  .callout {
+    background: var(--paper-warm);
+    border: 2px solid var(--ink);
+    border-left: 8px solid var(--accent);
+    padding: 24px 32px;
+    margin: 32px 0;
+  }
+
+  .callout.warning {
+    background: #fff4eb;
+    border-left-color: var(--caution);
+  }
+
+  .callout.positive {
+    border-left-color: var(--moss);
+  }
+
+  .callout h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .callout .icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* === VERDICT === */
+  .verdict {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 56px 48px;
+    margin: 64px -48px 0;
+    position: relative;
+  }
+
+  .verdict::before {
+    content: 'EXECUTIVE SUMMARY';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .verdict h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .verdict h2 .accent {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  /* === FOOTNOTE === */
+  .footnote {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    padding-left: 12px;
+    border-left: 2px solid var(--rule);
+  }
+
+  /* === RECOMMEND TABLE === */
+  .recommend-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+  }
+
+  .recommend-matrix th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 16px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .recommend-matrix td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+
+  .recommend-matrix tr:nth-child(even) td { background: var(--paper-warm); }
+
+  .recommend-matrix .pri-h { color: var(--accent); font-weight: 700; }
+  .recommend-matrix .pri-m { color: var(--gold); font-weight: 700; }
+  .recommend-matrix .pri-l { color: var(--moss); font-weight: 700; }
+
+  /* === FOOTER === */
+  footer {
+    margin-top: 96px;
+    padding: 40px 48px;
+    border-top: 3px double var(--ink);
+    background: var(--paper-warm);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+
+  footer p { margin: 4px 0; }
+
+  @media print {
+    body { background: white; }
+    .collab-card:hover { transform: none; box-shadow: none; }
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 24px; }
+    .masthead { padding: 24px; }
+    .masthead-title { font-size: 48px; }
+    .dossier, .collab-grid, .verdict-grid, .signal-grid, .backer-grid, .stats-row { grid-template-columns: 1fr; }
+    .dossier-side, .signal-card { border-right: none; border-bottom: 1px solid var(--rule); }
+    .media-item { grid-template-columns: 1fr; gap: 8px; }
+    .media-item .date { text-align: left; }
+    .verdict { margin: 64px -24px 0; padding: 40px 24px; }
+    .section-marker { gap: 16px; }
+    .section-marker .num { font-size: 48px; }
+    .capability-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== MASTHEAD ============== -->
+<header class="masthead">
+  <div class="masthead-top">
+    <span class="edition">Vendor Briefing No. 2026-04 · v2</span>
+    <div class="meta">
+      <span>Confidential · 內部評估</span>
+      <span id="date-stamp"></span>
+    </div>
+  </div>
+
+  <h1 class="masthead-title">希格諾科技<br><span class="accent">SignalPro</span> Dossier v2</h1>
+  <p class="masthead-sub">廠商背景、創辦人、媒體、資金來源與金主分析、接案能力評估、合作模式建議。新版含 James 回覆判讀與龍蝦助理 PoC 框架。</p>
+
+  <div class="tagline-strip">
+    <span class="tag">毫米波雷達 → 醫療 AI</span>
+    <span class="tag gold">NVIDIA Inception</span>
+    <span class="tag caution">成立 1.8 年</span>
+    <span class="tag warn">NemoClaw Early Preview</span>
+    <span class="tag green">廠商已退讓 LINE</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ============== SECTION 0 · JAMES 回覆判讀 ============== -->
+  <div class="section-marker">
+    <span class="num">00</span>
+    <div class="text">
+      <div class="label">Vendor Reply Analysis · 廠商回覆判讀</div>
+      <h2>James 的回覆透露了什麼</h2>
+    </div>
+  </div>
+
+  <div class="reply-block">
+    <div class="reply-header">
+      <span class="from">From</span>
+      <span class="name">James · 希格諾</span>
+      <span style="margin-left:auto; font-family:'JetBrains Mono', monospace; font-size:11px; color: rgba(244,239,230,0.6);">廠商業務窗口</span>
+    </div>
+
+    <div class="reply-body">
+      <p>林醫師您好，我是希格諾的 James，之後要麻煩您了</p>
+      <p>簡報中我們提到的 Line 的部份，其實只是用來表示一個通訊軟體，所以這個都能被替換掉，看秀傳這邊希望使用哪個通訊介面我們都能做調整的</p>
+      <p>目前希望在 POC 上合作的命題上，希望能先針對一些比較重要的指標來搭建一隻龍蝦助理，所以也希望能夠再和各位有機會再討論出幾個實作的驗證方向</p>
+    </div>
+
+    <div class="signal-grid">
+      <div class="signal-card">
+        <div class="signal-label">訊號 1 · 善意但暴露弱點</div>
+        <h4>「LINE 只是表示一個通訊軟體」</h4>
+        <p>這句話表面上很有彈性，實際上洩漏兩件事：</p>
+        <p>第一，他們<strong>確實理解了合規問題</strong>，所以快速退讓——這代表簡報裡寫得很堅定的「LINE 整合」其實沒有技術鎖死，可以替換。這是好事。</p>
+        <p>第二，但也代表簡報裡的架構圖、技術深度，<strong>很可能並未考慮過合規面</strong>，是先畫漂亮的圖再說。介面層只是「表示」，意味著底層實作彈性大、但同時也意味著還沒決定。</p>
+        <div class="verdict-line"><span class="neutral">JUDGEMENT</span> · 中性偏正面：彈性高 / 但「彈性高」也等於「還沒做完」</div>
+      </div>
+
+      <div class="signal-card">
+        <div class="signal-label">訊號 2 · 龍蝦助理：縮小範圍</div>
+        <h4>「先針對重要指標搭建一隻龍蝦助理」</h4>
+        <p>「龍蝦」是 NVIDIA NemoClaw 的中文諧音梗（claw = 爪 / 蝦螯），是他們對 Agent 的暱稱。這句話的關鍵是：</p>
+        <p>他們<strong>主動提議從一個垂直命題切入</strong>，不是要全院導入。這是務實的態度，也意味著 James 已經知道——以他們公司的規模和成熟度，<strong>沒辦法吃下整個 HIS / LIS / PACS 整合</strong>的大案子。</p>
+        <p>「龍蝦助理」的好處：可以精準驗證單一場景；壞處：價值有限、容易做完就停在 PoC，無法擴大。</p>
+        <div class="verdict-line"><span class="good">JUDGEMENT</span> · 正面：對方務實知道自己的能耐</div>
+      </div>
+
+      <div class="signal-card">
+        <div class="signal-label">訊號 3 · 沒講的更重要</div>
+        <h4>沒有提任何已落地案例</h4>
+        <p>正常合作流程的廠商開場白會是：「我們在 OO 醫院已經做過 XX，希望也能在秀傳⋯⋯」，但 James 完全沒提任何醫療領域的實績、人脈、論文、TFDA 進度。</p>
+        <p>這跟我們公開搜尋的結果一致——<strong>他們在醫療領域目前是 0 實績</strong>。秀傳很可能是他們的第一家，或試圖成為第一家試水醫院。</p>
+        <div class="verdict-line"><span class="bad">JUDGEMENT</span> · 警示：當白老鼠的風險自己評估</div>
+      </div>
+
+      <div class="signal-card">
+        <div class="signal-label">訊號 4 · 業務口吻</div>
+        <h4>「之後要麻煩您了」</h4>
+        <p>James 是<strong>業務 / BD 角色</strong>，不是技術窗口、也不是決策者。他能談範圍與場域，但無法談技術細節、合約條款、資安架構。</p>
+        <p>建議第一次會議要求他<strong>同時帶技術主管與商務決策者</strong>到場，不然會議會卡在「我回去問一下」。</p>
+        <div class="verdict-line"><span class="neutral">JUDGEMENT</span> · 操作面：要求合適的人到場</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout positive">
+    <span class="icon">★ 整體判讀</span>
+    <h4>James 的回覆值得一個正面回應，但仍需把關</h4>
+    <p>他展現了務實、能退讓、願意縮小命題的態度，這在新創廠商中算是好的特質。但「龍蝦助理」這個命題太抽象，下一封信應該<strong>反向定義場域</strong>：明確告訴他「我們有興趣的不是你們挑的命題，而是這幾個我們真正的痛點」，把主導權拿回來，避免被牽著走進對方準備好的 demo 場景。</p>
+  </div>
+
+  <!-- ============== SECTION 1 · 公司基本資料 ============== -->
+  <div class="section-marker">
+    <span class="num">01</span>
+    <div class="text">
+      <div class="label">Company Profile · 工商資訊</div>
+      <h2>它是一家什麼樣的公司</h2>
+    </div>
+  </div>
+
+  <div class="dossier">
+    <div class="dossier-side">
+      <h3>希格諾科技股份有限公司</h3>
+      <div class="en-name">SignalPro Technology Co., Ltd.</div>
+      <dl>
+        <dt>統一編號</dt>
+        <dd>95464633</dd>
+        <dt>設立日期</dt>
+        <dd>2024 年 6 月 3 日<div class="footnote">距今約 1 年 10 個月</div></dd>
+        <dt>登記資本</dt>
+        <dd>新台幣 2 億元</dd>
+        <dt>實收資本</dt>
+        <dd>新台幣 10 萬元（!）</dd>
+        <dt>所在地</dt>
+        <dd>高雄市苓雅區新光路 38 號 31 樓之 4</dd>
+        <dt>聯絡電話</dt>
+        <dd>07-2695198</dd>
+      </dl>
+    </div>
+
+    <div class="dossier-side">
+      <h3>董監事結構</h3>
+      <div class="en-name">所有董監事均為「天識數位科技股份有限公司」法人代表</div>
+      <dl>
+        <dt>董事長</dt>
+        <dd>田勝侑</dd>
+        <dt>董事</dt>
+        <dd>吳珮芳<br>周儒聰</dd>
+        <dt>監察人</dt>
+        <dd>呂關德</dd>
+        <dt>關係企業</dt>
+        <dd>天識數位科技股份有限公司</dd>
+        <dt>狀態</dt>
+        <dd>未上市櫃，股份有限公司</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- ============== SECTION 2 · 資金來源（關鍵新增） ============== -->
+  <div class="section-marker">
+    <span class="num">02</span>
+    <div class="text">
+      <div class="label">Funding Source · 資金來源（關鍵分析）</div>
+      <h2>30 億從哪來？實收 10 萬怎麼撐 30 億？</h2>
+    </div>
+  </div>
+
+  <div class="funding-section">
+    <span class="label">Capital Structure Analysis</span>
+    <h3>關鍵發現：希格諾不是 30 億的金主，是計畫的「掛名牽頭人」</h3>
+    <p class="lead">媒體報導都用「希格諾攜手⋯⋯投資 30 億」，容易誤導為希格諾出 30 億。實情是：希格諾是<strong style="color:var(--gold);">統籌整合者，硬體成本由 Supermicro / 茂綸 / 合通分擔，軟體由數位無限提供，場域由統懋半導體（上市公司）出借廠房</strong>。希格諾自己拿出來的，是品牌、整合服務與雷達 AI 演算法。</p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-label">希格諾實收資本</div>
+        <div class="stat-value">10 萬元</div>
+        <p>登記 2 億但實收僅 10 萬，公開資料證實希格諾本身缺乏自有資金。</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">SiGTRON 計畫總額</div>
+        <div class="stat-value">30 億元</div>
+        <p>由 6 家公司共同投入，希格諾掛名牽頭但實際資本貢獻比例不明。</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">資金來源</div>
+        <div class="stat-value">合作夥伴</div>
+        <p>硬體商、通路商、整合商各自帶資源進場，類似聯盟而非主投人。</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces', serif; font-size:28px; font-weight:600; margin: 48px 0 16px;">SiGTRON AI Factory 的六位金主／夥伴</h3>
+
+  <div class="backer-grid">
+
+    <div class="backer-card">
+      <span class="role listed">上市公司 · 場域提供</span>
+      <h4>統懋半導體</h4>
+      <div class="ticker">TWSE: 2434 · MOSPEC SEMICONDUCTOR</div>
+      <p>1987 年成立，2000 年上市。功率電晶體與二極體製造商，前身為統一企業電子事業部。</p>
+      <div class="role-in-deal">提供台南新市區廠址作為 AI Factory 機房場地。董事長翁淑貞、實收資本 3.7 億。</div>
+      <div class="judgement">
+        <strong>金主性質判讀：</strong>場域提供者，不是真正出資方。提供廠房可以視為「機會成本」貢獻而非現金。市值約 11 億，本業仍是傳統半導體，<strong>不是 AI 算力業</strong>。</div>
+    </div>
+
+    <div class="backer-card">
+      <span class="role foreign">美商 · 硬體龍頭</span>
+      <h4>Supermicro 美超微電腦</h4>
+      <div class="ticker">NASDAQ: SMCI</div>
+      <p>美國 AI 伺服器龍頭，市值千億美元級別。NVIDIA HGX B200 與 RTX Pro 6000 的主要 OEM 出貨商。</p>
+      <div class="role-in-deal">提供 128 台 HGX B200 + 24 台 RTX Pro 6000 伺服器硬體，為計畫核心成本。</div>
+      <div class="judgement">
+        <strong>金主性質判讀：</strong>硬體供應商，不是股權投資人。SMCI 賣設備收錢，<strong>不是金主</strong>。台灣已有多個類似的「Supermicro 攜手 X 公司建 AI Factory」案，是其標準商模。</div>
+    </div>
+
+    <div class="backer-card">
+      <span class="role distributor">日商通路 · 代理商</span>
+      <h4>茂綸 Macnica</h4>
+      <div class="ticker">日商 Macnica Galaxy 在台分公司</div>
+      <p>日本最大的半導體與電子零件代理商之一。NVIDIA、Xilinx、Intel 等大廠的亞太通路。</p>
+      <div class="role-in-deal">提供 NVIDIA 高階 GPU 通路採購支援，可能涉及融資租賃條件。</div>
+      <div class="judgement">
+        <strong>金主性質判讀：</strong>通路商角色。賺通路差價，<strong>不是 VC、不是金主</strong>。對希格諾而言是「貨源夥伴」。</div>
+    </div>
+
+    <div class="backer-card">
+      <span class="role private">私人公司 · 軟體提供</span>
+      <h4>數位無限軟體 INFINITIX</h4>
+      <div class="ticker">未上市</div>
+      <p>陳文裕領軍。產品 AI-Stack 是 GPU 資源池化軟體。「全台唯一獲選 NVIDIA Solution Advisor 全球夥伴」。2024 年獲 AMD GPU 生態建設夥伴獎。</p>
+      <div class="role-in-deal">提供 GPU 資源管理軟體 AI-Stack，將原始算力轉化為 IaaS / PaaS / SaaS 服務。</div>
+      <div class="judgement">
+        <strong>金主性質判讀：</strong>軟體合作夥伴，<strong>是聯盟方而非投資方</strong>。INFINITIX 自身也在募資階段，能提供軟體授權，無法提供大量現金。</div>
+    </div>
+
+    <div class="backer-card">
+      <span class="role private">私人公司 · SI 整合商</span>
+      <h4>敦陽科技</h4>
+      <div class="ticker">TWSE: 2480</div>
+      <p>1993 年成立，2002 年上市的系統整合商。資料中心建置、雲端服務、資安。台灣老牌 SI。</p>
+      <div class="role-in-deal">提供資料中心系統整合與佈建工程能力。</div>
+      <div class="judgement">
+        <strong>金主性質判讀：</strong>系統整合包工，<strong>賺工程費用</strong>，不是金主。可信度與規模都比希格諾強。</div>
+    </div>
+
+    <div class="backer-card">
+      <span class="role private">私人公司 · 機電工程</span>
+      <h4>合通企業（合通集團）</h4>
+      <div class="ticker">未上市集團</div>
+      <p>機電工程、能源管理、資料中心基礎設施建置。在資料中心建置上有實績。</p>
+      <div class="role-in-deal">提供機電、空調、電力基礎設施工程。</div>
+      <div class="judgement">
+        <strong>金主性質判讀：</strong>機電工程包工，<strong>賺工程費用</strong>，不是金主。</div>
+    </div>
+
+  </div>
+
+  <div class="callout warning">
+    <span class="icon">⚠ 整體金主結構結論</span>
+    <h4>30 億是「分散自付」的聯盟，不是有人押注希格諾</h4>
+    <p>把六位夥伴拆解後可以看出：<strong>沒有任何一家是創投、私募、戰略投資人</strong>。所有夥伴都是「賣硬體、賣軟體、賣服務、出場地」的角色，各自從這個案子賺自己那部分的錢。希格諾沒有獲得任何股權投資的證據。<br><br>
+    這意味著兩件事：(1) 希格諾<strong>沒有 VC 進行盡職調查與背書</strong>，外界對其營運品質沒有獨立驗證；(2) 一旦希格諾本身營運出問題，這個聯盟會立刻瓦解，因為沒有人對「希格諾品牌」有股權承諾。<br><br>
+    秀傳要評估的是：在<strong>沒有 VC 背書的情況下</strong>，是否願意成為希格諾的醫療領域第一個案場。</p>
+  </div>
+
+  <!-- ============== SECTION 3 · 接案能力評估（新增） ============== -->
+  <div class="section-marker">
+    <span class="num">03</span>
+    <div class="text">
+      <div class="label">Capability Assessment · 接案能力評估</div>
+      <h2>能不能接案？或是只會講話？</h2>
+    </div>
+  </div>
+
+  <p style="margin-bottom:16px; font-size:15px;">用六個面向，把「真實能力」與「敘事能力」區分開來：</p>
+
+  <div class="capability-matrix">
+    <div class="capability-row header">
+      <div>能力面向</div>
+      <div>評估依據（公開可驗證）</div>
+      <div>評分</div>
+    </div>
+
+    <div class="capability-row">
+      <div class="cap-name">毫米波雷達技術</div>
+      <div class="cap-detail">官網有 SignalPro SDK 文件、C++/Rust 核心、產品線完整。團隊宣稱博士背景，雖無法獨立驗證但有具體 SDK 文件。<strong>本業，能力可信。</strong></div>
+      <div class="cap-score score-high">A</div>
+    </div>
+
+    <div class="capability-row">
+      <div class="cap-name">AI 算力中心整合</div>
+      <div class="cap-detail">SiGTRON AI-FACTORY 簽約啟動，但<strong>還在「建置中」階段</strong>，尚未營運。能否最終如期投產要 2026 年下半年才能驗證。台南市政府站台屬政治支持非技術背書。</div>
+      <div class="cap-score score-mid">B−</div>
+    </div>
+
+    <div class="capability-row">
+      <div class="cap-name">醫院 HIS/LIS/PACS 整合</div>
+      <div class="cap-detail">公開資料、新聞稿、官網、論文、TFDA 認證、IRB 紀錄——<strong>全部為零</strong>。團隊也沒有公開的醫療資訊（HL7/FHIR）背景成員。</div>
+      <div class="cap-score score-zero">F</div>
+    </div>
+
+    <div class="capability-row">
+      <div class="cap-name">AI Agent 開發</div>
+      <div class="cap-detail">技術依賴 NVIDIA NemoClaw early preview（2026/3 才發布）。沒有自己的 LLM、沒有自家 framework。<strong>等於「拼裝廠」而非「研發廠」</strong>。</div>
+      <div class="cap-score score-low">C</div>
+    </div>
+
+    <div class="capability-row">
+      <div class="cap-name">合規與法遵能力</div>
+      <div class="cap-detail">官網無資安認證（ISO 27001/27701）、無 HIPAA / GDPR 合規說明、無食藥署 SaMD 認證進度。James 對 LINE 合規問題的快速退讓顯示，他們<strong>遇到才知道</strong>，不是<strong>規劃好的</strong>。</div>
+      <div class="cap-score score-low">C−</div>
+    </div>
+
+    <div class="capability-row">
+      <div class="cap-name">財務與營運穩定</div>
+      <div class="cap-detail">實收資本 10 萬、無 VC 背書、無公開財報、成立 1.8 年。對長期維護合約的承擔能力<strong>有限</strong>。</div>
+      <div class="cap-score score-low">D</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="icon">能力評估總結</span>
+    <h4>真實能力集中在「雷達 + 算力整合」，醫療資訊是空白頁</h4>
+    <p><strong>能做的：</strong>毫米波雷達感測、SDK 開發、與大廠（Supermicro / NVIDIA / 茂綸）形成商務聯盟、媒體曝光與政府關係。<br>
+    <strong>還不能做的：</strong>HIS 介接、合規 / 法遵、長期維護承諾、SaMD 醫材認證。<br>
+    <strong>結論：</strong>不是「講空話」的純 PPT 公司——他們確實有雷達 SDK 與 AI Factory 在動工——但<strong>把他們當成醫療資訊系統廠商會踩雷</strong>。把他們當成感測 / 算力夥伴比較準確。</p>
+  </div>
+
+  <!-- ============== SECTION 4 · 創辦人 ============== -->
+  <div class="section-marker">
+    <span class="num">04</span>
+    <div class="text">
+      <div class="label">Founder · 創辦人</div>
+      <h2>田勝侑是誰？</h2>
+    </div>
+  </div>
+
+  <div class="founder-card">
+    <div class="role">Chairman / 董事長</div>
+    <h3>田勝侑 <span style="font-size:24px;font-weight:400;color:var(--gold);">Tien Sheng-Yu</span></h3>
+
+    <p style="font-size:15px; max-width:680px; opacity:0.9;">
+      根據公開工商登記與媒體採訪資料，田勝侑為希格諾科技與「天識數位科技股份有限公司」的核心代表人。
+      希格諾母體是<strong style="color:var(--gold);">毫米波雷達 / 訊號處理</strong>背景，自我定位為「亞洲第一個專注於感測器訊號處理及 AI 模型建立的專業團隊」。
+      公司成立後快速跨足 AI 算力中心建置與醫療應用。
+    </p>
+
+    <div class="quote">
+      「現今各國都在積極發展算力主權，現有的算力都投入了造『大船』，但市場上更需要的是千千萬萬艘能靈活穿梭的『小艇』。SiGTRON AI FACTORY 的戰略核心，正是解決這些被科技巨頭所忽略的企業實際 AI 推理應用需求。」
+      <div class="quote-source">— 田勝侑 · 茂綸新聞稿 · 2025 年 11 月</div>
+    </div>
+
+    <p style="font-size:13px; opacity:0.7; margin-top:24px;">
+      田勝侑個人公開媒體曝光極少，無公開的學經歷、LinkedIn 或論文紀錄。所有發言均以「希格諾科技董事長」身份出現於 2025 年 Q4 之後的合作新聞稿。
+      實際技術背景需在會議中親自驗證。
+    </p>
+  </div>
+
+  <!-- ============== SECTION 5 · 業務軌跡 ============== -->
+  <div class="section-marker">
+    <span class="num">05</span>
+    <div class="text">
+      <div class="label">Business Trajectory · 業務軌跡</div>
+      <h2>從雷達到醫療：跨度極大的轉向</h2>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-event major">
+      <div class="date">2024 / 06 / 03 · 公司成立</div>
+      <h4>希格諾科技於高雄登記設立</h4>
+      <p>核心業務登記為汽車感測器、AIoT、毫米波雷達、智慧監控、智慧座艙、智慧家庭。早期定位為「雷達晶片商客戶之演算法授權」與「客製化感應演算軟體」。</p>
+    </div>
+
+    <div class="timeline-event">
+      <div class="date">2025 / Q1 — Q3 · 雷達本業期</div>
+      <h4>主力產品：SignalPro SDK（C++/Rust 核心）</h4>
+      <p>專注於非接觸式生理感測（心跳、呼吸、微動）、3D 雷達成像、車內兒童存在感測、駕駛生理訊號監測。</p>
+    </div>
+
+    <div class="timeline-event major">
+      <div class="date">2025 / 11 / 13 · 戰略轉向</div>
+      <h4>SiGTRON AI-FACTORY 簽約啟動</h4>
+      <p>聯合 Supermicro、敦陽、茂綸、數位無限、合通企業，於台南統懋半導體廠址投入 30 億建 AI 算力中心，總算力 40.96 ExaFLOPS。台南市長黃偉哲共同見證。<br>
+      <a href="https://money.udn.com/money/story/11162/9138006" target="_blank">📰 經濟日報報導</a></p>
+    </div>
+
+    <div class="timeline-event">
+      <div class="date">2025 / 10 — 2026 / Q1 · 應用層擴張</div>
+      <h4>跨足醫療：秀傳醫院 SignalPro × NemoClaw 簡報</h4>
+      <p>推出本案簡報——「智慧護理 AI 助手」，以 NVIDIA NemoClaw + Nemotron + OpenShell 為技術底層，LINE 為前端介面，目標是整合醫院 HIS / LIS / PACS / 用藥系統。</p>
+    </div>
+
+    <div class="timeline-event">
+      <div class="date">2026 / 03 / 16 · 技術相依風險浮現</div>
+      <h4>NVIDIA 官方標示 NemoClaw 為 Early Preview</h4>
+      <p>NVIDIA 在 GTC 2026 期間發表 NemoClaw 開源框架，明確聲明<strong>「not production-ready」</strong>，API 行為隨時可能改變。希格諾簡報的核心技術依賴於此 preview 版本。</p>
+    </div>
+
+    <div class="timeline-event major">
+      <div class="date">2026 / 04 · 與秀傳接洽</div>
+      <h4>James 主動回信，提議從「龍蝦助理」PoC 切入</h4>
+      <p>承認 LINE 介面可替換，主動縮小範圍至「重要指標 + 龍蝦助理」單一命題，顯示對方對自身能力與合規風險已有部分認知。</p>
+    </div>
+  </div>
+
+  <!-- ============== SECTION 6 · 媒體報導 ============== -->
+  <div class="section-marker">
+    <span class="num">06</span>
+    <div class="text">
+      <div class="label">Press Coverage · 公開報導</div>
+      <h2>媒體上的希格諾</h2>
+    </div>
+  </div>
+
+  <p style="margin-bottom:16px; font-size:15px;">所有媒體曝光集中在 2025 年 11 月之後，且全部圍繞 SiGTRON AI-FACTORY 一個事件。<strong>沒有任何醫療領域的落地案例報導</strong>，無學術論文、無 IRB 通過紀錄、無食藥署認證紀錄。</p>
+
+  <div class="media-list">
+    <div class="media-item">
+      <span class="source">經濟日報</span>
+      <div class="headline"><a href="https://money.udn.com/money/story/11162/9138006" target="_blank">新一代 SiGTRON AI 工廠落腳台南 打造全台首座高階算力基地</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">中央社</span>
+      <div class="headline"><a href="https://www.cna.com.tw/news/afe/202511130325.aspx" target="_blank">預定投資 30 億元 新一代 AI 工廠落腳台南</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">自由時報</span>
+      <div class="headline"><a href="https://ec.ltn.com.tw/article/breakingnews/5245050" target="_blank">希格諾科技攜手美超微 投資 30 億台南建置 AI 工廠</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">大紀元</span>
+      <div class="headline"><a href="https://www.epochtimes.com/b5/25/11/13/n14635223.htm" target="_blank">美超微等 6 企投 30 億元 台南建 AI 運算中心</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">大成報</span>
+      <div class="headline"><a href="https://n.yam.com/Article/20251113225150" target="_blank">希格諾攜 5 企業投 30 億建臺南 SiGTRON AI 工廠</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">Newtalk 新聞</span>
+      <div class="headline"><a href="https://newtalk.tw/news/view/2025-11-13/1004401" target="_blank">新一代 SiGTRON AI 工廠落腳台南 打造亞洲級算力核心基地</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">台南市政府</span>
+      <div class="headline"><a href="https://www.tainan.gov.tw/News_Content.aspx?n=13371&s=8780004" target="_blank">Neocloud AI-FACTORY 啟動台南據點 黃偉哲見證南部 AI 產業新篇章</a></div>
+      <span class="date">2025·11·13</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">工商時報</span>
+      <div class="headline"><a href="https://www.ctee.com.tw/news/20251114701755-431202" target="_blank">AI-Stack 賦能！數位無限 AI 工廠實現 GPU 高效管理</a></div>
+      <span class="date">2025·11·14</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">茂綸 Macnica</span>
+      <div class="headline"><a href="https://www.macnica.com/apac/galaxy/zh_tw/news-events/galaxy-news/sigtron-ai-factory/" target="_blank">茂綸參與 SiGTRON AI-FACTORY 計畫（含田勝侑董事長談話）</a></div>
+      <span class="date">2025·11</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">INFINITIX 英文</span>
+      <div class="headline"><a href="https://www.infinitix.ai/en/news-detail/Neocloud-AI-FACTORY/" target="_blank">INFINITIX and Partners Launch SiGTRON AI-FACTORY for Southern Taiwan</a></div>
+      <span class="date">2025·11·14</span>
+    </div>
+
+    <div class="media-item">
+      <span class="source">官方網站</span>
+      <div class="headline"><a href="https://www.signalpro.com.tw/" target="_blank">希格諾科技 SignalPro 官方網站</a></div>
+      <span class="date">—</span>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <span class="icon">📊 媒體曝光分析</span>
+    <h4>所有 11 篇報導都是 PR Newswire 同源稿改寫</h4>
+    <p>仔細比對會發現，「中央社」、「自由時報」、「大紀元」、「大成報」、「Newtalk」等的稿件全部源於同一篇<strong>美通社（PR Newswire）</strong>新聞稿，僅標題與引言不同。<strong>沒有任何深度採訪、技術評論、第三方觀點報導</strong>。<br><br>
+    另外要說明 NVIDIA Inception 計畫——根據 NVIDIA 官方文件，這個計畫<strong>免費加入、無需股權、新創都可以申請</strong>，主要門檻只有「成立 10 年內、有開發者、有官網、已合法登記」。簡報中強調的「Member of NVIDIA Inception Program」<strong>不是 NVIDIA 的技術背書，也不代表獲得 NVIDIA 投資</strong>，需避免被這個 logo 誤導。</p>
+  </div>
+
+  <!-- ============== SECTION 7 · 合作模式發想 ============== -->
+  <div class="section-marker">
+    <span class="num">07</span>
+    <div class="text">
+      <div class="label">Engagement Models · 合作模式</div>
+      <h2>五種合作架構（含龍蝦助理 PoC）</h2>
+    </div>
+  </div>
+
+  <p style="margin-bottom:24px; font-size:15px;">考慮到希格諾<strong>本業為毫米波雷達 + 算力整合，醫療為新跨界</strong>的雙軌特性，搭配 James 主動提議的「龍蝦助理 PoC」場景，建議從<strong>低風險、可逆、研究導向</strong>的合作切入。</p>
+
+  <div class="collab-grid">
+
+    <!-- MODEL A -->
+    <div class="collab-card">
+      <span class="badge low-risk">A · 最低風險</span>
+      <h3>非接觸式生命徵象研究合作</h3>
+      <div class="subtitle">Radar-based Vital Signs · 回到他們真正的本業</div>
+
+      <div class="content">
+        <p>跳過爭議大的「LINE × HIS 整合」，<strong>回頭利用希格諾原本的雷達技術</strong>。在病房或長照單位部署毫米波雷達，做<strong>非接觸式呼吸、心跳、跌倒偵測</strong>——這是他們真正有 SDK、有產品的領域。</p>
+
+        <ul>
+          <li>選一間病房或長照單位試裝 5-10 套</li>
+          <li>對照穿戴裝置 / 護理觀察值，做準確度驗證</li>
+          <li>產出共同研究論文、申請科技部計畫</li>
+          <li>不接 HIS、不寫病歷、不碰個資</li>
+        </ul>
+
+        <div class="specs">
+          <div><span class="spec-label">合規難度</span>低</div>
+          <div><span class="spec-label">技術成熟度</span>高（本業）</div>
+          <div><span class="spec-label">投入成本</span>低</div>
+          <div><span class="spec-label">時程</span>3-6 個月</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL B -->
+    <div class="collab-card">
+      <span class="badge research">B · 研究合作</span>
+      <h3>術後恢復遠端監測研究</h3>
+      <div class="subtitle">Post-op Monitoring × IRB Study · 對接秀傳手術強項</div>
+
+      <div class="content">
+        <p>秀傳體系本身手術量大、IRCAD 訓練中心國際知名。將希格諾雷達裝在<strong>術後病房床頭</strong>，連續監測呼吸頻率、體動、起身次數，觀察是否能早期偵測併發症（譫妄、肺部併發症、跌倒風險）。</p>
+
+        <ul>
+          <li>由秀傳 IRB 主導、希格諾提供硬體</li>
+          <li>聚焦於「資料採集 + 演算法驗證」階段</li>
+          <li>不寫入病歷、僅作研究資料庫</li>
+          <li>論文成果若佳 → 為日後正式產品鋪路</li>
+        </ul>
+
+        <div class="specs">
+          <div><span class="spec-label">合規難度</span>中（IRB）</div>
+          <div><span class="spec-label">技術成熟度</span>中</div>
+          <div><span class="spec-label">投入成本</span>中</div>
+          <div><span class="spec-label">時程</span>6-12 個月</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL C: 龍蝦助理 — JAMES 提案的具體化 -->
+    <div class="collab-card">
+      <span class="badge lobster">C · 龍蝦助理</span>
+      <h3>單一指標 AI Agent PoC</h3>
+      <div class="subtitle">Lobster Assistant · James 主動提議的場景具體化</div>
+
+      <div class="content">
+        <p>James 提的「龍蝦助理」要落地，需先選定<strong>一個明確指標</strong>。建議候選：</p>
+        <ul>
+          <li><strong>術後 24h 早期警示分數（NEWS2 / MEWS 計算）</strong>：自動讀取 vital signs 計算分數、產出建議</li>
+          <li><strong>跌倒風險評估彙整</strong>：整合 Morse Scale 各欄位，AI 產出草稿給護理師確認</li>
+          <li><strong>輸液速率與藥物交互作用提醒</strong>：純查詢、不寫入</li>
+        </ul>
+        <p>三個都是<strong>「讀取 + 計算 + 建議」</strong>，AI 不直接寫入病歷，護理師在 HIS 內手動確認後才生效。</p>
+
+        <div class="specs">
+          <div><span class="spec-label">合規難度</span>中</div>
+          <div><span class="spec-label">技術成熟度</span>低（preview）</div>
+          <div><span class="spec-label">投入成本</span>中</div>
+          <div><span class="spec-label">時程</span>6-9 個月</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL D -->
+    <div class="collab-card">
+      <span class="badge med-risk">D · 行政應用</span>
+      <h3>內部行政 AI 助手</h3>
+      <div class="subtitle">Admin Agent · 不碰病歷、只碰行政流程</div>
+
+      <div class="content">
+        <p>把簡報中的「IM + AI Agent」概念<strong>剝離臨床場域</strong>，先在<strong>非醫療區（總務、人資、設備管理）</strong>試行 NemoClaw 框架——例如「會議室預約助手」、「設備故障報修整理」、「教育訓練紀錄彙整」。</p>
+
+        <ul>
+          <li>使用院內 IM（Teams / Mattermost）取代 LINE</li>
+          <li>避開個資法、醫療法的紅線</li>
+          <li>驗證希格諾 Agent 框架的真實能力</li>
+          <li>若效果好，再評估擴大到臨床支援</li>
+        </ul>
+
+        <div class="specs">
+          <div><span class="spec-label">合規難度</span>低</div>
+          <div><span class="spec-label">技術成熟度</span>低</div>
+          <div><span class="spec-label">投入成本</span>中</div>
+          <div><span class="spec-label">時程</span>3-6 個月</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL E -->
+    <div class="collab-card">
+      <span class="badge high-risk">E · 高風險長線</span>
+      <h3>單一病房臨床 AI Agent 試辦</h3>
+      <div class="subtitle">Single-Ward Clinical Pilot · 簡報原案的縮小版</div>
+
+      <div class="content">
+        <p>如果未來要走簡報原案（IM + AI 整理護理紀錄），<strong>必須限縮場域與寫入權限</strong>：選一個病房（10-20 床），AI 只負責「<strong>讀取彙整、產出草稿</strong>」，<strong>絕不直接寫入正式病歷</strong>，所有寫入需護理師於 HIS 內手動確認。</p>
+
+        <ul>
+          <li>強制要求：合規白皮書、IRB、資安稽核三件套</li>
+          <li>用院內私有 IM 取代 LINE</li>
+          <li>3 個月評估，KPI 不達標立即終止</li>
+          <li>事故責任、原始碼託管、退場條款全寫進合約</li>
+        </ul>
+
+        <div class="specs">
+          <div><span class="spec-label">合規難度</span>極高</div>
+          <div><span class="spec-label">技術成熟度</span>低</div>
+          <div><span class="spec-label">投入成本</span>高</div>
+          <div><span class="spec-label">時程</span>12-24 個月</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collab-card" style="background: var(--paper-warm);">
+      <span class="badge" style="background: var(--ink); color: var(--paper);">★ 推薦組合</span>
+      <h3>建議路徑</h3>
+      <div class="subtitle">Recommended Roadmap</div>
+
+      <div class="content">
+        <p style="font-size:15px; margin-bottom:14px;">回應 James 的最佳策略：</p>
+        <ul style="font-size:14px;">
+          <li>第 1 階段（即刻）：先回信感謝彈性，但<strong>反向定義場域</strong>，把方案 A 或 C 之一的具體命題提給對方</li>
+          <li>第 2 階段（3-6 月）：方案 A + C 並行 PoC，A 驗本業、C 驗整合</li>
+          <li>第 3 階段（6-12 月）：依結果決定是否擴大到 B 或 E</li>
+          <li>方案 D 視內部行政部門意願</li>
+        </ul>
+        <p style="margin-top:14px; font-size:14px; padding-top:14px; border-top: 1px dashed var(--rule);">
+          <strong style="color:var(--accent-deep);">關鍵心法：</strong>不要讓對方提案，由秀傳定義「我們的痛點」與「我們的成功標準」，希格諾來證明能不能滿足。
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============== SECTION 8 · 會議準備 ============== -->
+  <div class="section-marker">
+    <span class="num">08</span>
+    <div class="text">
+      <div class="label">Meeting Prep · 廠商會議準備</div>
+      <h2>會議當天必問清單</h2>
+    </div>
+  </div>
+
+  <table class="recommend-matrix">
+    <thead>
+      <tr>
+        <th style="width:80px;">優先</th>
+        <th style="width:160px;">類別</th>
+        <th>必問問題</th>
+        <th style="width:200px;">期待答案的形式</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="pri-h">必問</td>
+        <td>真實案例</td>
+        <td>目前已實際 PoC 的醫院有哪幾家？可否提供窗口聯絡電話？有沒有正式合作公告或 IRB 證明？</td>
+        <td>具體醫院名稱 + 聯絡人</td>
+      </tr>
+      <tr>
+        <td class="pri-h">必問</td>
+        <td>資金結構</td>
+        <td>實收資本目前到位多少？SiGTRON 30 億計畫中希格諾自身出資多少？是否有 VC 投資？營收與燒錢速度？</td>
+        <td>合理的財務說明</td>
+      </tr>
+      <tr>
+        <td class="pri-h">必問</td>
+        <td>食藥署</td>
+        <td>系統涉及「AI 建議」「異常警示」是否屬於 SaMD？目前送件進度？是否有已取得認證的醫療 AI 產品？</td>
+        <td>明確時程或證號</td>
+      </tr>
+      <tr>
+        <td class="pri-h">必問</td>
+        <td>龍蝦助理</td>
+        <td>「龍蝦助理」目前最成熟的版本長什麼樣？可以現場 demo 嗎？是基於 NemoClaw 還是其他自研框架？</td>
+        <td>現場 live demo</td>
+      </tr>
+      <tr>
+        <td class="pri-m">應問</td>
+        <td>技術風險</td>
+        <td>NemoClaw 是 NVIDIA 官方標示的 early preview。若 NVIDIA 改版或停止維護，貴公司的應變計畫？</td>
+        <td>技術 fallback 方案</td>
+      </tr>
+      <tr>
+        <td class="pri-m">應問</td>
+        <td>HIS 介接</td>
+        <td>與我們現有 HIS 廠商（會議前確認）的介接是 HL7 v2 還是 FHIR？實際成功介接過哪幾套 HIS？預估費用與時程？</td>
+        <td>過往介接案例</td>
+      </tr>
+      <tr>
+        <td class="pri-m">應問</td>
+        <td>團隊組成</td>
+        <td>目前團隊規模？技術團隊有醫療資訊（HL7 / FHIR）背景成員嗎？有醫師或護理顧問嗎？</td>
+        <td>具體 CV</td>
+      </tr>
+      <tr>
+        <td class="pri-m">應問</td>
+        <td>事故責任</td>
+        <td>若 AI 整理錯誤導致醫療事故（如漏掉警示），責任在護理師、醫院、還是希格諾？保險方案？</td>
+        <td>明確責任歸屬條款</td>
+      </tr>
+      <tr>
+        <td class="pri-l">可問</td>
+        <td>商業條款</td>
+        <td>收費模式：一次性買斷？訂閱？按床數？年度維護費比例？原始碼託管條款？</td>
+        <td>價目表 + 合約範本</td>
+      </tr>
+      <tr>
+        <td class="pri-l">可問</td>
+        <td>戰略意圖</td>
+        <td>SiGTRON AI-FACTORY 主打「主權算力小艇」，醫療只是應用之一還是主軸？三年內醫療營收佔比目標？</td>
+        <td>戰略圖 + 數字</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============== EXECUTIVE SUMMARY ============== -->
+  <div class="verdict">
+    <h2>總結：<span class="accent">有故事</span>、<span class="accent">有聯盟</span>、但<span class="accent">沒有實績</span></h2>
+
+    <p style="font-size:17px; max-width:780px; line-height:1.7; opacity:0.9; font-family:'Fraunces', serif; font-weight:500;">
+      希格諾科技是 2024 年才成立的高雄新創，<strong style="color:var(--gold);">真正的本業是毫米波雷達訊號處理與 AI 模型</strong>，2025 年 Q4 透過 30 億的 SiGTRON AI-FACTORY 計畫一舉成為媒體焦點。
+      他們的 30 億不是自有資金，是聯合 6 家公司（含上市公司統懋、敦陽、Supermicro 等）分擔的聯盟，沒有任何 VC 背書。
+      James 的回信顯示廠商願意彈性與務實，這是好事；但他們在醫療領域目前仍是 0 實績，秀傳是否願意當白老鼠需自行評估。
+    </p>
+
+    <div class="verdict-grid">
+      <div class="stat">
+        <div class="stat-label">真實能力</div>
+        <div class="stat-value">雷達 + 算力</div>
+        <p>本業可信，作為感測 / 算力夥伴沒問題。當醫療資訊系統廠商會踩雷。</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">資金結構</div>
+        <div class="stat-value">無 VC 背書</div>
+        <p>實收 10 萬，30 億是聯盟分擔。一旦希格諾出狀況，聯盟會立刻瓦解。</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">建議起手式</div>
+        <div class="stat-value">A + 龍蝦 C</div>
+        <p>方案 A（雷達生命徵象）+ 方案 C（龍蝦助理單一指標）並行 PoC。</p>
+      </div>
+    </div>
+
+    <p style="margin-top:40px; font-size:15px; opacity:0.75; font-family:'Fraunces', serif; font-weight:500;">
+      核心建議：把希格諾當作「<strong style="color:var(--accent);">雷達感測 + 算力夥伴</strong>」而非「<strong style="color:var(--accent);">護理資訊系統供應商</strong>」來談合作。回信給 James 時，主動定義場域、不被牽著走，把主導權留在秀傳手上。
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  <p>本報告依據 2026 年 4 月公開資訊整理，含公司登記資料、新聞稿、NVIDIA 官方文件、衛福部法規。</p>
+  <p>會議當天請以廠商提供的最新資料為準。任何決策建議需經貴院法務、資安、醫工、醫療品管多方會審。</p>
+  <p style="margin-top:16px;">— END OF DOSSIER v2 —</p>
+</footer>
+
+<script>
+  const d = new Date();
+  const formatter = new Intl.DateTimeFormat('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  document.getElementById('date-stamp').textContent = formatter.format(d) + ' · TPE';
+</script>
+
+</body>
+</html>
