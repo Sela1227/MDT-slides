@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>乳癌診療指引 — 彰濱秀傳癌症中心</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --primary: #3d6b87;
+    --accent: #b8860b;
+    --highlight: #fff3cd;
+    --highlight-border: #ffc107;
+    --text: #222;
+    --text-muted: #666;
+    --border: #d4d4d4;
+    --bg-soft: #f8f9fa;
+    --bg-card: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Noto Serif TC", "Source Han Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+    color: var(--text);
+    line-height: 1.8;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 40px 60px 80px;
+    background: #fafafa;
+    font-size: 16px;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 10px;
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 14px;
+  }
+  .toolbar button {
+    background: white;
+    color: var(--primary);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .toolbar button:hover { background: #f0f0f0; }
+
+  .cover {
+    background: var(--bg-card);
+    padding: 60px 50px;
+    border-radius: 8px;
+    border-top: 6px solid var(--primary);
+    text-align: center;
+    margin-bottom: 50px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .cover .logo-placeholder {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border: 2px dashed var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .cover .hospital-name {
+    color: var(--primary);
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-family: "Noto Sans TC", sans-serif;
+    letter-spacing: 4px;
+  }
+  .cover h1 {
+    color: var(--primary);
+    font-size: 34px;
+    margin: 10px 0;
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+  .cover .subtitle {
+    color: var(--text-muted);
+    font-size: 18px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+  .cover .meta {
+    margin-top: 40px;
+    text-align: left;
+    display: inline-block;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 14px;
+  }
+  .cover .meta div { margin: 6px 0; }
+  .cover .meta strong { color: var(--primary); display: inline-block; min-width: 110px; }
+
+  .demo-banner {
+    background: var(--highlight);
+    border-left: 4px solid var(--highlight-border);
+    padding: 14px 20px;
+    margin: 30px 0;
+    border-radius: 4px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 14px;
+    color: #5c4900;
+  }
+  .demo-banner strong { display: block; margin-bottom: 4px; }
+
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 30px 40px;
+    margin: 40px 0;
+  }
+  .toc h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+    margin-top: 0;
+    font-size: 22px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .toc ol { padding-left: 25px; line-height: 2.2; }
+  .toc a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted transparent;
+  }
+  .toc a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+  .toc ol ol {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    line-height: 1.9;
+    font-size: 15px;
+  }
+
+  .chapter {
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 40px 50px;
+    margin: 40px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .chapter h1 {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-size: 26px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .chapter h2 {
+    color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 14px;
+    margin-top: 36px;
+    font-size: 20px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .chapter h3 {
+    color: #444;
+    font-size: 17px;
+    margin-top: 28px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .chapter p { margin: 12px 0; }
+
+  .chapter-summary {
+    background: var(--bg-soft);
+    border-left: 4px solid var(--primary);
+    padding: 16px 22px;
+    margin: 20px 0 30px;
+    border-radius: 0 4px 4px 0;
+  }
+  .chapter-summary strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 6px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  table thead tr {
+    border-top: 2px solid var(--text);
+    border-bottom: 1.5px solid var(--text);
+  }
+  table tbody tr:last-child { border-bottom: 2px solid var(--text); }
+  table th, table td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table th {
+    color: var(--primary);
+    font-weight: 600;
+    background: var(--bg-soft);
+  }
+  table tbody tr:not(:last-child) { border-bottom: 1px solid #eee; }
+
+  .hospital-mod {
+    background: var(--highlight);
+    border-left: 3px solid var(--highlight-border);
+    padding: 12px 18px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .hospital-mod::before {
+    content: "[ 本院修改 ]";
+    color: #8a6d00;
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+
+  .flowchart {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 30px 40px;
+    margin: 30px 0;
+    text-align: center;
+  }
+  .flowchart .mermaid {
+    width: 100%;
+  }
+  .flowchart svg {
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+  .flowchart-caption {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .flowchart-footnote {
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg-soft);
+    padding: 14px 22px;
+    margin: 8px 0 30px;
+    border-left: 3px solid var(--border);
+    border-radius: 0 4px 4px 0;
+    font-family: "Noto Sans TC", sans-serif;
+    line-height: 1.7;
+  }
+  .flowchart-footnote strong { color: var(--primary); }
+  .flowchart-footnote ul { margin: 6px 0; padding-left: 22px; }
+  .flowchart-footnote li { margin: 3px 0; }
+
+  .references {
+    font-size: 14px;
+    line-height: 1.9;
+    counter-reset: ref;
+    list-style: none;
+    padding-left: 0;
+  }
+  .references li {
+    counter-increment: ref;
+    padding: 8px 0 8px 35px;
+    position: relative;
+    border-bottom: 1px solid #eee;
+  }
+  .references li::before {
+    content: "[" counter(ref) "]";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .doc-footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: "Noto Sans TC", sans-serif;
+  }
+
+  cite {
+    color: var(--primary);
+    font-style: normal;
+    font-size: 13px;
+    background: #e8eef2;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+
+  .key-points {
+    background: #eef3f6;
+    border: 1px solid #c4d3dd;
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  .key-points strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 8px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .key-points ul { margin: 0; padding-left: 22px; }
+  .key-points li { margin: 4px 0; }
+
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 1.5cm 1.8cm 2cm;
+      @bottom-center {
+        content: "彰濱秀傳癌症中心 乳癌診療指引 v2026.1 — 第 " counter(page) " 頁 / 共 " counter(pages) " 頁";
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 9pt;
+        color: #666;
+      }
+    }
+    body {
+      background: white;
+      padding: 0;
+      max-width: none;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+    .toolbar, .demo-banner { display: none !important; }
+    .cover, .toc, .chapter {
+      box-shadow: none;
+      border: none;
+      padding: 20px 0;
+      page-break-after: always;
+    }
+    .chapter h1 { page-break-before: always; }
+    .chapter:first-of-type h1 { page-break-before: avoid; }
+    table { page-break-inside: avoid; }
+
+    /* 流程圖：滿版一頁 */
+    .flowchart {
+      page-break-before: always;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+      background: white;
+      border: none;
+      padding: 0;
+      margin: 0;
+      height: 16.5cm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flowchart .mermaid,
+    .flowchart svg {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
+    }
+    .flowchart-caption {
+      text-align: center;
+      margin-top: 0.6cm;
+      page-break-before: avoid;
+      page-break-after: always;
+      font-size: 11pt;
+    }
+
+    a { color: var(--text); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span>📄 乳癌診療指引 v2026.1（格式示範）</span>
+  <button onclick="window.print()">🖨 列印 / 轉 PDF</button>
+  <span style="margin-left: auto; opacity: 0.8; font-size: 13px;">點選列印可預覽紙本樣式</span>
+</div>
+
+<section class="cover">
+  <div class="logo-placeholder">[ 院徽 ]</div>
+  <div class="hospital-name">彰濱秀傳癌症中心</div>
+  <h1>乳癌診療指引</h1>
+  <div class="subtitle">Breast Cancer Treatment Guideline</div>
+  <div class="meta">
+    <div><strong>版本</strong>v2026.1</div>
+    <div><strong>發行日期</strong>西元 2026 年 5 月</div>
+    <div><strong>下次改版</strong>西元 2027 年 5 月</div>
+    <div><strong>適用單位</strong>彰濱秀傳癌症中心 乳癌多科團隊</div>
+    <div><strong>撰寫委員會</strong>外科、腫瘤內科、放射腫瘤科、影像科、病理科、護理</div>
+    <div><strong>主責編輯</strong>[ 主責醫師姓名 ]</div>
+  </div>
+</section>
+
+<div class="demo-banner">
+  <strong>⚠️ 本文件為格式示範</strong>
+  本文件展示彰濱秀傳癌症中心新版指引之版面、結構與排版風格。流程圖內容採用一般性臨床原則作為示意，實際發行版之治療建議需由本院多科團隊填入經多科會議共識決議之內容，且不可作為臨床參考。
+</div>
+
+<nav class="toc">
+  <h2>目 錄</h2>
+  <ol>
+    <li><a href="#ch1">適用範圍與目的</a></li>
+    <li><a href="#ch2">證據等級說明</a></li>
+    <li><a href="#ch3">診斷與分期流程</a></li>
+    <li><a href="#ch4">原位癌（DCIS）治療建議</a></li>
+    <li><a href="#ch5">Stage I 治療建議</a></li>
+    <li><a href="#ch6">Stage II 治療建議</a></li>
+    <li><a href="#ch7">本院修改紀錄表</a></li>
+    <li><a href="#ch8">參考文獻</a></li>
+  </ol>
+</nav>
+
+<section class="chapter" id="ch1">
+  <h1>第一章　適用範圍與目的</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    本指引提供彰濱秀傳癌症中心乳癌多科團隊治療決策之依據，適用於 18 歲以上經病理確診之原發性乳癌病人。
+  </div>
+  <h2>1.1 適用對象</h2>
+  <p>本指引適用於本院經組織病理切片確診為乳癌（含原位癌與侵襲性乳癌）之 18 歲以上病人。男性乳癌、懷孕期乳癌、發炎性乳癌及轉移性疾病另詳第 X 章特殊族群處理。</p>
+  <h2>1.2 制定目的</h2>
+  <p>建立彰濱秀傳癌症中心乳癌診療之標準化流程，整合外科、腫瘤內科、放射腫瘤科、影像科、病理科及護理團隊之共識，確保病人接受符合實證醫學之最佳治療。</p>
+  <h2>1.3 修訂原則</h2>
+  <p>本指引每年修訂一次，由本院乳癌多科團隊召集人主責。修訂時參考最新版 NCCN Breast Cancer Guidelines、ASCO/ESMO/SSO 等國際學會建議，以及本院長期治療成果分析；經多科會議共識後發行新版。</p>
+</section>
+
+<section class="chapter" id="ch2">
+  <h1>第二章　證據等級說明</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    本指引採用 NCCN 證據等級分類系統，所有未特別標註之建議預設為 Category 2A。
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">等級</th>
+        <th style="width:42%">證據強度</th>
+        <th style="width:40%">共識程度</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Category 1</strong></td><td>高品質證據（≥1 隨機分派第三期試驗或高品質統合分析）</td><td>NCCN 委員一致同意（≥85%）</td></tr>
+      <tr><td><strong>Category 2A</strong></td><td>較低層級證據</td><td>NCCN 委員一致同意（≥85%）</td></tr>
+      <tr><td><strong>Category 2B</strong></td><td>較低層級證據</td><td>NCCN 委員多數同意（50–85%）</td></tr>
+      <tr><td><strong>Category 3</strong></td><td>任何層級證據</td><td>NCCN 委員顯著分歧</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="chapter" id="ch3">
+  <h1>第三章　診斷與分期流程</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    從臨床發現病灶到完成分期之標準流程；流程圖中所有節點均可在本院相應科別執行。
+  </div>
+
+  <h2>3.1 整體診斷流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[臨床發現病灶<br/>或篩檢異常]:::startN
+    B[乳房超音波<br/>± 乳房攝影]:::actionN
+    C[追蹤觀察]:::actionN
+    D[病理切片檢查]:::actionN
+    E[完成分期評估]:::actionN
+    F[評估病灶範圍]:::actionN
+    G[依臨床判斷]:::actionN
+    H[ER/PR/HER2/Ki-67<br/>生物標記檢測]:::actionN
+    I[多科會議 MDT<br/>討論治療計畫]:::endN
+
+    A --> B
+    B -->|BIRADS 1-3| C
+    B -->|BIRADS 4-5| D
+    D -->|侵襲性乳癌| E
+    D -->|DCIS| F
+    D -->|良性| G
+    E --> H
+    F --> H
+    H --> I
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖 3-1　乳癌診斷流程</div>
+
+  <h2>3.2 生物標記檢測</h2>
+  <p>所有新診斷之侵襲性乳癌與新轉移病灶均應進行 ER、PR、HER2 之檢測；DCIS 應檢測 ER（PR 非必要）。檢測方法依最新 ASCO/CAP 指引執行。</p>
+  <table>
+    <thead><tr><th>標記</th><th>檢測方法</th><th>判讀標準（簡述）</th><th>必要性</th></tr></thead>
+    <tbody>
+      <tr><td>ER</td><td>IHC</td><td>染色細胞核 ≥1% 為陽性</td><td>所有新診斷</td></tr>
+      <tr><td>PR</td><td>IHC</td><td>染色細胞核 ≥1% 為陽性</td><td>侵襲性癌</td></tr>
+      <tr><td>HER2</td><td>IHC ± ISH</td><td>IHC 0/1+/2+/3+；2+ 需加做 ISH</td><td>所有新診斷</td></tr>
+      <tr><td>Ki-67</td><td>IHC</td><td>本院以 14% 為高低分界</td><td>建議</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="chapter" id="ch4">
+  <h1>第四章　原位癌（DCIS）治療建議</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    DCIS 治療以局部治療為主軸；ER 陽性者考慮 endocrine therapy 降低復發風險。本院重視病人共同決策，特別針對年長低風險族群提供省略放療選項。
+  </div>
+
+  <div class="key-points">
+    <strong>關鍵決策點</strong>
+    <ul>
+      <li>影像評估病灶範圍以決定 BCS 或 mastectomy</li>
+      <li>BCS 切緣 ≥2mm 為足夠（依 SSO/ASTRO/ASCO 共識）</li>
+      <li>術後 WBRT 可降低同側復發風險，但低風險族群可考慮省略</li>
+      <li>ER 陽性者考慮 5 年 endocrine therapy 降低對側風險</li>
+    </ul>
+  </div>
+
+  <h2>4.1 治療演算法</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef hospitalN fill:#fff3cd,stroke:#b8860b,stroke-width:1.5px,color:#5c4900
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[DCIS 病理確診]:::startN
+    B[影像評估病灶範圍]:::actionN
+    C[Lumpectomy<br/>達切緣 ≥2mm]:::actionN
+    D[Total Mastectomy<br/>± SLNB]:::actionN
+    H[術後 WBRT]:::actionN
+    I[共同決策<br/>可考慮省略 RT]:::hospitalN
+    ER[評估 ER 狀態]:::actionN
+    K[5 年 endocrine therapy]:::actionN
+    L[長期追蹤]:::endN
+
+    A --> B
+    B -->|局限性病灶<br/>適合 BCS| C
+    B -->|多中心或廣泛| D
+    C -->|高風險族群<sup>a</sup>| H
+    C -->|低風險族群<sup>b</sup>| I
+    D --> ER
+    H --> ER
+    I --> ER
+    ER -->|ER 陽性| K
+    ER -->|ER 陰性| L
+    K --> L
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖 4-1　DCIS 治療演算法</div>
+  <div class="flowchart-footnote">
+    <strong>註解</strong>
+    <ul>
+      <li><strong>a. 高風險族群：</strong>年齡 &lt;70 歲、Grade 3、病灶 &gt;2.5cm、切緣 &lt;3mm 任一項</li>
+      <li><strong>b. 低風險族群：</strong>年齡 ≥70 歲 + Grade 1-2 + 病灶 ≤2.5cm + 切緣 ≥3mm + ER 陽性接受 endocrine therapy（須全部符合）</li>
+      <li><strong>切緣 &lt;2mm 處理：</strong>原則上建議再切除，再評估切緣後續處置</li>
+    </ul>
+  </div>
+
+  <h2>4.2 手術選擇</h2>
+  <h3>4.2.1　Breast-Conserving Surgery（BCS）適應症</h3>
+  <p>適用於病灶局限於單一象限、可完整切除且達到適當切緣、術後外觀滿意者。BCS 後通常需配合術後放療以降低同側乳房復發風險。</p>
+  <h3>4.2.2　Total Mastectomy 適應症</h3>
+  <p>適用於以下情況：多中心或廣泛性 DCIS（病灶分布兩個以上象限或範圍過大）、無法達到適當切緣、病人選擇、合併特定基因突變（BRCA1/2）。可同時或延後進行重建手術。</p>
+  <h3>4.2.3　切除邊緣判讀</h3>
+  <p>依 SSO/ASTRO/ASCO 共識，DCIS 接受 BCS 合併 WBRT 者，切緣 ≥2mm 為足夠。切緣不足時通常建議再切除，但臨床判斷需綜合評估病灶位置、餘量、病人偏好。</p>
+
+  <h2>4.3 術後放療與內分泌治療</h2>
+  <h3>4.3.1　術後放療（WBRT）</h3>
+  <p>BCS 後 WBRT 可降低同側乳房腫瘤復發（IBTR）風險約 50%。所有 BCS 病人原則上建議 WBRT，但下列低風險族群經與病人充分討論後，可考慮省略：</p>
+  <ul>
+    <li>年齡 ≥70 歲</li>
+    <li>低或中等 grade</li>
+    <li>病灶 ≤2.5cm</li>
+    <li>切緣 ≥3mm</li>
+    <li>ER 陽性且接受 endocrine therapy</li>
+  </ul>
+  <div class="hospital-mod">
+    <p><strong>本院做法：</strong>對符合上述全部條件之病人，本院由放射腫瘤科主治醫師於術後門診進行共同決策諮詢，使用本院乳癌團隊製作之中文版說明單張，協助病人理解風險與選擇。</p>
+    <p style="margin: 6px 0 0; font-size: 14px; color: var(--text-muted);"><strong>決議日期：</strong>2026/03/15 多科會議共識通過</p>
+  </div>
+
+  <h3>4.3.2　Endocrine Therapy</h3>
+  <p>ER 陽性 DCIS 病人於 BCS + RT 後給予 5 年 tamoxifen（停經前）或 aromatase inhibitor（停經後）可降低同側與對側乳房事件。需與病人討論藥物副作用與依從性。</p>
+</section>
+
+<section class="chapter" id="ch5">
+  <h1>第五章　Stage I 治療建議</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    Stage I（T1N0M0）治療以局部治療（手術 ± 術後放療）為主軸，配合依分子分型決定之全身性輔助治療。早期乳癌之 5 年存活率超過 95%。
+  </div>
+
+  <div class="key-points">
+    <strong>關鍵決策點</strong>
+    <ul>
+      <li>絕大多數 Stage I 病人適合 BCS + SLNB</li>
+      <li>SLNB 陰性者免除腋下淋巴結廓清術</li>
+      <li>輔助全身治療依 ER/PR/HER2 分子分型決定</li>
+      <li>HR+/HER2- 中可考慮 21-gene assay 協助化療決策</li>
+    </ul>
+  </div>
+
+  <h2>5.1 治療演算法</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[Stage I 確診<br/>cT1N0M0]:::startN
+    C[Lumpectomy + SLNB]:::actionN
+    D[Mastectomy + SLNB]:::actionN
+    E[術後 RT 評估<sup>a</sup>]:::actionN
+    S[輔助全身治療<br/>依分子分型]:::actionN
+    Lum[Endocrine therapy 5 年<br/>± 化療<sup>b</sup>]:::actionN
+    TN[考慮輔助化療]:::actionN
+    Her[Anti-HER2 + 化療<br/>± Endocrine]:::actionN
+    FU[長期追蹤]:::endN
+
+    A -->|適合 BCS| C
+    A -->|不適合 BCS<br/>或病人選擇| D
+    C --> E
+    D --> E
+    E --> S
+    S -->|HR+/HER2-| Lum
+    S -->|TNBC| TN
+    S -->|HER2+| Her
+    Lum --> FU
+    TN --> FU
+    Her --> FU
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖 5-1　Stage I 治療演算法</div>
+  <div class="flowchart-footnote">
+    <strong>註解</strong>
+    <ul>
+      <li><strong>a. 術後 RT 評估：</strong>BCS 後原則建議 WBRT；Mastectomy 後 SLN 陰性可免除，SLN 陽性個別化評估 PMRT</li>
+      <li><strong>b. 化療決策：</strong>HR+/HER2- 之 T1c 病人可考慮 21-gene assay (Oncotype DX) 協助決定化療必要性</li>
+      <li><strong>本院修改：</strong>≥70 歲 + tumor &lt;2cm + Grade 1-2 + ER 強陽性 + SLN 陰性者，可共同決策免術後 RT（詳見 5.2.1）</li>
+    </ul>
+  </div>
+
+  <h2>5.2 依分子分型治療策略</h2>
+
+  <h3>5.2.1　HR+/HER2- (Luminal-like)</h3>
+  <p>佔 Stage I 乳癌約 70%。輔助治療以 endocrine therapy 為主：</p>
+  <ul>
+    <li><strong>停經前：</strong>Tamoxifen 5 年；高風險者可加 ovarian function suppression</li>
+    <li><strong>停經後：</strong>Aromatase inhibitor 5 年（letrozole/anastrozole/exemestane）</li>
+    <li><strong>延長治療：</strong>高風險者可考慮延長至 7–10 年</li>
+    <li><strong>化療決策：</strong>對 T1c-T2 N0 病人，可考慮 21-gene assay（Oncotype DX）；高 RS 分數者建議加 chemo</li>
+  </ul>
+
+  <div class="hospital-mod">
+    <p><strong>本院修改：</strong>對年齡 ≥70 歲、tumor &lt;2cm、Grade 1–2、ER 強陽性 (Allred score ≥7)、SLN 陰性、ER+/HER2- 之病人，經與病人共同決策後，可考慮免除術後放療，僅給予 endocrine therapy。</p>
+    <p style="margin: 6px 0 0; font-size: 14px; color: var(--text-muted);">
+      <strong>修改依據：</strong>本院 2019–2024 回溯資料分析（n=187，5 年 IBTR 1.6%）；PRIME II 試驗；CALGB 9343 試驗<br>
+      <strong>決議日期：</strong>2026/03/15 多科會議共識通過
+    </p>
+  </div>
+
+  <h3>5.2.2　HR-/HER2- (Triple Negative, TNBC)</h3>
+  <p>佔 Stage I 乳癌約 10–15%。雖無 endocrine therapy 與 anti-HER2 標靶可用，但對化療反應較佳。Stage I 中：</p>
+  <ul>
+    <li><strong>T1a (≤5mm)：</strong>輔助化療效益不明顯，可僅追蹤觀察</li>
+    <li><strong>T1b (5–10mm)：</strong>個別化考慮，需評估病人風險偏好</li>
+    <li><strong>T1c (10–20mm)：</strong>建議輔助化療，常見方案為 anthracycline-based 或 TC 方案</li>
+  </ul>
+
+  <h3>5.2.3　HER2+ (HR+ 或 HR-)</h3>
+  <p>佔 Stage I 乳癌約 15–20%。Anti-HER2 標靶治療顯著改善預後：</p>
+  <ul>
+    <li><strong>T1a：</strong>輔助治療效益不明顯，個別化考慮</li>
+    <li><strong>T1b–T1c：</strong>建議 paclitaxel + trastuzumab 12 週，後續 trastuzumab 完成 1 年</li>
+    <li>HR+ 者另加 endocrine therapy 5 年</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch6">
+  <h1>第六章　Stage II 治療建議</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    Stage II（cT2N0、cT0-1N1、cT2N1、cT3N0）治療策略開始考慮新輔助治療（neoadjuvant therapy）以縮小腫瘤、降期、提供預後資訊。
+  </div>
+
+  <div class="key-points">
+    <strong>關鍵決策點</strong>
+    <ul>
+      <li>是否先給新輔助治療（依 subtype 與手術可行性決定）</li>
+      <li>新輔助治療反應評估指引後續輔助治療強度</li>
+      <li>淋巴結手術範圍（SLNB vs ALND）</li>
+      <li>術後放療範圍是否涵蓋區域淋巴結</li>
+    </ul>
+  </div>
+
+  <h2>6.1 治療演算法</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[Stage II 確診]:::startN
+    B[完整 staging<br/>分子分型評估]:::actionN
+    N1[新輔助化療<br/>± 標靶治療]:::actionN
+    N2[新輔助治療<br/>降期]:::actionN
+    Surg[手術 + 腋下處置]:::actionN
+    RT[術後 RT 評估<sup>a</sup>]:::actionN
+    Adj[輔助全身治療<br/>依分子分型 + 病理反應<sup>b</sup>]:::actionN
+    FU[長期追蹤]:::endN
+
+    A --> B
+    B -->|TNBC ≥cT2 或 N+<br/>HER2+ ≥cT2 或 N+| N1
+    B -->|HR+/HER2- 想做 BCS<br/>但目前不適合| N2
+    B -->|無 NAC 適應症| Surg
+    N1 --> Surg
+    N2 --> Surg
+    Surg --> RT
+    RT --> Adj
+    Adj --> FU
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖 6-1　Stage II 治療演算法</div>
+  <div class="flowchart-footnote">
+    <strong>註解</strong>
+    <ul>
+      <li><strong>a. 術後 RT 評估：</strong>BCS 後 WBRT ± 區域淋巴結 RT；Mastectomy 後 ≥4 顆 LN+ 或 T3 建議 PMRT，1-3 顆 LN+ 個別化評估</li>
+      <li><strong>b. 輔助全身治療：</strong>接受 NAC 者依殘餘病灶調整；TNBC 殘餘病灶可加 capecitabine；HER2+ 殘餘病灶可改 T-DM1</li>
+      <li><strong>本院修改：</strong>所有接受 NAC 之病人於治療前置入定位 clip，每 6 週於 MDT 會議追蹤（詳見 6.2.1）</li>
+    </ul>
+  </div>
+
+  <h2>6.2 新輔助治療適應症</h2>
+  <table>
+    <thead>
+      <tr><th style="width:20%">分子分型</th><th style="width:35%">建議考慮 NAC 之情境</th><th style="width:45%">考量原因</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>TNBC</strong></td><td>cT2 以上 或 任何 N+</td><td>對化療反應佳；pCR 與長期預後密切相關；殘餘病灶可指引後續治療強度</td></tr>
+      <tr><td><strong>HER2+</strong></td><td>cT2 以上 或 任何 N+</td><td>Pertuzumab 加 trastuzumab 雙標靶可顯著提高 pCR；殘餘病灶可改用 T-DM1</td></tr>
+      <tr><td><strong>HR+/HER2-</strong></td><td>想做 BCS 但目前 unresectable</td><td>對化療反應較不顯著；多數情況下術後輔助化療效果相當</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.2.1　新輔助治療反應評估</h3>
+  <p>治療期間以臨床觸診、超音波每 1–2 個療程評估腫瘤反應；治療結束前以 MRI 評估手術可行性。最終以手術病理確認 pCR（pathological complete response）或殘餘病灶程度，作為輔助治療調整依據。</p>
+
+  <div class="hospital-mod">
+    <p><strong>本院做法：</strong>所有接受 NAC 之病人於治療前置入腋下與乳房病灶定位 clip，便於治療後手術定位。NAC 期間每 6 週於本院乳癌 MDT 會議追蹤，並由乳癌個案管理師主動聯繫病人確認治療依從性。</p>
+    <p style="margin: 6px 0 0; font-size: 14px; color: var(--text-muted);"><strong>決議日期：</strong>2026/02/20 多科會議共識</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch7">
+  <h1>第七章　本院修改紀錄表</h1>
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    本表逐條列出本院相對於 NCCN 標準建議之修改項目，及修改之依據與決議過程，作為臨床稽核與評鑑之佐證文件。
+  </div>
+
+  <table style="font-size: 13px;">
+    <thead>
+      <tr>
+        <th style="width:8%">編號</th>
+        <th style="width:10%">章節</th>
+        <th style="width:18%">NCCN 原則</th>
+        <th style="width:18%">本院做法</th>
+        <th style="width:18%">修改原因</th>
+        <th style="width:14%">證據依據</th>
+        <th style="width:8%">決議日期</th>
+        <th style="width:6%">主責</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>M-2026-01</td>
+        <td>4.3.1<br/>(DCIS RT)</td>
+        <td>BCS 後常規建議 WBRT</td>
+        <td>低風險族群提供共同決策諮詢與中文說明單張</td>
+        <td>強化病人自主，符合本院共同決策推動方向</td>
+        <td>院內共同決策推動委員會</td>
+        <td>2026/03/15</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td>M-2026-02</td>
+        <td>5.2.1<br/>(Stage I HR+)</td>
+        <td>Stage I HR+ 標準含術後 RT</td>
+        <td>≥70 歲 + tumor&lt;2cm + Grade 1-2 + ER 強陽性 + SLN 陰性者，可共同決策免術後 RT</td>
+        <td>本院年長病人比例高；放療長期副作用考量</td>
+        <td>本院回溯資料(n=187)；PRIME II；CALGB 9343</td>
+        <td>2026/03/15</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td>M-2026-03</td>
+        <td>3.2<br/>(Ki-67)</td>
+        <td>Ki-67 cutoff 各家不一</td>
+        <td>本院統一以 14% 為高低分界</td>
+        <td>本院病理科操作一致性與品管考量</td>
+        <td>本院病理科 SOP；St. Gallen 共識</td>
+        <td>2026/02/20</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td>M-2026-04</td>
+        <td>6.2<br/>(NAC)</td>
+        <td>NAC 期間追蹤頻率未明定</td>
+        <td>每 6 週 MDT 會議追蹤 + 個管師主動聯繫</td>
+        <td>強化治療依從性；本院個管師人力配置</td>
+        <td>本院個管中心 SOP</td>
+        <td>2026/02/20</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td colspan="8" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 20px;">
+          ── 以下依本院多科會議決議逐條填寫 ──
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="chapter" id="ch8">
+  <h1>第八章　參考文獻</h1>
+  <ol class="references">
+    <li>National Comprehensive Cancer Network. NCCN Clinical Practice Guidelines in Oncology: Breast Cancer, Version 2.2026.</li>
+    <li>Allison KH, et al. Estrogen and Progesterone Receptor Testing in Breast Cancer: ASCO/CAP Guideline Update. J Clin Oncol. 2020;38:1346-1366.</li>
+    <li>Morrow M, et al. SSO-ASTRO-ASCO Consensus Guideline on Margins for BCS With WBRT in DCIS. J Clin Oncol. 2016;34:4040-4046.</li>
+    <li>Kunkler IH, et al. Breast-Conserving Surgery with or without Irradiation in Early Breast Cancer (PRIME II). N Engl J Med. 2023.</li>
+    <li>Hughes KS, et al. Lumpectomy plus Tamoxifen with or without Irradiation in Women Age 70 Years or Older with Early Breast Cancer (CALGB 9343). J Clin Oncol. 2013.</li>
+    <li>Cardoso F, et al. Early breast cancer: ESMO Clinical Practice Guidelines. Ann Oncol. 2019.</li>
+    <li>本院 2015–2024 年乳癌長期追蹤資料分析報告（內部文件）</li>
+  </ol>
+</section>
+
+<div class="doc-footer">
+  彰濱秀傳癌症中心　乳癌診療指引　v2026.1<br>
+  發行日期：2026 年 5 月　|　下次改版：2027 年 5 月<br>
+  本文件為內部臨床參考，使用前請確認為最新版本
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#ffffff',
+      primaryTextColor: '#222',
+      primaryBorderColor: '#3d6b87',
+      lineColor: '#555',
+      fontFamily: '"Noto Sans TC", sans-serif',
+      fontSize: '18px'
+    },
+    flowchart: { 
+      curve: 'basis', 
+      padding: 20,
+      nodeSpacing: 55,
+      rankSpacing: 95,
+      useMaxWidth: false
+    }
+  });
+
+  // 確保 Mermaid 渲染後的 SVG 撐滿容器
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.flowchart svg').forEach(svg => {
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+        svg.style.maxWidth = 'none';
+      });
+    }, 300);
+</script>
+
+</body>
+</html>
