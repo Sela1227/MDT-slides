@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>乳癌診療指引 — 彰濱秀傳癌症中心</title>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  import elkLayouts from 'https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.7/dist/mermaid-layout-elk.esm.min.mjs';
+  mermaid.registerLayoutLoaders(elkLayouts);
+  window.mermaid = mermaid;
+</script>
 <style>
   :root {
     --primary: #3d6b87;
@@ -254,6 +259,24 @@
     max-width: none !important;
     height: auto !important;
   }
+  /* 強制隱藏 ELK 引擎的外框背景 */
+  .flowchart svg rect.background,
+  .flowchart svg .root > rect,
+  .flowchart svg > g > rect:first-of-type {
+    fill: transparent !important;
+    stroke: none !important;
+    stroke-width: 0 !important;
+  }
+  /* 強制節點與標籤文字大小 */
+  .flowchart svg .nodeLabel,
+  .flowchart svg .nodeLabel p,
+  .flowchart svg .edgeLabel,
+  .flowchart svg .edgeLabel p,
+  .flowchart svg foreignObject span,
+  .flowchart svg text {
+    font-size: 22px !important;
+    font-family: "Noto Sans TC", sans-serif !important;
+  }
   .flowchart-caption {
     text-align: center;
     color: var(--text-muted);
@@ -429,13 +452,14 @@
   <h2>目 錄</h2>
   <ol>
     <li><a href="#ch1">適用範圍與目的</a></li>
-    <li><a href="#ch2">證據等級說明</a></li>
+    <li><a href="#ch2">修改紀錄</a></li>
     <li><a href="#ch3">診斷與分期流程</a></li>
     <li><a href="#ch4">原位癌（DCIS）治療建議</a></li>
     <li><a href="#ch5">Stage I 治療建議</a></li>
     <li><a href="#ch6">Stage II 治療建議</a></li>
-    <li><a href="#ch7">本院修改紀錄表</a></li>
-    <li><a href="#ch8">參考文獻</a></li>
+    <li><a href="#ch7">追蹤計畫</a></li>
+    <li><a href="#ch8">化療處方集</a></li>
+    <li><a href="#ch9">參考文獻</a></li>
   </ol>
 </nav>
 
@@ -454,26 +478,133 @@
 </section>
 
 <section class="chapter" id="ch2">
-  <h1>第二章　證據等級說明</h1>
+  <h1>第二章　修改紀錄</h1>
+
   <div class="chapter-summary">
     <strong>本章重點</strong>
-    本指引採用 NCCN 證據等級分類系統，所有未特別標註之建議預設為 Category 2A。
+    本表逐條列出本院本年度相對於 NCCN 標準建議之修改項目、與前一年版本之變動、及修改之依據與決議過程，作為臨床稽核與評鑑之佐證文件。
   </div>
+
+  <h2>2.1 與前一年版本變動摘要</h2>
+
   <table>
     <thead>
       <tr>
-        <th style="width:18%">等級</th>
-        <th style="width:42%">證據強度</th>
-        <th style="width:40%">共識程度</th>
+        <th style="width:14%">變動類型</th>
+        <th style="width:14%">影響章節</th>
+        <th style="width:50%">變動摘要</th>
+        <th style="width:22%">決議日期</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td><strong>Category 1</strong></td><td>高品質證據（≥1 隨機分派第三期試驗或高品質統合分析）</td><td>NCCN 委員一致同意（≥85%）</td></tr>
-      <tr><td><strong>Category 2A</strong></td><td>較低層級證據</td><td>NCCN 委員一致同意（≥85%）</td></tr>
-      <tr><td><strong>Category 2B</strong></td><td>較低層級證據</td><td>NCCN 委員多數同意（50–85%）</td></tr>
-      <tr><td><strong>Category 3</strong></td><td>任何層級證據</td><td>NCCN 委員顯著分歧</td></tr>
+      <tr>
+        <td><strong>新增</strong></td>
+        <td>4.3.1</td>
+        <td>低風險 DCIS 病人新增「共同決策免 RT」選項</td>
+        <td>2026/03/15</td>
+      </tr>
+      <tr>
+        <td><strong>修改</strong></td>
+        <td>5.2.1</td>
+        <td>Stage I HR+ 老年低風險族群免 RT 條件之 ER 強陽性定義（Allred ≥7）</td>
+        <td>2026/03/15</td>
+      </tr>
+      <tr>
+        <td><strong>新增</strong></td>
+        <td>6.2.1</td>
+        <td>NAC 病人加入定位 clip 與 MDT 6 週追蹤之本院 SOP</td>
+        <td>2026/02/20</td>
+      </tr>
+      <tr>
+        <td><strong>更新</strong></td>
+        <td>8（化療處方集）</td>
+        <td>依 2025 年新進藥品調整劑量與支持性療法建議</td>
+        <td>2026/04/10</td>
+      </tr>
     </tbody>
   </table>
+
+  <h2>2.2 本院相對 NCCN 修改項目逐條紀錄</h2>
+
+  <table style="font-size: 13px;">
+    <thead>
+      <tr>
+        <th style="width:8%">編號</th>
+        <th style="width:10%">章節</th>
+        <th style="width:18%">NCCN 原則</th>
+        <th style="width:18%">本院做法</th>
+        <th style="width:18%">修改原因</th>
+        <th style="width:14%">證據依據</th>
+        <th style="width:8%">決議日期</th>
+        <th style="width:6%">主責</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>M-2026-01</td>
+        <td>4.3.1<br/>(DCIS RT)</td>
+        <td>BCS 後常規建議 WBRT</td>
+        <td>低風險族群提供共同決策諮詢與中文說明單張</td>
+        <td>強化病人自主，符合本院共同決策推動方向</td>
+        <td>院內共同決策推動委員會</td>
+        <td>2026/03/15</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td>M-2026-02</td>
+        <td>5.2.1<br/>(Stage I HR+)</td>
+        <td>Stage I HR+ 標準含術後 RT</td>
+        <td>≥70 歲 + tumor&lt;2cm + Grade 1-2 + ER 強陽性 + SLN 陰性者，可共同決策免術後 RT</td>
+        <td>本院年長病人比例高；放療長期副作用考量</td>
+        <td>本院回溯資料(n=187)；PRIME II；CALGB 9343</td>
+        <td>2026/03/15</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td>M-2026-03</td>
+        <td>3.2<br/>(Ki-67)</td>
+        <td>Ki-67 cutoff 各家不一</td>
+        <td>本院統一以 14% 為高低分界</td>
+        <td>本院病理科操作一致性與品管考量</td>
+        <td>本院病理科 SOP；St. Gallen 共識</td>
+        <td>2026/02/20</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td>M-2026-04</td>
+        <td>6.2<br/>(NAC)</td>
+        <td>NAC 期間追蹤頻率未明定</td>
+        <td>每 6 週 MDT 會議追蹤 + 個管師主動聯繫</td>
+        <td>強化治療依從性；本院個管師人力配置</td>
+        <td>本院個管中心 SOP</td>
+        <td>2026/02/20</td>
+        <td>[姓名]</td>
+      </tr>
+      <tr>
+        <td colspan="8" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 20px;">
+          ── 以下依本院多科會議決議逐條填寫 ──
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2.3 版本歷程</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:15%">版本</th>
+        <th style="width:20%">發行日期</th>
+        <th style="width:65%">主要異動</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>v2026.1</td><td>2026/05/01</td><td>本版（依 NCCN BC v2.2026 更新）</td></tr>
+      <tr><td>v2025.1</td><td>2025/05/15</td><td>[ 前版本主要異動摘要 ]</td></tr>
+      <tr><td>v2024.1</td><td>2024/06/01</td><td>[ 前版本主要異動摘要 ]</td></tr>
+    </tbody>
+  </table>
+
 </section>
 
 <section class="chapter" id="ch3">
@@ -725,34 +856,60 @@ flowchart LR
   </div>
 
   <h2>6.1 治療演算法</h2>
+
+  <p>本演算法因決策路徑較多，依時間軸拆分為兩張圖呈現，以利閱讀：</p>
+  <ul>
+    <li><strong>圖 6-1a</strong>：手術前治療策略（決定是否需要新輔助治療）</li>
+    <li><strong>圖 6-1b</strong>：手術後處置（術後 RT 與輔助全身治療）</li>
+  </ul>
+
+  <h3>6.1.1 手術前治療策略</h3>
   <div class="flowchart">
     <pre class="mermaid">
 flowchart LR
     classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
-    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+    classDef refN fill:#e8eef5,stroke:#3d6b87,stroke-width:1.5px,stroke-dasharray:5 4,color:#3d6b87,font-weight:600
 
     A[Stage II 確診]:::startN
     B[完整 staging<br/>分子分型評估]:::actionN
     N1[新輔助化療<br/>± 標靶治療]:::actionN
     N2[新輔助治療<br/>降期]:::actionN
-    Surg[手術 + 腋下處置]:::actionN
-    RT[術後 RT 評估<sup>a</sup>]:::actionN
-    Adj[輔助全身治療<br/>依分子分型 + 病理反應<sup>b</sup>]:::actionN
-    FU[長期追蹤]:::endN
+    Direct[直接手術]:::actionN
+    Cont[→ 續接圖 6-1b<br/>術後處置]:::refN
 
     A --> B
     B -->|TNBC ≥cT2 或 N+<br/>HER2+ ≥cT2 或 N+| N1
     B -->|HR+/HER2- 想做 BCS<br/>但目前不適合| N2
-    B -->|無 NAC 適應症| Surg
-    N1 --> Surg
-    N2 --> Surg
+    B -->|無 NAC 適應症| Direct
+    N1 --> Cont
+    N2 --> Cont
+    Direct --> Cont
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖 6-1a　Stage II 手術前治療策略（1/2）</div>
+
+  <h3>6.1.2 手術後處置</h3>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef refN fill:#e8eef5,stroke:#3d6b87,stroke-width:1.5px,stroke-dasharray:5 4,color:#3d6b87,font-weight:600
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    Prev[← 續接自圖 6-1a]:::refN
+    Surg[手術<br/>+ 腋下處置]:::actionN
+    RT[術後 RT 評估<sup>a</sup>]:::actionN
+    Adj[輔助全身治療<br/>依分子分型 + 病理反應<sup>b</sup>]:::actionN
+    FU[長期追蹤<br/>見圖 7-1]:::endN
+
+    Prev --> Surg
     Surg --> RT
     RT --> Adj
     Adj --> FU
     </pre>
   </div>
-  <div class="flowchart-caption">圖 6-1　Stage II 治療演算法</div>
+  <div class="flowchart-caption">圖 6-1b　Stage II 手術後處置（2/2）</div>
   <div class="flowchart-footnote">
     <strong>註解</strong>
     <ul>
@@ -784,77 +941,252 @@ flowchart LR
 </section>
 
 <section class="chapter" id="ch7">
-  <h1>第七章　本院修改紀錄表</h1>
+  <h1>第七章　追蹤計畫</h1>
+
   <div class="chapter-summary">
     <strong>本章重點</strong>
-    本表逐條列出本院相對於 NCCN 標準建議之修改項目，及修改之依據與決議過程，作為臨床稽核與評鑑之佐證文件。
+    所有完成主要治療之病人均依本院通用追蹤流程進行長期追蹤；接受 endocrine therapy 與 anti-HER2 治療者另有特殊追蹤項目。
   </div>
 
-  <table style="font-size: 13px;">
+  <h2>7.1 通用追蹤流程</h2>
+
+  <div class="key-points">
+    <strong>追蹤原則</strong>
+    <ul>
+      <li>追蹤頻率隨時間遞減，但終身不停止</li>
+      <li>每次追蹤均含病史詢問與理學檢查</li>
+      <li>每年一次乳房攝影（雙側保留乳房或對側乳房）</li>
+      <li>無症狀病人不常規執行轉移影像評估</li>
+      <li>新發症狀或疑似復發，啟動完整評估</li>
+    </ul>
+  </div>
+
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef alertN fill:#fee2e2,stroke:#b91c1c,stroke-width:2px,color:#7f1d1d,font-weight:600
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    Start[治療完成]:::startN
+    Y02[Year 0-2<br/>每 3-4 個月臨床檢查<br/>每年乳房攝影]:::actionN
+    Y25[Year 2-5<br/>每 6 個月臨床檢查<br/>每年乳房攝影]:::actionN
+    Y5[Year 5+<br/>每年臨床檢查<br/>每年乳房攝影]:::actionN
+    Long[終身追蹤]:::endN
+    Eval[新發症狀或影像異常<br/>啟動完整評估]:::alertN
+
+    Start --> Y02
+    Y02 -->|無症狀| Y25
+    Y25 -->|無症狀| Y5
+    Y5 --> Long
+    Y02 -->|出現症狀| Eval
+    Y25 -->|出現症狀| Eval
+    Y5 -->|出現症狀| Eval
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖 7-1　乳癌通用追蹤流程</div>
+
+  <h2>7.2 追蹤項目對照表</h2>
+
+  <table>
     <thead>
       <tr>
-        <th style="width:8%">編號</th>
-        <th style="width:10%">章節</th>
-        <th style="width:18%">NCCN 原則</th>
-        <th style="width:18%">本院做法</th>
-        <th style="width:18%">修改原因</th>
-        <th style="width:14%">證據依據</th>
-        <th style="width:8%">決議日期</th>
-        <th style="width:6%">主責</th>
+        <th style="width:18%">期間</th>
+        <th style="width:25%">臨床追蹤頻率</th>
+        <th style="width:20%">乳房攝影</th>
+        <th style="width:37%">特殊項目</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>M-2026-01</td>
-        <td>4.3.1<br/>(DCIS RT)</td>
-        <td>BCS 後常規建議 WBRT</td>
-        <td>低風險族群提供共同決策諮詢與中文說明單張</td>
-        <td>強化病人自主，符合本院共同決策推動方向</td>
-        <td>院內共同決策推動委員會</td>
-        <td>2026/03/15</td>
-        <td>[姓名]</td>
+        <td><strong>Year 0–2</strong></td>
+        <td>每 3–4 個月</td>
+        <td>每年</td>
+        <td>HR+ 者監測 endocrine therapy 副作用<br/>HER2+ 者監測心功能（每 3 個月 LVEF）</td>
       </tr>
       <tr>
-        <td>M-2026-02</td>
-        <td>5.2.1<br/>(Stage I HR+)</td>
-        <td>Stage I HR+ 標準含術後 RT</td>
-        <td>≥70 歲 + tumor&lt;2cm + Grade 1-2 + ER 強陽性 + SLN 陰性者，可共同決策免術後 RT</td>
-        <td>本院年長病人比例高；放療長期副作用考量</td>
-        <td>本院回溯資料(n=187)；PRIME II；CALGB 9343</td>
-        <td>2026/03/15</td>
-        <td>[姓名]</td>
+        <td><strong>Year 2–5</strong></td>
+        <td>每 6 個月</td>
+        <td>每年</td>
+        <td>HR+ 者繼續監測；停經後 AI 使用者考慮骨密度檢測</td>
       </tr>
       <tr>
-        <td>M-2026-03</td>
-        <td>3.2<br/>(Ki-67)</td>
-        <td>Ki-67 cutoff 各家不一</td>
-        <td>本院統一以 14% 為高低分界</td>
-        <td>本院病理科操作一致性與品管考量</td>
-        <td>本院病理科 SOP；St. Gallen 共識</td>
-        <td>2026/02/20</td>
-        <td>[姓名]</td>
-      </tr>
-      <tr>
-        <td>M-2026-04</td>
-        <td>6.2<br/>(NAC)</td>
-        <td>NAC 期間追蹤頻率未明定</td>
-        <td>每 6 週 MDT 會議追蹤 + 個管師主動聯繫</td>
-        <td>強化治療依從性；本院個管師人力配置</td>
-        <td>本院個管中心 SOP</td>
-        <td>2026/02/20</td>
-        <td>[姓名]</td>
-      </tr>
-      <tr>
-        <td colspan="8" style="text-align: center; color: var(--text-muted); font-style: italic; padding: 20px;">
-          ── 以下依本院多科會議決議逐條填寫 ──
-        </td>
+        <td><strong>Year 5+</strong></td>
+        <td>每年</td>
+        <td>每年</td>
+        <td>HR+ 者評估 endocrine therapy 是否延長至 7–10 年</td>
       </tr>
     </tbody>
   </table>
+
+  <h2>7.3 各分子分型特殊追蹤事項</h2>
+
+  <h3>7.3.1 HR+/HER2-（接受 Endocrine Therapy）</h3>
+  <ul>
+    <li><strong>停經前 + Tamoxifen：</strong>每年婦科檢查，注意子宮內膜變化（陰道異常出血即評估）</li>
+    <li><strong>停經後 + AI：</strong>治療前及每 2 年骨密度檢測；補充鈣與維他命 D</li>
+    <li><strong>遵從性追蹤：</strong>5 年內藥物中斷率約 30%，藥師、個管師與醫師團隊需持續鼓勵與衛教</li>
+  </ul>
+
+  <h3>7.3.2 HER2+（接受 Anti-HER2 治療期間）</h3>
+  <ul>
+    <li>治療前評估 LVEF（echocardiogram 或 MUGA）</li>
+    <li>Trastuzumab 治療期間每 3 個月監測 LVEF</li>
+    <li>LVEF 下降 ≥10% 或低於正常下限時暫停藥物，會診心臟科</li>
+  </ul>
+
+  <h3>7.3.3 TNBC</h3>
+  <ul>
+    <li>復發風險於治療後 2–3 年最高，臨床追蹤密度可酌增</li>
+    <li>有 BRCA 突變家族史者建議基因諮詢</li>
+    <li>若 BRCA 陽性，討論預防性對側乳房切除可能</li>
+  </ul>
+
+  <div class="hospital-mod">
+    <p><strong>本院做法：</strong>所有完成治療之病人於本院乳癌個案管理系統建檔，由個案管理師主動提醒下次回診；endocrine therapy 病人每年由藥師執行用藥諮詢與遵從性評估。</p>
+    <p style="margin: 6px 0 0; font-size: 14px; color: var(--text-muted);"><strong>決議日期：</strong>2026/01/20 多科會議共識</p>
+  </div>
 </section>
 
+
 <section class="chapter" id="ch8">
-  <h1>第八章　參考文獻</h1>
+  <h1>第八章　化療處方集</h1>
+
+  <div class="chapter-summary">
+    <strong>本章重點</strong>
+    本章彙整本院乳癌常用化療與標靶處方，含劑量、療程、支持性療法建議。實際使用前需依個案調整，特殊情況請與藥師、腫瘤內科主治醫師討論。
+  </div>
+
+  <div class="key-points">
+    <strong>使用注意事項</strong>
+    <ul>
+      <li>所有劑量為標準成人劑量；高齡、肝腎功能不佳、體能狀態差者需個別調整</li>
+      <li>化療前需確認血液、肝腎功能、心功能（含 anthracycline 或 anti-HER2）達標</li>
+      <li>支持性療法（止吐、G-CSF、口腔保健）依本院標準預防性給予</li>
+      <li>處方變動依本院藥事委員會公告為準，本表每年更新</li>
+    </ul>
+  </div>
+
+  <h2>8.1 輔助／新輔助化療處方</h2>
+
+  <h3>8.1.1　AC-T 系列</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">處方代碼</th>
+        <th style="width:32%">藥物與劑量</th>
+        <th style="width:18%">療程</th>
+        <th style="width:32%">適應症與備註</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ddAC → ddP</strong></td>
+        <td>
+          AC：Doxorubicin 60 mg/m² + Cyclophosphamide 600 mg/m²<br/>
+          P：Paclitaxel 175 mg/m²
+        </td>
+        <td>每 2 週 × 4<br/>接每 2 週 × 4</td>
+        <td>劑量密集型方案；需 G-CSF 預防；適用高風險早期乳癌</td>
+      </tr>
+      <tr>
+        <td><strong>AC → wP</strong></td>
+        <td>
+          AC：同上<br/>
+          wP：Paclitaxel 80 mg/m²
+        </td>
+        <td>AC 每 3 週 × 4<br/>wP 每週 × 12</td>
+        <td>標準輔助方案；耐受性較佳</td>
+      </tr>
+      <tr>
+        <td><strong>TC</strong></td>
+        <td>Docetaxel 75 mg/m² + Cyclophosphamide 600 mg/m²</td>
+        <td>每 3 週 × 4–6</td>
+        <td>免 anthracycline 方案；心毒性疑慮病人優先選擇</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>8.1.2　Anti-HER2 含化療方案</h3>
+  <div class="demo-content">
+    [由本院腫瘤內科填入：TCHP、AC-THP、wP+H、T-DM1 等具體劑量、療程、本院實際給藥流程]
+  </div>
+
+  <h3>8.1.3　TNBC 含 Platinum 方案</h3>
+  <div class="demo-content">
+    [由本院腫瘤內科填入：carboplatin-based 方案、KEYNOTE-522 對應之 NAC 方案等]
+  </div>
+
+  <h2>8.2 內分泌治療</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:20%">藥物</th>
+        <th style="width:18%">劑量</th>
+        <th style="width:20%">療程</th>
+        <th style="width:42%">適應症與備註</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Tamoxifen</td><td>20 mg PO QD</td><td>5–10 年</td><td>停經前首選；停經後亦可；注意子宮內膜變化</td></tr>
+      <tr><td>Letrozole</td><td>2.5 mg PO QD</td><td>5–10 年</td><td>停經後 AI；治療前後骨密度監測</td></tr>
+      <tr><td>Anastrozole</td><td>1 mg PO QD</td><td>5–10 年</td><td>停經後 AI；同上</td></tr>
+      <tr><td>Exemestane</td><td>25 mg PO QD</td><td>5–10 年</td><td>類固醇 AI；耐受性視個案</td></tr>
+      <tr><td>OFS（Goserelin）</td><td>3.6 mg SC q4w</td><td>2–5 年</td><td>停經前高風險併用；可加 AI 或 Tamoxifen</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8.3 標靶治療</h2>
+
+  <div class="demo-content">
+    [由本院藥師與腫瘤內科填入：Trastuzumab、Pertuzumab、T-DM1、Trastuzumab deruxtecan、CDK4/6 inhibitors（palbociclib/ribociclib/abemaciclib）、PARP inhibitors（olaparib/talazoparib）等劑量與本院給付規範]
+  </div>
+
+  <h2>8.4 支持性療法標準</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:25%">類別</th>
+        <th style="width:35%">本院標準預防方案</th>
+        <th style="width:40%">適用情境</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>止吐</strong></td>
+        <td>5-HT3 antagonist + dexamethasone ± NK1 antagonist</td>
+        <td>高致吐性方案（AC, ddAC, TC）</td>
+      </tr>
+      <tr>
+        <td><strong>G-CSF</strong></td>
+        <td>Pegfilgrastim 6 mg SC × 1（療程後 24–72 小時）</td>
+        <td>劑量密集方案、發燒性中性球低下風險 ≥20% 之方案</td>
+      </tr>
+      <tr>
+        <td><strong>骨保護</strong></td>
+        <td>Zoledronic acid 4 mg IV q6m 或 Denosumab 60 mg SC q6m</td>
+        <td>停經後使用 AI 且骨密度偏低者</td>
+      </tr>
+      <tr>
+        <td><strong>口腔護理</strong></td>
+        <td>本院乳癌口腔護理衛教單張 + 牙科會診</td>
+        <td>所有化療病人；anthracycline 與 capecitabine 特別注意</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="hospital-mod">
+    <p><strong>本院做法：</strong>所有化療處方於本院化療委員會審核通過後納入此處方集；新進藥品需經藥事委員會評估後加入。處方集每年隨本指引同步更新一次，期間若有重大藥品異動則發布補充公告。</p>
+    <p style="margin: 6px 0 0; font-size: 14px; color: var(--text-muted);"><strong>處方集主責：</strong>本院藥劑部 + 乳癌腫瘤內科主治醫師團隊</p>
+  </div>
+
+</section>
+
+<section class="chapter" id="ch9">
+  <h1>第九章　參考文獻</h1>
   <ol class="references">
     <li>National Comprehensive Cancer Network. NCCN Clinical Practice Guidelines in Oncology: Breast Cancer, Version 2.2026.</li>
     <li>Allison KH, et al. Estrogen and Progesterone Receptor Testing in Breast Cancer: ASCO/CAP Guideline Update. J Clin Oncol. 2020;38:1346-1366.</li>
@@ -873,28 +1205,41 @@ flowchart LR
 </div>
 
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'base',
-    themeVariables: {
-      primaryColor: '#ffffff',
-      primaryTextColor: '#222',
-      primaryBorderColor: '#3d6b87',
-      lineColor: '#555',
-      fontFamily: '"Noto Sans TC", sans-serif',
-      fontSize: '18px'
-    },
-    flowchart: { 
-      curve: 'basis', 
-      padding: 20,
-      nodeSpacing: 55,
-      rankSpacing: 95,
-      useMaxWidth: false
+  // 等 ESM 模組載入完成
+  function initMermaid() {
+    if (!window.mermaid) {
+      setTimeout(initMermaid, 50);
+      return;
     }
-  });
+    window.mermaid.initialize({
+      startOnLoad: true,
+      layout: 'elk',
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ffffff',
+        primaryTextColor: '#222',
+        primaryBorderColor: '#3d6b87',
+        lineColor: '#555',
+        fontFamily: '"Noto Sans TC", sans-serif',
+        fontSize: '22px'
+      },
+      flowchart: { 
+        padding: 10,
+        nodeSpacing: 55,
+        rankSpacing: 95,
+        useMaxWidth: false
+      },
+      elk: {
+        'elk.algorithm': 'layered',
+        'elk.direction': 'RIGHT',
+        'elk.edgeRouting': 'ORTHOGONAL',
+        'elk.layered.spacing.nodeNodeBetweenLayers': '60',
+        'elk.spacing.nodeNode': '40'
+      }
+    });
+    window.mermaid.run();
 
-  // 確保 Mermaid 渲染後的 SVG 撐滿容器
-  window.addEventListener('load', () => {
+    // 確保 SVG 撐滿容器，並強制移除 ELK 外框
     setTimeout(() => {
       document.querySelectorAll('.flowchart svg').forEach(svg => {
         svg.removeAttribute('width');
@@ -902,8 +1247,22 @@ flowchart LR
         svg.style.width = '100%';
         svg.style.height = 'auto';
         svg.style.maxWidth = 'none';
+
+        // 移除 ELK 外框：找最外層的 rect 設為透明
+        const rects = svg.querySelectorAll('rect');
+        rects.forEach(rect => {
+          // 如果這個 rect 寬度接近整個 SVG 寬度，視為外框背景
+          const svgWidth = svg.getBBox().width;
+          const rectWidth = parseFloat(rect.getAttribute('width') || 0);
+          if (rectWidth > svgWidth * 0.9) {
+            rect.setAttribute('fill', 'none');
+            rect.setAttribute('stroke', 'none');
+          }
+        });
       });
-    }, 300);
+    }, 800);
+  }
+  window.addEventListener('load', initMermaid);
 </script>
 
 </body>
