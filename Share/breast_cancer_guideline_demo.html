@@ -163,6 +163,15 @@
     padding: 40px 50px;
     margin: 40px 0;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    /* 接近 A4 橫向比例 1.414:1（彈性微調，內容超過時自然延伸） */
+    min-height: 770px;
+  }
+  /* 封面頁維持 A4 橫向比例 */
+  .cover {
+    min-height: 770px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .chapter h1 {
     color: var(--primary);
@@ -341,6 +350,35 @@
     font-family: "Noto Sans TC", sans-serif;
   }
 
+  /* 可點擊的流程圖節點：cursor 變手指即可，不加 hover 視覺變化 */
+  .flowchart svg g.node[onclick],
+  .flowchart svg g.node a {
+    cursor: pointer;
+  }
+
+  /* 外部指引引用標註（如放腫科指引） */
+  .external-ref {
+    background: #f0f4f8;
+    border-left: 3px solid #6b8caf;
+    padding: 12px 18px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+    color: #2c4a63;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .external-ref::before {
+    content: "📖 詳見其他指引";
+    color: #4a6585;
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .external-ref strong {
+    color: #2c4a63;
+  }
+
   .key-points {
     background: #eef3f6;
     border: 1px solid #c4d3dd;
@@ -499,25 +537,25 @@
     <tbody>
       <tr>
         <td><strong>新增</strong></td>
-        <td>4.3.1</td>
+        <td><a href="#sec-4-3-1">4.3.1</a></td>
         <td>低風險 DCIS 病人新增「共同決策免 RT」選項</td>
         <td>2026/03/15</td>
       </tr>
       <tr>
         <td><strong>修改</strong></td>
-        <td>5.2.1</td>
+        <td><a href="#sec-5-2-1">5.2.1</a></td>
         <td>Stage I HR+ 老年低風險族群免 RT 條件之 ER 強陽性定義（Allred ≥7）</td>
         <td>2026/03/15</td>
       </tr>
       <tr>
         <td><strong>新增</strong></td>
-        <td>6.2.1</td>
+        <td><a href="#sec-6-2-1">6.2.1</a></td>
         <td>NAC 病人加入定位 clip 與 MDT 6 週追蹤之本院 SOP</td>
         <td>2026/02/20</td>
       </tr>
       <tr>
         <td><strong>更新</strong></td>
-        <td>8（化療處方集）</td>
+        <td><a href="#ch8">8</a>（化療處方集）</td>
         <td>依 2025 年新進藥品調整劑量與支持性療法建議</td>
         <td>2026/04/10</td>
       </tr>
@@ -542,7 +580,7 @@
     <tbody>
       <tr>
         <td>M-2026-01</td>
-        <td>4.3.1<br/>(DCIS RT)</td>
+        <td><a href="#sec-4-3-1">4.3.1</a><br/>(DCIS RT)</td>
         <td>BCS 後常規建議 WBRT</td>
         <td>低風險族群提供共同決策諮詢與中文說明單張</td>
         <td>強化病人自主，符合本院共同決策推動方向</td>
@@ -552,7 +590,7 @@
       </tr>
       <tr>
         <td>M-2026-02</td>
-        <td>5.2.1<br/>(Stage I HR+)</td>
+        <td><a href="#sec-5-2-1">5.2.1</a><br/>(Stage I HR+)</td>
         <td>Stage I HR+ 標準含術後 RT</td>
         <td>≥70 歲 + tumor&lt;2cm + Grade 1-2 + ER 強陽性 + SLN 陰性者，可共同決策免術後 RT</td>
         <td>本院年長病人比例高；放療長期副作用考量</td>
@@ -562,7 +600,7 @@
       </tr>
       <tr>
         <td>M-2026-03</td>
-        <td>3.2<br/>(Ki-67)</td>
+        <td><a href="#ch3">3.2</a><br/>(Ki-67)</td>
         <td>Ki-67 cutoff 各家不一</td>
         <td>本院統一以 14% 為高低分界</td>
         <td>本院病理科操作一致性與品管考量</td>
@@ -572,7 +610,7 @@
       </tr>
       <tr>
         <td>M-2026-04</td>
-        <td>6.2<br/>(NAC)</td>
+        <td><a href="#sec-6-2-1">6.2</a><br/>(NAC)</td>
         <td>NAC 期間追蹤頻率未明定</td>
         <td>每 6 週 MDT 會議追蹤 + 個管師主動聯繫</td>
         <td>強化治療依從性；本院個管師人力配置</td>
@@ -621,6 +659,7 @@ flowchart LR
     classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
     classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+    classDef externalN fill:#f0f4f8,stroke:#6b8caf,stroke-width:1.5px,stroke-dasharray:3 2,color:#2c4a63
 
     A[臨床發現病灶<br/>或篩檢異常]:::startN
     B[乳房超音波<br/>± 乳房攝影]:::actionN
@@ -683,12 +722,13 @@ flowchart LR
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
     classDef hospitalN fill:#fff3cd,stroke:#b8860b,stroke-width:1.5px,color:#5c4900
     classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+    classDef externalN fill:#f0f4f8,stroke:#6b8caf,stroke-width:1.5px,stroke-dasharray:3 2,color:#2c4a63
 
     A[DCIS 病理確診]:::startN
     B[影像評估病灶範圍]:::actionN
     C[Lumpectomy<br/>達切緣 ≥2mm]:::actionN
     D[Total Mastectomy<br/>± SLNB]:::actionN
-    H[術後 WBRT]:::actionN
+    H[術後 WBRT<br/>📖 詳見放腫科指引]:::externalN
     I[共同決策<br/>可考慮省略 RT]:::hospitalN
     ER[評估 ER 狀態]:::actionN
     K[5 年 endocrine therapy]:::actionN
@@ -705,6 +745,9 @@ flowchart LR
     ER -->|ER 陽性| K
     ER -->|ER 陰性| L
     K --> L
+
+    click I "#sec-4-3-1" "點擊跳至 4.3.1 共同決策說明"
+    click K "#sec-4-3-2" "點擊跳至 4.3.2 內分泌治療詳細說明"
     </pre>
   </div>
   <div class="flowchart-caption">圖 4-1　DCIS 治療演算法</div>
@@ -725,8 +768,13 @@ flowchart LR
   <h3>4.2.3　切除邊緣判讀</h3>
   <p>依 SSO/ASTRO/ASCO 共識，DCIS 接受 BCS 合併 WBRT 者，切緣 ≥2mm 為足夠。切緣不足時通常建議再切除，但臨床判斷需綜合評估病灶位置、餘量、病人偏好。</p>
 
-  <h2>4.3 術後放療與內分泌治療</h2>
-  <h3>4.3.1　術後放療（WBRT）</h3>
+  <h2 id="sec-4-3">4.3 術後放療與內分泌治療</h2>
+
+  <div class="external-ref">
+    放療相關之具體分次劑量、技術選擇、副作用處理，<strong>詳見本院放射腫瘤科最新版「乳癌放射治療指引」</strong>。本章僅描述放療於整體治療流程中的決策原則。
+  </div>
+
+  <h3 id="sec-4-3-1">4.3.1　術後放療（WBRT）</h3>
   <p>BCS 後 WBRT 可降低同側乳房腫瘤復發（IBTR）風險約 50%。所有 BCS 病人原則上建議 WBRT，但下列低風險族群經與病人充分討論後，可考慮省略：</p>
   <ul>
     <li>年齡 ≥70 歲</li>
@@ -740,7 +788,7 @@ flowchart LR
     <p style="margin: 6px 0 0; font-size: 14px; color: var(--text-muted);"><strong>決議日期：</strong>2026/03/15 多科會議共識通過</p>
   </div>
 
-  <h3>4.3.2　Endocrine Therapy</h3>
+  <h3 id="sec-4-3-2">4.3.2　Endocrine Therapy</h3>
   <p>ER 陽性 DCIS 病人於 BCS + RT 後給予 5 年 tamoxifen（停經前）或 aromatase inhibitor（停經後）可降低同側與對側乳房事件。需與病人討論藥物副作用與依從性。</p>
 </section>
 
@@ -768,11 +816,12 @@ flowchart LR
     classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
     classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+    classDef externalN fill:#f0f4f8,stroke:#6b8caf,stroke-width:1.5px,stroke-dasharray:3 2,color:#2c4a63
 
     A[Stage I 確診<br/>cT1N0M0]:::startN
     C[Lumpectomy + SLNB]:::actionN
     D[Mastectomy + SLNB]:::actionN
-    E[術後 RT 評估<sup>a</sup>]:::actionN
+    E[術後 RT 評估<sup>a</sup><br/>📖 詳見放腫科指引]:::externalN
     S[輔助全身治療<br/>依分子分型]:::actionN
     Lum[Endocrine therapy 5 年<br/>± 化療<sup>b</sup>]:::actionN
     TN[考慮輔助化療]:::actionN
@@ -790,6 +839,11 @@ flowchart LR
     Lum --> FU
     TN --> FU
     Her --> FU
+
+    click Lum "#sec-5-2-1" "點擊跳至 5.2.1 HR+/HER2- 詳細說明"
+    click TN "#sec-5-2-2" "點擊跳至 5.2.2 TNBC 詳細說明"
+    click Her "#sec-5-2-3" "點擊跳至 5.2.3 HER2+ 詳細說明"
+    click FU "#ch7" "點擊跳至第七章 追蹤計畫"
     </pre>
   </div>
   <div class="flowchart-caption">圖 5-1　Stage I 治療演算法</div>
@@ -802,15 +856,19 @@ flowchart LR
     </ul>
   </div>
 
-  <h2>5.2 依分子分型治療策略</h2>
+  <h2 id="sec-5-2">5.2 依分子分型治療策略</h2>
 
-  <h3>5.2.1　HR+/HER2- (Luminal-like)</h3>
+  <div class="external-ref">
+    Stage I 病人之術後放療決策（含 BCS 後 WBRT、PMRT 適應症、加速分次方案 hypofractionation 等），<strong>詳見本院放射腫瘤科最新版「乳癌放射治療指引」</strong>。
+  </div>
+
+  <h3 id="sec-5-2-1">5.2.1　HR+/HER2- (Luminal-like)</h3>
   <p>佔 Stage I 乳癌約 70%。輔助治療以 endocrine therapy 為主：</p>
   <ul>
     <li><strong>停經前：</strong>Tamoxifen 5 年；高風險者可加 ovarian function suppression</li>
     <li><strong>停經後：</strong>Aromatase inhibitor 5 年（letrozole/anastrozole/exemestane）</li>
     <li><strong>延長治療：</strong>高風險者可考慮延長至 7–10 年</li>
-    <li><strong>化療決策：</strong>對 T1c-T2 N0 病人，可考慮 21-gene assay（Oncotype DX）；高 RS 分數者建議加 chemo</li>
+    <li><strong>化療決策：</strong>對 T1c-T2 N0 病人，可考慮 21-gene assay（Oncotype DX）；高 RS 分數者建議加 chemo（具體處方<a href="#ch8">詳見第八章 化療處方集</a>）</li>
   </ul>
 
   <div class="hospital-mod">
@@ -821,19 +879,19 @@ flowchart LR
     </p>
   </div>
 
-  <h3>5.2.2　HR-/HER2- (Triple Negative, TNBC)</h3>
+  <h3 id="sec-5-2-2">5.2.2　HR-/HER2- (Triple Negative, TNBC)</h3>
   <p>佔 Stage I 乳癌約 10–15%。雖無 endocrine therapy 與 anti-HER2 標靶可用，但對化療反應較佳。Stage I 中：</p>
   <ul>
     <li><strong>T1a (≤5mm)：</strong>輔助化療效益不明顯，可僅追蹤觀察</li>
     <li><strong>T1b (5–10mm)：</strong>個別化考慮，需評估病人風險偏好</li>
-    <li><strong>T1c (10–20mm)：</strong>建議輔助化療，常見方案為 anthracycline-based 或 TC 方案</li>
+    <li><strong>T1c (10–20mm)：</strong>建議輔助化療，常見方案為 anthracycline-based 或 TC 方案（<a href="#ch8">詳見第八章 化療處方集</a>）</li>
   </ul>
 
-  <h3>5.2.3　HER2+ (HR+ 或 HR-)</h3>
+  <h3 id="sec-5-2-3">5.2.3　HER2+ (HR+ 或 HR-)</h3>
   <p>佔 Stage I 乳癌約 15–20%。Anti-HER2 標靶治療顯著改善預後：</p>
   <ul>
     <li><strong>T1a：</strong>輔助治療效益不明顯，個別化考慮</li>
-    <li><strong>T1b–T1c：</strong>建議 paclitaxel + trastuzumab 12 週，後續 trastuzumab 完成 1 年</li>
+    <li><strong>T1b–T1c：</strong>建議 paclitaxel + trastuzumab 12 週，後續 trastuzumab 完成 1 年（<a href="#ch8">詳見第八章 化療處方集</a>）</li>
     <li>HR+ 者另加 endocrine therapy 5 年</li>
   </ul>
 </section>
@@ -870,6 +928,7 @@ flowchart LR
     classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
     classDef refN fill:#e8eef5,stroke:#3d6b87,stroke-width:1.5px,stroke-dasharray:5 4,color:#3d6b87,font-weight:600
+    classDef externalN fill:#f0f4f8,stroke:#6b8caf,stroke-width:1.5px,stroke-dasharray:3 2,color:#2c4a63
 
     A[Stage II 確診]:::startN
     B[完整 staging<br/>分子分型評估]:::actionN
@@ -885,6 +944,9 @@ flowchart LR
     N1 --> Cont
     N2 --> Cont
     Direct --> Cont
+
+    click N1 "#ch8" "點擊跳至第八章 化療處方集"
+    click N2 "#ch8" "點擊跳至第八章 化療處方集"
     </pre>
   </div>
   <div class="flowchart-caption">圖 6-1a　Stage II 手術前治療策略（1/2）</div>
@@ -895,11 +957,12 @@ flowchart LR
 flowchart LR
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
     classDef refN fill:#e8eef5,stroke:#3d6b87,stroke-width:1.5px,stroke-dasharray:5 4,color:#3d6b87,font-weight:600
+    classDef externalN fill:#f0f4f8,stroke:#6b8caf,stroke-width:1.5px,stroke-dasharray:3 2,color:#2c4a63
     classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
 
     Prev[← 續接自圖 6-1a]:::refN
     Surg[手術<br/>+ 腋下處置]:::actionN
-    RT[術後 RT 評估<sup>a</sup>]:::actionN
+    RT[術後 RT 評估<sup>a</sup><br/>📖 詳見放腫科指引]:::externalN
     Adj[輔助全身治療<br/>依分子分型 + 病理反應<sup>b</sup>]:::actionN
     FU[長期追蹤<br/>見圖 7-1]:::endN
 
@@ -907,6 +970,9 @@ flowchart LR
     Surg --> RT
     RT --> Adj
     Adj --> FU
+
+    click Adj "#ch8" "點擊跳至第八章 化療處方集"
+    click FU "#ch7" "點擊跳至第七章 追蹤計畫"
     </pre>
   </div>
   <div class="flowchart-caption">圖 6-1b　Stage II 手術後處置（2/2）</div>
@@ -919,7 +985,12 @@ flowchart LR
     </ul>
   </div>
 
-  <h2>6.2 新輔助治療適應症</h2>
+  <h2 id="sec-6-2">6.2 新輔助治療適應症</h2>
+
+  <div class="external-ref">
+    Stage II 病人之術後放療決策（含 PMRT、區域淋巴結照射 RNI 適應症、與新輔助治療反應的搭配考量），<strong>詳見本院放射腫瘤科最新版「乳癌放射治療指引」</strong>。
+  </div>
+
   <table>
     <thead>
       <tr><th style="width:20%">分子分型</th><th style="width:35%">建議考慮 NAC 之情境</th><th style="width:45%">考量原因</th></tr>
@@ -931,7 +1002,7 @@ flowchart LR
     </tbody>
   </table>
 
-  <h3>6.2.1　新輔助治療反應評估</h3>
+  <h3 id="sec-6-2-1">6.2.1　新輔助治療反應評估</h3>
   <p>治療期間以臨床觸診、超音波每 1–2 個療程評估腫瘤反應；治療結束前以 MRI 評估手術可行性。最終以手術病理確認 pCR（pathological complete response）或殘餘病灶程度，作為輔助治療調整依據。</p>
 
   <div class="hospital-mod">
@@ -968,6 +1039,7 @@ flowchart LR
     classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
     classDef alertN fill:#fee2e2,stroke:#b91c1c,stroke-width:2px,color:#7f1d1d,font-weight:600
     classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+    classDef externalN fill:#f0f4f8,stroke:#6b8caf,stroke-width:1.5px,stroke-dasharray:3 2,color:#2c4a63
 
     Start[治療完成]:::startN
     Y02[Year 0-2<br/>每 3-4 個月臨床檢查<br/>每年乳房攝影]:::actionN
@@ -1020,7 +1092,7 @@ flowchart LR
     </tbody>
   </table>
 
-  <h2>7.3 各分子分型特殊追蹤事項</h2>
+  <h2 id="sec-7-3">7.3 各分子分型特殊追蹤事項</h2>
 
   <h3>7.3.1 HR+/HER2-（接受 Endocrine Therapy）</h3>
   <ul>
@@ -1056,6 +1128,10 @@ flowchart LR
   <div class="chapter-summary">
     <strong>本章重點</strong>
     本章彙整本院乳癌常用化療與標靶處方，含劑量、療程、支持性療法建議。實際使用前需依個案調整，特殊情況請與藥師、腫瘤內科主治醫師討論。
+  </div>
+
+  <div class="external-ref">
+    本章為集中式處方參考。各分期治療章節中提到的具體化療方案、anti-HER2 治療、新輔助治療等，均連結至本章對應段落。
   </div>
 
   <div class="key-points">
