@@ -506,7 +506,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  }
  
  // Bind labels for click-to-uncheck behavior
- var labels = document.querySelectorAll('label.session, label.food-row');
+ var labels = document.querySelectorAll('label[data-group]');
  for (var i = 0; i < labels.length; i++) {
  (function(lbl) {
  var input = lbl.querySelector('input.ck');
