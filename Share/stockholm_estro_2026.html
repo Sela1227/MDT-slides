@@ -6,55 +6,55 @@
 <title>ESTRO 2026 · Stockholm</title>
 <style>
 :root {
-  /* True Nordic dark gray - no blue tint */
-  --bg:         #26282c;
-  --bg-2:       #2c2e33;
-  --card:       #32343a;
-  --card-2:     #3a3c42;
-  --card-3:     #44464c;
-  --line:       #4a4d54;
-  --line-l:     #383a40;
+ /* True Nordic dark gray - no blue tint */
+ --bg: #26282c;
+ --bg-2: #2c2e33;
+ --card: #32343a;
+ --card-2: #3a3c42;
+ --card-3: #44464c;
+ --line: #4a4d54;
+ --line-l: #383a40;
 
-  --text:       #ebecee;
-  --text-2:     #a8acb3;
-  --text-3:     #74777e;
-  --text-mute:  #50535a;
+ --text: #ebecee;
+ --text-2: #a8acb3;
+ --text-3: #74777e;
+ --text-mute: #50535a;
 
-  /* Primary anchored on #1a4c8f */
-  --primary:    #5489d4;
-  --primary-d:  #1a4c8f;
-  --primary-l:  #7ba6e0;
+ /* Primary anchored on #1a4c8f */
+ --primary: #5489d4;
+ --primary-d: #1a4c8f;
+ --primary-l: #7ba6e0;
 
-  /* Tier colors brightened for dark gray */
-  --conf:       #5489d4;
-  --conf-bg:    #2d3a4f;
-  --conf-bg2:   #2a3344;
+ /* Tier colors brightened for dark gray */
+ --conf: #5489d4;
+ --conf-bg: #2d3a4f;
+ --conf-bg2: #2a3344;
 
-  --tour:       #6db895;
-  --tour-bg:    #2f3f37;
-  --tour-bg2:   #2b3832;
+ --tour: #6db895;
+ --tour-bg: #2f3f37;
+ --tour-bg2: #2b3832;
 
-  --food:       #d4a070;
-  --food-bg:    #3f3327;
-  --food-bg2:   #382d22;
+ --food: #d4a070;
+ --food-bg: #3f3327;
+ --food-bg2: #382d22;
 
-  --chosen-bg:  #2c4036;
-  --chosen-b:   #6db895;
-  --warn:       #e07878;
-  --warn-bg:    #3f2828;
+ --chosen-bg: #2c4036;
+ --chosen-b: #6db895;
+ --warn: #e07878;
+ --warn-bg: #3f2828;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(84,137,212,0.15); }
 html { font-size: 16px; }
 body {
-  font-family: -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  padding: 12px;
-  max-width: 600px;
-  margin: 0 auto;
-  font-size: 15px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+ font-family: -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+ background: var(--bg);
+ color: var(--text);
+ padding: 12px;
+ max-width: 600px;
+ margin: 0 auto;
+ font-size: 15px;
+ line-height: 1.5;
+ -webkit-font-smoothing: antialiased;
 }
 
 /* Page header */
@@ -84,10 +84,10 @@ body {
 .day-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
 
 .day-head {
-  padding: 16px;
-  background: linear-gradient(135deg, var(--primary-d) 0%, #2a5a9c 100%);
-  display: flex; align-items: center; gap: 14px;
-  border-bottom: 1px solid var(--line);
+ padding: 16px;
+ background: linear-gradient(135deg, var(--primary-d) 0%, #2a5a9c 100%);
+ display: flex; align-items: center; gap: 14px;
+ border-bottom: 1px solid var(--line);
 }
 .date-box { text-align: center; min-width: 40px; }
 .date-num { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; }
@@ -145,12 +145,12 @@ body {
 .prog-wrap { padding: 0 12px 8px; }
 .prog-block { border: 1px solid var(--line); border-radius: 8px; margin-bottom: 7px; overflow: hidden; background: var(--card-2); }
 .ph2 { padding: 9px 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: #fff; background: var(--primary-d); }
-.ph2.ph-break   { background: #4a4d54; }
-.ph2.ph-lunch   { background: #5a4a3e; }
+.ph2.ph-break { background: #4a4d54; }
+.ph2.ph-lunch { background: #5a4a3e; }
 .ph2.ph-plenary { background: #143a6e; }
 .ph2.ph-evening { background: #143a6e; }
 .ph2.ph-special { background: #8b5a36; }
-.ph2.ph-extra   { background: #2d6a4f; }
+.ph2.ph-extra { background: #2d6a4f; }
 .ph2 .pht { font-size: .76rem; font-weight: 700; color: #fff; white-space: nowrap; }
 .ph2 .phl { font-size: .76rem; color: rgba(255,255,255,.85); flex: 1; min-width: 0; }
 .ph2 .phb { font-size: .6rem; font-weight: 700; padding: 2px 8px; border-radius: 3px; border: 1px solid rgba(255,255,255,.5); color: #fff; white-space: nowrap; }
@@ -165,67 +165,67 @@ body {
 .s-sub { font-size: .72rem; color: var(--text-3); margin-top: 3px; }
 .s-badge { font-size: .6rem; font-weight: 700; padding: 3px 7px; border-radius: 3px; border: 1px solid; white-space: nowrap; flex-shrink: 0; }
 .sb-plenary { border-color: var(--primary); color: var(--primary); background: var(--conf-bg); }
-.sb-award   { border-color: var(--food); color: var(--food); background: var(--food-bg); }
-.sb-joint   { border-color: var(--text-3); color: var(--text-2); }
-.sb-reg     { border-color: var(--warn); color: var(--warn); background: var(--warn-bg); }
-.sb-clash   { border-color: var(--warn); color: var(--warn); background: var(--warn-bg); }
+.sb-award { border-color: var(--food); color: var(--food); background: var(--food-bg); }
+.sb-joint { border-color: var(--text-3); color: var(--text-2); }
+.sb-reg { border-color: var(--warn); color: var(--warn); background: var(--warn-bg); }
+.sb-clash { border-color: var(--warn); color: var(--warn); background: var(--warn-bg); }
 
 /* Personally interested - blue left bar */
 .session.pick, label.session.pick {
-  border-left: 3px solid var(--primary);
-  padding-left: 10px;
-  background: var(--conf-bg2);
+ border-left: 3px solid var(--primary);
+ padding-left: 10px;
+ background: var(--conf-bg2);
 }
 .session.pick .s-title, label.session.pick .s-title { color: var(--text); font-weight: 600; }
 .session.pick .s-dot, label.session.pick .s-dot { display: none; }
 
 /* ═══ INTERACTIVE: label + radio (native, no JS for toggle) ═══ */
 label.session {
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  position: relative;
-  transition: background .12s, border-color .12s;
+ cursor: pointer;
+ user-select: none;
+ -webkit-user-select: none;
+ position: relative;
+ transition: background .12s, border-color .12s;
 }
 label.session:hover { background: var(--card-3); }
 label.session:active { background: var(--card-3); }
 
 /* Hide actual radio input but keep functional */
 .ck { 
-  position: absolute; 
-  opacity: 0; 
-  width: 1px; height: 1px; 
-  pointer-events: none; 
-  margin: 0; padding: 0;
+ position: absolute; 
+ opacity: 0; 
+ width: 1px; height: 1px; 
+ pointer-events: none; 
+ margin: 0; padding: 0;
 }
 
 /* Big visible checkbox circle */
 .ck-mark {
-  width: 28px; height: 28px;
-  min-width: 28px;
-  border: 2.5px solid var(--text-3);
-  border-radius: 50%;
-  background: var(--bg);
-  flex-shrink: 0;
-  position: relative;
-  display: inline-block;
-  transition: all .12s;
+ width: 28px; height: 28px;
+ min-width: 28px;
+ border: 2.5px solid var(--text-3);
+ border-radius: 50%;
+ background: var(--bg);
+ flex-shrink: 0;
+ position: relative;
+ display: inline-block;
+ transition: all .12s;
 }
 label.session:hover .ck-mark { border-color: var(--primary); transform: scale(1.05); }
 
 /* Native :checked CSS — works in ALL browsers since 2010 */
 .ck:checked + .ck-mark {
-  background: var(--chosen-b);
-  border-color: var(--chosen-b);
+ background: var(--chosen-b);
+ border-color: var(--chosen-b);
 }
 .ck:checked + .ck-mark::after {
-  content: '';
-  position: absolute;
-  left: 8px; top: 5px;
-  width: 9px; height: 14px;
-  border-right: 3px solid #fff;
-  border-bottom: 3px solid #fff;
-  transform: rotate(45deg);
+ content: '';
+ position: absolute;
+ left: 8px; top: 5px;
+ width: 9px; height: 14px;
+ border-right: 3px solid #fff;
+ border-bottom: 3px solid #fff;
+ transform: rotate(45deg);
 }
 
 /* Chosen label background — also via :checked + sibling — works everywhere */
@@ -233,32 +233,32 @@ label.session:hover .ck-mark { border-color: var(--primary); transform: scale(1.
 
 /* Rejected state — added by JS via class (works in any browser) */
 label.session.rejected {
-  opacity: .35;
-  background: transparent;
+ opacity: .35;
+ background: transparent;
 }
 label.session.rejected .s-title { text-decoration: line-through; }
 label.session.rejected .ck-mark {
-  background: var(--card-2);
-  border-color: var(--text-mute);
+ background: var(--card-2);
+ border-color: var(--text-mute);
 }
 label.session.rejected .ck-mark::after {
-  content: '\00d7';
-  position: absolute;
-  inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; line-height: 1;
-  color: var(--text-3); font-weight: 600;
-  border: none; transform: none;
-  width: auto; height: auto;
-  left: 0; top: 0;
+ content: '\00d7';
+ position: absolute;
+ inset: 0;
+ display: flex; align-items: center; justify-content: center;
+ font-size: 18px; line-height: 1;
+ color: var(--text-3); font-weight: 600;
+ border: none; transform: none;
+ width: auto; height: auto;
+ left: 0; top: 0;
 }
 
 /* Chosen label — green left bar via :checked + sibling-style — needs trick: 
-   we can't change the label's left border via CSS only without :has().
-   So we add a class via JS. */
+ we can't change the label's left border via CSS only without :has().
+ So we add a class via JS. */
 label.session.chosen {
-  border-left-color: var(--chosen-b) !important;
-  background: var(--chosen-bg);
+ border-left-color: var(--chosen-b) !important;
+ background: var(--chosen-bg);
 }
 
 /* Clash note */
@@ -283,49 +283,49 @@ label.session.chosen {
 
 /* Selectable food row */
 label.food-row {
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  position: relative;
-  align-items: center;
-  transition: background .12s;
+ cursor: pointer;
+ user-select: none;
+ -webkit-user-select: none;
+ position: relative;
+ align-items: center;
+ transition: background .12s;
 }
 label.food-row:hover { background: var(--food-bg); }
 label.food-row .ck-mark { 
-  width: 26px; height: 26px; min-width: 26px;
-  border: 2.5px solid var(--text-3);
+ width: 26px; height: 26px; min-width: 26px;
+ border: 2.5px solid var(--text-3);
 }
 label.food-row:hover .ck-mark { border-color: var(--food); transform: scale(1.05); }
 label.food-row .ck:checked + .ck-mark {
-  background: var(--chosen-b);
-  border-color: var(--chosen-b);
+ background: var(--chosen-b);
+ border-color: var(--chosen-b);
 }
 label.food-row .ck:checked + .ck-mark::after {
-  content: ''; position: absolute;
-  left: 7px; top: 4px;
-  width: 8px; height: 13px;
-  border-right: 2.5px solid #fff;
-  border-bottom: 2.5px solid #fff;
-  transform: rotate(45deg);
+ content: ''; position: absolute;
+ left: 7px; top: 4px;
+ width: 8px; height: 13px;
+ border-right: 2.5px solid #fff;
+ border-bottom: 2.5px solid #fff;
+ transform: rotate(45deg);
 }
 label.food-row.chosen {
-  background: var(--chosen-bg);
-  border-left: 3px solid var(--chosen-b);
-  padding-left: 9px;
+ background: var(--chosen-bg);
+ border-left: 3px solid var(--chosen-b);
+ padding-left: 9px;
 }
 label.food-row.rejected {
-  opacity: .35;
+ opacity: .35;
 }
 label.food-row.rejected .f-name { text-decoration: line-through; }
 label.food-row.rejected .ck-mark { background: var(--card-2); border-color: var(--text-mute); }
 label.food-row.rejected .ck-mark::after {
-  content: '\00d7';
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; line-height: 1;
-  color: var(--text-3); font-weight: 600;
-  border: none; transform: none; left: 0; top: 0;
-  width: auto; height: auto;
+ content: '\00d7';
+ position: absolute; inset: 0;
+ display: flex; align-items: center; justify-content: center;
+ font-size: 18px; line-height: 1;
+ color: var(--text-3); font-weight: 600;
+ border: none; transform: none; left: 0; top: 0;
+ width: auto; height: auto;
 }
 .f-name { font-weight: 600; color: var(--text); }
 .f-rest { color: var(--text-2); font-size: .76rem; margin-top: 3px; line-height: 1.5; }
@@ -335,7 +335,7 @@ label.food-row.rejected .ck-mark::after {
 .alert { margin: 7px 12px 8px; border-radius: 8px; padding: 11px 13px; font-size: .84rem; line-height: 1.5; display: flex; gap: 10px; align-items: flex-start; border-left: 3px solid; }
 .alert svg { flex-shrink: 0; margin-top: 1px; width: 18px; height: 18px; }
 .alert.warn { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); }
-.alert.ok   { background: var(--tour-bg); color: var(--tour); border-color: var(--tour); }
+.alert.ok { background: var(--tour-bg); color: var(--tour); border-color: var(--tour); }
 .alert.info { background: var(--conf-bg); color: var(--conf); border-color: var(--conf); }
 .alert.gold { background: var(--conf-bg); color: var(--conf); border-color: var(--conf); }
 .alert b { font-weight: 700; color: var(--text); }
@@ -364,938 +364,938 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
 
 <!-- SVG symbol definitions -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="i-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></symbol>
-  <symbol id="i-hotel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 21V12h6v9"/><rect x="7" y="6" width="3" height="3" rx=".4"/><rect x="14" y="6" width="3" height="3" rx=".4"/></symbol>
-  <symbol id="i-conf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
-  <symbol id="i-food" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 2v7c0 1.7 1.3 3 3 3s3-1.3 3-3V2M6 12v10M15 2v20M20 2a5 5 0 0 1 0 10"/></symbol>
-  <symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></symbol>
-  <symbol id="i-train" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="3" width="16" height="14" rx="4"/><path d="M4 11h16"/><circle cx="9" cy="19" r="2"/><circle cx="15" cy="19" r="2"/><path d="M7 21l-2 2M17 21l2 2"/></symbol>
-  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
-  <symbol id="i-sunrise" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="8 6 12 2 16 6"/></symbol>
-  <symbol id="i-sunset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="16 5 12 9 8 5"/></symbol>
-  <symbol id="i-temp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></symbol>
-  <symbol id="i-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></symbol>
-  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
-  <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
-  <symbol id="i-hospital" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></symbol>
-  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
-  <symbol id="i-water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
-  <symbol id="i-boat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.61 7.76"/><path d="M12 10V3M5 13l7-3 7 3"/></symbol>
-  <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22V12"/><path d="M5 12l7-10 7 10H5z"/><path d="M4 16l8-6 8 6H4z"/></symbol>
-  <symbol id="i-castle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="22" y1="20" x2="2" y2="20"/><path d="M6 20V10M18 20V10"/><path d="M2 5v5h4V5h2v5h4V5h2v5h4V5h2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5h2z"/><rect x="9" y="14" width="6" height="6"/></symbol>
-  <symbol id="i-museum" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></symbol>
-  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
-  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></symbol>
-  <symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5v2M15 11v2M15 17v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2z"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+ <symbol id="i-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></symbol>
+ <symbol id="i-hotel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 21V12h6v9"/><rect x="7" y="6" width="3" height="3" rx=".4"/><rect x="14" y="6" width="3" height="3" rx=".4"/></symbol>
+ <symbol id="i-conf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+ <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+ <symbol id="i-food" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 2v7c0 1.7 1.3 3 3 3s3-1.3 3-3V2M6 12v10M15 2v20M20 2a5 5 0 0 1 0 10"/></symbol>
+ <symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></symbol>
+ <symbol id="i-train" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="3" width="16" height="14" rx="4"/><path d="M4 11h16"/><circle cx="9" cy="19" r="2"/><circle cx="15" cy="19" r="2"/><path d="M7 21l-2 2M17 21l2 2"/></symbol>
+ <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+ <symbol id="i-sunrise" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="8 6 12 2 16 6"/></symbol>
+ <symbol id="i-sunset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="16 5 12 9 8 5"/></symbol>
+ <symbol id="i-temp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></symbol>
+ <symbol id="i-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></symbol>
+ <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+ <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></symbol>
+ <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+ <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+ <symbol id="i-hospital" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></symbol>
+ <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
+ <symbol id="i-water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+ <symbol id="i-boat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.61 7.76"/><path d="M12 10V3M5 13l7-3 7 3"/></symbol>
+ <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22V12"/><path d="M5 12l7-10 7 10H5z"/><path d="M4 16l8-6 8 6H4z"/></symbol>
+ <symbol id="i-castle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="22" y1="20" x2="2" y2="20"/><path d="M6 20V10M18 20V10"/><path d="M2 5v5h4V5h2v5h4V5h2v5h4V5h2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5h2z"/><rect x="9" y="14" width="6" height="6"/></symbol>
+ <symbol id="i-museum" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></symbol>
+ <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+ <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></symbol>
+ <symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5v2M15 11v2M15 17v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2z"/></symbol>
+ <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
 </svg>
 
 <script>
 (function(){
-  function updateGroup(groupName, chosenInput) {
-    var inputs = document.querySelectorAll('input.ck[name="' + groupName + '"]');
-    for (var i = 0; i < inputs.length; i++) {
-      var lbl = inputs[i].closest('label');
-      if (!lbl) continue;
-      if (chosenInput && inputs[i] === chosenInput && chosenInput.checked) {
-        lbl.classList.add('chosen');
-        lbl.classList.remove('rejected');
-      } else if (chosenInput && chosenInput.checked) {
-        lbl.classList.add('rejected');
-        lbl.classList.remove('chosen');
-      } else {
-        lbl.classList.remove('chosen');
-        lbl.classList.remove('rejected');
-      }
-    }
-  }
-  
-  function bind() {
-    // Bind change event on radios for visual update
-    var radios = document.querySelectorAll('input.ck');
-    for (var i = 0; i < radios.length; i++) {
-      radios[i].addEventListener('change', function() {
-        updateGroup(this.name, this);
-      });
-    }
-    
-    // Bind labels for click-to-uncheck behavior
-    var labels = document.querySelectorAll('label.session, label.food-row');
-    for (var i = 0; i < labels.length; i++) {
-      (function(lbl) {
-        var input = lbl.querySelector('input.ck');
-        if (!input) return;
-        
-        lbl.addEventListener('mousedown', function() {
-          input._wasChecked = input.checked;
-        });
-        lbl.addEventListener('touchstart', function() {
-          input._wasChecked = input.checked;
-        }, {passive: true});
-        lbl.addEventListener('click', function(e) {
-          if (input._wasChecked) {
-            // Already-checked radio clicked again — uncheck it
-            setTimeout(function() {
-              input.checked = false;
-              updateGroup(input.name, null);
-              input._wasChecked = false;
-            }, 0);
-          }
-        });
-      })(labels[i]);
-    }
-  }
-  
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
-  }
+ function updateGroup(groupName, chosenInput) {
+ var inputs = document.querySelectorAll('input.ck[name="' + groupName + '"]');
+ for (var i = 0; i < inputs.length; i++) {
+ var lbl = inputs[i].closest('label');
+ if (!lbl) continue;
+ if (chosenInput && inputs[i] === chosenInput && chosenInput.checked) {
+ lbl.classList.add('chosen');
+ lbl.classList.remove('rejected');
+ } else if (chosenInput && chosenInput.checked) {
+ lbl.classList.add('rejected');
+ lbl.classList.remove('chosen');
+ } else {
+ lbl.classList.remove('chosen');
+ lbl.classList.remove('rejected');
+ }
+ }
+ }
+ 
+ function bind() {
+ // Bind change event on radios for visual update
+ var radios = document.querySelectorAll('input.ck');
+ for (var i = 0; i < radios.length; i++) {
+ radios[i].addEventListener('change', function() {
+ updateGroup(this.name, this);
+ });
+ }
+ 
+ // Bind labels for click-to-uncheck behavior
+ var labels = document.querySelectorAll('label.session, label.food-row');
+ for (var i = 0; i < labels.length; i++) {
+ (function(lbl) {
+ var input = lbl.querySelector('input.ck');
+ if (!input) return;
+ 
+ lbl.addEventListener('mousedown', function() {
+ input._wasChecked = input.checked;
+ });
+ lbl.addEventListener('touchstart', function() {
+ input._wasChecked = input.checked;
+ }, {passive: true});
+ lbl.addEventListener('click', function(e) {
+ if (input._wasChecked) {
+ // Already-checked radio clicked again — uncheck it
+ setTimeout(function() {
+ input.checked = false;
+ updateGroup(input.name, null);
+ input._wasChecked = false;
+ }, 0);
+ }
+ });
+ })(labels[i]);
+ }
+ }
+ 
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', bind);
+ } else {
+ bind();
+ }
 })();
 </script>
 
 <!-- ═══════════════════════════════════ PAGE ═══════════════════════════════════ -->
 
 <div class="ph">
-  <div class="ph-label">Annual ESTRO Congress 2026</div>
-  <div class="ph-title">Stockholm</div>
-  <div class="ph-dates">14 – 20 May 2026 &nbsp;·&nbsp; Stockholmsmässan, Älvsjö</div>
+ <div class="ph-label">Annual ESTRO Congress 2026</div>
+ <div class="ph-title">Stockholm</div>
+ <div class="ph-dates">14 – 20 May 2026 &nbsp;·&nbsp; Stockholmsmässan, Älvsjö</div>
 </div>
 
 <!-- Legend card -->
 <div class="info-card">
-  <div class="ic-title">Color Tiers</div>
-  <div class="tier-row">
-    <div class="tier-pill"><div class="tp tp-conf"></div>Conference · ESTRO</div>
-    <div class="tier-pill"><div class="tp tp-tour"></div>Sightseeing · Tourism</div>
-    <div class="tier-pill"><div class="tp tp-food"></div>Dining · Fika</div>
-  </div>
-  <div class="legend-row" style="margin-top:10px;">
-    <div class="leg-item"><div class="leg-bar" style="background:var(--conf)"></div> 有興趣場次（藍左線）</div>
-    <div class="leg-item"><div class="leg-bar" style="background:var(--chosen-b)"></div> 已選定（綠左線）</div>
-    <div class="leg-item" style="opacity:.35;">— 劃掉 = 放棄（點擊選擇）</div>
-  </div>
+ <div class="ic-title">Color Tiers</div>
+ <div class="tier-row">
+ <div class="tier-pill"><div class="tp tp-conf"></div>Conference · ESTRO</div>
+ <div class="tier-pill"><div class="tp tp-tour"></div>Sightseeing · Tourism</div>
+ <div class="tier-pill"><div class="tp tp-food"></div>Dining · Fika</div>
+ </div>
+ <div class="legend-row" style="margin-top:10px;">
+ <div class="leg-item"><div class="leg-bar" style="background:var(--conf)"></div> 有興趣場次（藍左線）</div>
+ <div class="leg-item"><div class="leg-bar" style="background:var(--chosen-b)"></div> 已選定（綠左線）</div>
+ <div class="leg-item" style="opacity:.35;">— 劃掉 = 放棄（點擊選擇）</div>
+ </div>
 </div>
 
 <!-- Practical tips -->
 <div class="info-card">
-  <div class="ic-title">實用提醒</div>
-  <div class="ic-row"><svg width="14" height="14"><use href="#i-card"/></svg> <span><b>Stockholm Card</b>：含 50+ 景點 + 大眾交通，3 天以上划算，Go City® 購買</span></div>
-  <div class="ic-row"><svg width="14" height="14"><use href="#i-card"/></svg> <span><b>地鐵</b>：感應式信用卡直接刷，免買票（單次 SEK 42）</span></div>
-  <div class="ic-row"><svg width="14" height="14"><use href="#i-water"/></svg> <span><b>自來水</b>：可直接飲用，全球最乾淨之一</span></div>
-  <div class="ic-row"><svg width="14" height="14"><use href="#i-food"/></svg> <span>進正式餐廳需等帶位 · 刀叉並排 = 吃完了</span></div>
-  <div class="ic-row"><svg width="14" height="14"><use href="#i-plane"/></svg> <span>Arlanda 貴賓室評價普通，吃的選擇少，用點數換不值</span></div>
+ <div class="ic-title">實用提醒</div>
+ <div class="ic-row"><svg width="14" height="14"><use href="#i-card"/></svg> <span><b>Stockholm Card</b>：含 50+ 景點 + 大眾交通，3 天以上划算，Go City® 購買</span></div>
+ <div class="ic-row"><svg width="14" height="14"><use href="#i-card"/></svg> <span><b>地鐵</b>：感應式信用卡直接刷，免買票（單次 SEK 42）</span></div>
+ <div class="ic-row"><svg width="14" height="14"><use href="#i-water"/></svg> <span><b>自來水</b>：可直接飲用，全球最乾淨之一</span></div>
+ <div class="ic-row"><svg width="14" height="14"><use href="#i-food"/></svg> <span>進正式餐廳需等帶位 · 刀叉並排 = 吃完了</span></div>
+ <div class="ic-row"><svg width="14" height="14"><use href="#i-plane"/></svg> <span>Arlanda 貴賓室評價普通，吃的選擇少，用點數換不值</span></div>
 </div>
 
 <!-- ═══ 5/14 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">14</div><div class="date-wd">THU · 5月</div></div>
-    <div class="day-info"><div class="day-title">抵達日</div><div class="day-sub">下午 · 晚上自由</div></div>
-    <div class="day-tiers"><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>14°C</b> / 7°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:20</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:10</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 16h 50m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-    <div class="wx-note">歷史氣候平均值，出發前請查即時預報</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">14</div><div class="date-wd">THU · 5月</div></div>
+ <div class="day-info"><div class="day-title">抵達日</div><div class="day-sub">下午 · 晚上自由</div></div>
+ <div class="day-tiers"><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>14°C</b> / 7°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:20</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:10</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 16h 50m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ <div class="wx-note">歷史氣候平均值，出發前請查即時預報</div>
+ </div>
 
-  <div class="sec s-util">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-train"/></svg></div>
-    <div class="sec-text">交通 &amp; 入住</div>
-  </div>
-  <div class="row">
-    <div class="row-t">13:00</div>
-    <div class="row-i"><svg><use href="#i-plane"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">抵達 Arlanda 機場（ARN）</div>
-      <div class="row-desc">搭 Pendeltåg 通勤火車 → Ulriksdal 站，約 28 分鐘，出站右轉 1 分鐘到飯店</div>
-      <span class="rtag rt-conf">固定</span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="row-t">14:30</div>
-    <div class="row-i"><svg><use href="#i-hotel"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">入住 AC Hotel by Marriott Ulriksdal</div>
-      <div class="row-desc">15:00 才能 check-in，可先寄放行李 · 附近有 Mall of Scandinavia 可先逛</div>
-    </div>
-  </div>
+ <div class="sec s-util">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-train"/></svg></div>
+ <div class="sec-text">交通 &amp; 入住</div>
+ </div>
+ <div class="row">
+ <div class="row-t">13:00</div>
+ <div class="row-i"><svg><use href="#i-plane"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">抵達 Arlanda 機場（ARN）</div>
+ <div class="row-desc">搭 Pendeltåg 通勤火車 → Ulriksdal 站，約 28 分鐘，出站右轉 1 分鐘到飯店</div>
+ <span class="rtag rt-conf">固定</span>
+ </div>
+ </div>
+ <div class="row">
+ <div class="row-t">14:30</div>
+ <div class="row-i"><svg><use href="#i-hotel"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">入住 AC Hotel by Marriott Ulriksdal</div>
+ <div class="row-desc">15:00 才能 check-in，可先寄放行李 · 附近有 Mall of Scandinavia 可先逛</div>
+ </div>
+ </div>
 
-  <div class="sec s-tour">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-pin"/></svg></div>
-    <div class="sec-text">觀光</div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">15:30</div>
-    <div class="row-i"><svg><use href="#i-tree"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">Kungsträdgården 國王花園 → 市政廳外觀</div>
-      <div class="row-desc">確認有無殘櫻 · 沿途經過市政廳（1923年完工，瑞典象徵性建築，河岸邊上鏡）</div>
-      <span class="rtag rt-tour">免費</span>
-    </div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">16:15</div>
-    <div class="row-i"><svg><use href="#i-camera"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">騎士島（Riddarholmen）+ Evert Taube 雕像</div>
-      <div class="row-desc">拍攝市政廳最佳角度 · 旁邊有騎士島教堂（瑞典歷代國王長眠之地）</div>
-      <span class="rtag rt-tour">免費</span>
-    </div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">16:45</div>
-    <div class="row-i"><svg><use href="#i-castle"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">Gamla Stan 老城區：大教堂 → 大廣場 → 皇宮外觀</div>
-      <div class="row-desc">Storkyrkan 大教堂（30分，含聖喬治屠龍雕塑）→ Stortorget 大廣場（中世紀砍頭刑場，現在是市集廣場）→ 諾貝爾博物館外觀</div>
-      <span class="rtag rt-tour">免費</span>
-    </div>
-  </div>
+ <div class="sec s-tour">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-pin"/></svg></div>
+ <div class="sec-text">觀光</div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">15:30</div>
+ <div class="row-i"><svg><use href="#i-tree"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">Kungsträdgården 國王花園 → 市政廳外觀</div>
+ <div class="row-desc">確認有無殘櫻 · 沿途經過市政廳（1923年完工，瑞典象徵性建築，河岸邊上鏡）</div>
+ <span class="rtag rt-tour">免費</span>
+ </div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">16:15</div>
+ <div class="row-i"><svg><use href="#i-camera"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">騎士島（Riddarholmen）+ Evert Taube 雕像</div>
+ <div class="row-desc">拍攝市政廳最佳角度 · 旁邊有騎士島教堂（瑞典歷代國王長眠之地）</div>
+ <span class="rtag rt-tour">免費</span>
+ </div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">16:45</div>
+ <div class="row-i"><svg><use href="#i-castle"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">Gamla Stan 老城區：大教堂 → 大廣場 → 皇宮外觀</div>
+ <div class="row-desc">Storkyrkan 大教堂（30分，含聖喬治屠龍雕塑）→ Stortorget 大廣場（中世紀砍頭刑場，現在是市集廣場）→ 諾貝爾博物館外觀</div>
+ <span class="rtag rt-tour">免費</span>
+ </div>
+ </div>
 
-  <div class="sec s-food">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
-    <div class="sec-text">今日美食 · 週四豌豆湯日</div>
-  </div>
-  <div class="food-block">
-    <div class="food-head">週四傳統 Ärtsoppa 豌豆湯日</div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">豌豆湯（Ärtsoppa）+ 煎薄餅</div><div class="f-rest">Ragnars Skafferi · 市政廳內 · 週四 11:00–14:00 · SEK 140 含沙拉麵包咖啡</div><div class="f-tip">低溫燉煮 12 小時，抵達後先放行李再去剛剛好</div></div>
-    </div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-coffee"/></svg>
-      <div><div class="f-name">Fika：肉桂捲（Kanelbullar）</div><div class="f-rest">Vete-Katten · 百年咖啡館，裝潢穿越 1920 年代</div><div class="f-tip">用手撕開每層吃，搭不加糖黑咖啡才道地</div></div>
-    </div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">晚餐：Smak（已訂位）</div><div class="f-rest">北歐小份多樣式 · 自選 3–7 道菜 · 需提前訂位</div></div>
-    </div>
-    <label class="food-row" data-group="d514">
-      <input type="radio" name="d514" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">備選：Stockholms Gästabud</div><div class="f-rest">皇宮旁 · Gamla Stan 內</div><div class="f-tip">肉丸 + 綿密薯泥 + 瑞典啤酒 · 在地首選 · 服務極好</div></div>
-    </label>
-    <label class="food-row" data-group="d514">
-      <input type="radio" name="d514" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">備選：Restaurant Tradition</div><div class="f-rest">Gästabud 隔壁 · 同樣老牌瑞典料理</div><div class="f-tip">份量比 Gästabud 大 · 同樣有肉丸、馴鹿肉</div></div>
-    </label>
-    <label class="food-row" data-group="d514">
-      <input type="radio" name="d514" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">備選：魚湯（Kajsas Fisk）</div><div class="f-rest">Hötorgshallen 市場內 · 價格實惠</div><div class="f-tip">瑞典魚湯專賣 · 便宜又快 · 適合疲憊想省力用餐</div></div>
-    </label>
-  </div>
+ <div class="sec s-food">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
+ <div class="sec-text">今日美食 · 週四豌豆湯日</div>
+ </div>
+ <div class="food-block">
+ <div class="food-head">週四傳統 Ärtsoppa 豌豆湯日</div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">豌豆湯（Ärtsoppa）+ 煎薄餅</div><div class="f-rest">Ragnars Skafferi · 市政廳內 · 週四 11:00–14:00 · SEK 140 含沙拉麵包咖啡</div><div class="f-tip">低溫燉煮 12 小時，抵達後先放行李再去剛剛好</div></div>
+ </div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-coffee"/></svg>
+ <div><div class="f-name">Fika：肉桂捲（Kanelbullar）</div><div class="f-rest">Vete-Katten · 百年咖啡館，裝潢穿越 1920 年代</div><div class="f-tip">用手撕開每層吃，搭不加糖黑咖啡才道地</div></div>
+ </div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">晚餐：Smak（已訂位）</div><div class="f-rest">北歐小份多樣式 · 自選 3–7 道菜 · 需提前訂位</div></div>
+ </div>
+ <label class="food-row" data-group="d514">
+ <input type="radio" name="d514" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">備選：Stockholms Gästabud</div><div class="f-rest">皇宮旁 · Gamla Stan 內</div><div class="f-tip">肉丸 + 綿密薯泥 + 瑞典啤酒 · 在地首選 · 服務極好</div></div>
+ </label>
+ <label class="food-row" data-group="d514">
+ <input type="radio" name="d514" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">備選：Restaurant Tradition</div><div class="f-rest">Gästabud 隔壁 · 同樣老牌瑞典料理</div><div class="f-tip">份量比 Gästabud 大 · 同樣有肉丸、馴鹿肉</div></div>
+ </label>
+ <label class="food-row" data-group="d514">
+ <input type="radio" name="d514" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">備選：魚湯（Kajsas Fisk）</div><div class="f-rest">Hötorgshallen 市場內 · 價格實惠</div><div class="f-tip">瑞典魚湯專賣 · 便宜又快 · 適合疲憊想省力用餐</div></div>
+ </label>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body">
-      <div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div>
-      <div class="hs-detail">Kolonnvägen 41, Solna · +46 8 400 549 02 · Ulriksdal 站步行 1 分鐘</div>
-    </div>
-    <span class="hbadge hb-in">入住 15:00</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body">
+ <div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div>
+ <div class="hs-detail">Kolonnvägen 41, Solna · +46 8 400 549 02 · Ulriksdal 站步行 1 分鐘</div>
+ </div>
+ <span class="hbadge hb-in">入住 15:00</span>
+ </div>
 </div>
 
 <!-- ═══ 5/15 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">15</div><div class="date-wd">FRI · 5月</div></div>
-    <div class="day-info"><div class="day-title">ESTRO 第 1 天</div><div class="day-sub">全天滿 · 無觀光空間</div></div>
-    <div class="day-tiers"><div class="dt dt-conf"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>15°C</b> / 7°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:18</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:12</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 16h 54m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">15</div><div class="date-wd">FRI · 5月</div></div>
+ <div class="day-info"><div class="day-title">ESTRO 第 1 天</div><div class="day-sub">全天滿 · 無觀光空間</div></div>
+ <div class="day-tiers"><div class="dt dt-conf"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>15°C</b> / 7°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:18</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:12</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 16h 54m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ </div>
 
-  <div class="alert warn">
-    <svg width="14" height="14"><use href="#i-warn"/></svg>
-    <span>Varian Summit（09:00–17:00）與 Pre-meeting Courses 時段重疊，<b>二選一，請盡快確認報名</b></span>
-  </div>
+ <div class="alert warn">
+ <svg width="14" height="14"><use href="#i-warn"/></svg>
+ <span>Varian Summit（09:00–17:00）與 Pre-meeting Courses 時段重疊，<b>二選一，請盡快確認報名</b></span>
+ </div>
 
-  <div class="sec s-conf">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
-    <div class="sec-text">ESTRO 會議日程</div>
-  </div>
-  <div class="prog-wrap">
-    <div class="prog-block">
-      <div class="ph2 ph-special"><span class="pht">09:00 – 17:00</span><span class="phl">Varian International Oncology Summit 2026</span><span class="phb">建議報名</span></div>
-    </div>
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:15 – 16:00</span><span class="phl">Pre-meeting Courses（6 軌並行）</span></div>
-      <div class="prog-sessions">
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 如何改變臨床實踐？</div></div><span class="s-badge sb-reg">需報名</span></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">線上自適應放療的未來（Physics）</div></div><span class="s-badge sb-reg">需報名</span></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">老年癌症患者最佳實踐（Clinical）</div></div><span class="s-badge sb-reg">需報名</span></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">Clinical Bootcamp（乳癌 · 肺癌 · 腸胃 · 泌尿）</div></div><span class="s-badge sb-reg">需報名</span></div>
-      </div>
-    </div>
-    <div class="prog-block"><div class="ph2 ph-plenary"><span class="pht">17:00 – 18:00</span><span class="phl">開幕典禮（Plenary Hall）</span><span class="phb">全體</span></div></div>
-    <div class="prog-block"><div class="ph2 ph-evening"><span class="pht">18:15</span><span class="phl">Welcome &amp; Networking Evening（展覽區）</span></div></div>
-    <div class="prog-block"><div class="ph2 ph-special"><span class="pht">19:00</span><span class="phl">HAL5 + PCCT Launch at ESTRO Booth</span></div></div>
-  </div>
+ <div class="sec s-conf">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
+ <div class="sec-text">ESTRO 會議日程</div>
+ </div>
+ <div class="prog-wrap">
+ <div class="prog-block">
+ <div class="ph2 ph-special"><span class="pht">09:00 – 17:00</span><span class="phl">Varian International Oncology Summit 2026</span><span class="phb">建議報名</span></div>
+ </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:15 – 16:00</span><span class="phl">Pre-meeting Courses</span></div>
+ <div class="prog-sessions">
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 如何改變臨床實踐？</div></div><span class="s-badge sb-reg">需報名</span></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">線上自適應放療的未來（Physics）</div></div><span class="s-badge sb-reg">需報名</span></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">老年癌症患者最佳實踐（Clinical）</div></div><span class="s-badge sb-reg">需報名</span></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">Clinical Bootcamp（乳癌 · 肺癌 · 腸胃 · 泌尿）</div></div><span class="s-badge sb-reg">需報名</span></div>
+ </div>
+ </div>
+ <div class="prog-block"><div class="ph2 ph-plenary"><span class="pht">17:00 – 18:00</span><span class="phl">開幕典禮（Plenary Hall）</span><span class="phb">全體</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-evening"><span class="pht">18:15</span><span class="phl">Welcome &amp; Networking Evening（展覽區）</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-special"><span class="pht">19:00</span><span class="phl">HAL5 + PCCT Launch at ESTRO Booth</span></div></div>
+ </div>
 
-  <div class="paid-block">
-    <div class="paid-title">付費課程（優先度低）· 與上午行程衝突</div>
-    <div class="paid-row">◉ AI 會前課程（How will AI change my clinical practice?）</div>
-    <div class="paid-row">◉ Adaptive RT 會前課程（Time to adapt: Online ART）</div>
-    <div class="paid-row">◻ 高齡癌症治療課程 ◻ Brachytherapy 課程</div>
-  </div>
+ <div class="paid-block">
+ <div class="paid-title">付費課程（優先度低）· 與上午行程衝突</div>
+ <div class="paid-row">◉ AI 會前課程（How will AI change my clinical practice?）</div>
+ <div class="paid-row">◉ Adaptive RT 會前課程（Time to adapt: Online ART）</div>
+ <div class="paid-row">◻ 高齡癌症治療課程 ◻ Brachytherapy 課程</div>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 地鐵，約 35 分</div></div>
-    <span class="hbadge hb-stay">住宿中</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 地鐵，約 35 分</div></div>
+ <span class="hbadge hb-stay">住宿中</span>
+ </div>
 </div>
 
 <!-- ═══ 5/16 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">16</div><div class="date-wd">SAT · 5月</div></div>
-    <div class="day-info"><div class="day-title">ESTRO 第 2 天</div><div class="day-sub">週末 · 半天彈性</div></div>
-    <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>15°C</b> / 8°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:16</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:14</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 16h 58m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">16</div><div class="date-wd">SAT · 5月</div></div>
+ <div class="day-info"><div class="day-title">ESTRO 第 2 天</div><div class="day-sub">週末 · 半天彈性</div></div>
+ <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>15°C</b> / 8°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:16</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:14</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 16h 58m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ </div>
 
-  <div class="alert gold">
-    <svg width="14" height="14"><use href="#i-star"/></svg>
-    <span>今日有 <b>7 個有興趣場次</b> · 08:00 與 08:45 時段衝突，<b>點擊圓圈</b>勾選想參加的場次</span>
-  </div>
+ <div class="alert gold">
+ <svg width="14" height="14"><use href="#i-star"/></svg>
+ <span>今日有 <b>7 個有興趣場次</b> · 08:00 與 08:45 時段衝突，<b>點擊圓圈</b>勾選想參加的場次</span>
+ </div>
 
-  <div class="sec s-conf">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
-    <div class="sec-text">ESTRO 會議日程</div>
-  </div>
-  <div class="prog-wrap">
+ <div class="sec s-conf">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
+ <div class="sec-text">ESTRO 會議日程</div>
+ </div>
+ <div class="prog-wrap">
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">教學講座（8 軌並行）</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺術後放療：證據與臨床實務</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">胸腔再放療（Re-irradiation in the thorax）：病人選擇與劑量</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">SBRT 技術需求（疾病通用型）</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">RTT 主導的線上 ART 靶區定義</div></div></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 前列腺術後放療 vs 胸腔再放療，同時段，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">教學講座</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺術後放療：證據與臨床實務</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">胸腔再放療（Re-irradiation in the thorax）：病人選擇與劑量</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">SBRT 技術需求（疾病通用型）</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">RTT 主導的線上 ART 靶區定義</div></div></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 前列腺術後放療 vs 胸腔再放療，同時段，點擊選一個</div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">專題討論 &amp; 辯論（8 軌並行）</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">轉移性前列腺癌：是否治療原發腫瘤？</div></div>
-          <span class="s-badge sb-clash">四選一</span></label>
-        <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 + 系統治療聯合推薦（ESTRO-ESMO）</div></div>
-          <span class="s-badge sb-clash">四選一</span></label>
-        <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 在臨床的實際價值</div></div>
-          <span class="s-badge sb-clash">四選一</span></label>
-        <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Offline ART 未來發展</div></div>
-          <span class="s-badge sb-clash">四選一</span></label>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 四個有興趣場次同時段，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">專題討論 &amp; 辯論</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">轉移性前列腺癌：是否治療原發腫瘤？</div></div>
+ <span class="s-badge sb-clash">四選一</span></label>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 + 系統治療聯合推薦（ESTRO-ESMO）</div></div>
+ <span class="s-badge sb-clash">四選一</span></label>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 在臨床的實際價值</div></div>
+ <span class="s-badge sb-clash">四選一</span></label>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Offline ART 未來發展</div></div>
+ <span class="s-badge sb-clash">四選一</span></label>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 四個有興趣場次同時段，點擊選一個</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:00 – 10:30</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:00 – 10:30</span><span class="phl">茶歇</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Presidential Symposium</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">自動化 Adaptive Radiotherapy（Streamlining with automation）</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">可信賴 AI：不確定性與驗證</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Jens Overgaard Legacy Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Presidential Symposium（11:40）：放射腫瘤學未來</div></div><span class="s-badge sb-plenary">全體</span></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Presidential Symposium</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">自動化 Adaptive Radiotherapy（Streamlining with automation）</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">可信賴 AI：不確定性與驗證</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Jens Overgaard Legacy Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Presidential Symposium（11:40）：放射腫瘤學未來</div></div><span class="s-badge sb-plenary">全體</span></div>
+ </div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">14:10 – 15:10</span><span class="phl">Award Lectures</span></div>
-      <div class="prog-sessions">
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Breur Award · Regaud Award · van der Schueren Award</div></div><span class="s-badge sb-award">頒獎</span></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">14:10 – 15:10</span><span class="phl">Award Lectures</span></div>
+ <div class="prog-sessions">
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Breur Award · Regaud Award · van der Schueren Award</div></div><span class="s-badge sb-award">頒獎</span></div>
+ </div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">15:15 – 16:30</span><span class="phl">專題討論 &amp; 辯論</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 5 天療程（Hypofractionation）—— 2035 可行？（辯論）</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EFOMP：AI 與醫療器材法規</div></div><span class="s-badge sb-joint">聯合</span></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">現代放療調試的風險與現實</div></div></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">15:15 – 16:30</span><span class="phl">專題討論 &amp; 辯論</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 5 天療程（Hypofractionation）—— 2035 可行？（辯論）</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EFOMP：AI 與醫療器材法規</div></div><span class="s-badge sb-joint">聯合</span></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">現代放療調試的風險與現實</div></div></div>
+ </div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">16:30 – 17:00</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">16:30 – 17:00</span><span class="phl">茶歇</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers（8 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 輔助靶區勾畫（Next-gen delineation：影像 · AI · 模型）</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">寡轉移長期證據 · 乳癌 2 · 婦科癌 1</div></div></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 輔助靶區勾畫（Next-gen delineation：影像 · AI · 模型）</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">寡轉移長期證據 · 乳癌 2 · 婦科癌 1</div></div></div>
+ </div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2" class="ph2 ph-extra"><span class="pht">付費 Workshop</span><span class="phl">Contouring Workshops（需另行報名）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Pelvic nodes contouring（14:30–16:30）</div></div><span class="s-badge sb-reg">付費</span></div>
-      </div>
-    </div>
-  </div>
+ <div class="prog-block">
+ <div class="ph2" class="ph2 ph-extra"><span class="pht">付費 Workshop</span><span class="phl">Contouring Workshops（需另行報名）</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Pelvic nodes contouring（14:30–16:30）</div></div><span class="s-badge sb-reg">付費</span></div>
+ </div>
+ </div>
+ </div>
 
-  <div class="sec s-tour">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-pin"/></svg></div>
-    <div class="sec-text">若有半天空閒（週末推薦）</div>
-  </div>
-  <div class="flex-block">
-    <div class="fb-title">可配合 17:00 後或整個早上空檔</div>
-    <div class="fb-opt">
-      <svg width="15" height="15"><use href="#i-boat"/></svg>
-      <div><div class="fb-opt-name">群島渡輪遊</div><div class="fb-opt-desc">市中心碼頭出發 · 北歐最美群島風光 · 約 3 小時</div></div>
-    </div>
-    <div class="fb-opt">
-      <svg width="15" height="15"><use href="#i-museum"/></svg>
-      <div><div class="fb-opt-name">Östermalmshallen 美食市集</div><div class="fb-opt-desc">週六 09:30–17:00 · 起司 · 海鮮 · 糕點</div></div>
-    </div>
-    <div class="fb-opt">
-      <svg width="15" height="15"><use href="#i-music"/></svg>
-      <div><div class="fb-opt-name">ABBA 博物館</div><div class="fb-opt-desc">Djurgården 島 · 需提前預訂指定時段</div></div>
-    </div>
-  </div>
+ <div class="sec s-tour">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-pin"/></svg></div>
+ <div class="sec-text">若有半天空閒（週末推薦）</div>
+ </div>
+ <div class="flex-block">
+ <div class="fb-title">可配合 17:00 後或整個早上空檔</div>
+ <div class="fb-opt">
+ <svg width="15" height="15"><use href="#i-boat"/></svg>
+ <div><div class="fb-opt-name">群島渡輪遊</div><div class="fb-opt-desc">市中心碼頭出發 · 北歐最美群島風光 · 約 3 小時</div></div>
+ </div>
+ <div class="fb-opt">
+ <svg width="15" height="15"><use href="#i-museum"/></svg>
+ <div><div class="fb-opt-name">Östermalmshallen 美食市集</div><div class="fb-opt-desc">週六 09:30–17:00 · 起司 · 海鮮 · 糕點</div></div>
+ </div>
+ <div class="fb-opt">
+ <svg width="15" height="15"><use href="#i-music"/></svg>
+ <div><div class="fb-opt-name">ABBA 博物館</div><div class="fb-opt-desc">Djurgården 島 · 需提前預訂指定時段</div></div>
+ </div>
+ </div>
 
-  <div class="sec s-food">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
-    <div class="sec-text">今日美食</div>
-  </div>
-  <div class="food-block">
-    <div class="food-head">週六推薦：Östermalm 午餐 → Fika → Lilla Ego 晚餐</div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">蝦肉三明治（Räksmörgås）</div><div class="f-rest">Lisa Elmqvist · Östermalmshallen · 90 年老店 · SEK 195</div><div class="f-tip">北極甜蝦直送 · 用刀叉吃 · 擠一點檸檬更好吃</div></div>
-    </div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-coffee"/></svg>
-      <div><div class="f-name">Fika：超大肉桂捲（Saturnus）</div><div class="f-rest">大到兩人分著吃 · 搭濃縮咖啡</div><div class="f-tip">用手撕開每層吃，不要直接咬</div></div>
-    </div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">晚餐：Lilla Ego</div><div class="f-rest">Vasastan · 季節性北歐料理</div><div class="f-tip">鹿肉排必點 · 需提前訂位</div></div>
-    </div>
-  </div>
+ <div class="sec s-food">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
+ <div class="sec-text">今日美食</div>
+ </div>
+ <div class="food-block">
+ <div class="food-head">週六推薦：Östermalm 午餐 → Fika → Lilla Ego 晚餐</div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">蝦肉三明治（Räksmörgås）</div><div class="f-rest">Lisa Elmqvist · Östermalmshallen · 90 年老店 · SEK 195</div><div class="f-tip">北極甜蝦直送 · 用刀叉吃 · 擠一點檸檬更好吃</div></div>
+ </div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-coffee"/></svg>
+ <div><div class="f-name">Fika：超大肉桂捲（Saturnus）</div><div class="f-rest">大到兩人分著吃 · 搭濃縮咖啡</div><div class="f-tip">用手撕開每層吃，不要直接咬</div></div>
+ </div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">晚餐：Lilla Ego</div><div class="f-rest">Vasastan · 季節性北歐料理</div><div class="f-tip">鹿肉排必點 · 需提前訂位</div></div>
+ </div>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → 市中心：Pendeltåg 約 10 分，每 15 分一班</div></div>
-    <span class="hbadge hb-stay">住宿中</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → 市中心：Pendeltåg 約 10 分，每 15 分一班</div></div>
+ <span class="hbadge hb-stay">住宿中</span>
+ </div>
 </div>
 
 <!-- ═══ 5/17 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">17</div><div class="date-wd">SUN · 5月</div></div>
-    <div class="day-info"><div class="day-title">ESTRO 第 3 天</div><div class="day-sub">18:00 Karolinska Site Visit</div></div>
-    <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>16°C</b> / 8°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:14</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:17</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 03m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">17</div><div class="date-wd">SUN · 5月</div></div>
+ <div class="day-info"><div class="day-title">ESTRO 第 3 天</div><div class="day-sub">18:00 Karolinska Site Visit</div></div>
+ <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>16°C</b> / 8°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:14</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:17</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 03m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ </div>
 
-  <div class="alert info">
-    <svg width="14" height="14"><use href="#i-info"/></svg>
-    <span>18:00 起保留 Karolinska Hospital Site Visit（公司安排，議程待確認）· 彈性活動請於 <b>17:00 前結束</b></span>
-  </div>
-  <div class="alert gold">
-    <svg width="14" height="14"><use href="#i-star"/></svg>
-    <span>今日有 <b>9 個有興趣場次</b> · 08:00 / 08:45 / 10:30 / 15:15 衝突，<b>點擊圓圈</b>勾選</span>
-  </div>
+ <div class="alert info">
+ <svg width="14" height="14"><use href="#i-info"/></svg>
+ <span>18:00 起保留 Karolinska Hospital Site Visit（公司安排，議程待確認）· 彈性活動請於 <b>17:00 前結束</b></span>
+ </div>
+ <div class="alert gold">
+ <svg width="14" height="14"><use href="#i-star"/></svg>
+ <span>今日有 <b>9 個有興趣場次</b> · 08:00 / 08:45 / 10:30 / 15:15 衝突，<b>點擊圓圈</b>勾選</span>
+ </div>
 
-  <div class="sec s-conf">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
-    <div class="sec-text">ESTRO 會議日程</div>
-  </div>
-  <div class="prog-wrap">
+ <div class="sec s-conf">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
+ <div class="sec-text">ESTRO 會議日程</div>
+ </div>
+ <div class="prog-wrap">
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">Meet-the-Expert &amp; 教學講座（8 軌）</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肺癌 SBRT —— 30 年發展：創新與前路</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Adaptive RT：從離線到即時</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">粒子治療最新趨勢</div></div></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 肺癌 SBRT vs Adaptive RT，同時段，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">Meet-the-Expert &amp; 教學講座</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肺癌 SBRT —— 30 年發展：創新與前路</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Adaptive RT：從離線到即時</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">粒子治療最新趨勢</div></div></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 肺癌 SBRT vs Adaptive RT，同時段，點擊選一個</div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">聯合專題 &amp; 辯論（8 軌）</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Stage IV NSCLC 放療角色再探（ESTRO-IASLC）</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 能否只靠 Radiobiology 改善？（辯論）</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EORTC：未來放療試驗設計</div></div><span class="s-badge sb-joint">聯合</span></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-AAPM：即時分次內自適應新發展</div></div><span class="s-badge sb-joint">聯合</span></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> Stage IV NSCLC vs Re-irradiation radiobiology，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">聯合專題 &amp; 辯論</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Stage IV NSCLC 放療角色再探（ESTRO-IASLC）</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 能否只靠 Radiobiology 改善？（辯論）</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EORTC：未來放療試驗設計</div></div><span class="s-badge sb-joint">聯合</span></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-AAPM：即時分次內自適應新發展</div></div><span class="s-badge sb-joint">聯合</span></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> Stage IV NSCLC vs Re-irradiation radiobiology，點擊選一個</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:00 – 10:30</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:00 – 10:30</span><span class="phl">茶歇</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Highlights</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 推動放射腫瘤學</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">FLASH &amp; Cardiac STAR 的崛起</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Interdisciplinary Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Lancet Oncology 頂尖臨床試驗（11:40）</div></div><span class="s-badge sb-plenary">全體</span></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> AI 推動放射腫瘤學 vs FLASH/Cardiac STAR，點擊選一個（11:40 全體必參加）</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Highlights</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 推動放射腫瘤學</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">FLASH &amp; Cardiac STAR 的崛起</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Interdisciplinary Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Lancet Oncology 頂尖臨床試驗（11:40）</div></div><span class="s-badge sb-plenary">全體</span></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> AI 推動放射腫瘤學 vs FLASH/Cardiac STAR，點擊選一個（11:40 全體必參加）</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">14:10 – 16:30</span><span class="phl">Highlights + 專題討論</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺 SBRT 進階（增強版 vs 標準版）（辯論）</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肝癌 / 肝轉移 Ablative 治療（ESTRO-CIRSE）</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">膀胱癌保留器官：放療的地位（辯論）</div></div></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 前列腺 SBRT vs 肝癌 Ablative，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">14:10 – 16:30</span><span class="phl">Highlights + 專題討論</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺 SBRT 進階（增強版 vs 標準版）（辯論）</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肝癌 / 肝轉移 Ablative 治療（ESTRO-CIRSE）</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">膀胱癌保留器官：放療的地位（辯論）</div></div></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 前列腺 SBRT vs 肝癌 Ablative，點擊選一個</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">16:30 – 17:00</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">16:30 – 17:00</span><span class="phl">茶歇</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers（8 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">頭頸癌 3</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 3 · 前列腺癌 1 · 上消化道癌</div></div></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">頭頸癌 3</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 3 · 前列腺癌 1 · 上消化道癌</div></div></div>
+ </div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2" class="ph2 ph-extra"><span class="pht">付費 Workshop</span><span class="phl">Contouring Workshops（需另行報名）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Liver cancer SBRT contouring（10:30–12:30）</div><div class="s-sub">與 AI / FLASH 場次衝突</div></div><span class="s-badge sb-reg">付費</span></div>
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Rectal cancer boost contouring（14:30–16:30）</div><div class="s-sub">與前列腺 SBRT / 肝癌 Ablative 衝突</div></div><span class="s-badge sb-reg">付費</span></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2" class="ph2 ph-extra"><span class="pht">付費 Workshop</span><span class="phl">Contouring Workshops（需另行報名）</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Liver cancer SBRT contouring（10:30–12:30）</div><div class="s-sub">與 AI / FLASH 場次衝突</div></div><span class="s-badge sb-reg">付費</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Rectal cancer boost contouring（14:30–16:30）</div><div class="s-sub">與前列腺 SBRT / 肝癌 Ablative 衝突</div></div><span class="s-badge sb-reg">付費</span></div>
+ </div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2 ph-evening"><span class="pht">18:00</span><span class="phl">Karolinska Hospital Site Visit（公司安排）</span><span class="phb">待確認</span></div>
-      <div class="prog-sessions">
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">RAD 成員 + Varian 合作項目參訪</div><div class="s-sub">Solna —— 與飯店同區，交通極方便</div></div></div>
-      </div>
-    </div>
-  </div>
+ <div class="prog-block">
+ <div class="ph2 ph-evening"><span class="pht">18:00</span><span class="phl">Karolinska Hospital Site Visit（公司安排）</span><span class="phb">待確認</span></div>
+ <div class="prog-sessions">
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">RAD 成員 + Varian 合作項目參訪</div><div class="s-sub">Solna —— 與飯店同區，交通極方便</div></div></div>
+ </div>
+ </div>
+ </div>
 
-  <div class="sec s-tour">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-pin"/></svg></div>
-    <div class="sec-text">若有半天空閒（需 17:00 前結束）</div>
-  </div>
-  <div class="flex-block">
-    <div class="fb-title">確保 17:00 前可返回</div>
-    <div class="fb-opt">
-      <svg width="15" height="15"><use href="#i-castle"/></svg>
-      <div><div class="fb-opt-name">皇后島宮 Drottningholm</div><div class="fb-opt-desc">UNESCO 遺址 · 渡輪 45 分 · 整個早上，13:00 前可返回</div></div>
-    </div>
-    <div class="fb-opt">
-      <svg width="15" height="15"><use href="#i-tree"/></svg>
-      <div><div class="fb-opt-name">Djurgården 島散步</div><div class="fb-opt-desc">Skansen + 自然步道 · 時間彈性，可隨時折返</div></div>
-    </div>
-    <div class="fb-opt">
-      <svg width="15" height="15"><use href="#i-train"/></svg>
-      <div><div class="fb-opt-name">地鐵藝術之旅</div><div class="fb-opt-desc">T-bana 各站藝術裝置 · 免費 · 可隨時中斷，最適合碎片時間</div></div>
-    </div>
-  </div>
+ <div class="sec s-tour">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-pin"/></svg></div>
+ <div class="sec-text">若有半天空閒（需 17:00 前結束）</div>
+ </div>
+ <div class="flex-block">
+ <div class="fb-title">確保 17:00 前可返回</div>
+ <div class="fb-opt">
+ <svg width="15" height="15"><use href="#i-castle"/></svg>
+ <div><div class="fb-opt-name">皇后島宮 Drottningholm</div><div class="fb-opt-desc">UNESCO 遺址 · 渡輪 45 分 · 整個早上，13:00 前可返回</div></div>
+ </div>
+ <div class="fb-opt">
+ <svg width="15" height="15"><use href="#i-tree"/></svg>
+ <div><div class="fb-opt-name">Djurgården 島散步</div><div class="fb-opt-desc">Skansen + 自然步道 · 時間彈性，可隨時折返</div></div>
+ </div>
+ <div class="fb-opt">
+ <svg width="15" height="15"><use href="#i-train"/></svg>
+ <div><div class="fb-opt-name">地鐵藝術之旅</div><div class="fb-opt-desc">T-bana 各站藝術裝置 · 免費 · 可隨時中斷，最適合碎片時間</div></div>
+ </div>
+ </div>
 
-  <div class="sec s-food">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
-    <div class="sec-text">今日美食</div>
-  </div>
-  <div class="food-block">
-    <div class="food-head">Karolinska 參訪前後可選擇</div>
-    <label class="food-row" data-group="d517">
-      <input type="radio" name="d517" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">瑞典肉丸（Köttbullar）— Meatballs for the People</div><div class="f-rest">鹿肉 / 馴鹿 / 麋鹿等多種選擇</div><div class="f-tip">鹿肉肉丸必點 · 搭紅醋栗果醬（Lingonsylt）才道地</div></div>
-    </label>
-    <label class="food-row" data-group="d517">
-      <input type="radio" name="d517" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">Restaurant Pelikan</div><div class="f-rest">Södermalm · 百年老店 · 昏黃燈光年代感</div><div class="f-tip">份量驚人 · 手工熬製紅醋栗果醬</div></div>
-    </label>
-  </div>
+ <div class="sec s-food">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
+ <div class="sec-text">今日美食</div>
+ </div>
+ <div class="food-block">
+ <div class="food-head">Karolinska 參訪前後可選擇</div>
+ <label class="food-row" data-group="d517">
+ <input type="radio" name="d517" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">瑞典肉丸（Köttbullar）— Meatballs for the People</div><div class="f-rest">鹿肉 / 馴鹿 / 麋鹿等多種選擇</div><div class="f-tip">鹿肉肉丸必點 · 搭紅醋栗果醬（Lingonsylt）才道地</div></div>
+ </label>
+ <label class="food-row" data-group="d517">
+ <input type="radio" name="d517" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">Restaurant Pelikan</div><div class="f-rest">Södermalm · 百年老店 · 昏黃燈光年代感</div><div class="f-tip">份量驚人 · 手工熬製紅醋栗果醬</div></div>
+ </label>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">Karolinska Hospital 也在 Solna，與飯店非常近</div></div>
-    <span class="hbadge hb-stay">住宿中</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">Karolinska Hospital 也在 Solna，與飯店非常近</div></div>
+ <span class="hbadge hb-stay">住宿中</span>
+ </div>
 </div>
 
 <!-- ═══ 5/18 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">18</div><div class="date-wd">MON · 5月</div></div>
-    <div class="day-info"><div class="day-title">ESTRO 第 4 天</div><div class="day-sub">21:30 Rock Festival</div></div>
-    <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-food"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>16°C</b> / 8°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:12</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:19</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 07m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-    <div class="wx-note">Party 在河岸邊，晚上偏涼，帶外套</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">18</div><div class="date-wd">MON · 5月</div></div>
+ <div class="day-info"><div class="day-title">ESTRO 第 4 天</div><div class="day-sub">21:30 Rock Festival</div></div>
+ <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-food"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>16°C</b> / 8°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:12</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:19</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 07m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ <div class="wx-note">Party 在河岸邊，晚上偏涼，帶外套</div>
+ </div>
 
-  <div class="alert warn">
-    <svg width="14" height="14"><use href="#i-warn"/></svg>
-    <span>現代藝術博物館週一休館 · SkyView 今日可去（10:00–16:00）</span>
-  </div>
-  <div class="alert gold">
-    <svg width="14" height="14"><use href="#i-star"/></svg>
-    <span>今日有 <b>8 個有興趣場次</b> · 08:45 / 10:30 / 15:15 衝突，<b>點擊圓圈</b>勾選</span>
-  </div>
+ <div class="alert warn">
+ <svg width="14" height="14"><use href="#i-warn"/></svg>
+ <span>現代藝術博物館週一休館 · SkyView 今日可去（10:00–16:00）</span>
+ </div>
+ <div class="alert gold">
+ <svg width="14" height="14"><use href="#i-star"/></svg>
+ <span>今日有 <b>8 個有興趣場次</b> · 08:45 / 10:30 / 15:15 衝突，<b>點擊圓圈</b>勾選</span>
+ </div>
 
-  <div class="sec s-conf">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
-    <div class="sec-text">ESTRO 會議日程</div>
-  </div>
-  <div class="prog-wrap">
+ <div class="sec s-conf">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
+ <div class="sec-text">ESTRO 會議日程</div>
+ </div>
+ <div class="prog-wrap">
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">教學講座（8 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">鼻咽癌（NPC）靶區勾畫 2026 新進展</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">生物標記驅動放療試驗</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">量子計算在放療的潛力</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">定量 CBCT 最新發展</div></div></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">教學講座</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">鼻咽癌（NPC）靶區勾畫 2026 新進展</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">生物標記驅動放療試驗</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">量子計算在放療的潛力</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">定量 CBCT 最新發展</div></div></div>
+ </div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">聯合 Pitch &amp; 辯論（8 軌）</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 × 靶向放射核素治療（ESTRO-EANM）</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 + 免疫治療最佳化</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">直腸癌試驗大戰：一個病例四種策略（辯論）</div></div></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 放療 × 核醫 vs 頭頸 + 免疫，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">聯合 Pitch &amp; 辯論</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 × 靶向放射核素治療（ESTRO-EANM）</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 + 免疫治療最佳化</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">直腸癌試驗大戰：一個病例四種策略（辯論）</div></div></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 放療 × 核醫 vs 頭頸 + 免疫，點擊選一個</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:00 – 10:30</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:00 – 10:30</span><span class="phl">茶歇</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Highlights</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 臨床實務</div></div>
-          <span class="s-badge sb-clash">三選一</span></label>
-        <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 4</div></div>
-          <span class="s-badge sb-clash">三選一</span></label>
-        <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 治療計畫創新</div></div>
-          <span class="s-badge sb-clash">三選一</span></label>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Iridium 192 Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Donal Hollywood Award &amp; Best Papers（11:40）</div></div><span class="s-badge sb-plenary">全體</span></div>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> Re-irradiation vs 頭頸癌 4 vs AI 治療計畫，三選一（11:40 全體必參加）</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Highlights</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 臨床實務</div></div>
+ <span class="s-badge sb-clash">三選一</span></label>
+ <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 4</div></div>
+ <span class="s-badge sb-clash">三選一</span></label>
+ <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 治療計畫創新</div></div>
+ <span class="s-badge sb-clash">三選一</span></label>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Iridium 192 Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Donal Hollywood Award &amp; Best Papers（11:40）</div></div><span class="s-badge sb-plenary">全體</span></div>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> Re-irradiation vs 頭頸癌 4 vs AI 治療計畫，三選一（11:40 全體必參加）</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">14:10 – 16:30</span><span class="phl">Highlights + 聯合專題</span></div>
-      <div class="prog-sessions">
-        <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺癌：影像、治療與全球視野（ESTRO-ASTRO）</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-        <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">NSCLC 劑量強化辯論</div></div>
-          <span class="s-badge sb-clash">二選一</span></label>
-      </div>
-      <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> ESTRO-ASTRO 前列腺 vs NSCLC 劑量，點擊選一個</div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">14:10 – 16:30</span><span class="phl">Highlights + 聯合專題</span></div>
+ <div class="prog-sessions">
+ <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺癌：影像、治療與全球視野（ESTRO-ASTRO）</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">NSCLC 劑量強化辯論</div></div>
+ <span class="s-badge sb-clash">二選一</span></label>
+ </div>
+ <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> ESTRO-ASTRO 前列腺 vs NSCLC 劑量，點擊選一個</div>
+ </div>
 
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">16:30 – 17:00</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">16:30 – 17:00</span><span class="phl">茶歇</span></div></div>
 
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers（8 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">前列腺癌 2 · 肺癌 3 · 生活品質創新</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">線上自適應放療進展 · 治療計畫創新 2</div></div></div>
-      </div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers</span></div>
+ <div class="prog-sessions">
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">前列腺癌 2 · 肺癌 3 · 生活品質創新</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">線上自適應放療進展 · 治療計畫創新 2</div></div></div>
+ </div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2 ph-plenary"><span class="pht">18:15 – 19:15</span><span class="phl">General Assembly（大會年度會員大會）</span><span class="phb">全體</span></div>
-    </div>
+ <div class="prog-block">
+ <div class="ph2 ph-plenary"><span class="pht">18:15 – 19:15</span><span class="phl">General Assembly（大會年度會員大會）</span><span class="phb">全體</span></div>
+ </div>
 
-    <div class="prog-block">
-      <div class="ph2 ph-evening"><span class="pht">21:30</span><span class="phl">ESTRO Party：Rock Festival 2026</span></div>
-      <div class="prog-sessions">
-        <div class="session">
-          <svg width="13" height="13" style="flex-shrink:0;margin-top:4px;"><use href="#i-music"/></svg>
-          <div class="s-body"><div class="s-title">Stockholm Waterfront · Nils Erikson Plan 4</div><div class="s-sub">ESTROnauts · Gantry 270 · The ProTones &nbsp;|&nbsp; €35 含歡迎飲料 · 現場限量購票 · 不退票</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
+ <div class="prog-block">
+ <div class="ph2 ph-evening"><span class="pht">21:30</span><span class="phl">ESTRO Party：Rock Festival 2026</span></div>
+ <div class="prog-sessions">
+ <div class="session">
+ <svg width="13" height="13" style="flex-shrink:0;margin-top:4px;"><use href="#i-music"/></svg>
+ <div class="s-body"><div class="s-title">Stockholm Waterfront · Nils Erikson Plan 4</div><div class="s-sub">ESTROnauts · Gantry 270 · The ProTones &nbsp;|&nbsp; €35 含歡迎飲料 · 現場限量購票 · 不退票</div></div>
+ </div>
+ </div>
+ </div>
+ </div>
 
-  <div class="sec s-food">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
-    <div class="sec-text">今日美食</div>
-  </div>
-  <div class="food-block">
-    <div class="food-head">General Assembly 後 → 快速晚餐（19:15–21:15）→ Rock Party</div>
-    <label class="food-row" data-group="d518">
-      <input type="radio" name="d518" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">Bistro Bestick</div><div class="f-rest">精緻擺盤 · 牛肉比例高的肉丸</div><div class="f-tip">GA（19:15）後步行可達 · 適合快速優雅一餐</div></div>
-    </label>
-    <label class="food-row" data-group="d518">
-      <input type="radio" name="d518" class="ck">
-      <span class="ck-mark"></span>
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">Den Gyldene Freden（1722 年創立）</div><div class="f-rest">300 年老店 · Gamla Stan</div><div class="f-tip">據說諾貝爾文學獎評審常來 · 體驗瑞典最古老餐廳</div></div>
-    </label>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-ticket"/></svg>
-      <div><div class="f-name">Rock Festival Party</div><div class="f-rest">Party 票在報名區 Party Ticket Desk 購買 · 限量 · 不退票</div></div>
-    </div>
-  </div>
+ <div class="sec s-food">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
+ <div class="sec-text">今日美食</div>
+ </div>
+ <div class="food-block">
+ <div class="food-head">General Assembly 後 → 快速晚餐（19:15–21:15）→ Rock Party</div>
+ <label class="food-row" data-group="d518">
+ <input type="radio" name="d518" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">Bistro Bestick</div><div class="f-rest">精緻擺盤 · 牛肉比例高的肉丸</div><div class="f-tip">GA（19:15）後步行可達 · 適合快速優雅一餐</div></div>
+ </label>
+ <label class="food-row" data-group="d518">
+ <input type="radio" name="d518" class="ck">
+ <span class="ck-mark"></span>
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">Den Gyldene Freden（1722 年創立）</div><div class="f-rest">300 年老店 · Gamla Stan</div><div class="f-tip">據說諾貝爾文學獎評審常來 · 體驗瑞典最古老餐廳</div></div>
+ </label>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-ticket"/></svg>
+ <div><div class="f-name">Rock Festival Party</div><div class="f-rest">Party 票在報名區 Party Ticket Desk 購買 · 限量 · 不退票</div></div>
+ </div>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 約 35 分</div></div>
-    <span class="hbadge hb-stay">住宿中</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 約 35 分</div></div>
+ <span class="hbadge hb-stay">住宿中</span>
+ </div>
 </div>
 
 <!-- ═══ 5/19 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">19</div><div class="date-wd">TUE · 5月</div></div>
-    <div class="day-info"><div class="day-title">ESTRO 最後半天</div><div class="day-sub">13:30 閉幕 · 下午完全自由</div></div>
-    <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>16°C</b> / 8°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:10</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:21</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 11m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-    <div class="wx-note">13:30 後自由 · Fotografiska 黃金下午時段</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">19</div><div class="date-wd">TUE · 5月</div></div>
+ <div class="day-info"><div class="day-title">ESTRO 最後半天</div><div class="day-sub">13:30 閉幕 · 下午完全自由</div></div>
+ <div class="day-tiers"><div class="dt dt-conf"></div><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>16°C</b> / 8°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:10</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:21</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 11m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ <div class="wx-note">13:30 後自由 · Fotografiska 黃金下午時段</div>
+ </div>
 
-  <div class="alert ok">
-    <svg width="14" height="14"><use href="#i-info"/></svg>
-    <span>今日 <b>13:30 閉幕</b>，下午完全自由 · 所有有興趣場次今天不衝突，可全部參加</span>
-  </div>
+ <div class="alert ok">
+ <svg width="14" height="14"><use href="#i-info"/></svg>
+ <span>今日 <b>13:30 閉幕</b>，下午完全自由 · 所有有興趣場次今天不衝突，可全部參加</span>
+ </div>
 
-  <div class="sec s-conf">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
-    <div class="sec-text">ESTRO 會議日程（上午）</div>
-  </div>
-  <div class="prog-wrap">
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">08:30 – 09:10</span><span class="phl">Proffered Papers &amp; 教學講座（7 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 用於同質化與臨床決策</div></div></div>
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Re-irradiation 實務技巧</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">放療用於良性與功能性疾病</div></div></div>
-      </div>
-    </div>
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">09:15 – 10:30</span><span class="phl">專題討論（7 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">免疫調節 × 放療：最大化治療成效</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EANO：腦轉移 —— 應延後局部治療？（辯論）</div></div><span class="s-badge sb-joint">聯合</span></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">器官保存策略：頭頸 · 膀胱 · 乳癌</div></div></div>
-      </div>
-    </div>
-    <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:30 – 11:00</span><span class="phl">茶歇</span></div></div>
-    <div class="prog-block">
-      <div class="ph2"><span class="pht">11:00 – 12:15</span><span class="phl">辯論 &amp; 專題（7 軌）</span></div>
-      <div class="prog-sessions">
-        <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO 指南的臨床落地：從共識到實踐</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">臨床試驗 vs 技術：誰改變了更多？（辯論）</div></div></div>
-        <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">Oligo 策略：乳癌 &amp; 婦科 SABR 前沿</div></div></div>
-      </div>
-    </div>
-    <div class="prog-block">
-      <div class="ph2 ph-plenary"><span class="pht">12:25 – 13:30</span><span class="phl">Closing Debate：「Dear Radiation Oncology — We have a dream」</span><span class="phb">閉幕</span></div>
-    </div>
-  </div>
+ <div class="sec s-conf">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-conf"/></svg></div>
+ <div class="sec-text">ESTRO 會議日程（上午）</div>
+ </div>
+ <div class="prog-wrap">
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">08:30 – 09:10</span><span class="phl">Proffered Papers &amp; 教學講座</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 用於同質化與臨床決策</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Re-irradiation 實務技巧</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">放療用於良性與功能性疾病</div></div></div>
+ </div>
+ </div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">09:15 – 10:30</span><span class="phl">專題討論</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">免疫調節 × 放療：最大化治療成效</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EANO：腦轉移 —— 應延後局部治療？（辯論）</div></div><span class="s-badge sb-joint">聯合</span></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">器官保存策略：頭頸 · 膀胱 · 乳癌</div></div></div>
+ </div>
+ </div>
+ <div class="prog-block"><div class="ph2 ph-break"><span class="pht">10:30 – 11:00</span><span class="phl">茶歇</span></div></div>
+ <div class="prog-block">
+ <div class="ph2"><span class="pht">11:00 – 12:15</span><span class="phl">辯論 &amp; 專題</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO 指南的臨床落地：從共識到實踐</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">臨床試驗 vs 技術：誰改變了更多？（辯論）</div></div></div>
+ <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">Oligo 策略：乳癌 &amp; 婦科 SABR 前沿</div></div></div>
+ </div>
+ </div>
+ <div class="prog-block">
+ <div class="ph2 ph-plenary"><span class="pht">12:25 – 13:30</span><span class="phl">Closing Debate：「Dear Radiation Oncology — We have a dream」</span><span class="phb">閉幕</span></div>
+ </div>
+ </div>
 
-  <div class="sec s-tour">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-camera"/></svg></div>
-    <div class="sec-text">下午自由（13:30 後）</div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">14:00</div>
-    <div class="row-i"><svg><use href="#i-camera"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">Fotografiska 攝影博物館</div>
-      <div class="row-desc">開到 23:00 · 頂樓咖啡館俯瞰波羅的海 · 充裕時間慢慢逛</div>
-      <span class="rtag rt-tour">安排</span>
-    </div>
-  </div>
+ <div class="sec s-tour">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-camera"/></svg></div>
+ <div class="sec-text">下午自由（13:30 後）</div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">14:00</div>
+ <div class="row-i"><svg><use href="#i-camera"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">Fotografiska 攝影博物館</div>
+ <div class="row-desc">開到 23:00 · 頂樓咖啡館俯瞰波羅的海 · 充裕時間慢慢逛</div>
+ <span class="rtag rt-tour">安排</span>
+ </div>
+ </div>
 
-  <div class="sec s-food">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
-    <div class="sec-text">今日美食</div>
-  </div>
-  <div class="food-block">
-    <div class="food-head">最後完整的自由下午 · 最好的告別方式</div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-coffee"/></svg>
-      <div><div class="f-name">Fika：公主蛋糕（Prinsesstårta）</div><div class="f-rest">Fotografiska 頂樓咖啡館 · 淡綠色杏仁膏 · 俯瞰波羅的海</div><div class="f-tip">用刀切，不要用叉挖 · 搭黑咖啡才是瑞典吃法</div></div>
-    </div>
-    <div class="food-row">
-      <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">晚餐：Restaurant Ekstedt</div><div class="f-rest">Humlegårdsgatan · 全程明火烹飪 · 北歐頂級體驗</div><div class="f-tip">⚑ 強烈建議現在就訂位，瑞典最難訂的餐廳之一</div></div>
-    </div>
-  </div>
+ <div class="sec s-food">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
+ <div class="sec-text">今日美食</div>
+ </div>
+ <div class="food-block">
+ <div class="food-head">最後完整的自由下午 · 最好的告別方式</div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-coffee"/></svg>
+ <div><div class="f-name">Fika：公主蛋糕（Prinsesstårta）</div><div class="f-rest">Fotografiska 頂樓咖啡館 · 淡綠色杏仁膏 · 俯瞰波羅的海</div><div class="f-tip">用刀切，不要用叉挖 · 搭黑咖啡才是瑞典吃法</div></div>
+ </div>
+ <div class="food-row">
+ <svg width="14" height="14"><use href="#i-food"/></svg>
+ <div><div class="f-name">晚餐：Restaurant Ekstedt</div><div class="f-rest">Humlegårdsgatan · 全程明火烹飪 · 北歐頂級體驗</div><div class="f-tip">⚑ 強烈建議現在就訂位，瑞典最難訂的餐廳之一</div></div>
+ </div>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">明日 12:00 前退房</div></div>
-    <span class="hbadge hb-last">最後一夜</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">明日 12:00 前退房</div></div>
+ <span class="hbadge hb-last">最後一夜</span>
+ </div>
 </div>
 
 <!-- ═══ 5/20 ═══ -->
 <div class="day-card">
-  <div class="day-head">
-    <div class="date-box"><div class="date-num">20</div><div class="date-wd">WED · 5月</div></div>
-    <div class="day-info"><div class="day-title">離開日</div><div class="day-sub">15:25 起飛 · ARN</div></div>
-    <div class="day-tiers"><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
-  </div>
-  <div class="wx">
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>17°C</b> / 8°C</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:08</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:23</b></div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 15m 白晝</div>
-    <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
-    <div class="wx-note">瓦薩博物館早上光線最好</div>
-  </div>
+ <div class="day-head">
+ <div class="date-box"><div class="date-num">20</div><div class="date-wd">WED · 5月</div></div>
+ <div class="day-info"><div class="day-title">離開日</div><div class="day-sub">15:25 起飛 · ARN</div></div>
+ <div class="day-tiers"><div class="dt dt-tour"></div><div class="dt dt-food"></div></div>
+ </div>
+ <div class="wx">
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-temp"/></svg> <b>17°C</b> / 8°C</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunrise"/></svg> <b>04:08</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-sunset"/></svg> <b>21:23</b></div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-clock"/></svg> 17h 15m 白晝</div>
+ <div class="wx-c"><svg width="13" height="13"><use href="#i-rain"/></svg> 22%</div>
+ <div class="wx-note">瓦薩博物館早上光線最好</div>
+ </div>
 
-  <div class="sec s-food">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-coffee"/></svg></div>
-    <div class="sec-text">最後早晨 Fika</div>
-  </div>
-  <div class="row r-food">
-    <div class="row-t">09:00</div>
-    <div class="row-i"><svg><use href="#i-coffee"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">Fabrique 肉桂捲（最後一次 Fika）</div>
-      <div class="row-desc">斯德哥爾摩多家分店 · 剛出爐最好吃 · 行李退房後輕裝出發</div>
-    </div>
-  </div>
+ <div class="sec s-food">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-coffee"/></svg></div>
+ <div class="sec-text">最後早晨 Fika</div>
+ </div>
+ <div class="row r-food">
+ <div class="row-t">09:00</div>
+ <div class="row-i"><svg><use href="#i-coffee"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">Fabrique 肉桂捲（最後一次 Fika）</div>
+ <div class="row-desc">斯德哥爾摩多家分店 · 剛出爐最好吃 · 行李退房後輕裝出發</div>
+ </div>
+ </div>
 
-  <div class="sec s-tour">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-museum"/></svg></div>
-    <div class="sec-text">早上觀光</div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">10:00</div>
-    <div class="row-i"><svg><use href="#i-boat"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">瓦薩博物館（Vasa Museum）</div>
-      <div class="row-desc">留 1.5–2 小時 · 帶薄外套（室內偏涼）· 可繞船一圈</div>
-      <span class="rtag rt-conf">固定</span>
-    </div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">11:30</div>
-    <div class="row-i"><svg><use href="#i-museum"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">維京博物館（The Viking Museum）— 選排</div>
-      <div class="row-desc">就在瓦薩旁邊 · 約 30 分鐘 · 英文語音導覽</div>
-      <span class="rtag rt-opt">選排</span>
-    </div>
-  </div>
-  <div class="row r-tour">
-    <div class="row-t">11:30</div>
-    <div class="row-i"><svg><use href="#i-museum"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">或：北歐博物館（Nordic Museum）— 選排</div>
-      <div class="row-desc">步行 3 分鐘 · 北歐文化互動展 · 快速走 45 分</div>
-      <span class="rtag rt-opt">擇一</span>
-    </div>
-  </div>
+ <div class="sec s-tour">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-museum"/></svg></div>
+ <div class="sec-text">早上觀光</div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">10:00</div>
+ <div class="row-i"><svg><use href="#i-boat"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">瓦薩博物館（Vasa Museum）</div>
+ <div class="row-desc">留 1.5–2 小時 · 帶薄外套（室內偏涼）· 可繞船一圈</div>
+ <span class="rtag rt-conf">固定</span>
+ </div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">11:30</div>
+ <div class="row-i"><svg><use href="#i-museum"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">維京博物館（The Viking Museum）— 選排</div>
+ <div class="row-desc">就在瓦薩旁邊 · 約 30 分鐘 · 英文語音導覽</div>
+ <span class="rtag rt-opt">選排</span>
+ </div>
+ </div>
+ <div class="row r-tour">
+ <div class="row-t">11:30</div>
+ <div class="row-i"><svg><use href="#i-museum"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">或：北歐博物館（Nordic Museum）— 選排</div>
+ <div class="row-desc">步行 3 分鐘 · 北歐文化互動展 · 快速走 45 分</div>
+ <span class="rtag rt-opt">擇一</span>
+ </div>
+ </div>
 
-  <div class="sec s-util">
-    <div class="sec-icon"><svg width="14" height="14"><use href="#i-train"/></svg></div>
-    <div class="sec-text">前往機場</div>
-  </div>
-  <div class="row">
-    <div class="row-t">12:00</div>
-    <div class="row-i"><svg><use href="#i-hotel"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">退房 → 步行 1 分鐘到 Ulriksdal 站</div>
-      <span class="rtag rt-conf">固定</span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="row-t">12:30</div>
-    <div class="row-i"><svg><use href="#i-train"/></svg></div>
-    <div class="row-b">
-      <div class="row-name">Pendeltåg 直達 Arlanda 機場</div>
-      <div class="row-desc">約 28 分鐘 · 13:00 前抵達 · 留充裕報到時間</div>
-      <span class="rtag rt-conf">固定</span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="row-t">15:25</div>
-    <div class="row-i"><svg><use href="#i-plane"/></svg></div>
-    <div class="row-b"><div class="row-name">起飛，再見斯德哥爾摩</div></div>
-  </div>
+ <div class="sec s-util">
+ <div class="sec-icon"><svg width="14" height="14"><use href="#i-train"/></svg></div>
+ <div class="sec-text">前往機場</div>
+ </div>
+ <div class="row">
+ <div class="row-t">12:00</div>
+ <div class="row-i"><svg><use href="#i-hotel"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">退房 → 步行 1 分鐘到 Ulriksdal 站</div>
+ <span class="rtag rt-conf">固定</span>
+ </div>
+ </div>
+ <div class="row">
+ <div class="row-t">12:30</div>
+ <div class="row-i"><svg><use href="#i-train"/></svg></div>
+ <div class="row-b">
+ <div class="row-name">Pendeltåg 直達 Arlanda 機場</div>
+ <div class="row-desc">約 28 分鐘 · 13:00 前抵達 · 留充裕報到時間</div>
+ <span class="rtag rt-conf">固定</span>
+ </div>
+ </div>
+ <div class="row">
+ <div class="row-t">15:25</div>
+ <div class="row-i"><svg><use href="#i-plane"/></svg></div>
+ <div class="row-b"><div class="row-name">起飛，再見斯德哥爾摩</div></div>
+ </div>
 
-  <div class="hotel-strip">
-    <svg width="16" height="16"><use href="#i-hotel"/></svg>
-    <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">退房 → Ulriksdal 站（步行 1 分）→ Pendeltåg 直達機場 約 28 分</div></div>
-    <span class="hbadge hb-out">退房 12:00</span>
-  </div>
+ <div class="hotel-strip">
+ <svg width="16" height="16"><use href="#i-hotel"/></svg>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">退房 → Ulriksdal 站（步行 1 分）→ Pendeltåg 直達機場 約 28 分</div></div>
+ <span class="hbadge hb-out">退房 12:00</span>
+ </div>
 </div>
 
 <footer>ESTRO 2026 · Stockholm · 14–20 May</footer>
