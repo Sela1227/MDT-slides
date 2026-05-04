@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sela RT Handbook v2026.12</title>
+<title>Sela RT Handbook v2026.13</title>
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
   import elkLayouts from 'https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.7/dist/mermaid-layout-elk.esm.min.mjs';
@@ -695,7 +695,7 @@
       size: A4 landscape;
       margin: 1.4cm 1.6cm 1.8cm;
       @bottom-center {
-        content: "Sela RT Handbook v2026.12 — " counter(page) " / " counter(pages);
+        content: "Sela RT Handbook v2026.13 — " counter(page) " / " counter(pages);
         font-family: "Noto Sans TC", sans-serif;
         font-size: 9pt;
         color: #666;
@@ -776,7 +776,7 @@
       <div class="meta">
         <div>
           <strong>VERSION</strong>
-          <span>v2026.12</span>
+          <span>v2026.13</span>
         </div>
         <div>
           <strong>UPDATED</strong>
@@ -784,7 +784,7 @@
         </div>
         <div>
           <strong>SCOPE</strong>
-          <span>乳癌、肺癌、攝護腺癌、B 細胞淋巴瘤（持續擴充中）</span>
+          <span>乳癌、肺癌、攝護腺癌、B 細胞淋巴瘤、直腸癌（持續擴充中）</span>
         </div>
       </div>
     </div>
@@ -792,7 +792,7 @@
 
   <div class="cover-footer">
     <span>Sela RT Handbook</span>
-    <span>v2026.12</span>
+    <span>v2026.13</span>
   </div>
 </section>
 
@@ -805,7 +805,7 @@
     <li><a href="#lung-divider" class="toc-link">肺癌　Lung Cancer</a></li>
     <li><a href="#prostate-divider" class="toc-link">攝護腺癌　Prostate Cancer</a></li>
     <li class="toc-pending">中樞神經腫瘤　CNS Tumor</li>
-    <li class="toc-pending">消化道癌　GI Cancer</li>
+    <li><a href="#rectal-divider" class="toc-link">直腸癌　Rectal Cancer</a></li>
     <li class="toc-pending">婦科癌　Gynecologic Cancer</li>
     <li><a href="#bcell-divider" class="toc-link">B 細胞淋巴瘤　B-Cell Lymphoma</a></li>
   </ul>
@@ -4265,6 +4265,1159 @@ flowchart LR
   </div>
 </section>
 
+<!-- ============ 癌種分隔頁：直腸癌 ============ -->
+<section class="cancer-divider" id="rectal-divider">
+  <div class="cancer-divider-top"></div>
+  <div class="cancer-divider-body">
+    <div class="cancer-divider-left">
+      <div class="cancer-divider-num"><span class="num">06</span>SECTION</div>
+      <h2 class="cancer-divider-zh">直腸癌</h2>
+      <div class="cancer-divider-en">RECTAL CANCER</div>
+      <div class="cancer-divider-line"></div>
+      <div class="cancer-divider-meta">TNT 為現代主流；LCCRT、SCRT、watch-and-wait organ preservation；化療搭配 capecitabine 為主</div>
+    </div>
+    <div class="cancer-divider-right">
+      <ol>
+        <li><a href="#rectal-ind">適應症</a></li>
+        <li><a href="#rectal-sim">模擬定位</a></li>
+        <li><a href="#rectal-tgt">靶區勾劃</a></li>
+        <li><a href="#rectal-dose">劑量與分次</a></li>
+        <li><a href="#rectal-oar">OAR 限制</a></li>
+        <li><a href="#rectal-tox">副作用</a></li>
+        <li><a href="#rectal-fu">追蹤</a></li>
+        <li><a href="#rectal-ref">文獻</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 適應症 ============ -->
+<section class="chapter" id="rectal-ind">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>1. 適應症</h1>
+
+  <h2>1.1 整體決策流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[直腸癌<br/>分期 + MRF / EMVI 評估]:::startN
+    B[低風險早期<br/>cT1-2 N0 上直腸]:::actionN
+    C[局部進展<br/>cT3-4 或 cN+]:::actionN
+    D[復發或不可切除]:::actionN
+    E[寡轉移]:::actionN
+    B1[手術為主<br/>選擇性免 RT<sup>a</sup>]:::actionN
+    C1[TNT<sup>b</sup> 或 LCCRT 或 SCRT]:::actionN
+    D1[Salvage CRT 或 re-RT]:::actionN
+    E1[Ablative RT 至寡轉移]:::actionN
+    F[計畫處方]:::endN
+
+    A --> B --> B1 --> F
+    A --> C --> C1 --> F
+    A --> D --> D1 --> F
+    A --> E --> E1 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　直腸癌 RT 整體決策</div>
+  <div class="flowchart-footnote">
+    <ul>
+      <li><strong>a. 上直腸 cT3 N0 MRF−：</strong>PROSPECT 證實 FOLFOX 為主之化療 ± 選擇性 RT 不劣於標準 CRT；可省 RT</li>
+      <li><strong>b. TNT 首選：</strong>RAPIDO（SCRT + chemo）或 PRODIGE 23（chemo + LCCRT）；OPRA 顯示 TNT 後 50% 達 cCR 可進入 watch &amp; wait</li>
+    </ul>
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.2 風險分層與治療選擇</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">分期 / 風險</th><th style="width:30%">標準處置</th><th style="width:46%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>cT1 N0 早期（黏膜下）</td><td>手術或 TEM</td><td>選擇性病人考慮 contact RT (Papillon)</td></tr>
+      <tr><td>cT2 N0</td><td>TME 為主；不需 RT</td><td>—</td></tr>
+      <tr><td><strong>cT3 N0 上直腸 MRF−</strong></td><td><strong>chemo only TNT</strong> 或標準 CRT</td><td>PROSPECT：化療為主可不需 RT</td></tr>
+      <tr><td>cT3 N0/+ 中下直腸</td><td><strong>TNT 或 LCCRT 或 SCRT</strong></td><td>TNT 為現代主流</td></tr>
+      <tr><td>cT4 任何 N</td><td><strong>TNT 首選</strong></td><td>RAPIDO、PRODIGE 23</td></tr>
+      <tr><td>cN+ 任何 T</td><td>TNT 或 LCCRT</td><td>—</td></tr>
+      <tr><td>MRF+ 或 EMVI+</td><td><strong>TNT 強烈建議</strong></td><td>降階 + 局部控制</td></tr>
+      <tr><td>cT4b（鄰近器官受侵犯）</td><td>TNT + extended surgery</td><td>個別化評估</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    MRF = mesorectal fascia；EMVI = extramural venous invasion。MRI 為評估標準。NCCN 與 ESMO 將 cT3 細分（a/b/c/d）依 mesorectal extension 深度。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.3 TNT（Total Neoadjuvant Therapy）</h2>
+
+  <h3>1.3.1 兩大主流方案</h3>
+  <table>
+    <thead>
+      <tr><th style="width:24%">方案</th><th style="width:38%">順序</th><th style="width:38%">證據</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Induction (PRODIGE 23)</strong></td><td>FOLFIRINOX × 6 → LCCRT (50 Gy / 25 fx) → TME</td><td>3y DFS 75.7% vs 68.5%（vs 標準 CRT）</td></tr>
+      <tr><td><strong>Consolidation (RAPIDO)</strong></td><td>SCRT (5×5 Gy) → CAPOX × 6 → TME</td><td>3y DRTF 23.7% vs 30.4%（vs 標準 CRT，DM 顯著降）</td></tr>
+      <tr><td><strong>OPRA (organ preservation)</strong></td><td>LCCRT → consolidation chemo 或 induction → TME 或 W&amp;W</td><td>3y TME-free 53%；50% 達 cCR 可進 W&amp;W</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.3.2 TNT 適應症</h3>
+  <ul>
+    <li>cT3-4 或 cN+ 中下直腸癌</li>
+    <li>MRF+ 或 EMVI+</li>
+    <li>有 organ preservation 意願</li>
+    <li>遠端轉移風險高（年輕、cT4、廣泛 cN+）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.4 Long-Course CRT（標準方案）</h2>
+  <ul>
+    <li><strong>劑量：</strong>50.4 Gy / 28 fx 或 50 Gy / 25 fx + capecitabine 825 mg/m² BID（W2 daily）</li>
+    <li><strong>適應症：</strong>標準 CRT 之 cT3-4 N0/+ 病人；或 TNT 之一部分</li>
+    <li><strong>RT-surgery 間隔：</strong>標準 6-8 週；OPRA 試驗中 W&amp;W 評估通常 8-12 週</li>
+    <li><strong>Boost：</strong>TNT 多採至 54-56 Gy boost；watch &amp; wait 候選者可考慮 boost 至 56-60 Gy</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.5 Short-Course RT（SCRT, 5×5 Gy）</h2>
+  <ul>
+    <li><strong>劑量：</strong>25 Gy / 5 fx（每日 5 Gy × 5 天）</li>
+    <li><strong>適應症：</strong>resectable cT3 N0/+；TNT 之 RAPIDO 方案；frail 病人不適合 LCCRT</li>
+    <li><strong>RT-surgery 間隔：</strong>傳統 1 週內；Stockholm III 顯示延遲 4-8 週可降低 toxicity 並提升 pCR rate；TNT 中 SCRT → chemo → 12-16 週後手術</li>
+    <li><strong>證據：</strong>Polish trial、Stockholm III、RAPIDO；SCRT vs LCCRT 對 OS / DFS 無顯著差異</li>
+  </ul>
+
+  <div class="inline-note">
+    <strong>RAPIDO：</strong>SCRT + CAPOX × 6 vs LCCRT + adj chemo，3y DRTF 23.7% vs 30.4%（p=0.019）。
+    <strong>PRODIGE 23：</strong>FOLFIRINOX → LCCRT vs LCCRT + adj chemo，3y DFS 75.7% vs 68.5%（p=0.034）。
+    <strong>PROSPECT：</strong>cT2 N+/cT3 N0/+ 上直腸 MRF− 病人，FOLFOX × 6 ± 選擇性 RT vs 標準 CRT，5y DFS 80.8% 兩臂相當。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.6 Watch &amp; Wait（W&amp;W）與 organ preservation</h2>
+
+  <ul>
+    <li><strong>條件：</strong>TNT 後達 <strong>cCR</strong>（DRE + endoscopy + MRI 三方面評估）</li>
+    <li><strong>cCR 標準：</strong>白色疤痕、無潰瘍、無結節、MRI mrTRG 1（無 viable tumor）</li>
+    <li><strong>追蹤：</strong>初年每 3 個月 DRE + MRI + endoscopy；2-5 年每 4-6 月；&gt;5 年每年</li>
+    <li><strong>Local regrowth：</strong>2 年內 25-30%；多數可 salvage TME</li>
+    <li><strong>證據：</strong>OPRA、IWWD（International W&amp;W Database）、Habr-Gama 系列研究</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.7 術後 RT</h2>
+  <ul>
+    <li><strong>適應症：</strong>術後病理發現 R1/R2 切除、CRM+、ENE+、未做 neoadjuvant 而 pT4 或 pN+ 之 selected 病人</li>
+    <li><strong>劑量：</strong>50.4 Gy / 28 fx + capecitabine</li>
+    <li><strong>現代趨勢：</strong>術後 RT 已少用；多採 neoadjuvant TNT 為主</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.8 特殊情境</h2>
+
+  <h3>1.8.1 Re-irradiation</h3>
+  <ul>
+    <li><strong>適應症：</strong>骨盆腔復發、距上次 RT ≥1 年</li>
+    <li><strong>劑量：</strong>30-40 Gy / 1.2 Gy BID 或 SBRT 30-35 Gy / 5 fx</li>
+    <li><strong>累積限制：</strong>cumulative bowel EQD2 &lt;100 Gy（α/β=3）</li>
+  </ul>
+
+  <h3>1.8.2 寡轉移</h3>
+  <ul>
+    <li>≤3-5 病灶（liver、lung 為主）；SBRT 顯著延遲全身治療</li>
+    <li>SABR-COMET、Cardiff 等試驗支持</li>
+  </ul>
+
+  <h3>1.8.3 Palliative</h3>
+  <ul>
+    <li>骨盆腔出血 / 疼痛：SCRT 25 Gy / 5 fx 或 30 Gy / 10 fx</li>
+    <li>骨轉移：8 Gy 單次或 30 Gy / 10 fx</li>
+    <li>SVC obstruction（罕見骨盆腔變體）：emergency SCRT</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 模擬定位 ============ -->
+<section class="chapter" id="rectal-sim">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>2. 模擬定位</h1>
+
+  <h2>2.1 體位與固定</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">姿勢</th><th style="width:40%">特點</th><th style="width:38%">證據</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Prone + belly board</strong></td><td>傳統首選；推開 small bowel 顯著</td><td>Belly board (Civco-type) 較 prone alone bowel V&lt;45 Gy 減 20-30%（Drzymala 2009）</td></tr>
+      <tr><td>Supine（VMAT 時代）</td><td>setup 重現性佳；bowel dose 與 prone 相當（VMAT）</td><td>17 病人 VMAT 比較：bowel/bladder dose 無顯著差，supine setup 較好（Brierley 2017）</td></tr>
+      <tr><td>Prone alone（無 belly board）</td><td>舊式；不再建議</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>ASTRO 2025 guideline 條件性建議：</strong>3D-CRT 採 prone + belly board；IMRT/VMAT 兩種姿勢皆可，依 setup 重現性與 institutional 經驗決定。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.2 Bladder protocol（充盈以推開小腸）</h2>
+
+  <ul>
+    <li><strong>標準目標：</strong>full bladder（200-300 mL）以推開 small bowel 至 high-dose 區外</li>
+    <li><strong>具體做法：</strong>排空後喝水 500 mL，等 30-45 分鐘（與 prostate protocol 類似但以 bowel sparing 為目的）</li>
+    <li><strong>實證：</strong>full bladder + belly board 為 prone 主流；單獨 supine 採 full bladder 之 bowel dose 與 prone 無顯著差（VMAT）</li>
+    <li><strong>選擇性 empty bladder：</strong>少數病人 full bladder 反而推 small bowel 進入 rectovesical / Pouch of Douglas，此時 empty bladder 較佳（個別化模擬比對）</li>
+    <li><strong>SCRT（5 fx）：</strong>full bladder 一致性較易維持；inter-fraction 變動可接受</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.3 Rectum / Bowel preparation</h2>
+
+  <ul>
+    <li><strong>原則：</strong>不刻意 empty rectum（rectum 本身為 GTV）</li>
+    <li><strong>抗脹氣 / 規律飲食：</strong>避免氣體填充影響 GTV 邊界</li>
+    <li><strong>排便：</strong>治療前自然排便即可；不用 enema</li>
+    <li><strong>Small bowel 評估：</strong>口服顯影劑可幫助勾劃（選擇性）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.4 影像取得</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">項目</th><th style="width:75%">建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Slice thickness</td><td>3 mm（含 GTV 區域）</td></tr>
+      <tr><td>Scan range</td><td>L4-5 至 ischial tuberosity 下緣 + 5 cm 緩衝</td></tr>
+      <tr><td>FOV</td><td>≥45 cm</td></tr>
+      <tr><td>對比劑</td><td>常用 IV contrast（淋巴結評估）；口服顯影劑選擇性</td></tr>
+      <tr><td>4D-CT</td><td>不需常規（骨盆腔動作小）</td></tr>
+      <tr><td>MRI 整合</td><td><strong>強烈建議</strong>；mrTRG、MRF、EMVI 評估</td></tr>
+      <tr><td>PET-CT</td><td>選擇性，cT4 或 N status 不確定時</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.5 BB 標記與 Markers</h2>
+
+  <ul>
+    <li><strong>Tattoo：</strong>中心 + 雙側 lateral；prone 病人於髂骨翼附加標記</li>
+    <li><strong>Anal marker：</strong>radio-opaque marker 標示 anal verge（下界判定關鍵）</li>
+    <li><strong>Fiducial markers：</strong>不常規；boost 至 GTV 或 W&amp;W candidate 之 SBRT boost 可考慮</li>
+    <li><strong>Surgical clips（postop）：</strong>含於 CTV</li>
+  </ul>
+
+  <h2>2.6 計畫前查核</h2>
+  <ul>
+    <li>病理：腺癌 vs 罕見組織型（squamous、neuroendocrine、signet ring）</li>
+    <li>分期：MRI（mrT、mrN、MRF、EMVI、mrTRG），可加 endorectal US（早期）、CT chest/abdomen、PET 選擇性</li>
+    <li>距 anal verge：低 / 中 / 上直腸（&lt;5 cm / 5-10 cm / 10-15 cm）</li>
+    <li>共病：心血管（capecitabine 心毒）、DPYD 缺失（fluoropyrimidine 嚴重毒性）</li>
+    <li>排尿 / 排便功能：baseline LARS（low anterior resection syndrome）為 W&amp;W 與術後比較指標</li>
+    <li>性功能：baseline 評估（術後 / RT 後 ED 與性慾下降風險）</li>
+    <li>生育需求：年輕病人 sperm banking、ovarian transposition</li>
+    <li>化療搭配：capecitabine 與 RT 同步</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 靶區勾劃 ============ -->
+<section class="chapter" id="rectal-tgt">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>3. 靶區勾劃</h1>
+
+  <h2>3.1 GTV 定義</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:75%">勾劃</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>原發 GTV（intact）</td><td>MRI T2WI 勾劃；含整個 tumor + EMVI 範圍</td></tr>
+      <tr><td>陽性淋巴結 GTVn</td><td>≥5 mm 短徑、不規則邊緣、heterogeneous signal、混合 morphology；MRI 標準</td></tr>
+      <tr><td>Boost 區（W&amp;W candidate）</td><td>整個 GTV + 5 mm</td></tr>
+      <tr><td>Post-TNT 重新模擬</td><td>不縮小，採 pre-treatment GTV 範圍</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.2 CTV 定義（NRG / RTOG / ESTRO consensus）</h2>
+
+  <h3>3.2.1 CTV 區域</h3>
+  <ul>
+    <li><strong>Mesorectum：</strong>全 mesorectal fat + fascia 涵蓋</li>
+    <li><strong>Internal iliac LN：</strong>必含；血管 + 7 mm</li>
+    <li><strong>Presacral region：</strong>S1-S3 levels 之 anterior sacrum + 1.5 cm</li>
+    <li><strong>Obturator LN：</strong>含於 cT3-4 中下直腸；可疑 cN+ 必含</li>
+    <li><strong>External iliac LN：</strong>僅含於 cT4 侵犯前腹器官（bladder、prostate、vagina、uterus）</li>
+    <li><strong>Inguinal LN：</strong>僅含於 anal canal 侵犯或下直腸 ≤5 cm 從 anal verge 之 cT4</li>
+  </ul>
+
+  <h3>3.2.2 CTV 上下界</h3>
+  <ul>
+    <li><strong>上界：</strong>L5/S1 junction（含 common iliac LN 下緣）</li>
+    <li><strong>下界：</strong>tumor 下緣 + 2 cm；下直腸至 anal verge 含 levator muscles 下緣</li>
+    <li><strong>低位 cT4 含 anal canal：</strong>下界至 ischiorectal fossa 下緣；含 inguinal LN（雙側）</li>
+  </ul>
+
+  <h3>3.2.3 CTV margin（mesorectum 周圍）</h3>
+  <ul>
+    <li>Mesorectum 整個包含（fascia 內）</li>
+    <li>Posterior：sacrum 前面 + 1.5 cm（presacral region）</li>
+    <li>Lateral：含 internal iliac、obturator nodes 至 pelvic side wall</li>
+    <li>Anterior：mid/upper rectum 至 mesorectum 前緣；low rectum cT4 含 prostate / vagina 後 1 cm</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.3 PTV margin</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:30%">PTV margin</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3D-CRT 或 IMRT，daily IGRT</td><td>5-10 mm</td><td>Posterior 7 mm（含 sacrum 動作）</td></tr>
+      <tr><td>VMAT + daily CBCT</td><td>5-7 mm</td><td>—</td></tr>
+      <tr><td>SCRT</td><td>7-10 mm</td><td>—</td></tr>
+      <tr><td>SBRT boost (W&amp;W)</td><td>3-5 mm</td><td>fiducial 必要</td></tr>
+      <tr><td>Re-irradiation</td><td>5 mm</td><td>嚴格 OAR 約束</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    Mesorectum 動作研究（Nuyttens 2002）建議 anisotropic margin：上 1.3-2.4 cm anterior（依高度）、後 8-18 mm。現代 daily IGRT 可採均勻 5-7 mm。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.4 OAR 勾劃要點</h2>
+
+  <h3>3.4.1 Small bowel</h3>
+  <ul>
+    <li>Bowel bag（peritoneal cavity 內全 small + large bowel）為現代偏好</li>
+    <li>或 individual loops 至 PTV 上緣 + 2 cm</li>
+    <li>RTOG consensus 採 bowel bag</li>
+  </ul>
+
+  <h3>3.4.2 Bladder</h3>
+  <ul>
+    <li>整個膀胱（含 wall + lumen）</li>
+    <li>每日 CBCT 評估容積一致性</li>
+  </ul>
+
+  <h3>3.4.3 Femoral heads</h3>
+  <ul>
+    <li>雙側分開勾劃，含至 lesser trochanter</li>
+    <li>Femoral neck 含於 PRV</li>
+  </ul>
+
+  <h3>3.4.4 其他</h3>
+  <ul>
+    <li><strong>Anal canal / sphincter：</strong>長期 incontinence；low rectal 病灶必勾</li>
+    <li><strong>Iliac vessels：</strong>不視為 OAR，但 CTV 勾劃參照</li>
+    <li><strong>Sigmoid colon：</strong>分開於 small bowel；含 CTV 上緣</li>
+    <li><strong>External genitalia / penis bulb：</strong>低位病灶或 inguinal 受照時注意</li>
+    <li><strong>Cauda equina：</strong>不常規；extended LN field 注意</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 劑量與分次 ============ -->
+<section class="chapter" id="rectal-dose">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>4. 劑量與分次</h1>
+
+  <h2>4.1 Long-Course CRT 標準</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">情境</th><th style="width:24%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:38%">化療</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>cT3-4 或 cN+ neoadjuvant</td><td>50.4 Gy / 28 fx</td><td>1.8 Gy</td><td>capecitabine 825 mg/m² BID（W2 daily）</td></tr>
+      <tr><td>cT3-4 或 cN+（替代）</td><td>50 Gy / 25 fx</td><td>2.0 Gy</td><td>同上</td></tr>
+      <tr><td>術後 R1/R2 或高風險</td><td>50.4 Gy / 28 fx</td><td>1.8 Gy</td><td>capecitabine</td></tr>
+      <tr><td>Boost 至 GTV（TNT 部分）</td><td>+ 5.4 Gy / 3 fx → 55.8 Gy 總量</td><td>1.8 Gy</td><td>—</td></tr>
+      <tr><td>W&amp;W candidate boost</td><td>+ 6 Gy / 3 fx 或 + 9 Gy / 5 fx</td><td>2-3 Gy</td><td>OPRA-style</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.2 Short-Course RT (SCRT)</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">情境</th><th style="width:24%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:38%">時序</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SCRT → immediate surgery</td><td>25 Gy / 5 fx</td><td>5.0 Gy</td><td>RT 完成後 ≤7 天手術（傳統）</td></tr>
+      <tr><td>SCRT → delayed surgery</td><td>25 Gy / 5 fx</td><td>5.0 Gy</td><td>RT 後 4-8 週手術（Stockholm III 主流）</td></tr>
+      <tr><td><strong>SCRT + TNT (RAPIDO)</strong></td><td>25 Gy / 5 fx</td><td>5.0 Gy</td><td>RT → CAPOX × 6 → 12-16 週後 TME</td></tr>
+      <tr><td>Palliative SCRT</td><td>25 Gy / 5 fx 或 30 Gy / 10 fx</td><td>5.0 / 3.0 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="inline-note">
+    <strong>Stockholm III：</strong>SCRT immediate vs SCRT delayed (4-8 wk) vs LCCRT，3 臂 OS 與 LR 相當；SCRT delayed pCR rate 11%（vs immediate 1.7%）且 acute toxicity 較低。
+    <strong>Polish trial：</strong>SCRT vs LCCRT，長期 OS / DFS 無顯著差。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.3 TNT 完整方案</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">方案</th><th style="width:30%">RT 部分</th><th style="width:46%">化療部分與時序</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>RAPIDO (consolidation chemo)</strong></td><td>SCRT 25 Gy / 5 fx</td><td>RT → CAPOX × 6 (18 週) → TME；總期間 ~26 週</td></tr>
+      <tr><td><strong>PRODIGE 23 (induction chemo)</strong></td><td>LCCRT 50 Gy / 25 fx</td><td>FOLFIRINOX × 6 (12 週) → LCCRT → TME (8-10 週後)；總 ~28 週</td></tr>
+      <tr><td><strong>OPRA induction</strong></td><td>LCCRT 50.4-54 Gy</td><td>FOLFOX × 8 → LCCRT → 評估 cCR 進 W&amp;W 或 TME</td></tr>
+      <tr><td><strong>OPRA consolidation</strong></td><td>LCCRT 50.4-54 Gy</td><td>LCCRT → FOLFOX × 8 → 評估 cCR 進 W&amp;W 或 TME</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.4 處方規格與 DVH</h2>
+
+  <h3>4.4.1 EBRT 處方</h3>
+  <ul>
+    <li><strong>D95 ≥ 95%</strong> prescription、V95 ≥ 95% PTV volume</li>
+    <li><strong>D2 ≤ 107%</strong>（hot spot）</li>
+    <li>CI 0.9-1.1、HI 接近 0</li>
+    <li>SIB 同步加量：boost PTV 達 55.8 Gy，elective PTV 50.4 Gy（同 28 fx）</li>
+  </ul>
+
+  <h3>4.4.2 SCRT 處方</h3>
+  <ul>
+    <li>D95 ≥ 95% prescription、V95 ≥ 95%</li>
+    <li>D2 ≤ 107%</li>
+    <li>每次 5 Gy 大分次，更需嚴格 OAR 約束</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.5 技術選擇</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">技術</th><th style="width:38%">適用</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3D-CRT (4 fields)</td><td>傳統、resource-limited</td><td>OAR conformity 普通；ASTRO conditional 接受</td></tr>
+      <tr><td><strong>IMRT</strong></td><td>普及方案</td><td>降 small bowel V15 顯著（Samuelian 2012、RTOG 0822）</td></tr>
+      <tr><td><strong>VMAT</strong></td><td>主流</td><td>治療快、conformity 佳；setup 重現性 supine 較好（Brierley 2017）</td></tr>
+      <tr><td>SBRT (boost / W&amp;W)</td><td>選擇性 boost、re-RT</td><td>fiducial 必要</td></tr>
+      <tr><td>Proton therapy</td><td>選擇性 re-RT</td><td>降 cumulative bowel dose</td></tr>
+      <tr><td>Contact RT (Papillon)</td><td>cT1 N0 lower rectum</td><td>50 kV X-ray，劑量達 90-110 Gy（特殊技術）</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.6 化療搭配</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:75%">搭配</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>LCCRT 同步</strong></td><td><strong>capecitabine 825 mg/m² BID</strong>（RT day only 或每日）；或 5-FU CI</td></tr>
+      <tr><td>SCRT 同步</td><td><strong>不需</strong>（5×5 Gy alone）</td></tr>
+      <tr><td>TNT induction (PRODIGE 23)</td><td>FOLFIRINOX × 6 → LCCRT</td></tr>
+      <tr><td>TNT consolidation (RAPIDO)</td><td>SCRT → CAPOX × 6（每 3 週 oxaliplatin + capecitabine 14 天 / 7 天休）</td></tr>
+      <tr><td>OPRA</td><td>FOLFOX × 8 ± LCCRT 50.4 Gy</td></tr>
+      <tr><td>術後 adjuvant（依 ypTNM）</td><td>FOLFOX × 4-6 月（高風險）；neoadjuvant TNT 後 adjuvant 多省略</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>禁忌：</strong>active scleroderma / SLE 為相對禁忌；DPYD 缺失基因型 capecitabine 相對禁忌（可改 reduced dose 或 alternative）；嚴重 IBD active flare 相對禁忌；既往骨盆腔 RT 為 re-RT 評估；懷孕為絕對禁忌。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.7 Re-irradiation</h2>
+  <ul>
+    <li><strong>適應症：</strong>骨盆腔復發、距首次 RT ≥1 年、無遠端轉移、PS 0-1</li>
+    <li><strong>方案：</strong>30-40 Gy / 1.2 Gy BID + capecitabine；或 SBRT 30-35 Gy / 5 fx</li>
+    <li><strong>累積限制：</strong>cumulative bowel EQD2 &lt;100 Gy（α/β=3）；cord cumulative &lt;65 Gy（含 6 個月恢復）</li>
+    <li>質子治療於 re-RT 有理論優勢</li>
+  </ul>
+    </div>
+  </div>
+</section>
+<!-- ============ Rectal — OAR ============ -->
+<section class="chapter" id="rectal-oar">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>5. OAR 限制</h1>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    限制以 conventional 50.4 Gy / 28 fx + concurrent capecitabine 為基準；SCRT (25 Gy / 5 fx) 限制獨立列出。EQD2 換算 α/β = 3 for late toxicity。
+  </p>
+
+  <h2>5.1 Small bowel (Bowel bag)</h2>
+
+  <h3>5.1.1 LCCRT (50.4 Gy)</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>V15</td><td>&lt;120-150 cc（理想 &lt;100）</td><td>RTOG 0822；急性腹瀉相關</td></tr>
+      <tr><td>V35</td><td>&lt;100 cc</td><td>—</td></tr>
+      <tr><td>V40</td><td>&lt;65 cc</td><td>—</td></tr>
+      <tr><td>V45</td><td>&lt;15-20 cc</td><td>嚴格 acute G3+ 預測</td></tr>
+      <tr><td>Dmax</td><td>&lt;52 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.1.2 SCRT (25 Gy / 5 fx)</h3>
+  <ul>
+    <li>V25 &lt;100 cc、V20 &lt;200 cc、Dmax &lt;30 Gy</li>
+    <li>勾劃以 bowel bag 為主</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.2 膀胱（Bladder）</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標（50.4 Gy）</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>V40</td><td>&lt;40%</td><td>急性 cystitis 相關</td></tr>
+      <tr><td>V45</td><td>&lt;15%</td><td>—</td></tr>
+      <tr><td>V50</td><td>&lt;5%</td><td>—</td></tr>
+      <tr><td>Mean</td><td>&lt;35 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.3 股骨頭（Femoral heads）</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>V40</td><td>&lt;25-40%</td><td>—</td></tr>
+      <tr><td>V45</td><td>&lt;15%</td><td>—</td></tr>
+      <tr><td>Dmax</td><td>&lt;52 Gy</td><td>骨壞死罕見</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.4 其他 OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">OAR</th><th style="width:38%">目標</th><th style="width:38%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Anal canal / sphincter</td><td>Mean &lt;30 Gy（保肛者）</td><td>incontinence、LARS 相關</td></tr>
+      <tr><td>Sigmoid colon</td><td>V40 &lt;20-25 cc</td><td>—</td></tr>
+      <tr><td>External genitalia (low rectal)</td><td>V40 &lt;5%</td><td>—</td></tr>
+      <tr><td>Iliac crest bone marrow</td><td>V10 &lt;90%；mean &lt;25 Gy</td><td>同步化療下骨髓抑制相關</td></tr>
+      <tr><td>Cauda equina</td><td>Dmax &lt;52 Gy</td><td>extended LN field 注意</td></tr>
+      <tr><td>Penis bulb (男性 low rectal)</td><td>Mean &lt;52.5 Gy</td><td>ED 相關</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.5 衝突處理</h2>
+  <ul>
+    <li><strong>絕對不可超：</strong>cauda equina Dmax、small bowel V45 (15-20 cc)</li>
+    <li><strong>可權衡：</strong>PTV D95 vs bowel V45、bladder V40；CTV elective 區可放鬆 95%</li>
+    <li><strong>Bowel V45 不達標：</strong>檢查 bladder filling；考慮 prone + belly board 重新模擬；嚴重者降 elective LN 範圍</li>
+    <li><strong>差肺功能 + extended LN field：</strong>考慮 IMRT 嚴格 marrow sparing</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 副作用 ============ -->
+<section class="chapter" id="rectal-tox">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>6. 副作用</h1>
+
+  <h2>6.1 急性 GI 毒性</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:12%">G</th><th style="width:38%">表現</th><th style="width:50%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>輕微腹瀉、無 cramping</td><td>低渣飲食、補水、loperamide PRN</td></tr>
+      <tr><td>2</td><td>每日排便 4-6 次以上、cramping</td><td>+ Loperamide 規律使用、評估電解質、CBC</td></tr>
+      <tr><td>3</td><td>每日排便 ≥7 次、脫水、住院</td><td>+ IV 點滴、評估暫停 RT 1-3 天；排除 C. difficile</td></tr>
+      <tr><td>4</td><td>大量出血、穿孔、危及生命</td><td>暫停 RT、外科會診</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.2 急性 GU 毒性</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:12%">G</th><th style="width:38%">表現</th><th style="width:50%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>輕微 dysuria、頻尿</td><td>限咖啡因、飲水適量</td></tr>
+      <tr><td>2</td><td>明顯 dysuria、急尿</td><td>+ Phenazopyridine、排除 UTI</td></tr>
+      <tr><td>3</td><td>嚴重 LUTS、retention、肉眼血尿</td><td>+ urology 會診、catheterization PRN</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.3 急性副作用處理流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[每週 OTV<br/>評估 GI / GU]:::startN
+    GI1[GI G1 輕微]:::actionN
+    GI2[GI G2 中度腹瀉]:::actionN
+    GI3[GI G3 脫水 / 出血]:::actionN
+    GU1[GU G1-2]:::actionN
+    GU3[GU G3 retention]:::actionN
+    M1[衛教 + 飲食<br/>持續]:::actionN
+    M2[Loperamide<br/>持續]:::actionN
+    M3[IV 點滴 + 暫停<br/>排除 C. diff]:::actionN
+    M4[Phenazopyridine<br/>排除 UTI]:::actionN
+    M5[Urology 會診<br/>catheterization]:::actionN
+    F[完成療程]:::endN
+
+    A --> GI1 --> M1 --> F
+    A --> GI2 --> M2 --> F
+    A --> GI3 --> M3 --> F
+    A --> GU1 --> M4 --> F
+    A --> GU3 --> M5 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　急性 GI / GU 毒性處理</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.4 急性其他</h2>
+
+  <ul>
+    <li><strong>會陰皮膚反應（perineal dermatitis）：</strong>低位 / 含 anal canal field 後普遍；保溼、局部 silver sulfadiazine、避免摩擦</li>
+    <li><strong>骨髓抑制：</strong>同步 capecitabine 下普遍；CBC 每週監測；中性球 &lt;1000 暫停化療</li>
+    <li><strong>Capecitabine 特異：</strong>hand-foot syndrome、心毒（罕見 chest pain → 換 RT alone）、口腔黏膜炎</li>
+    <li><strong>疲勞：</strong>普遍 G2；運動 + 休息</li>
+    <li><strong>SCRT 急性副作用：</strong>較 LCCRT 輕；多為輕度疲勞與腸胃道</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.5 晚期副作用</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">副作用</th><th style="width:18%">時程</th><th style="width:58%">備註 / 處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>慢性放射性腸炎</td><td>6 月-年</td><td>慢性腹瀉、cramping、bowel habit change；低渣飲食、loperamide、症狀治療</td></tr>
+      <tr><td>Bowel obstruction (SBO)</td><td>6 月-數年</td><td>累積 small bowel V45 相關；嚴重需手術</td></tr>
+      <tr><td>慢性出血（proctitis）</td><td>6 月-2 年</td><td>術後保留 anastomosis 病人；APC 雷射、sucralfate enema</td></tr>
+      <tr><td>LARS（Low Anterior Resection Syndrome）</td><td>術後持續</td><td>頻便、incontinence、cluster；術後復健</td></tr>
+      <tr><td>Anastomotic 瘻管</td><td>術後 6 月內</td><td>RT + 手術後較高；多需 stoma diversion</td></tr>
+      <tr><td>骨盆骨折 (insufficiency fracture)</td><td>1-5 年</td><td>含 sacrum、pubic ramus；女性、停經後較高</td></tr>
+      <tr><td>勃起功能障礙（ED）</td><td>6 月-2 年</td><td>男性 30-60%；PDE5 抑制劑</td></tr>
+      <tr><td>不孕</td><td>數月-永久</td><td>事先 sperm banking / ovarian transposition</td></tr>
+      <tr><td>第二原發癌</td><td>10+ 年</td><td>bladder、prostate、uterus 風險略增</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6.6 W&amp;W 監測中的副作用</h2>
+  <ul>
+    <li><strong>Local regrowth：</strong>2 年內 25-30%；TNT 後 sustained cCR 可長期保肛</li>
+    <li><strong>持續直腸功能：</strong>多數 W&amp;W 病人 anorectal function 接近 baseline</li>
+    <li><strong>心理負擔：</strong>頻繁追蹤焦慮；需充分諮詢</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 追蹤 ============ -->
+<section class="chapter" id="rectal-fu">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>7. 追蹤</h1>
+
+  <h2>7.1 治療中（OTV）</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">頻率</th><th style="width:78%">項目</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>每週 1 次</td><td>體重、PS、CTCAE GI / GU、皮膚、CBC（同步化療必含）</td></tr>
+      <tr><td>每 fx 影像</td><td>kV 或 CBCT；VMAT 必每 fx 對位</td></tr>
+      <tr><td>每週 / 必要時</td><td>bladder volume 一致性（CBCT 評估）；G2+ 副作用提高評估頻率</td></tr>
+      <tr><td>SCRT</td><td>每天評估副作用；5 fx 後 standard surgery 時程確認</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.2 RT 後追蹤時序</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-with:2.5px,color:#5c4900,font-weight:600
+
+    A[完成 RT/TNT]:::startN
+    B[6-8 週<br/>術前 restaging]:::actionN
+    C[手術 / W&W decision]:::actionN
+    D[術後 3 月<br/>後續評估]:::actionN
+    E[每 3-6 月 × 2y]:::actionN
+    F[每 6-12 月 ≥3y]:::actionN
+    G[長期追蹤<br/>≥5y 每年]:::endN
+
+    A --> B --> C --> D --> E --> F --> G
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　直腸癌 RT 後追蹤時序</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.3 反應評估（restaging post-TNT）</h2>
+
+  <h3>7.3.1 cCR 評估三方面</h3>
+  <ul>
+    <li><strong>DRE：</strong>白色疤痕、無潰瘍、無結節、平坦</li>
+    <li><strong>Endoscopy：</strong>白色疤痕、telangiectasia 可、無 visible tumor</li>
+    <li><strong>MRI：</strong>mrTRG（含 ymrT、ymrN）；mrTRG 1-2 為 cCR 候選</li>
+  </ul>
+
+  <h3>7.3.2 mrTRG（MRI Tumor Regression Grading）</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:18%">mrTRG</th><th style="width:42%">影像表現</th><th style="width:40%">處置</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>無 viable tumor signal、纖維化為主</td><td>cCR 候選 → W&amp;W 評估</td></tr>
+      <tr><td>2</td><td>緻密纖維化 + 微量 tumor</td><td>near-cCR → W&amp;W 仔細評估</td></tr>
+      <tr><td>3</td><td>≥50% 纖維化</td><td>partial response → 手術</td></tr>
+      <tr><td>4</td><td>&lt;50% 纖維化</td><td>poor response → 手術</td></tr>
+      <tr><td>5</td><td>無變化或進展</td><td>poor / progression → 手術</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.4 各時期項目</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:20%">時期</th>
+        <th style="width:30%">臨床評估</th>
+        <th style="width:25%">影像</th>
+        <th style="width:25%">CEA / 內視鏡</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>RT/TNT 完成 6-8 週</td><td>急性副作用收斂、PS</td><td>MRI restaging（mrTRG）</td><td>CEA、DRE、endoscopy</td></tr>
+      <tr><td>術後 3 月</td><td>傷口、stoma、LARS</td><td>CT chest/abdomen/pelvis</td><td>CEA</td></tr>
+      <tr><td>0-2 年</td><td>每 3 月 PE</td><td>每 6 月 CT</td><td>每 3-6 月 CEA；每年 colonoscopy</td></tr>
+      <tr><td>3-5 年</td><td>每 6 月</td><td>每年 CT</td><td>每 6 月 CEA；每 3 年 colonoscopy</td></tr>
+      <tr><td>≥5 年</td><td>每年</td><td>有症狀才</td><td>每 5 年 colonoscopy</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.5 W&amp;W 追蹤 (intensified surveillance)</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">時期</th><th style="width:78%">項目（高頻）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0-1 年</td><td>每 3 個月 DRE + endoscopy + MRI；CEA 每 3 個月</td></tr>
+      <tr><td>1-2 年</td><td>每 4 個月（仍頻繁，2 年內復發風險最高）</td></tr>
+      <tr><td>2-3 年</td><td>每 6 個月</td></tr>
+      <tr><td>3-5 年</td><td>每 6-12 個月</td></tr>
+      <tr><td>≥5 年</td><td>每年</td></tr>
+      <tr><td>遠端轉移監測</td><td>每年 CT chest/abdomen + CEA</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    Local regrowth 2 年內 25-30%；發現後 salvage TME 可救援，OS 不顯著低於 immediate TME 病人（IWWD、OPRA 證據）。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.6 特殊族群長期重點</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">族群</th><th style="width:70%">重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>W&amp;W 病人</td><td>密集監測直至 5 年；心理諮詢 + 充分溝通</td></tr>
+      <tr><td>術後 ostomate</td><td>stoma 復健諮詢；性功能與生活品質</td></tr>
+      <tr><td>低位 LAR 病人</td><td>LARS 評估；biofeedback 與 pelvic floor PT</td></tr>
+      <tr><td>男性 RT 後</td><td>ED 評估與處理；testosterone level 監測</td></tr>
+      <tr><td>女性 RT 後年輕</td><td>陰道狹窄評估、dilator 使用、生育與更年期諮詢</td></tr>
+      <tr><td>Lynch syndrome</td><td>第二原發 risk 高（uterine、ovarian、urothelial）；終身 surveillance</td></tr>
+      <tr><td>Re-irradiation 後</td><td>累積 bowel toxicity 風險高；密切監測 obstruction、fistula</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rectal — 文獻 ============ -->
+<section class="chapter" id="rectal-ref">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">直腸癌</span>8. 主要試驗與文獻</h1>
+
+  <h2>8.1 LCCRT 標準</h2>
+  <ol class="references">
+    <li>Sauer R, et al. Preoperative versus postoperative chemoradiotherapy for rectal cancer (CAO/ARO/AIO-94). N Engl J Med. 2004;351:1731-1740.</li>
+    <li>Roh MS, et al. Preoperative multimodality therapy improves disease-free survival in patients with carcinoma of the rectum (NSABP R-03). J Clin Oncol. 2009;27:5124-5130.</li>
+    <li>Gerard JP, et al. Preoperative radiotherapy with or without concurrent fluorouracil and leucovorin in T3-4 rectal cancers (FFCD 9203). J Clin Oncol. 2006;24:4620-4625.</li>
+    <li>Hofheinz RD, et al. Chemoradiotherapy with capecitabine versus fluorouracil for locally advanced rectal cancer (CAO/ARO/AIO-04). Lancet Oncol. 2012;13:579-588.</li>
+  </ol>
+
+  <h2>8.2 SCRT 與 SCRT vs LCCRT</h2>
+  <ol class="references">
+    <li>Bujko K, et al. Long-term results of a randomized trial comparing preoperative short-course radiotherapy with preoperative conventionally fractionated chemoradiation for rectal cancer (Polish trial). Br J Surg. 2006;93:1215-1223.</li>
+    <li>Ngan SY, et al. Randomized trial of short-course radiotherapy versus long-course chemoradiation comparing rates of local recurrence in patients with T3 rectal cancer (TROG 01.04). J Clin Oncol. 2012;30:3827-3833.</li>
+    <li>Erlandsson J, et al. Optimal fractionation of preoperative radiotherapy and timing to surgery for rectal cancer (Stockholm III). Lancet Oncol. 2017;18:336-346.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.3 TNT (Total Neoadjuvant Therapy)</h2>
+  <ol class="references">
+    <li>Bahadoer RR, et al. Short-course radiotherapy followed by chemotherapy before total mesorectal excision (TME) versus preoperative chemoradiotherapy, TME, and optional adjuvant chemotherapy in locally advanced rectal cancer (RAPIDO). Lancet Oncol. 2021;22:29-42.</li>
+    <li>Conroy T, et al. Neoadjuvant chemotherapy with FOLFIRINOX and preoperative chemoradiotherapy for patients with locally advanced rectal cancer (PRODIGE 23). Lancet Oncol. 2021;22:702-715.</li>
+    <li>Garcia-Aguilar J, et al. Organ preservation in patients with rectal adenocarcinoma treated with total neoadjuvant therapy (OPRA). J Clin Oncol. 2022;40:2546-2556.</li>
+    <li>Schrag D, et al. Preoperative treatment of locally advanced rectal cancer (PROSPECT). N Engl J Med. 2023;389:322-334.</li>
+  </ol>
+
+  <h2>8.4 Watch &amp; Wait</h2>
+  <ol class="references">
+    <li>Habr-Gama A, et al. Operative versus nonoperative treatment for stage 0 distal rectal cancer following chemoradiation therapy: long-term results. Ann Surg. 2004;240:711-717.</li>
+    <li>van der Valk MJM, et al. Long-term outcomes of clinical complete responders after neoadjuvant treatment for rectal cancer in the International Watch &amp; Wait Database (IWWD). Lancet. 2018;391:2537-2545.</li>
+    <li>Smith JJ, et al. Assessment of a watch-and-wait strategy for rectal cancer in patients with a complete response after neoadjuvant therapy. JAMA Oncol. 2019;5:e185896.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.5 Consensus Guidelines</h2>
+  <ol class="references">
+    <li>Wo JY, et al. Radiation therapy for rectal cancer: ASTRO clinical practice guideline focused update. Pract Radiat Oncol. 2025;15:124-143.</li>
+    <li>Glynne-Jones R, et al. Rectal cancer: ESMO Clinical Practice Guidelines for diagnosis, treatment and follow-up. Ann Oncol. 2017;28:iv22-iv40.</li>
+    <li>Cervantes A, et al. Metastatic colorectal cancer: ESMO Clinical Practice Guidelines update. Ann Oncol. 2023;34:10-32.</li>
+    <li>Valentini V, et al. International consensus guidelines on Clinical Target Volume delineation in rectal cancer. Radiother Oncol. 2016;120:195-201.</li>
+  </ol>
+
+  <h2>8.6 Atlas / OAR 與 IMRT</h2>
+  <ol class="references">
+    <li>Myerson RJ, et al. Elective clinical target volumes for conformal therapy in anorectal cancer: an RTOG consensus panel contouring atlas. Int J Radiat Oncol Biol Phys. 2009;74:824-830.</li>
+    <li>Hong TS, et al. NRG Oncology RTOG 0822: a phase 2 study of preoperative chemoradiation therapy using IMRT in patients with locally advanced rectal cancer. Int J Radiat Oncol Biol Phys. 2015;93:29-36.</li>
+    <li>Samuelian JM, et al. Reduced acute bowel toxicity in patients treated with IMRT for rectal cancer. Int J Radiat Oncol Biol Phys. 2012;82:1981-1987.</li>
+    <li>Bentzen SM, et al. QUANTEC overview. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S3-S9.</li>
+    <li>Kavanagh BD, et al. QUANTEC small bowel. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S101-S107.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">直腸癌</span>RECTAL CANCER</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.7 體位 / Bladder / Bowel Protocols</h2>
+  <ol class="references">
+    <li>Drzymala M, et al. Bowel exposure in rectal cancer IMRT using prone, supine, or a belly board. Radiother Oncol. 2009;90:105-110.</li>
+    <li>Brierley JD, et al. The effect of prone and supine treatment positions for the pre-operative treatment of rectal cancer on organ-at-risk sparing and setup reproducibility using volumetric modulated arc therapy. Radiat Oncol. 2017;12:163.</li>
+    <li>Wiltshire KL, et al. The effect of treatment position, prone or supine, on dose-volume histograms for pelvic radiotherapy in patients with rectal cancer. Radiother Oncol. 2009;92:241-246.</li>
+    <li>Choi Y, et al. Evaluating variations of bladder volume using an ultrasound scanner in rectal cancer patients during chemoradiation. Radiat Oncol J. 2015;33:135-141.</li>
+    <li>Nuyttens JJ, et al. The position of the patient for rectal cancer radiotherapy: prone or supine? Radiother Oncol. 2002;62:333-336.</li>
+  </ol>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 癌種分隔頁：B 細胞淋巴瘤 ============ -->
 <section class="cancer-divider" id="bcell-divider">
   <div class="cancer-divider-top"></div>
@@ -4315,7 +5468,7 @@ flowchart LR
     D[Localized 特殊<br/>原發部位]:::actionN
     E[Salvage / palliative]:::actionN
     B1[化療反應後<br/>consolidation ISRT<sup>a</sup>]:::actionN
-    C1[低劑量 ISRT<br/>(2-4 Gy/2 fx)<sup>b</sup>]:::actionN
+    C1["低劑量 ISRT<br/>(2-4 Gy/2 fx)<sup>b</sup>"]:::actionN
     D1[Definitive ISRT<br/>±化療<sup>c</sup>]:::actionN
     E1[姑息性 RT<br/>2 Gy×2 / 4 Gy×1]:::actionN
     F[計畫處方]:::endN
