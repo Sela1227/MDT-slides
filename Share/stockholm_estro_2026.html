@@ -279,7 +279,54 @@ label.session.chosen {
 .food-head { padding: 9px 12px; background: var(--food-bg); border-bottom: 1px solid var(--food); font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--food); }
 .food-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--line-l); font-size: .84rem; }
 .food-row:last-child { border-bottom: none; }
-.food-row svg { flex-shrink: 0; color: var(--food); margin-top: 2px; width: 18px; height: 18px; }
+.food-row > svg { flex-shrink: 0; color: var(--food); margin-top: 2px; width: 18px; height: 18px; }
+
+/* Selectable food row */
+label.food-row {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  align-items: center;
+  transition: background .12s;
+}
+label.food-row:hover { background: var(--food-bg); }
+label.food-row .ck-mark { 
+  width: 26px; height: 26px; min-width: 26px;
+  border: 2.5px solid var(--text-3);
+}
+label.food-row:hover .ck-mark { border-color: var(--food); transform: scale(1.05); }
+label.food-row .ck:checked + .ck-mark {
+  background: var(--chosen-b);
+  border-color: var(--chosen-b);
+}
+label.food-row .ck:checked + .ck-mark::after {
+  content: ''; position: absolute;
+  left: 7px; top: 4px;
+  width: 8px; height: 13px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg);
+}
+label.food-row.chosen {
+  background: var(--chosen-bg);
+  border-left: 3px solid var(--chosen-b);
+  padding-left: 9px;
+}
+label.food-row.rejected {
+  opacity: .35;
+}
+label.food-row.rejected .f-name { text-decoration: line-through; }
+label.food-row.rejected .ck-mark { background: var(--card-2); border-color: var(--text-mute); }
+label.food-row.rejected .ck-mark::after {
+  content: '\00d7';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; line-height: 1;
+  color: var(--text-3); font-weight: 600;
+  border: none; transform: none; left: 0; top: 0;
+  width: auto; height: auto;
+}
 .f-name { font-weight: 600; color: var(--text); }
 .f-rest { color: var(--text-2); font-size: .76rem; margin-top: 3px; line-height: 1.5; }
 .f-tip { color: var(--text-3); font-size: .73rem; margin-top: 3px; line-height: 1.5; }
@@ -354,7 +401,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
     for (var i = 0; i < inputs.length; i++) {
       var lbl = inputs[i].closest('label');
       if (!lbl) continue;
-      if (inputs[i] === chosenInput && chosenInput.checked) {
+      if (chosenInput && inputs[i] === chosenInput && chosenInput.checked) {
         lbl.classList.add('chosen');
         lbl.classList.remove('rejected');
       } else if (chosenInput && chosenInput.checked) {
@@ -368,35 +415,38 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
   }
   
   function bind() {
+    // Bind change event on radios for visual update
     var radios = document.querySelectorAll('input.ck');
     for (var i = 0; i < radios.length; i++) {
-      var r = radios[i];
-      r.addEventListener('change', function(e) {
+      radios[i].addEventListener('change', function() {
         updateGroup(this.name, this);
       });
-      // Click to uncheck if already checked
-      r.addEventListener('mousedown', function(e) {
-        this._wasChecked = this.checked;
-      });
-      r.addEventListener('touchstart', function(e) {
-        this._wasChecked = this.checked;
-      }, {passive: true});
-      r.addEventListener('click', function(e) {
-        if (this._wasChecked) {
-          var self = this;
-          setTimeout(function() {
-            self.checked = false;
-            updateGroup(self.name, null);
-          }, 0);
-        }
-      });
     }
-    // Also bind labels for extra reliability on mobile
-    var labels = document.querySelectorAll('label.session');
+    
+    // Bind labels for click-to-uncheck behavior
+    var labels = document.querySelectorAll('label.session, label.food-row');
     for (var i = 0; i < labels.length; i++) {
-      labels[i].addEventListener('click', function(e) {
-        // Native label behavior will toggle the input — change event handles the rest
-      });
+      (function(lbl) {
+        var input = lbl.querySelector('input.ck');
+        if (!input) return;
+        
+        lbl.addEventListener('mousedown', function() {
+          input._wasChecked = input.checked;
+        });
+        lbl.addEventListener('touchstart', function() {
+          input._wasChecked = input.checked;
+        }, {passive: true});
+        lbl.addEventListener('click', function(e) {
+          if (input._wasChecked) {
+            // Already-checked radio clicked again — uncheck it
+            setTimeout(function() {
+              input.checked = false;
+              updateGroup(input.name, null);
+              input._wasChecked = false;
+            }, 0);
+          }
+        });
+      })(labels[i]);
     }
   }
   
@@ -529,10 +579,24 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
       <svg width="14" height="14"><use href="#i-food"/></svg>
       <div><div class="f-name">晚餐：Smak（已訂位）</div><div class="f-rest">北歐小份多樣式 · 自選 3–7 道菜 · 需提前訂位</div></div>
     </div>
-    <div class="food-row">
+    <label class="food-row" data-group="d514">
+      <input type="radio" name="d514" class="ck">
+      <span class="ck-mark"></span>
       <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">備選：Stockholms Gästabud 或 Restaurant Tradition</div><div class="f-rest">兩家緊鄰 · 皇宮旁 · Gamla Stan 內</div><div class="f-tip">肉丸 + 綿密薯泥 + 瑞典啤酒，在地首選</div></div>
-    </div>
+      <div><div class="f-name">備選：Stockholms Gästabud</div><div class="f-rest">皇宮旁 · Gamla Stan 內</div><div class="f-tip">肉丸 + 綿密薯泥 + 瑞典啤酒 · 在地首選 · 服務極好</div></div>
+    </label>
+    <label class="food-row" data-group="d514">
+      <input type="radio" name="d514" class="ck">
+      <span class="ck-mark"></span>
+      <svg width="14" height="14"><use href="#i-food"/></svg>
+      <div><div class="f-name">備選：Restaurant Tradition</div><div class="f-rest">Gästabud 隔壁 · 同樣老牌瑞典料理</div><div class="f-tip">份量比 Gästabud 大 · 同樣有肉丸、馴鹿肉</div></div>
+    </label>
+    <label class="food-row" data-group="d514">
+      <input type="radio" name="d514" class="ck">
+      <span class="ck-mark"></span>
+      <svg width="14" height="14"><use href="#i-food"/></svg>
+      <div><div class="f-name">備選：魚湯（Kajsas Fisk）</div><div class="f-rest">Hötorgshallen 市場內 · 價格實惠</div><div class="f-tip">瑞典魚湯專賣 · 便宜又快 · 適合疲憊想省力用餐</div></div>
+    </label>
   </div>
 
   <div class="hotel-strip">
@@ -886,14 +950,18 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
   </div>
   <div class="food-block">
     <div class="food-head">Karolinska 參訪前後可選擇</div>
-    <div class="food-row">
+    <label class="food-row" data-group="d517">
+      <input type="radio" name="d517" class="ck">
+      <span class="ck-mark"></span>
       <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">瑞典肉丸（Köttbullar）</div><div class="f-rest">Meatballs for the People · 鹿肉 / 馴鹿 / 麋鹿等多種選擇</div><div class="f-tip">鹿肉肉丸必點 · 搭紅醋栗果醬（Lingonsylt）才道地</div></div>
-    </div>
-    <div class="food-row">
+      <div><div class="f-name">瑞典肉丸（Köttbullar）— Meatballs for the People</div><div class="f-rest">鹿肉 / 馴鹿 / 麋鹿等多種選擇</div><div class="f-tip">鹿肉肉丸必點 · 搭紅醋栗果醬（Lingonsylt）才道地</div></div>
+    </label>
+    <label class="food-row" data-group="d517">
+      <input type="radio" name="d517" class="ck">
+      <span class="ck-mark"></span>
       <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">備選：Restaurant Pelikan</div><div class="f-rest">Södermalm · 百年老店 · 昏黃燈光年代感</div><div class="f-tip">份量驚人 · 手工熬製紅醋栗果醬</div></div>
-    </div>
+      <div><div class="f-name">Restaurant Pelikan</div><div class="f-rest">Södermalm · 百年老店 · 昏黃燈光年代感</div><div class="f-tip">份量驚人 · 手工熬製紅醋栗果醬</div></div>
+    </label>
   </div>
 
   <div class="hotel-strip">
@@ -1017,14 +1085,18 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
   </div>
   <div class="food-block">
     <div class="food-head">General Assembly 後 → 快速晚餐（19:15–21:15）→ Rock Party</div>
-    <div class="food-row">
+    <label class="food-row" data-group="d518">
+      <input type="radio" name="d518" class="ck">
+      <span class="ck-mark"></span>
       <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">高級肉丸（Bistro Bestick）</div><div class="f-rest">精緻擺盤 · 牛肉比例高 · GA 後步行可達</div></div>
-    </div>
-    <div class="food-row">
+      <div><div class="f-name">Bistro Bestick</div><div class="f-rest">精緻擺盤 · 牛肉比例高的肉丸</div><div class="f-tip">GA（19:15）後步行可達 · 適合快速優雅一餐</div></div>
+    </label>
+    <label class="food-row" data-group="d518">
+      <input type="radio" name="d518" class="ck">
+      <span class="ck-mark"></span>
       <svg width="14" height="14"><use href="#i-food"/></svg>
-      <div><div class="f-name">備選：Den Gyldene Freden（1722 年創立）</div><div class="f-rest">300 年老店 · Gamla Stan · 據說諾貝爾文學獎評審常來</div></div>
-    </div>
+      <div><div class="f-name">Den Gyldene Freden（1722 年創立）</div><div class="f-rest">300 年老店 · Gamla Stan</div><div class="f-tip">據說諾貝爾文學獎評審常來 · 體驗瑞典最古老餐廳</div></div>
+    </label>
     <div class="food-row">
       <svg width="14" height="14"><use href="#i-ticket"/></svg>
       <div><div class="f-name">Rock Festival Party</div><div class="f-rest">Party 票在報名區 Party Ticket Desk 購買 · 限量 · 不退票</div></div>
