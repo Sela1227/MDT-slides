@@ -270,9 +270,86 @@ label.session.chosen {
 .fb-title { padding: 9px 12px; background: var(--tour-bg); border-bottom: 1px solid var(--tour); font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--tour); }
 .fb-opt { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--line-l); font-size: .84rem; color: var(--text-2); }
 .fb-opt:last-child { border-bottom: none; }
-.fb-opt svg { flex-shrink: 0; margin-top: 2px; color: var(--tour); width: 18px; height: 18px; }
+.fb-opt > svg { flex-shrink: 0; margin-top: 2px; color: var(--tour); width: 18px; height: 18px; }
 .fb-opt-name { font-weight: 600; color: var(--text); }
 .fb-opt-desc { font-size: .76rem; color: var(--text-3); margin-top: 3px; line-height: 1.5; }
+
+/* Selectable flex-opt (sightseeing alternatives) */
+label.fb-opt {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  align-items: center;
+  transition: background .12s;
+}
+label.fb-opt:hover { background: var(--tour-bg); }
+label.fb-opt .ck-mark {
+  width: 26px; height: 26px; min-width: 26px;
+  border: 2.5px solid var(--text-3);
+  border-radius: 50%;
+  background: var(--bg);
+  flex-shrink: 0; position: relative;
+  display: inline-block; transition: all .12s;
+}
+label.fb-opt:hover .ck-mark { border-color: var(--tour); transform: scale(1.05); }
+label.fb-opt .ck:checked + .ck-mark { background: var(--chosen-b); border-color: var(--chosen-b); }
+label.fb-opt .ck:checked + .ck-mark::after {
+  content: ''; position: absolute;
+  left: 7px; top: 4px;
+  width: 8px; height: 13px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg);
+}
+label.fb-opt.chosen { background: var(--chosen-bg); border-left: 3px solid var(--chosen-b); padding-left: 9px; }
+label.fb-opt.rejected { opacity: .35; }
+label.fb-opt.rejected .fb-opt-name { text-decoration: line-through; }
+label.fb-opt.rejected .ck-mark { background: var(--card-2); border-color: var(--text-mute); }
+label.fb-opt.rejected .ck-mark::after {
+  content: '\00d7'; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; line-height: 1; color: var(--text-3); font-weight: 600;
+  border: none; transform: none; left: 0; top: 0; width: auto; height: auto;
+}
+
+/* Selectable row (e.g., 5/20 museum alternatives) */
+label.row {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  align-items: center;
+  transition: background .12s;
+}
+label.row:hover { background: var(--card-3); }
+label.row .ck-mark {
+  width: 26px; height: 26px; min-width: 26px;
+  border: 2.5px solid var(--text-3);
+  border-radius: 50%;
+  background: var(--bg);
+  flex-shrink: 0; position: relative;
+  display: inline-block; transition: all .12s;
+}
+label.row:hover .ck-mark { border-color: var(--tour); transform: scale(1.05); }
+label.row .ck:checked + .ck-mark { background: var(--chosen-b); border-color: var(--chosen-b); }
+label.row .ck:checked + .ck-mark::after {
+  content: ''; position: absolute;
+  left: 7px; top: 4px;
+  width: 8px; height: 13px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg);
+}
+label.row.chosen { background: var(--chosen-bg); border-left: 3px solid var(--chosen-b); }
+label.row.rejected { opacity: .35; }
+label.row.rejected .row-name { text-decoration: line-through; }
+label.row.rejected .ck-mark { background: var(--card-2); border-color: var(--text-mute); }
+label.row.rejected .ck-mark::after {
+  content: '\00d7'; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; line-height: 1; color: var(--text-3); font-weight: 600;
+  border: none; transform: none; left: 0; top: 0; width: auto; height: auto;
+}
 
 /* Food block */
 .food-block { margin: 4px 12px 8px; border: 1px solid var(--food); border-radius: 8px; background: var(--food-bg2); overflow: hidden; }
@@ -345,16 +422,21 @@ label.food-row.rejected .ck-mark::after {
 .paid-title { font-size: .68rem; font-weight: 800; color: var(--warn); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 7px; }
 .paid-row { font-size: .84rem; color: var(--text-2); padding: 4px 0; line-height: 1.4; }
 
-/* Hotel */
-.hotel-strip { background: var(--bg-2); border-top: 1px solid var(--line); padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
-.hotel-strip svg { color: var(--primary-l); flex-shrink: 0; opacity: .8; width: 20px; height: 20px; }
+/* Hotel — Nordic heather tone */
+.hotel-strip { 
+  background: var(--hotel-bg2); 
+  border-top: 1px solid var(--hotel-bg); 
+  padding: 12px 16px; 
+  display: flex; align-items: center; gap: 12px; 
+}
+.hotel-strip svg { color: var(--hotel-l); flex-shrink: 0; opacity: .9; width: 20px; height: 20px; }
 .hs-body { flex: 1; min-width: 0; }
-.hs-name { font-size: .86rem; font-weight: 700; color: var(--text); }
+.hs-name { font-size: .86rem; font-weight: 700; color: var(--hotel-l); }
 .hs-detail { font-size: .73rem; color: var(--text-2); margin-top: 3px; line-height: 1.5; }
 .hbadge { font-size: .62rem; font-weight: 700; padding: 4px 9px; border-radius: 4px; border: 1px solid; white-space: nowrap; letter-spacing: .03em; flex-shrink: 0; }
 .hb-in { border-color: var(--tour); color: var(--tour); background: var(--tour-bg); }
 .hb-out { border-color: var(--warn); color: var(--warn); background: var(--warn-bg); }
-.hb-stay { border-color: var(--text-3); color: var(--text-2); }
+.hb-stay { border-color: var(--hotel); color: var(--hotel); background: var(--hotel-bg); }
 .hb-last { border-color: var(--primary); color: var(--primary); background: var(--conf-bg); }
 
 footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 14px 0 20px; letter-spacing: .08em; }
@@ -773,18 +855,12 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  </div>
  <div class="flex-block">
  <div class="fb-title">可配合 17:00 後或整個早上空檔</div>
- <div class="fb-opt">
- <svg width="15" height="15"><use href="#i-boat"/></svg>
- <div><div class="fb-opt-name">群島渡輪遊</div><div class="fb-opt-desc">市中心碼頭出發 · 北歐最美群島風光 · 約 3 小時</div></div>
- </div>
- <div class="fb-opt">
- <svg width="15" height="15"><use href="#i-museum"/></svg>
- <div><div class="fb-opt-name">Östermalmshallen 美食市集</div><div class="fb-opt-desc">週六 09:30–17:00 · 起司 · 海鮮 · 糕點</div></div>
- </div>
- <div class="fb-opt">
- <svg width="15" height="15"><use href="#i-music"/></svg>
- <div><div class="fb-opt-name">ABBA 博物館</div><div class="fb-opt-desc">Djurgården 島 · 需提前預訂指定時段</div></div>
- </div>
+ <label class="fb-opt" data-group="t516"><input type="radio" name="t516" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-boat"/></svg>
+ <div><div class="fb-opt-name">群島渡輪遊</div><div class="fb-opt-desc">市中心碼頭出發 · 北歐最美群島風光 · 約 3 小時</div></div></label>
+ <label class="fb-opt" data-group="t516"><input type="radio" name="t516" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-museum"/></svg>
+ <div><div class="fb-opt-name">Östermalmshallen 美食市集</div><div class="fb-opt-desc">週六 09:30–17:00 · 起司 · 海鮮 · 糕點</div></div></label>
+ <label class="fb-opt" data-group="t516"><input type="radio" name="t516" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-music"/></svg>
+ <div><div class="fb-opt-name">ABBA 博物館</div><div class="fb-opt-desc">Djurgården 島 · 需提前預訂指定時段</div></div></label>
  </div>
 
  <div class="sec s-food">
@@ -930,18 +1006,12 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  </div>
  <div class="flex-block">
  <div class="fb-title">確保 17:00 前可返回</div>
- <div class="fb-opt">
- <svg width="15" height="15"><use href="#i-castle"/></svg>
- <div><div class="fb-opt-name">皇后島宮 Drottningholm</div><div class="fb-opt-desc">UNESCO 遺址 · 渡輪 45 分 · 整個早上，13:00 前可返回</div></div>
- </div>
- <div class="fb-opt">
- <svg width="15" height="15"><use href="#i-tree"/></svg>
- <div><div class="fb-opt-name">Djurgården 島散步</div><div class="fb-opt-desc">Skansen + 自然步道 · 時間彈性，可隨時折返</div></div>
- </div>
- <div class="fb-opt">
- <svg width="15" height="15"><use href="#i-train"/></svg>
- <div><div class="fb-opt-name">地鐵藝術之旅</div><div class="fb-opt-desc">T-bana 各站藝術裝置 · 免費 · 可隨時中斷，最適合碎片時間</div></div>
- </div>
+ <label class="fb-opt" data-group="t517"><input type="radio" name="t517" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-castle"/></svg>
+ <div><div class="fb-opt-name">皇后島宮 Drottningholm</div><div class="fb-opt-desc">UNESCO 遺址 · 渡輪 45 分 · 整個早上，13:00 前可返回</div></div></label>
+ <label class="fb-opt" data-group="t517"><input type="radio" name="t517" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-tree"/></svg>
+ <div><div class="fb-opt-name">Djurgården 島散步</div><div class="fb-opt-desc">Skansen + 自然步道 · 時間彈性，可隨時折返</div></div></label>
+ <label class="fb-opt" data-group="t517"><input type="radio" name="t517" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-train"/></svg>
+ <div><div class="fb-opt-name">地鐵藝術之旅</div><div class="fb-opt-desc">T-bana 各站藝術裝置 · 免費 · 可隨時中斷，最適合碎片時間</div></div></label>
  </div>
 
  <div class="sec s-food">
@@ -1245,24 +1315,28 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <span class="rtag rt-conf">固定</span>
  </div>
  </div>
- <div class="row r-tour">
+ <label class="row r-tour" data-group="t520">
+ <input type="radio" name="t520" class="ck">
+ <span class="ck-mark"></span>
  <div class="row-t">11:30</div>
  <div class="row-i"><svg><use href="#i-museum"/></svg></div>
  <div class="row-b">
- <div class="row-name">維京博物館（The Viking Museum）— 選排</div>
+ <div class="row-name">維京博物館（The Viking Museum）</div>
  <div class="row-desc">就在瓦薩旁邊 · 約 30 分鐘 · 英文語音導覽</div>
- <span class="rtag rt-opt">選排</span>
+ <span class="rtag rt-opt">擇一</span>
  </div>
- </div>
- <div class="row r-tour">
+ </label>
+ <label class="row r-tour" data-group="t520">
+ <input type="radio" name="t520" class="ck">
+ <span class="ck-mark"></span>
  <div class="row-t">11:30</div>
  <div class="row-i"><svg><use href="#i-museum"/></svg></div>
  <div class="row-b">
- <div class="row-name">或：北歐博物館（Nordic Museum）— 選排</div>
+ <div class="row-name">北歐博物館（Nordic Museum）</div>
  <div class="row-desc">步行 3 分鐘 · 北歐文化互動展 · 快速走 45 分</div>
  <span class="rtag rt-opt">擇一</span>
  </div>
- </div>
+ </label>
 
  <div class="sec s-util">
  <div class="sec-icon"><svg width="14" height="14"><use href="#i-train"/></svg></div>
