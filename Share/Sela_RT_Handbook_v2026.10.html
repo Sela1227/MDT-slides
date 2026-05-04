@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sela RT Handbook v2026.11</title>
+<title>Sela RT Handbook v2026.12</title>
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
   import elkLayouts from 'https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.7/dist/mermaid-layout-elk.esm.min.mjs';
@@ -695,7 +695,7 @@
       size: A4 landscape;
       margin: 1.4cm 1.6cm 1.8cm;
       @bottom-center {
-        content: "Sela RT Handbook v2026.11 — " counter(page) " / " counter(pages);
+        content: "Sela RT Handbook v2026.12 — " counter(page) " / " counter(pages);
         font-family: "Noto Sans TC", sans-serif;
         font-size: 9pt;
         color: #666;
@@ -776,7 +776,7 @@
       <div class="meta">
         <div>
           <strong>VERSION</strong>
-          <span>v2026.11</span>
+          <span>v2026.12</span>
         </div>
         <div>
           <strong>UPDATED</strong>
@@ -792,7 +792,7 @@
 
   <div class="cover-footer">
     <span>Sela RT Handbook</span>
-    <span>v2026.11</span>
+    <span>v2026.12</span>
   </div>
 </section>
 
@@ -3248,11 +3248,20 @@ flowchart LR
 
   <h3>2.2.1 Bladder protocol</h3>
   <ul>
-    <li><strong>原則：</strong>適度脹尿（comfortably full bladder）</li>
-    <li><strong>具體做法：</strong>排空膀胱後喝水 300-500 mL，等 30-45 分鐘</li>
-    <li><strong>目的：</strong>推開小腸、固定膀胱位置、減少 bladder dose 比例</li>
-    <li><strong>SBRT：</strong>原則同上，更嚴格的容積一致性（治療前 CBCT 確認）</li>
+    <li><strong>目標容量：</strong>≥ 200 mL（最低門檻）；理想 <strong>250-350 mL</strong></li>
+    <li><strong>具體做法：</strong>排空膀胱後喝水 <strong>300-500 mL</strong>，等 <strong>30-60 分鐘</strong></li>
+    <li><strong>達標時間個別差異大：</strong>500 mL preload 95% 病人 57 分鐘達 180 cc；250 mL preload 需 75 分鐘（Bechara 2019）</li>
+    <li><strong>超音波 bladder scanner（建議）：</strong>以 250 mL cutoff 排程治療，準時治療率 93% vs 75%（Cramp）</li>
+    <li><strong>目的：</strong>推開小腸、減少 bladder dose 比例、降低 intra-fractional prostate motion</li>
+    <li><strong>實證劑量影響：</strong>planned bladder &gt; 200 mL + 治療日達 planned 的 82-113%，顯著降低 intra-fractional motion（Sup/Inf p=0.008、Ant/Post p=0.0001；O'Doherty 2018）</li>
+    <li><strong>毒性影響：</strong>bladder 容量 &lt; 180-200 mL 與 acute / late GU toxicity 增加相關（多項研究綜整）</li>
+    <li><strong>SBRT：</strong>full bladder 仍為主流但 inter-fractional 縮小明顯（5 fx 末平均減少 86.9 mL / 19%；Lin 2020）；MR-Linac adaptive 平台可考慮 empty bladder（baseline 88 cc 之 predictable filling pattern；Zelefsky 2025）</li>
+    <li><strong>Salvage post-op：</strong>不論 protocol，consistent volume 難達；中位實際容量約 120 mL（Braide 2018）</li>
   </ul>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>無 universal consensus：</strong>各機構依 local audit data 自訂 protocol。McGuinness（524 病人 retrospective）採 250-350 mL 為 ideal。α-blocker 可降低 SBRT 期間 bladder filling rate（Zelefsky 2025）。
+  </p>
 
   <h3>2.2.2 Rectum protocol</h3>
   <ul>
@@ -4240,6 +4249,17 @@ flowchart LR
     <li>Sanda MG, et al. Clinically Localized Prostate Cancer: AUA/ASTRO/SUO Guideline. J Urol. 2018;199:683-690.</li>
     <li>Bentzen SM, et al. QUANTEC overview. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S3-S9.</li>
     <li>Grimm J, et al. HyTEC: hypofractionated tolerance dose-volume effects. Int J Radiat Oncol Biol Phys. 2021;110:1-10.</li>
+  </ol>
+
+  <h2>8.8 Bladder Filling Protocols</h2>
+  <ol class="references">
+    <li>O'Doherty UM, et al. Reduction of intra-fraction prostate motion: determining optimal bladder volume and filling for prostate radiotherapy using daily 4D TPUS and CBCT. Tech Innov Patient Support Radiat Oncol. 2018;5:1-7.</li>
+    <li>McGuinness C, et al. Use of a prospective cohort study in the development of a bladder scanning protocol to assist in bladder filling consistency for prostate cancer patients receiving radiation therapy. J Med Radiat Sci. 2016;63:154-160.</li>
+    <li>Bechara N, et al. Timing variability of bladder volumes in men receiving radiotherapy to the prostate. Pract Radiat Oncol. 2019;9:e493-e497.</li>
+    <li>Braide K, et al. The value of a bladder-filling protocol for patients with prostate cancer who receive post-operative radiation. Acta Oncol. 2019;58:463-468.</li>
+    <li>Lin Y-W, et al. Strict bladder filling and rectal emptying during prostate SBRT: does it make a dosimetric or clinical difference? Radiat Oncol. 2020;15:240.</li>
+    <li>Nicosia L, et al. Bladder filling dynamics during online adaptive prostate stereotactic body radiotherapy: rationale for using an empty bladder workflow for treatment. Radiother Oncol. 2025（in press）.</li>
+    <li>Mullaney LM, et al. Maintaining consistent bladder filling during external beam radiotherapy for prostate cancer. Tech Innov Patient Support Radiat Oncol. 2021;17:1-7（綜述）.</li>
   </ol>
     </div>
   </div>
