@@ -1,0 +1,4092 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sela RT Handbook v2026.10</title>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  import elkLayouts from 'https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.7/dist/mermaid-layout-elk.esm.min.mjs';
+  mermaid.registerLayoutLoaders(elkLayouts);
+  window.mermaid = mermaid;
+</script>
+<style>
+  :root {
+    --primary: #3d6b87;
+    --primary-dark: #2c5470;
+    --primary-mid: #5a89a5;
+    --primary-light: #a8c0d2;
+    --primary-soft: #e8f0f5;
+    --primary-tint: #f4f7fa;
+    --accent: #3d6b87;          /* 統一同 primary：北歐單色策略 */
+    --paper: #faf8f4;            /* 暖米紙感：取代右欄硬藍 */
+    --paper-soft: #f5f2ec;
+    --text: #1f2933;
+    --text-muted: #6b7280;
+    --text-subtle: #9ca3af;
+    --border: #d4d4d4;
+    --border-soft: #e5e7eb;
+    --bg-soft: #f8f9fa;
+    --bg-card: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    color: var(--text);
+    line-height: 1.75;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 40px 60px 80px;
+    background: #fafafa;
+    font-size: 15.5px;
+    line-break: strict;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .print-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 24px;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 99;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .print-btn:hover { opacity: 1; transform: translateY(-2px); }
+  @media print { .print-btn { display: none !important; } }
+
+  /* 封面 — 北歐重整：單色頂條、霧藍右欄（鎖定偏好）、logo+title 水平排列 */
+  .cover {
+    background: var(--bg-card);
+    border-radius: 6px;
+    margin-bottom: 50px;
+    box-shadow: 0 2px 12px rgba(31,41,51,0.05);
+    overflow: hidden;
+    position: relative;
+    min-height: 790px;
+    display: flex;
+    flex-direction: column;
+  }
+  .cover-top-bar {
+    height: 8px;
+    background: var(--primary);
+  }
+  .cover-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.618fr 1fr;
+  }
+  .cover-brand {
+    background: var(--bg-card);
+    padding: 88px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border-soft);
+  }
+  .cover-badge {
+    display: inline-block;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 5px 16px;
+    border-radius: 2px;
+    font-size: 10.5px;
+    font-family: "Noto Sans TC", sans-serif;
+    letter-spacing: 4px;
+    margin-bottom: 48px;
+    font-weight: 600;
+    align-self: flex-start;
+    text-transform: uppercase;
+  }
+  /* 水平排列：logo 左、title 右 */
+  .cover-title-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .cover-logo {
+    width: 124px;
+    height: 124px;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(31,41,51,0.08);
+    flex-shrink: 0;
+  }
+  .cover-title-block {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  .cover h1 {
+    color: var(--primary);
+    font-size: 44px;
+    margin: 0 0 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .cover .subtitle {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 5px;
+    margin-bottom: 0;
+    font-weight: 400;
+    font-family: "Noto Sans TC", sans-serif;
+    text-transform: uppercase;
+  }
+  /* 封面右欄：保留霧藍色（使用者鎖定偏好） */
+  .cover-meta-wrap {
+    background: var(--primary);
+    color: white;
+    padding: 88px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .cover-meta-wrap::before {
+    content: "DOC INFO";
+    position: absolute;
+    top: 56px;
+    left: 56px;
+    font-size: 10.5px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.45);
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+  }
+  .cover .meta {
+    font-family: "Noto Sans TC", sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  .cover .meta div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .cover .meta div + div {
+    padding-top: 26px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .cover .meta strong {
+    color: rgba(255,255,255,0.55);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 3px;
+  }
+  .cover .meta div > *:not(strong) {
+    color: white;
+    font-size: 14.5px;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+  }
+  .cover-footer {
+    background: var(--primary-dark);
+    color: rgba(255,255,255,0.75);
+    padding: 12px 56px;
+    font-size: 10.5px;
+    font-family: "Noto Sans TC", sans-serif;
+    letter-spacing: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* 目錄 — 簡化版：只列癌別，超連結用北歐霧藍色調 */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 48px 60px;
+    margin: 40px 0;
+    box-shadow: 0 1px 3px rgba(31,41,51,0.03);
+  }
+  .toc h2 {
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 36px;
+    font-size: 12px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+    letter-spacing: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--primary);
+  }
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc-counter;
+  }
+  .toc-list li {
+    counter-increment: toc-counter;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: baseline;
+  }
+  .toc-list li:last-child { border-bottom: none; }
+  .toc-list li::before {
+    content: counter(toc-counter, decimal-leading-zero);
+    color: var(--primary-mid);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-right: 24px;
+    min-width: 28px;
+  }
+  /* 已填癌別：北歐霧藍超連結 */
+  .toc-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease, letter-spacing 0.2s ease;
+    flex: 1;
+    position: relative;
+  }
+  .toc-link::after {
+    content: "→";
+    position: absolute;
+    right: 0;
+    color: var(--primary-light);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .toc-link:hover {
+    color: var(--primary-dark);
+    letter-spacing: 1.5px;
+  }
+  .toc-link:hover::after {
+    color: var(--primary);
+    transform: translateX(4px);
+  }
+  /* 待填癌別：灰字、無 hover */
+  .toc-pending {
+    color: var(--text-subtle);
+    font-weight: 500;
+  }
+  .toc-pending::before {
+    color: var(--text-subtle) !important;
+  }
+  .toc-list li.toc-pending::after {
+    content: "尚未填入";
+    margin-left: auto;
+    color: var(--text-subtle);
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  /* 章節結構 — Nordic 重整：
+     .chapter 為邏輯容器（無視覺）；.page 為視覺單位
+     .page-banner 為每癌頁首（letterhead 風格）
+     .page-content 為實際內容區
+     min-height 790px 維持 A4 橫向比例（1120px × 790px ≈ 1.414:1） */
+  .chapter {
+    margin: 32px 0 0;
+  }
+  .chapter > * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .page {
+    background: var(--bg-card);
+    border-radius: 6px;
+    padding: 0;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(31,41,51,0.03);
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 790px;
+    position: relative;
+  }
+  /* 每癌頁首 — letterhead 風格 */
+  .page-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--primary-soft);
+    padding: 14px 50px;
+    border-bottom: 1px solid var(--primary-light);
+    border-top: 3px solid var(--primary);
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .page-banner .banner-cancer {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+  }
+  .page-banner .banner-cancer .banner-zh {
+    font-size: 13px;
+    margin-right: 10px;
+    color: var(--primary);
+    letter-spacing: 4px;
+  }
+  .page-banner .banner-meta {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--primary-mid);
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+  }
+  .page-banner .banner-mark {
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: var(--primary);
+    margin-right: 14px;
+  }
+  .page-content {
+    padding: 32px 50px 36px;
+  }
+  .page-content > * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .page-content h1 {
+    color: var(--primary);
+    margin: 0 0 28px;
+    padding: 0 0 16px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 22px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+    position: relative;
+    letter-spacing: 0.5px;
+  }
+  .page-content h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 20px;
+    width: 3px;
+    background: var(--primary);
+  }
+  .page-content h1 .site {
+    color: var(--text-muted);
+    margin-right: 14px;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 14px;
+    border-right: 1px solid var(--border-soft);
+  }
+  .page-content h2 {
+    color: var(--primary);
+    border-left: 3px solid var(--primary);
+    padding-left: 12px;
+    margin-top: 32px;
+    font-size: 17px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+  }
+  .page-content h2:first-child,
+  .page-content > h2:first-of-type:not([class]) {
+    margin-top: 0;
+  }
+  .page-content h3 {
+    color: var(--text);
+    font-size: 14.5px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+  }
+  .page-content p { margin: 10px 0; }
+
+  /* 表格 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    font-family: "Noto Sans TC", sans-serif;
+    table-layout: fixed;
+  }
+  table thead tr {
+    border-top: 2px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
+  }
+  table tbody tr:last-child { border-bottom: 2px solid var(--primary); }
+  table th, table td {
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.55;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  table th {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  table tbody tr:not(:last-child) { border-bottom: 1px solid #eee; }
+  table tbody tr:hover { background: var(--primary-tint); }
+  table .td-label {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: 1px;
+    margin-right: 4px;
+  }
+  .compact-table { font-size: 13px; }
+  .compact-table td { line-height: 1.6; padding: 8px 10px; }
+
+  /* 流程圖 — Nordic 重整：去除邊框與填色，只留上下細線 */
+  .flowchart {
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+    border-radius: 0;
+    padding: 22px 0;
+    margin: 22px 0;
+    text-align: center;
+  }
+  .flowchart .mermaid { width: 100%; }
+  .flowchart svg {
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+  .flowchart svg rect.background,
+  .flowchart svg .root > rect,
+  .flowchart svg > g > rect:first-of-type {
+    fill: transparent !important;
+    stroke: none !important;
+    stroke-width: 0 !important;
+  }
+  .flowchart svg .nodeLabel,
+  .flowchart svg .nodeLabel p,
+  .flowchart svg .edgeLabel,
+  .flowchart svg .edgeLabel p,
+  .flowchart svg foreignObject span,
+  .flowchart svg text {
+    font-size: 21px !important;
+    font-family: "Noto Sans TC", sans-serif !important;
+  }
+  .flowchart-caption {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    margin-top: -6px;
+    margin-bottom: 8px;
+    font-family: "Noto Sans TC", sans-serif;
+    letter-spacing: 1px;
+  }
+  .flowchart-footnote {
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg-soft);
+    padding: 10px 18px;
+    margin: 6px 0 22px;
+    border-left: 3px solid var(--border);
+    border-radius: 0 4px 4px 0;
+    font-family: "Noto Sans TC", sans-serif;
+    line-height: 1.65;
+  }
+  .flowchart-footnote strong { color: var(--primary); }
+  .flowchart-footnote ul { margin: 4px 0; padding-left: 20px; }
+  .flowchart-footnote li { margin: 2px 0; }
+
+  /* 參考文獻 */
+  .references {
+    font-size: 13px;
+    line-height: 1.8;
+    counter-reset: ref;
+    list-style: none;
+    padding-left: 0;
+    margin: 14px 0;
+  }
+  .references li {
+    counter-increment: ref;
+    padding: 5px 0 5px 32px;
+    position: relative;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .references li::before {
+    content: "[" counter(ref) "]";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* 內聯註記 */
+  .inline-note {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 4px 0 12px;
+    padding-left: 12px;
+    border-left: 2px solid var(--primary-light);
+  }
+  .inline-note strong { color: var(--primary); }
+
+  cite {
+    color: var(--primary);
+    font-style: normal;
+    font-size: 12.5px;
+    background: var(--primary-soft);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+
+  /* 列印版 */
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 1.4cm 1.6cm 1.8cm;
+      @bottom-center {
+        content: "Sela RT Handbook v2026.10 — " counter(page) " / " counter(pages);
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 9pt;
+        color: #666;
+      }
+    }
+    body {
+      background: white;
+      padding: 0;
+      max-width: none;
+      font-size: 10.5pt;
+      line-height: 1.55;
+    }
+    .cover, .toc, .page {
+      box-shadow: none;
+      border: none;
+      padding: 16px 0;
+      page-break-after: always;
+    }
+    .chapter {
+      margin: 0;
+    }
+    .page h1 { page-break-before: avoid; }
+    .chapter:first-of-type .page:first-of-type h1 { page-break-before: avoid; }
+    table { page-break-inside: avoid; }
+
+    .flowchart {
+      page-break-before: always;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+      background: white;
+      border: none;
+      padding: 0;
+      margin: 0;
+      height: 16cm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flowchart .mermaid,
+    .flowchart svg {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
+    }
+    .flowchart-caption {
+      text-align: center;
+      margin-top: 0.5cm;
+      page-break-before: avoid;
+      page-break-after: always;
+      font-size: 10.5pt;
+    }
+
+    a { color: var(--text); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()" title="列印或匯出 PDF">列印 / PDF</button>
+
+<!-- ============ 封面 ============ -->
+<section class="cover">
+  <div class="cover-top-bar"></div>
+  <div class="cover-body">
+    <div class="cover-brand">
+      <div class="cover-badge">RT HANDBOOK</div>
+      <div class="cover-title-row">
+        <img class="cover-logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAGQAZADASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAECBwUGCAQD/8QAWRAAAQMDAQMFCgYNCAkEAwEAAQACAwQFEQYHITESQVFhcRMUIjJSdIGRstE1VZShscEIFRYXIzY3QnOCkpOzJTNDU1RictImJ0VjZISiwuEkNGXwRKPig//EABsBAAIDAQEBAAAAAAAAAAAAAAAGAQUHBAID/8QAPhEAAQMCAQcJBwMDBQEBAAAAAQACAwQRBQYSEyExUXEUFjRBUmGRobEiM1OBwdHhFTJyJPDxIyU1QmImQ//aAAwDAQACEQMRAD8AyCEIWSLeEJjgkhCFJCSaLoQhCSLoQcpJ5SKChCEBCEI3p70ZQEIQEJoQpskkpJIUkJJhHOmhQAooQhSoTKQQEIuhPPUllCjzouhSyhLrRxQhNCZSCEITKRRlQhCEIQhCEIQhMJIT5kISQmEkIQhCFCEIQUsqUJ53JBJMIQmhBQhCEISKlCaEIUIQhCQIKEJhNRyE8oQmjmRkJZRdCE+G9IYRyulF1NkIS5Q3lOBslS/udLFLO/yYoy8/MCvTWudqAXl0jGC7jZCAsrT6Y1PUjMWn7kQed0PIH/UQvU3RGryN1inHa9nvX3FFUHYw+C43YnRtOuQeKwOSgkrYPuG1h8RTfvGe9H3Daw+Ipv3jPevXIKnsHwUfq9F8UeK15AWxDQusPiOb96z3o+4XV/xFN+9Z70cgqewfBH6vRfFHitdKYOFsP3C6w+I5v3jPeg6E1ef9hy/vWe9HIKnsHwR+r0XxR4rXMprJ3fTt6tEQkudG2kafF7pMzLuwZyViQ8YXPJG6M2eLFdkM8czc6M3CmhOnZNUziCmgmnmPCOJhc4+gL13K0Xq2RCa4WeupYT/SSReD6SM49KlsMjm5wabLw6pha8Mc4AnqXiPFMKAeC4AEbzgZOAtkGh9XOYHsskrmkZBbIwg/OvUVPJLfMbdeZ6uCntpXAX3rXkwVsH3D6w+Iaj9tnvR9w2sPiGf94z3r68gqewfBc/6tQ/FHitfylzrYfuG1h8RT/vGe9H3Daw+Ipv3jPejkFT2D4Kf1ai+KPFa/lJbD9w2sPiOb94z3o+4bWHxFP+8Z70cgqewfBH6vRfFHite5kwtgGhdX/EU37xnvT+4XV/xHN+8Z70cgqewfBR+rUPxR4rXiUlsf3C6v+Ipv3jPeg6F1f8RzfvGe9HIKnsHwU/q9F8UeK1wJ5Wdk0Vq5gybBVO/wuYfrXgq7DqCkGamw3OIDie9y4esZXl1HO3WWHwXpmI0jz7Mg8QvDlAXzdI1r+Q/LH+S4YPqKfdAOlc5aRtXYHtdsKkTvSyjlAjKWQoQpFLnS5SAVKFJCWR0pcpBQpFIJcpMcVCE0IQpshCEIChCeNyiApcyjlQUIwmkE1CEsIwh5ACz+jNH3bVEokgApqBrsSVUgyOxg/OPzDnPMvtBBJO8MjFyvhU1cNLGZJXWAWAjbJLKyGGN8sjzhrGNLnOPUBvK3bTezK/XPE1yey1QHme3lzH9Xg30n0K1NK6WtGnKfkUFODORiSok8KR/p5h1DAWcTVR5PsbZ05udyQ8RytlkJZSjNG87Vp1m2caWtwa6WkfcZh/SVb+WM9TdzR6ltdNTwU0YjpoI4GDg2NoaPmX1SV/FTxRCzGgJUmqppzeRxPFHaEbuhCF9bBfC5Qj0IQpsoumEwgEIJ6FCnWozSxQQvmmkZHFG0ue9xwGgbySeYKn9bbVaieR9Fpj8BCNxrXsBe/rY0+KOs7+oKG3DVUk9Y7S9DLiCHDq1zT47+Ij7BuJ68dC+GyDQ8F5jN9u7BJRRyFlPAeErhxc7+6DuxznKXqytmqJ+S0ureU34dhtNSUvLq4XB/a3fuVfTTz11dy5qiasq5TjLnmSR56BxKsnRey2prAyr1HJLSQneKWI4kcP7zvzewb+sK26S30FJjvaipoccDHE1uPUF6SF6pcCjY/PmOcV4rsqppY9FTtzB5/heKzWe1WWmFNa6GClj5+Q3e7tPE+kr2SxxzRuilja9jxhzXDIcOgjnQUwVetY1osBqSq6RznZzjcrn3axpqDTeoWNomltDWRmWFnNGQcOYOrgR1FWVsTu8ly0aKaoeZJbfKafJOSWYDmZ7AcehYL7IcjvWyHdyu6zerktUvseA42+9Px4HfETfTyD7wlumaIMVdGzYR+U6Vkhq8BZLLrc07fnb0Vp7uhCCVFM1kkXUkbksoyhSmQlhGUZQhGepA7EkIsouU89SM9SSFNlN08joRkoRuUakLyXC1224xmOvoKapaeaWIO+ladetlenKxrnW91RbJTw7k7lx5/wADvqIW+c6YXwlpIZhZ7QV1QV1RTm8TyPmqA1Ls+1HZGumZCLlSt3mWmaeU0dbOPqytTZI143HK6r51qWstBWXULXztjFDcDvFTC0AuP99vB309aX6zJ5pGdAfkU2Yblc5pDKsXG8fUKhEZwsrqfTl103WCnuUPgPOIqhm+OXsPMeo71ieKV5YnxOzHixT1BPHUMEkZuCnnqQgcEL5r6oUhxUVIICE0IQvSEIQgKEIzuURwUyVAKChNRc7CHHC3XZbov7oqv7Z3Nh+1UD8Bh3d8PH5v+Ec/Tw6V96WlfVSCNi5a6uioYTLIdQ819dm+gZL93O7Xhjo7XnMUW8OqevpDPp7FddPBDT07IKeJkUUbQ1jGNw1oHAAKYa1jGsY0Na0YaAMAAcyFoFFQx0bM1m3rKyXEsTmxCXPkOrqG5CEisPqfUtm03SCe61Yjc4fgoWDlSyf4W/XwXU+Rsbc5xsFwxRPlcGMFydyzC+FdV0lDD3atqoKaPypZAwfOqW1JtSvtxc6KzsbaqY7g8YfM4f4jub6B6VpFVPUVs5nrqiaqmPGSaQvd6yqGpyhhjNoxneia6PJCplAdM7NG7afsr8rdomjaRxa68tmI5qeF8nzgYXgk2saOZ/TV5HT3o761RzhuVg7D6fTVTc62nu8dJLcJOR3oyoaCHNweUG53crON3HC5KXGqiqmEYsLrursmqShpzM7Odbdb7Lb27VtISFrWPuTnOIDWtonEkngAAd69l02h2C1SsiuVNeaR7xljZbe9vKHUeCqTVETNK7U5u86Voio62OeGI8C04cAOreQFs23vUcFVX09ghhB7zImmkI3hzm7mj0HJ7Qun9UmbFIXkZzTYC21cZwOnfPC2IEseLk3GryW1jarpHy7j8jd7186natpdtPI6nFwfMGOMbXUxaHOxuBOdwzhVnetEahs1jjvFbTRCmIaZGtky+LlcOUMdYzgnC1twVfPjdbEc17QCe5W1LkzhlQM+J5cAeoj7L7UcFwvV2EMLHVNwrZiceU9xySegcT1BdL6XtTLJp2htLHB3e0IY5w/OdxcfSSVX2wWxRspKrUUzAZZXGnpyR4rBjlEdp3ehWkrXA6PRR6d/7neiosp8SE8wpo/2M9fwlzplCRV6lZJMcUimFKhU79kNM510s1NzNp5ZPSXNH1KGy3WWnNL6bko691aauapfNJ3KmL2gYAaM9g+de77IKjHJs1w5w6WnPqDh9BVV4GOCSq+rko8QfI0a/wDC0rCaCLEcIjieSACdm+5V4/fW0l03P5Gfej76ukum5/Iz71RyYHUo5xVO4L1zPot7vEfZXh99bSX/AMn8jPvR99XSR+M/kh96pAN6k8KOcVTuH9/NTzPou07xH2V3ffV0n/8AJ/Iz70DarpPoufyM+9UjhHJRziqdwUcz6Le7xH2V3ffW0n0XP5Ifej762kv/AJP5GfeqRwjk9SnnFU7h/fzRzPo97vEfZXd99bSR+M/kZ96Pvq6S/wDk/kZ96pDACMKOcVTuCOZ9F2neI+yvOPalo95w6pro+t9E/wCrKyVv11pCtcGw3+kY4/mzExH/AKgFz0GhItyMcR0L6NyjnG1oXykyNpiPZeR4fZdUQOjniE0MscsZ4OY4OB9IU1y5bK+4Wqfu1rrqmik5zBIW57RwPpCsDTO1i4U7mQahpW1kXA1EDQyUdZb4rvRhWtLj8EuqT2T5Kirck6uAF0Rzx5q40YXgst2tt6o21lrrI6mE7iWne09DhxB6iverwODhdp1JXexzCWuFiF5btbqG62+WhuFOyop5RhzHj5+ojpVE7QNGVml6ru8ZfUWuV2IpyN7D5D+voPP2roFfGvpKavopqOshZNTzNLJI3DIcCuCvw+OsZY/u6irXCcXlw+S7dbTtH99a5cBQtg17pap0tdu5ZfLQTkmlnI5udjv7w+cb1r2Ug1EL4HljxYhaxS1MdVEJYzcFSCkoAqa+YX3QhCRClCaEIxvQhCQ4JlQe8NYSdwHFeVJFtay2kbDUakv8Nsh5TYz4dRKP6OMcT2ngOsroyhpKagooaKjhbDTwMDI2N4ABalsi0/8AaTTLaqePk1twAmlzxYzHgM9AOT1lbmn3B6EU0Icf3OWU5RYoa2pLWn2G6h9Sg70upGVpe1DWH3N0DaOhc03WqYTFz9xZwMhHzAc57FYzzsgYZH7AqalppKqURRi5K8+0fX0NgL7XbAye6keETvZT553dLuhvr6DS1dPU3Ctkra6okqKiU5fJIck/+OpQ8J73SyvdJI8lznOOS4niSecppBxDEpKt+vU3qC1jCcGhw+MZou7rP99SQHMnhCFW3VyvtbaJ9xulJb43tjfVTMha9wyGlxAyt71bsgulGyKo05VPryMcuKVzY5GuH5zTuHo3Edar7Lm4c1zmuByHNJBB6QRwKy1TrLV0s8U7tSXLlwkFmJcN3dLQAHdecqzopqRrC2ZpJ6iFS4lT4hJI19M8BoGsHrV30el6S5UFoq9U26mqr1SQsEkwJJ5Y6SPG6d+RnKwGurLpmw3SbW91iqqyR0sYipARyHTY8E7/APDnfuGOdbnpi4y3bTluuU8YjlqaZkr2gbgSN+Fouuto9ipbhUWGaxNvUMTuRU90c0R8ocQAQckdO7enCq5PHAHusL7Cd/Us6ohWTVJjjBNr3ANtV9YG5ahrHaZcdR2qa1ChpaOmlc3l8l5e8gHOMnAHDoWlhW/dtU6Bn2fVUNFTUtO+eFzY6BsAbI2QjccAbsHfys8yp4HDR0pRxQOL2udJnkhaBk+WiJ7GxGMA9fWugdkPI+93a+QB/S57e6OW2ZK0zYu2Ruz6jMgIDppnMzztMhwVuSd6Lo7OA9FmWJaquX+R9U0JJ4XSuK6SYQtK2uamqLBY4qe3TCKvrXFrHje6OMeM4de8AHmyvlUTtgjMjtgXRSUz6qZsUe0rUtu18pqu40djpntkNEXS1DgchsjhgM7QMk9oVbp7y4vcS5ziSSTkknnTCzutqTVTGQ9a2DDKFtDTNhab29UlIcEk1yLvumkUZQiyLphRJKeUFCCUBPKiE0IujATwEYKCEIzkFLAQhCLpEJYU8JFTsQvZY7tcbHXtr7XUup5hudje148lzeDh/wDRhXnoLWdFqilMZaKW5RNzNTF2QR5bDzt+cc/SaAX0oqmpoK+Guop309TA/lxyN4tP1jmI5wrXDcUkpHWOtu77KgxnAosQYXN1PGw/ddR5THStd2f6np9U2bvgBkVbAQyqgB8R3MR/dPEHtHELYs8ye45GysD2G4KyyaF8EhjeLELG6ostJqCyT2usb4Eoyx4G+N48Vw6wucLrb6u03SottczkT07+Q7oPQ4dRG8LqEKs9uOnu70MeoqZn4alAjqcDxoidzv1SfUVS45QCeLSt/c30TJkxihpZ9A8+y7yKqIcVPK+Y3qYSSFpqkhAQpQhCZG5JCEjwKy+hLKb/AKsobe5pMAd3ao/Rs3kek4HpWHdwPYrW2A21raS53iRvhSPbTRE+S0cp2PSR6lYYXTcoqWtOzaqjHqzklE9wOs6h81aBxnduHMEkzxQFoayBeK+XKms1oqrpWOIgpoy92OLuho6ycD0rmu8XSrvV4qbrXOzPUP5RAO5g5mjqA3Kxtvl8LpKPTsDzgAVVSB6RG0/OfUq6sdlu97nfBaaCarfG3lP5GAGjmySQN/MEnY5Uvnm5PHrtu3rRcl6OKkpjWTas7YT1D8rzhMb1kLBbBU6sorJdO60ndKpsE4PgvYc7x1HgPStr2s6Rs+mGUE9slmY6pe5joJJC/cBnlDO8cw9KpmUMroXS9Tdu9MMuKQMqY6faXi4PUtEQoCVpdyQ5pPRlTXGRZWQIOxC+fczNIyEbjI4MHpOPrX15lAktcHNOHA5B6DzL0wgOBKh4JaQF1LQ07KSkgpYhhkEbY2jqaMfUqP1hs31PHfK2st9I24U1RO+VhilaHjlEnBa4jhnmyrK0XruzX+khilqY6S5ckCSnldyS53OWE7nA9W/qW2HI4jC0Kanp8RhaL3A2WWQ01ZWYPUONrOO24XN8ehtYPcGDTtWD/ecxo9fKWz6b2T3SomZLfqiKkpwcuhgfy5HDo5XBvoyrnyhcsWAU0bs43K76jKyumZmts3gF8qOlp6KjipKWJsUELAyNjRua0cAvonxCSuwABYJYcSTcphBUKiaKngknnkbFFG0ve9xwGtAyST0KqNTbWnue+DTlI0MBwKqobku62s6O31Lkqq2GlF5TZd9DhtRXvzYW39ArKv13t9kt76+5VLYYW8M73PPktHOepc+awv8AU6mv8tznb3OPHc4Is57nGOA7ecnpK8N4ulxvFX31dK2aql4AyO3NHQBwA7F5WOadwIPpSfieLOrPYYLNWiYJk8zDjpJDd58uCkhNGFTJjsgJowlzqVCaEIUIQgJgJoQkQgJhBQpshBSTQoSwhMpIQnlJMjckEIRhRK+ii5C9BZTR9+n01fobnCHPjHgVEYP85EeI7RxHWOtdHUs8NVTRVVNI2WCZjZI3t4OaRkH1LlpwPFXFsKvffNmqLDM/MlCe6QZ/qXHh+q7PocEz5PVtnGncdR2JJyvwwOYKtg1jUeHUrIC+VXBFVU0tNUMD4ZWFj2ngWkYIX1BQmwi+orPgSDcLmG+W6Sz3ustUpJdTTGMHym/mn0gheYKwNu9sFLqKjujG4bWw9zef78f/APJHqVfrOq+n5PUOYtkwqr5XSMlO22vj1qQQooXGrFSSB3poPBCFB5AaSehdA7LKI0GgrVGRh0sRnd2vJd9BC58maXROaOLhgeldQ2qEU1rpKcDAigYwDsaAmbJuO73vSTlnKQyOPeSfD/K9B4oHWcBHOsXq2sNv0vdK0HBhpJHNPXyTj501vcGtJPUkKNhe8NHWuetW3E3nVNyuZOWzVDhH1Mb4LfmAWw7LdaU+k5qqGvo5JqSqc1zpIRmSNwGM8n84Y5hv6MrS4xyWBvQMIcRhZuyskjqDO3bdbNLhsM9GKV49mwHgrK11pa43/UtLqbSrO/qK5iKQTROA7i9uBynZwQNwPUQQUtpOn9S6i2jSU8NFUGlayKOGoc0iFkZAL3crhnJdu45AW1bB3yHQzmvJLBXTdzz0eCfpJWza1t1Zd9MVtvoLiy3TztDRUPzhrc+EMggjIyMjpTc2iZPT6XX7VnEfRZ6/E5aSqEOo6O7QTuvt+S0jancNH0+j3WGifRy1sXc2U8UADnQlpGXEjxdwOd+/KqIcFZtPsfbT2CpnqL0JKtsbnw9wjxCMDIznJOencqxYctB6ku4yJs9r5GhurVZN+TZpxE+OF5cQbknv3KXMvm9wGSTwUvCc9rGNc5ziA1rRkknmA5yre2cbOo6NsV21FA2Sr3PhpXb2w9BcOBd1cB2rloaCWsfms2dZXfimLQ4dHnP1k7B1latojZvX31kdddXuoLe7wmtLfwso6QD4o6z6lc9mttHZ7dHQULHsgj8UPkc8+txJXsO7ggp5oqCKkbZm3esuxPFZ8QkzpNnUNyAU1FMruVWkhCFKFou3Grlp9EdxicWtqqqOGTHOze4j0loVGxse+RkcTHSSPcGta0Zc5xOAABxK6H2n2iS9aKraWBnLqIsVELecuZvx6RkKhdLXUWbUNBd+9xUill7p3Mu5PK3EbjzHfuSbj0V6thebNK0fJSbNw+TRC7wSbb9WpfOsoay118MN4oamkyWvcyVhaXR8reR07sq1tsdHpan0XR1tuo6Nk9RKzvKWBgaXMI5TjkcRyennIU9RPte1WyMFkk70u9vdyxDVDkksduIy3OWnAwRneN6+942bT3PSGnrPLdGwz2sObLI1hcHNfvcG9m7GV0QUBZHKyEZzXDUVxVOKiWaCSpJY5hOc3XxB+f1WoaW2cV9/0wy9QXGKF0vKMML4yQ4Akb3Z3ZIPMVpWHNJa4clzSQQeYjcVYeodaXK11g0RpGIQQ0WKNjms5c8rwMHkjm38+Ok7lqF/03fLAyGS7UToWT+JJyw4F3EgkcCqqupomsAhabt/cepXuE108kjjUvAD9bBqvZYtGEJ8yqgr9ClgYUQmoQmEJIQi6aSaEKUkFCEXUICEIRdCCgIQouhCaSYQhJ3BbBsxuZtWu7ZKXcmKoeaWXskGB/1BqwDl8nSOic2Zhw+Mh7T0FpyPnC6KWYxTNeOor4V1OKimfEesFdVFAUKeZtTTRVDfFljbIP1gD9a+gC00HUsSIsbLQ9uVEKjRbark5fR1LJAegO8E/SFSfMuiNo0HfOh7xFjJ71c4drd4+hc6tOQEnZQsAnDt4WjZHSl1M9h6ipoQhLyblJCEjnIQvYX0oWCWvpozwfMwH0uC6ixgAdAwuYbQM3mh85j9oLp53jFN2Tg/03rPMsz/AK0Y7lFavtXkMez27Y/PjbH+09oW0LUdsZxs7r+uWAf/ALGq7rTanee4pWw1t6uIHtD1VB4W+6d2U3a82yluM10paKCpYJGtEZkkDTvHQAcdq0ILdaXaXqCl0uyxwMp2Pjj7jHWDPdGsAwN3DlAbs/NlImHGlDnGp+S1TF217mNbRGxJ18Pmrl09Q2qxW6nsVDURZgbjkGQGRxO8uI45J3rxa70pTastLKGesnpTFJ3SN8ZyM4x4TeDh9C5vMeZDK4l0pPKMhPhk9PK4561ZuyvXlfFcaawXmaSrp6hwip53nMkTzwa48XNPDJ3js4MVJjMFT/TvbYHUEoV+TdVRjlUb85w1nfx71867QuubFaqmjtN4fWW+RpElPBIWOcOfDT9R3quiSzLSC1wOC0jBB6MdK6syFo33DQz7TKnUdTGzvJrI5YYt34SoxhziOgYB6yepRX4GJC3RE/PqCMIym0AfpmjZe4FiTuK8WyrQotbI77eYs3BwzTwuH/twec/3z83DpVi5Qd/FIK7pqaOmjEcY1JYrayWsmMspuT5dyMFATyhdC5UspIPFMIUJLFs1FYn3t1kbdqQ3Jpwabunh5xnHRnq4qGs70zT+m6y6HBkjZiFp/OkO5o9fzArmn8I6Z1Q+RzpnP7o6QnwnPJyXZ6c78qoxPFRROa0C5PomLBMBOJMe8uzQNnFdXgKhNq2kp7FfZa6kp3OtlW4yMcxpIheeLDjgM7x245lvuyfWxvlOLPdZh9tIm5jkdu75YOf/ABjnHON/St/7d6+k0MOKU4IP4XypampwKsII7iOohVFsP05dKa6TX2sgkpqfuDoYWyNLXSFxBLsHfgY9Kt8Bxwcbs8VgNc6oo9L2Z1ZOBLUSZZTU4dgyv+po4k/WqCr9Sajr7obpNeKtlTyuUzuUhYyPoDWjdjq5+dcjquDCY2wD2iu+PD6vKCV9SbNH96vytzu21G40GqKqNumrdC+GV0bxKHCdwBxkuHTx4ELwbRNffdbbqWhhtrqOOKXushfKHlzgCABgDdvK3Wouel9T7Nzcr8639/tpHNlOWiaOYAjwfzhk4IHWqUhzyG8ob8DPaqnEamaJuaH3a/WrzA6KmmfnuiLXxm202upFPmQhUCbkKXMohPKEIyEApJgKEJpJpKEIQmkhCEIQhCEIQhCE0kKUIKhI3LSOkYX0SdwUt2qSdS6P0RK6bRllld4zqGHP7IH1LME7lgtn34i2M/8ABR/Qs4Vp0BvG3gFiFULTPHefVY/UkYl0/cWHg6llH/SVzLFva3sXTt8+BK7zaT2SuY4vEb2Jayj/AHMTtkWdUvyUxwKEDOUJXTwhPO5JNC9AL02f4ZoPOY/aC6dk8YrmGzfDND5zH7QXTzuJTdk57t/FZ3lp7+PglzLT9sv5O679NB/FatvWo7Y/yd136aD+K1XVd0Z/ApZw0/1kX8h6qhcIxvUkLNLrawkR1LaNkluNx15RuLcx0YdUv9Aw35yPUtYPBWtsBoeTR3W6ObvklZTsPU0co/O4epWmDw6aqaD1a/BUeUVTyegeRtOrxVoJ5SQtCWRKSCkOCF5UpJ8EZCalCihPC1baXqdumdPufC5v2xqcx0jeODzvPU36cL5zTNhjL3bAvtT076iVsTBclV5ts1E25XuOxUknKp7eSZiDudMRvH6o3dpK0EBJgdkve5znuJLnE5JJ4kqSzmsqXVMxkctjw6iZQ07YW9XqiJ8kUzJoXvjljcHsexxDmuHAgjgVv9DtX1DBRCGekoauVrcCd4c1x6yAcE9mFoITRT1k9NfRutdRW4bS1ltMy9l677dbjfbk64XSoM0xHJbuw1jfJaOYLxYUkcy+D5HSOLnG5K7IomQsDGCwCXIbnOBnpwnuAwllMcF5XrghCEwoUIwmkhTdCaMpIUFCaSEKEJhMhJPKlSkjBRzp5QoUUKWEEDmRZCQQQjBQUIRzKLuCmOCg/gpG1T1LorZ5v0HYvMY/oWdKwWzz8Q7H5jH9Czy02n903gFiNX79/E+q8V9H8iV/m0nslcxReK3sXTt9+Ba7zaT2SuYYvEb2Jayj/cxOuReyX5L6pIQllPCEFSScF5XoL0Wb4ZofOY/aC6ePjFcw2f4aoPOY/aC6ed4xTdk57t/FZ5lp7+PgorUNsf5Pa79LB/FatvWo7Y/yeV/6WD+K1Xdd0d/ApYw3pkX8h6qh0BCAs0W1DYjmV8bHKcQbP6F4GDPJLMevLyPoAVDroDZQ8P2d2jH5sb2ntEjkx5OAadx7vslDLInkrAO19CtmKYQeKAnNZsjKSEKFKE+ZJY/UV6ttgtj7jdalkEDdzQT4UjuZrRzk9Chzg0XKljC85rRcqV/u9DY7VNc7jL3OCIc3jPdzNaOcnoXO2qL3V6jvc10rPB5XgxRA5bEwcGj6zznK+utNWV+q7oJ6k9xpIiRTUwdujB5z0uPOfQNyw4PQkjGcTdUO0bNTR5rTsnMDbRs00mt58h91IJ4SapBUSaUIQUBSvCaRTJSUoujCEJ4QhIJpJhQhCEIQhCE0KEJJpJ7kWQhCEKUITRlLKEJ5wkCkmEXQpBBCEiVC9akHcovTUXcFLdqHbF0Vs8/ESx+Yx/Qs8OKwOz38RLF5jH9CzwWm0/um8AsQq/fv4n1XkvozZa7zaT2SuX4fEb2Lp++n+Ra7zaT2SuYIfEb2Jcyj2sTrkZsl+S+md6EhxTSwnhSQUijmUKQvTZvhqh85j9oLp13jFcxWY/y1Qecx+0F067xim7Jz3b+Kz3LT38fBRWo7Y/ye1/6WD+K1beStQ2x/k8rv00H8Vquq7oz+BSxhnS4v5D1VDoHBCMrNFtQCTjjiugNlFNJS7P7WyUEOkY6bB5g95cPmIVBUtO6traeiZ41RKyIdrnAfWuoqeCOmgjp4gBHEwRsA5gBgfQmnJuL2nSfJI+Wc9mRw/P8AvxU0FNCbEgKKFJJQhBXjq7VbK2riq6yhp6ieFpbG+VgcWA8eTncO0L2FeO73S3WiidWXOshpIGnHLkOMnoHOT1BQ4tAu7YvUYeXWZt7kV1mtNdSvpau3Us0TxgtdGPmPN6FzrrKznTupq21FxdFG4Phc7i6Nwy3PXzehdIW+spbhRRVtFUR1FNM3lRyMOWuCqfbpSxUup7FeZou6QOxHM3HjCN4dj0tJVLjVJHLTh46jt7kzZNV8tPVmM3sQdXeNarUtc3HLY9mRkcppGR0jPFRL2t8ZwHaVcG2y4Wus0LbK2hEc8dVVsMEoHit5DiezhjCexugtEGg6m63eGlZHPPJypqhrcGJuGjeebId2qhOEf1Gha/Va900DKL+j5Q+PXnZtlUI3oX1uDqQ3Kq7wGKQzvMA/3fKPJ+bC+SqHtzXEJjjdnsDtl1IJFPmQvK9JJ5SQoQhCEIQhCEKEIQhClCYRhCOKlCEJhCiyEkJ8E0WQoowmUudCkC6EIJUUI2KR4KDuCfMk5AGtSdi6M2e/iHY/MY/oWcysHs9P+gdj8xj+hZtadT+6bwCxCs9+/ifVeO+/Ald5tJ7JXMMXiN7F09fPgSu82k9krmKLxG9iW8ox7TE65F7JfkpjimkOKaWE8KTupJNBUKQvRZvhqh85j9oLp13jFcw2f4aofOY/aC6dd4xTdk57t6z3LT38fBJahtk/J5XfpoP4rVt61DbJ+Tyu/TQfxWq6rujv4FLGG9Mi/kPVUQhJB4LNVtYWxbMaQVm0G0RkZbHK6c/qNJHz4XQqpDYbF3TXEkhH8zQyuHpcwK7084AwNpb7ysuyukL6/N3AfdMIKAgq7SwhfOeWKnhdNPKyGJoy58jg1o9J3KvtsuqbjY20FBaKt1NU1HKllka0FwjGAAMg4yTx6lUFyr7jdJO6XO4VVY7m7vKXAdgO4KlrsZjpXmMC5CZMLybmroxMXBrT4q4dV7UrVbw6nsbBc6nh3TJEDT28Xej1qpNQ3e6agre/LtVunkHiNxhkY6Gt4BeNrQFLCVqzE56o2cbDcnvDMEpaAXYLu3nb+FZmwjUDoqmbTVS/8FIHT0hJ8Vw3vZ6R4Q7Ctz2p6bqNS6YdTUTWOrYJBNAHHAcRuLc82QT6cKhqCumtdfT3KmcWzUsjZmHrac49IyPSuo45WyU7J2+Cx7A/fzAjO9MWDTCrpXQSdWr5JPyjpzh9e2ph1Z2v5jb4qv8ARmiBUbPorLqule13fbqlkLZcPh5gOU3cCd5IHlLxbTdGX+8TWq3WGKmjstHAGNhM3IbG/PjOHPgYxx5+lbVcNeaQoZ3Q1F+pTI04LYuVJj9kELVdodJWa8t1JV6Ou0VfSU/KZU0kc/c+U44IcQcbwMjDsdS6Z46cQGNntEADUdZsuGmmqzVCaX2QSTcg5oJ619rjsvsFBo2eR80ra+CndK6t7oeSXAZ8XhyebHz5VOsJLASMEheu5Ul5sz32a5CrpeSA40zpTyCDwIAPJI3c3QvIDuSpiE0b3BrGZttqfMHpp4mOfLLpA7WFJMJJgrgVwhCSahCeEsJ5RlGpCihMpZUIQpAKIKnzIQkQjGEZRlShNHBLlJEoQgoBSB60DGUITJSKZKROVClJGEJgoUJKLlPKg5SNqk/tXRmzzfoOx+Yx/Qs4sHs7/EOx+ZRrOlabTe6bwCxGs9+/ifVeO+fAld5tJ7JXMMXiN7F07fPgSu82k9krmKL+bb2Jbyk/cxOuReyX5KYTQmAldPCaR4IPFCFIXps3w1Q+cx+0F047iVzHZvhqh85i9oLp13jFNuTnu38VnuWnv4+CitQ2x79nlcP97B/FatwwtQ2xD/V9XfpYP4rVd13R38ClfDelxfyHqqGKAgoHBZqtrGxb/sGIGrq0c5t7sfvGK6SqL2KVAg17HEf/AMmkmjHaOS//ALSrzT3gJvSDiVlmVbS3EHd4CEIQrpLSobbJVGq1/VMzltLBFAB0buUfnctQwtg2j5O0C+Z499Y/6GrAELNsQeXVTyd5Wz4RGGUMQHZCSlzJAZUsLjVktn2U2SkvusYqeuw6CCJ1QYz/AEhaQAD1ZOT2Lbtu9TfZaijs1sgrX0JhMtSKaJzuW7OGtdyRwAGcc+VVcE01NM2emnlgmZ4skTyxzewjerb2CTTT0N6mnmlmlfVRlz5Hlzj4HOTvTFhUjJojSAWJ2lJ2PwSU84xBxDmtsA07/wC9aqUWa8AYFouI/wCUk9yzugq3UGldQNuUdjuc8L2GKeHvaQd0Yf1eIO8enpXRBJRyj0lWUOAiF4e15uFS1OVb6mIxSRAg8Vz5ryvveqb8bi7T1xpYmRCKKPvaQuDQSck8niSVgha7t8U3H5JJ7l0+HHPFHKPSibAGzPL3PNyop8q5KeIRRxiw7yuYPtZdviq4fJZPcpNtd3PC0XI/8pJ7l0+HHpKfKPSV8+bcfbK+/POf4Y81yzUQz08piqYJYJAASyVhY7B4HBShjmmkEcEUkzyMhkbC5x9A3rbttB/1gVPm0PslfLY2T98Si38YJ/YS/wAjHLOT31Xsm0Yg79O5ZbXm3ste+1l25rTcvkcn+VSFpvB/2Pcj/wApJ7l05yj0n1oLiRxKYObcfbKUueU/wwuWZo5YZXRTRvikYcOY9pa5p6CDwUFnNoP493wdFW76AsIEqTx6KVzNxT5SymeFkh6wD4pjcllPihfK6+9kksp86CEKQE92F9Kelq6kE0tJU1AacOMULn4PXgHC+LjuV0bBqUw6Rqas5Bqa1+D0hjWt+nKsMNohWTaMmwsqjG8SOHU+laLm4CqL7VXbmtFx+SSe5L7V3f4ouXyST3Lp8HrRk9JTBzbj7ZSlzzn+GPNcu1FBcaaLu1Vb6yCLIHLlgcxuTwGSF8Ff21yl770BcsNBdC1k7T/geCfmyufnHcqHFKDkUoYDe4TTgWKHEoXPcLEGylyhkAbyTgAbySvdNZ7zDTd8y2a5MgxnujqV4bj1LPWaVulNKUt/jghlvd2mdFb3St5TaaJpw6XHOSeHo61sk9Le4r/WUNv2hXOe+UsBqHU1TT4ilHJDsDHg48Ic27K+kGHNcy7zr7lyVmOPjkLYgM0XFzfXbbs2AbyquY8OGQQQgrZNQimvumKfV9JSx0tT3x3rc4YhhhkIy2QDmzz9q1r81cE8Jhkt1dSuqOqFVDnWsRqI3FdG7O/xDsfmUf0LOlYLZ3+Idi8xj+hZxaPTe6bwCxys9+/ifVeO9/Atd5tJ7JXMcfiN7F07e/gWu82k9krmKLxG9iW8o/3MTrkXsl+SmpBRTylcJ4KSEyhCkL0Wf4aofOYvaC6ePjHtXMdl+GqHP9pj9oLpx25xTdk57t/FZ7lp7+PgktQ2y/k8rv00H8Vq25ajtk/J3XfpoP4rVdV3R38CljDelxfyHqqGKSZSWarahsWX0VXC2awtFc53JZHVsa8/3X+AfmcukyMOIPELlR4LmkZxkYz0LpTR11F70vb7nkd0mhAlAPCRvguHrBTdk5OC10XzSBlnTESRzjr1fUfVZY8UBB4oCZ0jKgNrNMabaFcsjAnEU468sA+lpWrlWTt8t7mXO23drfBlidTPP95p5TfmJ9SrXmWeYrFo6t477+K1/AajTUEZ3C3hqTapKA3KYO5VpCuQouVt/Y//AAXePOY/YKqV3BW19j+P5KvHnUfsK5wDpY4FLmVf/Hu4j1Vmc6CjnWK1hWVNu0pda+jeGVNPSvkicWhwDgNxweKeXuDGlx6llrGGR4aOtZQBCoJm0vWh43OnP/JRqX3ytafGVN8ijVNzgpe/wTLzSr+7xV+YKN6oP75WtPjKm+Rxo++TrT40p/kUfuRzgpe9HNKv7vFfTbP+UCp82g9lfPY1+Uah/QT/AMNYC+XSvvVwfcbnK2ape1rXObGGDAGBuG5Z/Y3+Uah/QT+wl2GVs2JCRuwuTfUU76bBXRP2hlvJX4nzFI8ExwKfepZSuc9oP4+33zx3stWDJWc2hfj7ffPHey1YXmWZ1vSH8Stpws/0kf8AEeiXOmkBvT51zrtKMJOTKFC9KDjgZPBdD7MqTvPQNniIw59P3Z3a8l31hc7zNc9vc2b3P8Fvadw+ldS0NO2koqelaMNgiZGP1WgfUmrJuO7nv+SRstJvYjj3knw/yvoeKSZ4pJsWfrx3yl7+sldREZ7vTyR47WkBcvt5XJHKHhDiOtdWtO8dq5k1NR/a/Ul0osYENXI0dnKJHzEJWylj9lknyT1kVN7csR7is3emPuegdO3Kn8Nlne+krWj+iy9rmvPUQBv61td51RRXK+aitVLX22hkno2toLo1jWkkMBfG+U8x3gHdjf1Ku9OXy42CtdU0D2ESN5E0MrOXFMzyXN5+3iMrNM1RYY5e+odB2ltWDyg5073RB3SI8YXDT1rC25dY6r37tWpd1bhUwfmhhcBcttbrIOu+4+SgIXWfZZ3CraY6i81zJ4IneMIYwPDx0E4x2haueC9l7ulwvdyfcLnP3adwwMDDWNHBrRzALxlVdXK2SQZuwakw4dTPghJk/c43P2XRmzr8Q7F5kxZ4hYLZ1+IVi8yYs8tEpvdN4BZBWdIfxPqvFfN1kr/NpPZK5ii8RvYunb78C13m0nslcwxeI3sS1lJtYnTIvZL8lMcU0udNLCeFIpYTQhSF6bN8NUPnMftBdOO3uK5js3w3Q+cx+0F04fGKbsnPdv4rPctPfx8FFahtk/J3XfpoP4rVt5Wo7YxnZ5XfpYP4rVdV3Rn8ClfDOmRfyHqqGKSkQlhZqtsGxI71aGwe+COoq9PTvx3XNTTZ6RgSNHow71qsML0WuuqbXc6e40bgKimkEkeeBI5j1EZB7V3YfVclqGv6uvgqzGKAV1I6Lr2jiF1AUl5LJcqa8WiludG7MNRGHgc7TztPWDkHsXsK0Zrg4XCxtzC1xB2haxtPtBvGjK2GJvKngAqIRz8pm8j0jIXP7cFoI3gjcup9xGMArnXaBZTp/VdVRNbyaaU93pujubjw9ByPQlbKKlJDZhwKeMj64AupnHvH1WDwkEZymeCVCU/BBOQra+x+P8lXkdFVH7CqM8Fbn2P3wXefOovYVzgHSxwKXMq/+PdxHqrMKwe0H8Rb55jJ9Czh4rB7QfxEvnmMv0J1qfdO4FZnR+/ZxHqucAMKSWE1mPWtvGxCkhqfFBUpHgts2N/lGof0E/sLVCts2N/lFoj/ALif2F3YZ0qPiFV430CX+JV9pHgmk7gtGWNrnTaD+Pl888d7LVhVmtoP4+X3zx3stWD4rNK3pD+JW0YX0SP+I9FLKEBC5V3FBQRuQeKRQvSymj6QV+rrRRkZa+sjLh1NPKPzNXSjiTk9O9URsXpO+dexSkZbS0ssvYThg9oq9uZPGT0ebTF28rMcr5s+tDOyPVfKolZBTSzybmRRue7sAJP0L522qjrrdS10X83UwMmZ2OaHD6VjNfVJo9EXqoBwW0UgHa4ckfSvHsqqe+tnlkcXZMdMIT+oS36grjTDTaPuul0U55Ppu+3ldbOqD2wUneu0CtcBhtTHFOOsluD87Vfqp/b9Tci7WmuA/nYHwu7WuBHtFVePR59ITuIKu8lZtHiDR2gR9foq1ATSTKQwtVSScpJOXobVB2LozZ3u0FYh/wADH9CzuVgtnn4h2PzGP6FnFptN7pvALEKz37+J9V5L5vsld5tJ7JXMMX823sXT17+Ba7zaT2SuYYv5tvYlvKP9zE65F7JfkvqEYSTCV08JoUVLmQpBXos/w1Q+cx+0F087xiuYbP8ADVB51H7QXTzvGKbsnfdv4rPMtPfx8FArUtsP5PK79LB/FattWpbYvyeV36WD+K1XVd0Z/ApZw3pcX8h6qhihBTCzVbUNiSRUsIxuQpVgbFNTd4XR1grJMU1a/lU5J3Mm6Oxw+cDpVzniuVTlrg5rnNc0ghzTggjgR1q/dmWqm6lsnJqXNFzpMMqmjdy/JkA6HfMQQnDAcQ0jeTvOsbOCzrKvCDE/lUY1Hbx3/NbWtO2taaN/093xSx8q4UOZYQOL2/ns9IGR1hbkhvFX88LZ4zG7YUp0tQ+mmbKzaFytE7lAEcFMrbtrOnBYdQmrpo+TQXBxkZgbo5OLmfWO09C1AFZxVU7qeUxu6lstBWMrIGzM60ncFbf2P3wXefOYvYKqRxVt/Y//AAVePOYvYKssB6WOBVPlX/x7uI9VZhWE1+M6Gvg/4GT6FnOZY3VFBNdNN3G3U7mNmqaZ8TC84aCRuzjmTrOC6NwG4rMaZwbM1x2Ahc0IW9DZRqfnqbZ6JX/5U/vUam/tFs/eP/ypB/Squ/7CtXGP4eP/ANAtFCa3obKNTk474tg//wBX/wCVaxqex1mnbsbbXPhfMI2yZiJLcOzjiOpfGagqIG58jbBdVNi1JVP0cT7lYxbbsbP+sShH+4n/AIa1HK23Y5+UWh/QVH8NesM6XHxC8Y30CXgVfiR4JIWjrGwuddoP4+33zw+y1YNZzaF+Pt988PstWDWaVvSH8StnwzokX8R6JjgmkE+dcy7kFJykVB/BHWvfUrP+x+pc1F5uBHitip2nty4/9qtritB2GUvcNFPqCN9VWSP9DcNH0Fb5laJhUeZSMHd6rHcdm0uISu77eGpaXtsqe4bP6qPODUTRQjr8LlH5mrybB6kz6JfATnvaskZjoDgHD6Ssf9kFVYtNpoQd8tS+UjqazH0uXm+x4qfwd7oiRufDMB2hzT9AXHp/90De631Vo2l/2Eyf+r/RWyq828UfddK0tWBvpqxuT1PBb9OFYa1vafR9/aCu0bRl0cHdm9rCHfUVZV0ekp3t7lSYXNoayN+4hc9NQ4IYQRnpUtyzWy2kKKTlJRIQNqh2wrozZ3+Idi8xj+hZ0rBbPPxDsXmMf0LPA71p1P7pvALEKv37+J9V4r38C13m0nslcwxeI0dS6gvvwJX+bSeyVy/EfAZ2Jayj/cxOuReyX5L6JhJSSwnhRUuZIjCM7kIC9No+GqDzqL2gunXeMe1cxWb4boPOY/aC6df4x7U3ZOe7fxWfZae/j4KK1HbGf9Xdd+mg/itW3LUNsn5O6/8ATQfxWq7rujv4FLGG9Mi/kPVUQhHMhZotptqUgjcgIUKQFFwyshpm9Vmnr3BdKMcp0fgyRZwJYz4zD9XQQF4CouGQvrFI6J4e3aF854GTxmN4uCunrTcKS7WynuVDJ3SnqGB7Hc/WD0EHII6QvUCqX2Mam+110NhrJMUlc/NOSd0c/R2P+kDpV0YWiUFW2qhDxt6+Kx3FcPfQVLojs6jvCwmubFHqPTVVbDgTOHLp3n8yVu9p+o9RK5yLZI3uilYWSMcWvaeLXDcR611SFR22qyi26pbcYWcmC5NLzgbhK3c71jB9ap8oaPPjEzdo2piyQxDRymmcdTtY4/4WjHnVufY+/BV585i9gqo+Yq3Psffgq8edR+wqnAOljgUw5Wf8c7iPVWagIPFRe9sbHPkc1jGjLnOOAB0kp6KypSyU+UvIbjbfjKh+Us96PtjbfjKi+UM96857d696N+5expVF7bj/AKeP8zh/7ldIuNuH+0aL5Qz3qkts80U+unyQTRys7zhHKjeHDPhc4VLj7gaQ2PWEyZKscMQFx1Faatt2OD/WJQ/oJ/4a1Jbdsb/KHRfoJ/YSrhnSmcU/Y10CXgVfWEEblLO5InctGCxtc57Qvx9vvnjvZasGs5tC/H2++eH2WrBrNK3pD+JWz4YP6SL+I9EwU1EcVJc67kZUJCA0k8BvU+ZDYXVE0dOwZdK9sY7XED61LBnOAUPdmMJK6H2d0ZodDWenc3ku71bI4db/AAj9Kz3OlFE2GFkLBhsbQwdgGPqQVp8TMxgbuCw+eQyyOees3VLbfKruuqKGjByKej5RHW95+poXn2D1PcNaz05O6qoXj0sc1w+bKxm1iq762hXQg5bCY4B+qwZ+clfHZhUCl2g2aQ8HzuhPY9jm/SQkzlH+65//AKt9FpTaT/5/M/8AN/qujCvjX07aqhqKVwBbNE6M/rAj619SU878p1cLiyzJpLXXC5WDHRExO8ZhLD2jcmVltZUneOr7vS8nDWVby3sceUPpWJWYzs0cjm7itupZdLC1+8AoHFJyaR4L5jaug7CujNng/wBBLH5jH9CznBYPZ9+Itj8xj+hZwrTaf3TeAWIVfv38T6ryX0/yHX+bSeyVzBD4jexdO3z4Er/NpPZK5ii8RvYEtZSfuYnXIvZL8l9QmkE0sJ4RxSQhC9BeizkC9UB/4mP2gunn+Oe1ctUsncayCb+rlY71OC6jacsDukZTdk4f9N4WeZaA6aM9xQtR2xDlbPLh1SQn/wDa1bctc2nwGo2f3hjeLYO6D9VzXfUrysbnQPHcUrYe4Nq4ye0PVc+BPISHFBCzNbYNiMphe3Ttnrr/AHiK129rDNIHOLnnDWNbxccej0lRvVsrLLdqi117GtqIHAHknLXAjIcOohfXQyCPSW9nevhyqHTaDO9q17dy8hSRvTK+S6F835yCHFpBBDmnBBHAjrC6K2d386k0rTV0uBVR5hqgP6xvE9hGHelc7FWBsLuxpNTz2l7j3K4QlzRzd1jGQfS0uHoCvcBqzFUaM7HevUlfKrDxPSaUD2ma/l1/dXUtM2yW0V+hqqcNzLQubUsPPgHDv+kn1Lc15btStrbTWUjxls0D4yO1pCcamISxOYesLN6KcwVDJB1ELl8cFb2wD4Ju/nMfsKn4iRE0HiBg9qt/7H4/yVePOY/YSXgWqsA4rS8qjfDie8KzDxWC2gAO0LfQRkd4S7v1VnTxWD1/+It98wl9lOlR7p3ArM6T37OI9VzY2GLH82z9kKYhi/q2fshMDcpDcszL3X2rbRG22xQMEP8AUx/sBfQBrRhrQ0dAGE+KeFBcTtUhgB1BRPBbbsa/KJRD/cT+wtTK23Y1+UWi/QVHsLtwzpcfEKuxvoEvAq+0jwTSPBaMNixtc6bQvx+vvnZ9lqwazm0E/wCnl888PstWEAWaVvSH8Stpwwf0cX8R6JDimnhC5l22QszoKlFbrmy05GW99Nkd2MBd9Swy3bYjSd8a2fUkbqWke7PW4ho+bK7sOj0lSxveqzGJdFQyO7irwKGgFwB6UIWjrG1zBqCaWtv9yrDHL+Hq5Xg8g7wXnHN0YXwtNRLRXihq2xyZgqY5NzDzPBXUhAJ3jPajkjO5o9SXOb/+rpM/rvs/KchlYRBodFqtbb+E3EFxI4E7kghCY0m9aozbRS97a7fKBhtVSxy56SMtPshaYArQ2/UuJrNcA3iJadx9Th/3KsOZZ7jEejrHjfrWu5Oy6bD4zu1eCCkeCe9RmOI3HoaT8yrW6yrt2oLozZ9+Ili8xi+hZtY/TNP3rpq1U2MGKihaR18gLILT4RmxtHcsNqHZ0rj3leO+7rHXn/hpPZK5ih8RvYultWyiHS90lJwG0knslc1RNwxvYljKM+0wJ5yLHsyngvoOKaQTSwndCDwQg8EKQvlMCYn444OF05YqkVljoKoHImpo356ctBXMzjhuehXtscrhXaAooy7L6N76V46OSct/6XBMuTklpHM3hJWWUJdDHJuNvH/C3Ary3elFdaayiIyKiB8X7TSF6UwmxwuCFn7HFrg4dS5Wa1zPAeCHN8FwPSNxUjwWw7SrU60a2r4g3kwVDu+Yejkv3keh3KWurMqmIwzOYeorbqKdtRAyVvWArL+x+pmuvd1rSPCipmRN6uU4k+yFjNt0fI166TGO6UcR7cFw+pZf7H2Vorb1AT4To4XjsBcPrXp29WiR8NDfYmEth/8ATz45gTlp9eR6QmQw6TBxm9WvzSYKgRZROz+vV5BVRlASByjO9KqegU3DcsvoOZ9PrmySMOD37G30Oy0j1FYfK2bZXbpLlry3Frcx0jzVSnmAaN3rcQuuga51SwN3hcWKvayilLtmafRdBlNvEJLzXasZQWqrrpCAyngfKf1WkrSHGzblYu1pc4ALl6QYmlA4d0f7RVufY/fBl585i9gqoYsmNpd4xGT286t77H8fyVeT/wATF7BSRghvXX4rT8phm4XY/wDlWaeKwe0D8Rb75hL7Kzawmv8A8Rr75hL7Kcqn3TuBWbUvv2cR6rnEcFIBJuCApAhZidq3AbEwE0spEqLKVI8Ftexz8otD+gn/AIa1LOVtuxv8o1D+hn/hld+GdLZxCq8a6BLwKvtI8E8pE7itGWNjaudNoP4+Xzzx30BYTKzW0E/6eX3zx30BYQcVmdb0h/ErasM6HF/EeillPISyllcy7SEOOFan2P8AS/8AprzcCPGljgaexpcfaCqp3BXnsVpO9tBQTEYdVVEs3aOVyR8zVe5Px59TfcEsZWzZlDm9ogfVbmmEFaltT1HXaZ09BV24wipmq2wtMrOWOTyXOdu9CdJpWwsL3bAs0poH1ErYmbTqW24KSokbU9X/ANZbvkn/AJSdtS1jzS24f8p/5VV+vUvemDmniG4eKvdSwtM2T6lr9S2SrmujoXVVPU9zJij5ALC0Fu7PatyyrWGVszBI3YVQVNO+mldFJtC0XbhSd8aI74A8Kkqo5fQctPtKkhvXRuuqM3DRt3pQMufSPLe1o5Q+cLnCM8pod0jKUMo482dr94WhZGzZ1M+PcfVTX3tlI+4XWkt8Yy6pnZEPS4A/NlefK3XYpa3V+su/nNzDb4jISfLdlrf+4+hVFDDpp2s3lMOKVIpaR8p6h59SvLktaA1vBowOxCHJLSgsWO1avtUqe9tBXV2cGSNsQ7XOAVBBW9t7rhFp+gtzXeHU1XdCP7rB73BVCEl5QSZ1QG7gtLyQgzKMvP8A2KY4ppJhUQTUhB4IQeChF1F3ilWJsDuncbvX2aR+G1cQniB/rGbnetpB/VVdkbivRZbhPaLrSXOmGZaWUSNb5QHFvpGR6V2UFTyaoa/q6+CrsXouWUb4ht6uIXTqF8qGqp6+hgrqR4fBURtljcOdpGQvqtGBBFwsbcC02K0HbVYnXHT7LtTx8qotxLngDe6E+N6tx9apXOQuqHMa9rmOaHNcCCCMgjoXPe0bTEmmL86OJjjbqkl9K/oHPGetv0YSplBQm/KGDin3JHFAAaSQ97fqF6NkV1Za9cUrZXhsNa00ryeHKdvZ/wBQA9Kvm5UdPcKGehrIhLTzsLJGO5wVyxyiCCCQQcgg7weYjrXQuzfVUWp7I0yyN+2NMAyqZwJPM8Dod9OQvpk9VtdGad/yXyyuoHslbVs2bD3HqKp/W+kLlpeseXxyVFtLvwNUG5AHM1+ODvmK1oPDhkHI6l1W9rXtLXtDmkYIIyCFgqjR2k6iYzTaftznk5JEIGfUpqsnQ52dE6w3LzRZYOjjDZ2XI6wuebVQ113rW0Vspn1U7j4rBkN6yeAHWVfezrSUelrU5kj2zV9QQ6olaNwxwY3+6N/ad62C3UFDboO4UFHT0sXkxRho+ZenK78NwhlIc8m7lVYxlBLiA0YGazdv4oVfbcb22g0u20xv/wDUXJ/JIB3iFpBcfScN9JW53y6UVmtc1yuEwip4hvPO48zQOcnmC501Xe6nUt/nutU3kB+GQxZyIoxwb9Z6yV5xqubTwlgPtOXrJrC3VdUJXD2G6/n1BYwZ5Kt/7H34JvHnUfsKocYCt77H74JvHnUfsJewDpY4FOOVn/HO4j1VmHjlea6UUFyttTbqnl9wqYnRScg4PJcMHB5ivUcYSGE8kAixWVtcWm4WhDZPpccJrpjo76//AJUvvU6YH9LcvlP/AIW+IzuXGcNpfhjwViMYrviu8VoY2VaY/rLl8p/8JjZTpfPj3H5T/wCFvaBuR+m0vwx4I/WK74rvFc8bRbJSaf1TJbaAy9wbBHIO6P5Ry4HO/wBC9mxz8otD+hn/AIZX221H/T+cH+ywfQV8djZ/1i0PXDP/AAylFjAzFM1osM5aC+R8mBF7zcln0V8o5k0k+LLFpt32caeut2qrnUSXFs9VIZJBHUYbnAG4Y3cF5vvUaY/rrp8pH+Vb4E1xuw+mcblgurBmK1rGhrZCAO9aINlemP625/KP/CbdlOmC4fhLkd/PU/8Ahb0pReO3tXk4bS/DHgvX6xXfFd4rlm8Rso7jXU8eSyCeVjcnJw1xA+hdHaNo/tfpK00eMGKjjDu0tyfnJXPlZTmu1rNQjeam7Oix/imIPzLpkgN8FvijcOxVGAw5skru+yY8q6guhgYTrtc+SFU32QVTl9koM8O7VBH7LB9LlbKozbfU98a6bADupaONnYXFzj9IXdjkmZRu79Sqsl4tJiLDuufJaOAjAUsIwkEFayrK+x/qORdbvQ8rdJBHM0dbXFp9oK3sKhtjlUKbaBRsO4VMM0HaeTyh7CvlPuByZ9IBuJWU5UxaPEHHeAfp9EnRtkYY372vBa7sO4rlyqgdSVlRSOGHQTPiI/wuI+pdSrnbaZTCi17eIgMNfMJm9j2h30krjykjvC1+4qwyMmzaiSPeL+H+Vrz3ANJPBX9sr086waWiFQzk1lYe7zg8W5Hgt9Ax6SVW+yPSzr5eBdKuL+TqF4d4Q3TSjeGjpA4n0BXoTk5PFfPJ+gLG6d427PuvplbiokcKWM6ht47kikmd6xmqbvDYdP1l2lwe4R5Y0/nvO5rfSSEyveGNLjsCS443SPDG7Sqa2xXQXLWstPG7lRUDBTt6OXxf85x6FqIUXySTSPnmeXyyPL5HH85xOSfWpDgs3qpzPM6Q9ZW0UFKKSmZCOoIQhNc6600ISOcoQmeC+eMBSKiVBK9BWpsM1G3kS6aq5MEF01Fk8RxfH6D4Q6iehWquWaWpqKKrhrKSUw1EDxJE8fmuHD/70LorRGpKXU1iir4g2Kob4FTBn+akHEdh4g84KdMCrxNHoXn2m7O8LNMqcJNPNyiMey7b3H8rOLHakstDqC0TW2vYXRvGWuHjRu5nN6wsijnV65oe0tcLgpVje6Nwc02IXMuqrBcNN3V1BcGZzvhmaPAmb5Q+scy8louFbabhFcLdUvp6mPxXt5xztI4Fp6Cuk9S2K3ahtj7fcoe6Rk5Y4bnRu8pp5iqM1noa76akfMWGst+fBqY2+KOh4/NPXwSZiGEy0j9LBs8wtKwjH4MQj5PVWDtmvYf73KwNLbVrRWRshvzHW2pxgytaXQOPTkb29h3da3eiutqroxJRXOiqGHgY52n61y+HA8D6QkGMJyWtJ6cL3T5RTMFpW38l8avI6nkdnQvLe7aF1NUV9BTRl9RXUsLRxL5mgfOVqGo9punLYx0dDKbrU8A2DxAet53erKonkM8huexSwF6myjkcLRtt5rzTZGwsdeZ5cN2z7rLap1FddS1wqblN+DYT3GnZuji7BznrO9YsbggIS9NM+V2c83KboKeOnYI4hYBM7wrA2S6ssWm6C4w3eomifPOx8fIgfJkBuD4oOFXyWOpfajq3UsukZtXPiNAyvgMLyQO5Xv8AfQ0Z/bqr5FL7kDaho3+3VXyKT3KiEK45x1HZCXuZtL23eX2V8Haho3H/AL6r+RSe5L76Gjf7bV/IpPcqH3dCYUc46jcEczaTtu8vsr3++ho3+3VXyOT3Jjahoznr6r5FJ7lRCNyOcdRuCOZtJ23eX2WybTbxQX7V0txtkj5KZ0ETA58ZYctBzuO9fLZxdqGx6ypLpcpHx0sUcrXOZG55BczA3NBPFYAYQqnlj+U8otrvdMAw2MUfJLnNtbvV7nahovmuFT8il/ypffQ0Z8Y1HyOX3KiE8K35xz9kJf5m0vbd5fZXuNp+jD/tKf5HL/lR98/RnxjUfI5f8qocoRzkn7IUczaXtu8vsr3++fo34xn+Ry+5SZtQ0YHg/bCpO/8AscvuVC7kxxRzkqOyFPM2k7bvL7LO6dr7ZT7SGXqvmey3x10tSHCJziclxZ4I38SFbR2n6M5rhU/IpfcqJ3IwFy0uMy0zSGgazdd1fk5BWua57jqAHV1fJXu3ado3muNR8jl9yp/WdyivGr7nc6cl0E834IuBBLA0NG48OCxAUt3MvFdi0tYwMeAAvpheAQYdKZYySSLa0ykmEcFVK9Xu0zXMtmprXcpXFsVNVxySEAnDM4duHUSrnO03RfxlP8jl/wAqohxCg5wAVrQ4tLSMLGAG6o8UwCnxGQSyOIIFtSvr752jPjGf5HL7lpt7tlPtG14yrsU8htzIGNrql0LmcggnDRyhvcRjHRxKx+itnFzvnIrLoJLdQHeA4YmlHUD4o6z6ArqtNuorTb4rfb6dkFPEMNY35yTzk9KZKdtRiDByloDdveUlVjqTCZTyN5c/ZfVYeW1O10FJa7fDQUMLYaaBvJYwf/d56SvRzppFXgAaLBLLnFxJO1CpTbVqVt0u7LDRycqloH5nLTufNwx18kbu0noW87U9Wt03aO9qORpu1Y0tpxx7k3gZT2c3Sewqho2kZJJLickk5JPSUtY9iAa3QMOs7U6ZKYQZH8rkGobOO9SbuU+ZQUwlELQShMFACalQhB4IQhCWNygOC+hUVBQo4WU0lf63TN6ZcqQd0b4s8BdhszOg9BHEHmPUSsYkQvcUronh7DYhfKeCOojMUguCumtP3igv1qiudtm7pBJuIIw6Nw4tcOZw6PqXvyubdI6juWmLkaugdy45MCop3HwJgOGehw5nc3WFfGk9S2rUtD3zbZj3RmO7U8m6WE9Dh0dBG4p7w7FI6xtjqcOr7LLMZwOXD3lw1sOw/dZrKHNDmlrgCCMEHnQEK12qi2LSNTbMtO3Z756Nr7XVO3l1OPwbj1sO71YVeXjZfqqgc51JHTXKIcDDJyH/ALLsfMVfJ4oyqypwimn1ltj3K6osoK6kGa19xuOtcw1tjv1CcVlluMOOJdTuI9YyF4i2VnjwzN/xRuH1Lqzm4qJDTxGe1Vjsm4yfZertmWkwHtRg/NcrAnyXfslHheQ/9grqgMj8hvqT5LPIb6l55tN7fkvfPV/wvP8AC5W8LyH/ALBR4Q/Mf+wV1TyWeQ31I5MfkN9Sjm03t+SOej/hef4XK/heQ/8AYKR5XOx/7BXVPJj8gepHJZ5A9SObTe35Keer/hef4XKpz5L/ANkoy7yH/sFdVclnkN9SRYzyG+pHNpvb8kc9X/C8/wALlYZ8h/7BUvCP5kn7BXU/IZ5I9SYazyR6lPNpvb8kc9X/AAvP8Llfku8iT9g+5Ihw4sf+wV1Thnkj1I5LfJHqRzab2/JHPV/wvP8AC5W3+Q/9goJPkv8A2CuqcM8hvqRyWeQ31I5tN7fko56v+F5/hcqlx8l/7BRk+S/9grqrkx+Q31JchmfEb6lHNodvyU89X/C8/wALlXJ8l37BTyfJf+yfcuquSzyG+pMNYfzG+pTzab2/JRz1f8Lz/C5UyfJf+yUwT5D/ANg+5dUljPIb6kuSzyG+pHNpvb8kc9X/AAvP8Llff5D/ANg+5PLuaOQ/qFdUclnkN9SORGfzG+pHNpvb8kc9H/C8/wALlpkdS84ZTVDz0NicfqWRodN6kriO9bFcHg8HOhLG+t2F0oABw3diln0r6MybjH7nkr5vyznI9iMD5qkLPsp1BVua65VFNboucA91k9Q3D1qxtLaC07YHNnipjV1jf/yKk8twP90cG+gLaTxSKtKbCqan1tbr3lUVbjlbWCz32G4ak0JAoJVgqdHBYDW+qKDS1s75qj3WplBFNTA4dK76mjnP1rxa71xbdMwup2FtZdCPApWu8XoMh/NHVxPzqjLxcrhe7lJcrpUGeok3Z4Na3ma0czR0KlxPF2UwLGa3eiZcEyfkrnCSUWj9eH3ULpX1l3uk9zuExlqZ3ZceYDmaBzAcAF8cIATSQ97nuLnbStPijbEwMYLAIA3qQ4qKkFAXpHOmhGEFCeEk8pKbIQVEcFI8FAnCgoTSTJ3KOV5QhfahrKu3VjK2gqZaapj8SSN2HDq6x1HcV8sqJIyvTHOabtNiofG2Rpa8XBVt6Q2rU8zWUmpYu9peHfkLSYnf4m8WdoyOxWVSVFPWUzKmjqIqiB+9kkTw5p7CFyxjnXss90udmnM9puFTRPJy7uTvBd/iafBd6QmKjygfGM2YX7+tJ2I5Ixykvpjmncdn4XTyFTln2u3OnDWXi2QVzRxlgd3J/pactPzLbbdtU0hVgConrKB/OJ6ZxA/WZkJhhxSlmGp/jqSlU4FXU59qMnhrW7k7klgqbWekakfgdSWw9Tpg0/PheoahsB3i924jqqWe9dYniP8A2Hiq800w2sPgsmhY37f2H47t3ylvvTF/sPx3bvlDfep00faHivPJ5eyfBZFCx32/sHx5bvlLfel9v7B8eW35S33o00faCOTy9k+CySFjft/YPjy3fKW+9Av9h+O7d8pb70aaPtBHJ5eyfBZNJY0agsPx3bvlDfepC/2E/wC27d8pb70aaPtBTyeTsnwWQTWO+31h+O7d8pb70jf7B8d275S33qNNH2go0EnZPgslhJY37f2H48tvylvvQL/Yfjy2/KWe9Tpo+0EaCTsnwWSTWNN/sHx5bvlLfel90Fg+PLd8pb71Gmj7Q8VPJ5OyfBZMpLGi/wBh+PLd8pb70fb+w/Hdu+Ut96NNH2gjk8vZPgskmFjBf7D8d275S33p/b+wD/bdu+Ut96NNH2go0EnZPgskUljvt/YPju3fKWe9P7f2D47tx/5lvvRpo+0FOgk7J8FkELGm/wBg+O7d8pb70fb+w/Hdu+UN96NNH2gjk8vZPgskhYt+pNPMGXX62tHSalvvXgrNe6MpQe6aioZHD82FxlPqaCoNRENZcPFS2lncbBh8CtkyhV3dNrunoAW2+iuFc/mJjELPW7f8y0+9bUtTV4cyh73tcR/qm8uT9p3D0BcM+MUsX/a/BWtLk7X1Gxlh36vyrmvV3tllpe+bpWw0sfNy3b3dg4n0KqdYbUqytD6TTkT6KA7nVUg/Cu/wjg3tOT2KvKmeoq6h1TWVE1TO7xpJnl7j6SohL1bj0soLYvZHmnDDclIKch8/tHy/KTuU+R0kjnPe8lznOOS49JPOUwNyOKkCFQEkm5TWGgCwQEwMpghGQiyhGE1EkZUgpQmEFCChCCjmSQhCEHrQkUIQkhCEIRzoQpCEIKEYQVN0iogY5lPCSFO0JFjTxAKXc2dA9SkhTnO3rzo27lDubfIb6kdzb5I9S+mUIz3b0aNm5fPkN8gepHIb5I9S+mElOc7ejRs3KBY3yR6kuQ0fmj1L6Y50Yyoznb0aNu5Q5DfJHqRyG+SPUp4TwjOdvRo2bl8+Q3yR6kchvkj1KYTwpznb1GYzcvnyG+SPUkY2+SPUvoUBRnO3ozG7lAMb5I9SOQ3yR6lMDenhGe7epEbdy+Zjb5I9SOQ3GOS31KaMb0Zzt6NGzcoCNvkj1I7m3yR6lMjCeFOc7eoEbD1L58hvkt9SAwD80epfTCMIznb1OjZuXz5DfJHqR3Np/NHqU0xwRnO3o0bNygGNH5o9SOTjgpFCjPcetecxo2BIAdCYQgKLr0mUk+ZGEFCQUglwUhwUBCEBCFKE9yTcoUlBQllJPCRUoT3IJGEkKEIykd6CmhCimEEpICEIQnzKUJIQnhQhJMAIwmhCR4JKSCpui6iAmgI4IQjCWCpBCEKKE0AIQkOKfMjCaEKKEyjCEJIT50EIQkmEYTQgFRQmQgBCEBCMJoKEsJKRUUIRjemAkmFCm6WEsKaWFIUJYKAFJRQhPCAmOCEIQhCFCEIQnhShJCeEDOVCEHgkmUkIX//Z" alt="SELA">
+        <div class="cover-title-block">
+          <h1>Sela RT<br>Handbook</h1>
+          <div class="subtitle">Personal Clinical Reference</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-meta-wrap">
+      <div class="meta">
+        <div>
+          <strong>VERSION</strong>
+          <span>v2026.10</span>
+        </div>
+        <div>
+          <strong>UPDATED</strong>
+          <span>2026 May</span>
+        </div>
+        <div>
+          <strong>SCOPE</strong>
+          <span>乳癌、肺癌、攝護腺癌（持續擴充中）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <span>Sela RT Handbook</span>
+    <span>v2026.10</span>
+  </div>
+</section>
+
+<!-- ============ 目錄 ============ -->
+<nav class="toc">
+  <h2>目 錄</h2>
+  <ul class="toc-list">
+    <li><a href="#breast-ind" class="toc-link">乳癌　Breast</a></li>
+    <li class="toc-pending">頭頸　Head &amp; Neck</li>
+    <li><a href="#lung-ind" class="toc-link">肺　Lung</a></li>
+    <li><a href="#prostate-ind" class="toc-link">攝護腺　Prostate</a></li>
+    <li class="toc-pending">中樞神經　CNS</li>
+    <li class="toc-pending">消化道　GI</li>
+    <li class="toc-pending">婦科　Gynecologic</li>
+    <li class="toc-pending">血液　Hematologic</li>
+  </ul>
+</nav>
+<!-- ============ 乳癌 — 適應症 ============ -->
+<section class="chapter" id="breast-ind">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>1. 適應症</h1>
+
+  <h2>1.1 整體決策流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[術後評估 RT]:::startN
+    B[BCS 後]:::actionN
+    C[Mastectomy 後]:::actionN
+    B1[WBRT ± boost]:::actionN
+    B2[低風險可免 RT<sup>a</sup>]:::actionN
+    B3[符合條件 APBI<sup>b</sup>]:::actionN
+    C1[T3-4 或 ≥4 LN+<br/>PMRT + RNI]:::actionN
+    C2[1-3 LN+ 個別化]:::actionN
+    C3[T1-2 N0 多數<br/>不需 PMRT]:::actionN
+    E[計畫處方]:::endN
+
+    A --> B
+    A --> C
+    B --> B1
+    B --> B2
+    B --> B3
+    C --> C1
+    C --> C2
+    C --> C3
+    B1 --> E
+    B2 --> E
+    B3 --> E
+    C1 --> E
+    C2 --> E
+    C3 --> E
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　術後 RT 整體決策</div>
+  <div class="flowchart-footnote">
+    <ul>
+      <li><strong>a. 低風險免 RT：</strong>≥65 歲、cT1N0、ER+、margin neg、接受 endocrine therapy（PRIME II / CALGB 9343 條件，詳 1.2.1）</li>
+      <li><strong>b. APBI 適合：</strong>ASTRO 2023 suitable 條件（詳 1.5）</li>
+    </ul>
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.2 BCS 後 WBRT</h2>
+  <p>多數 BCS 病人 WBRT；少數低風險族群可共享決策免 RT。</p>
+
+  <h3>1.2.1 可免 RT 之低風險族群（invasive，需全部符合）</h3>
+  <ul>
+    <li>≥65 歲（PRIME II）/ ≥70 歲（CALGB 9343）</li>
+    <li>Tumor ≤3 cm（PRIME II）/ ≤2 cm（CALGB 9343）</li>
+    <li>cN0、ER+、margin neg、低-中 grade、無 LVI</li>
+    <li>接受完整 endocrine therapy</li>
+  </ul>
+  <div class="inline-note">
+    <strong>PRIME II</strong> 10y IBTR 9.5% (no RT) vs 0.9% (RT)，OS 無差異。<br>
+    <strong>CALGB 9343</strong> 10y LRR 10% vs 2%，OS 無差異。
+  </div>
+
+  <h3>1.2.2 DCIS 後 WBRT</h3>
+  <p>BCS 後預設 WBRT；下列低風險可考慮免 RT：</p>
+  <ul>
+    <li>≥50 歲、低-中 grade、≤2.5 cm、margin ≥3 mm、ER+ 接受 endocrine therapy</li>
+    <li>Oncotype DX DCIS Score 可輔助</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.3 PMRT 適應症</h2>
+  <table>
+    <thead>
+      <tr><th style="width:34%">情境</th><th style="width:18%">PMRT</th><th style="width:48%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>T3–T4（含 inflammatory）</td><td><strong>強烈建議</strong></td><td>chest wall + RNI</td></tr>
+      <tr><td>≥4 LN+</td><td><strong>強烈建議</strong></td><td>chest wall + RNI（含 SCV ± IMN）</td></tr>
+      <tr><td>1–3 LN+</td><td>個別化</td><td>多數建議；高風險特徵<sup>a</sup>更傾向 PMRT</td></tr>
+      <tr><td>切緣陽性無法再切</td><td>建議</td><td>chest wall</td></tr>
+      <tr><td>cT3N0 → ypT1-2N0（NAC 後）</td><td>建議</td><td>依術前分期</td></tr>
+      <tr><td>NAC 後 ypN+</td><td>建議</td><td>標準 PMRT + RNI</td></tr>
+      <tr><td>T1-2 N0 單純</td><td>多數不需</td><td>除非有高風險特徵<sup>a</sup></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>a. 高風險特徵：</strong>&lt;40-50 歲、Grade 3、LVSI、ER 陰、TNBC、HER2+ 未完整治療、僅取 1-2 顆 SLN、廣泛 ECE
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.4 RNI</h2>
+
+  <h3>1.4.1 區域定義</h3>
+  <ul>
+    <li><strong>Axilla L1：</strong>pec minor 外緣外側</li>
+    <li><strong>Axilla L2：</strong>pec minor 後方</li>
+    <li><strong>Axilla L3 / infraclav：</strong>pec minor 內緣至 subclavian vein</li>
+    <li><strong>SCV：</strong>鎖骨上窩</li>
+    <li><strong>IMN：</strong>前 3 肋間 IMA 旁</li>
+  </ul>
+
+  <h3>1.4.2 RNI 適應症</h3>
+  <table>
+    <thead>
+      <tr><th style="width:36%">情境</th><th style="width:64%">RNI 建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>≥4 LN+</td><td>原則 RNI（axilla apex + SCV，考慮 IMN）</td></tr>
+      <tr><td>1–3 LN+</td><td>多數建議（MA.20、EORTC 22922）</td></tr>
+      <tr><td>cN+ NAC 後 ypN0</td><td>NSABP B-51 顯示對 IBR/RFI 無顯著改善 → 可省略 RNI<sup>a</sup></td></tr>
+      <tr><td>cN0 SLN 1-2+ + BCS + WBRT</td><td>Z0011 族群可不做 ALND 也不做 RNI；high tangent 涵蓋部分 axilla</td></tr>
+      <tr><td>IMN 加照</td><td>medial/central tumor、≥4 LN+、cN+ post-NAC、年輕高風險</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>a. NSABP B-51 (Mamounas 2024)：</strong>cN1 達 ypN0 病人 RNI 對 IBR/RFI 無 benefit。實務上仍視個別情況（特別 PMRT vs BCS 不同）。
+  </p>
+  <div class="inline-note">
+    <strong>MA.20：</strong>10y DFS 82% vs 77%、DDFS 改善、OS 趨勢。
+    <strong>EORTC 22922：</strong>15y DM 與 BC mortality 改善。
+    <strong>AMAROS：</strong>cT1-2 cN0 SLN+ 1-2 顆 RT 可替代 ALND，淋巴水腫顯著少。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.5 APBI（ASTRO 2023 Consensus）</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">條件</th>
+        <th style="width:27%">Suitable</th>
+        <th style="width:27%">Cautionary</th>
+        <th style="width:28%">Unsuitable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>年齡</td><td>≥50</td><td>40–49</td><td>&lt;40</td></tr>
+      <tr><td>病理</td><td>IDC、低-中 grade DCIS ≤2.5 cm</td><td>ILC、純 DCIS &gt;2.5 cm 或 high grade</td><td>—</td></tr>
+      <tr><td>Tumor size</td><td>≤2 cm</td><td>2.1–3 cm</td><td>&gt;3 cm</td></tr>
+      <tr><td>Margin</td><td>≥2 mm（DCIS ≥3 mm）</td><td>&lt;2 mm</td><td>陽性</td></tr>
+      <tr><td>LN</td><td>pN0</td><td>—</td><td>pN+</td></tr>
+      <tr><td>ER</td><td>+</td><td>−</td><td>—</td></tr>
+      <tr><td>多焦點</td><td>單一</td><td>—</td><td>多焦點</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.6 Boost</h2>
+  <table>
+    <thead>
+      <tr><th style="width:34%">族群</th><th style="width:66%">Boost</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&lt;50 歲</td><td><strong>強烈建議</strong>（EORTC boost 絕對獲益最大）</td></tr>
+      <tr><td>50–70 歲 + 高風險特徵<sup>a</sup></td><td>建議</td></tr>
+      <tr><td>≥70 歲、低風險、ER+</td><td>可省略</td></tr>
+      <tr><td>DCIS（年輕、close margin、high grade）</td><td>考慮（BIG 3-07 / TROG 07.01）</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>a.</strong> Grade 3、LVI、close margin、廣泛 DCIS、TNBC、HER2+
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.7 特殊情境</h2>
+
+  <h3>1.7.1 NAC 後 RT</h3>
+  <ul>
+    <li>RT 決策依術前分期與術後病理較高者</li>
+    <li>cT3-4 / cN+ → 即使 ypT0/ypN0 多數仍給 RT</li>
+    <li>cN1 → ypN0：B-51 結果支持可省 RNI（個別情境仍可考慮）</li>
+    <li>cN+ ypN+：標準 PMRT + RNI</li>
+  </ul>
+
+  <h3>1.7.2 Phyllodes / Sarcoma</h3>
+  <p>Borderline / malignant phyllodes、angiosarcoma：BCS 後考慮 RT（特別 close margin 或 &gt;5 cm）；50 Gy/25 fx ± boost 60-66 Gy。</p>
+
+  <h3>1.7.3 Re-irradiation（IBR）</h3>
+  <p>既往 WBRT 後 IBR：考慮 partial breast re-RT（45 Gy/30 fx BID 或 hypo schemes）。NRG-BR001 / RTOG 1014 提供部分證據。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 乳癌 — 模擬定位 ============ -->
+<section class="chapter" id="breast-sim">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>2. 模擬定位</h1>
+
+  <h2>2.1 體位</h2>
+  <table>
+    <thead>
+      <tr><th style="width:22%">姿勢</th><th style="width:38%">適應症</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Supine</strong></td><td>絕大多數預設</td><td>重現性高、可整合 RNI、適合 DIBH</td></tr>
+      <tr><td><strong>Prone</strong></td><td>大且下垂乳房、左側 + 心肺難達標、單純 WBRT 不需 RNI</td><td>降低肺與心臟劑量；不適合需 RNI 者</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.1.1 Standard supine setup</h3>
+  <ul>
+    <li>Breast board 傾斜 5–15°</li>
+    <li>患側手上舉（hand-grip）</li>
+    <li>頭部正中、下巴向健側偏（避開 SCV field）</li>
+    <li>膝下墊 wedge cushion</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.2 DIBH</h2>
+  <p><strong>適應症：</strong>左側乳癌（WBRT/PMRT 皆然），可降 mean heart dose ~50%。次要：右側但醫學內乳房大、心臟解剖不利者。</p>
+  <p><strong>必要條件：</strong>能穩定閉氣 ≥20 秒、配合佳、無重度 COPD。</p>
+
+  <h3>2.2.1 設備比較</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:24%">系統</th><th style="width:38%">原理</th><th style="width:38%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>RPM (Varian)</td><td>外部 marker + 紅外線追蹤</td><td>普及；需自主閉氣</td></tr>
+      <tr><td>Catalyst / Sentinel</td><td>SGRT 光學表面追蹤</td><td>無 marker；即時監測</td></tr>
+      <tr><td>ABC</td><td>Spirometer 控氣道容積</td><td>侵入性高、穩定性好</td></tr>
+      <tr><td>視覺回饋眼鏡</td><td>病人即時看呼吸曲線</td><td>大幅提升配合度</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.3 影像取得</h2>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">項目</th><th style="width:75%">建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Slice thickness</td><td>2–3 mm</td></tr>
+      <tr><td>Scan range</td><td>下顎至 L1（含整個雙肺與心臟）</td></tr>
+      <tr><td>FOV</td><td>≥50 cm，含雙側皮膚輪廓完整</td></tr>
+      <tr><td>對比劑</td><td>不需；RNI 解剖模糊時考慮</td></tr>
+      <tr><td>4D-CT</td><td>不常規；DIBH 取代</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.4 BB 標記</h2>
+  <ul>
+    <li><strong>Scar wire：</strong>手術疤痕外圍鉛條</li>
+    <li><strong>Palpable border：</strong>BB 標 sup / med / lat 邊界</li>
+    <li><strong>Surgical clips：</strong>BCS 中應請外科置入 ≥5 顆，標 lumpectomy cavity</li>
+    <li><strong>Tattoo：</strong>中心點 + 兩側 lateral；SGRT 可用較少</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.5 Bolus</h2>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:32%">情境</th><th style="width:24%">Bolus</th><th style="width:44%">頻率</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>PMRT 含皮膚侵犯（T4b）</td><td><strong>每次</strong></td><td>每 fx，3–5 mm</td></tr>
+      <tr><td>PMRT inflammatory</td><td><strong>每次</strong></td><td>每 fx</td></tr>
+      <tr><td>PMRT 切緣陽性、靠近皮膚</td><td>建議</td><td>每 fx 或交替</td></tr>
+      <tr><td>PMRT 一般情境</td><td>選擇性</td><td>近年趨向減少使用</td></tr>
+      <tr><td>WBRT</td><td>不需</td><td>—</td></tr>
+      <tr><td>Boost</td><td>不需</td><td>—</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 乳癌 — 靶區 ============ -->
+<section class="chapter" id="breast-tgt">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>3. 靶區勾劃</h1>
+
+  <h2>3.1 全乳房 CTV / PTV（BCS 後）</h2>
+
+  <h3>3.1.1 Whole breast CTV</h3>
+  <ul>
+    <li><strong>上：</strong>可觸及乳腺上緣（多在第 2 肋間）</li>
+    <li><strong>下：</strong>乳腺下緣 + inframammary fold 下 1 cm</li>
+    <li><strong>內：</strong>胸骨外緣</li>
+    <li><strong>外：</strong>mid-axillary line 或 latissimus dorsi 前緣</li>
+    <li><strong>前：</strong>皮下 5 mm（除非皮膚侵犯）</li>
+    <li><strong>後：</strong>pec major 前表面（不含肌肉）</li>
+  </ul>
+
+  <h3>3.1.2 Whole breast PTV</h3>
+  <ul>
+    <li>CTV → PTV：5–10 mm（IGRT 方式調整；SGRT + daily kV 可降至 5 mm）</li>
+    <li>PTV 不延伸至皮膚外（trim at skin – 3 mm）</li>
+    <li>PTV_eval：trim 5 mm from skin、排除肺與心臟以利 DVH 評估</li>
+  </ul>
+
+  <h2>3.2 胸壁 CTV / PTV（PMRT）</h2>
+  <ul>
+    <li><strong>範圍：</strong>對側 mastectomy 疤痕、皮下、pec major + minor、肋骨與肋間肌前緣</li>
+    <li><strong>上：</strong>原乳房上緣（多在 caudal head of clavicle 下緣）</li>
+    <li><strong>下：</strong>對側 inframammary fold 對應位置</li>
+    <li><strong>內：</strong>胸骨外緣　<strong>外：</strong>mid-axillary line</li>
+    <li><strong>後：</strong>含 pec major + minor（implant 含 implant 表面 + 1 cm）</li>
+    <li><strong>前：</strong>皮膚（含或 minus 3 mm，依是否需 bolus）</li>
+  </ul>
+  <p style="font-size:13px;color:var(--text-muted);">
+    Implant / reconstruction：含 implant 表面（前後皆需），ESTRO-ACROP 2019 提供詳細 implant CTV 定義。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.3 區域淋巴結 CTV</h2>
+  <table>
+    <thead>
+      <tr><th style="width:18%">區域</th><th style="width:42%">範圍</th><th style="width:40%">關鍵邊界</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Axilla L1</strong></td><td>pec minor 外緣外側</td><td>外：lat dorsi 前緣；下：第 4 肋間</td></tr>
+      <tr><td><strong>Axilla L2</strong></td><td>pec minor 後方</td><td>含 pec minor 全長下方淋巴鏈</td></tr>
+      <tr><td><strong>Axilla L3</strong></td><td>pec minor 內緣至 SCV 外界</td><td>上：subclavian vein 下緣</td></tr>
+      <tr><td><strong>SCV</strong></td><td>鎖骨上窩淋巴鏈</td><td>上：cricoid 下緣；外：anterior scalene 外側；內：carotid sheath 外緣</td></tr>
+      <tr><td><strong>IMN</strong></td><td>前 3 肋間 IMA 旁</td><td>第 1–3 肋間，IMA 周圍 5 mm</td></tr>
+      <tr><td>Interpec (Rotter's)</td><td>pec major / minor 之間</td><td>RNI 時通常涵蓋於 axilla L2</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    PTV margin：CTV → PTV 5 mm（IGRT daily）至 7 mm；SCV/IMN 附近 PTV 不應超出胸壁進入肺實質太多。
+  </p>
+
+  <h2>3.4 Tumor bed / Boost CTV</h2>
+  <ul>
+    <li><strong>定義：</strong>原 lumpectomy cavity（含 clips、seroma、術後 architectural distortion）</li>
+    <li><strong>輔助：</strong>術前 MRI、術中超音波、surgical clips（≥5 顆）</li>
+    <li><strong>CTV margin：</strong>cavity + 10–15 mm</li>
+    <li><strong>PTV margin：</strong>CTV + 5–7 mm</li>
+    <li>不延伸至皮膚（trim at skin – 3 mm）、不進入 pec 後方</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.5 OAR 勾劃要點</h2>
+
+  <h3>3.5.1 心臟</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">結構</th><th style="width:78%">勾劃</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>整體心臟</td><td>含心包膜下緣至 pulmonary trunk；上界至心包膜上緣（多在 PA bifurcation 下）</td></tr>
+      <tr><td>LAD</td><td>從 left main 起點沿 anterior interventricular sulcus 至心尖；建議 PRV 5 mm</td></tr>
+      <tr><td>左心室</td><td>含 ventricle 全壁；輔助 V5 評估</td></tr>
+      <tr><td>右冠狀動脈</td><td>右側乳癌或廣泛 IMN field 注意</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.5.2 肺</h3>
+  <p>同側肺、對側肺分開勾劃；不含 main bronchus 與 trachea。雙肺合一用於 V5、V20 評估。</p>
+
+  <h3>3.5.3 對側乳房</h3>
+  <p>從乳房上緣到 inframammary fold；含可觸及乳腺組織；&lt;40 歲嚴格控制（second cancer 風險）。</p>
+
+  <h3>3.5.4 其他</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">OAR</th><th style="width:78%">重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>脊髓</td><td>SCV field 必評估</td></tr>
+      <tr><td>Brachial plexus</td><td>C5–T1 nerve roots 經 anterior 與 middle scalene 之間下行至 axilla；含 SCV 必勾</td></tr>
+      <tr><td>食道</td><td>IMN / SCV field 相關</td></tr>
+      <tr><td>甲狀腺</td><td>SCV field 邊緣</td></tr>
+      <tr><td>肱骨頭</td><td>SCV + axilla L3 時下緣</td></tr>
+      <tr><td>肝</td><td>右側 + IMN + 大型乳房可能進入</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 乳癌 — 劑量 ============ -->
+<section class="chapter" id="breast-dose">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>4. 劑量與分次</h1>
+
+  <h2>4.1 WBRT</h2>
+  <table>
+    <thead>
+      <tr><th style="width:24%">方案</th><th style="width:18%">總劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:44%">來源 / 適用</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conventional</td><td>50 Gy / 25 fx</td><td>2.0 Gy</td><td>少用；複雜情境保留</td></tr>
+      <tr><td><strong>Moderate hypo (UK)</strong></td><td>40 Gy / 15 fx</td><td>2.67 Gy</td><td>START B；目前最廣泛採用</td></tr>
+      <tr><td>Moderate hypo (CAN)</td><td>42.56 Gy / 16 fx</td><td>2.66 Gy</td><td>Whelan / OCOG</td></tr>
+      <tr><td><strong>Ultra-hypo</strong></td><td>26 Gy / 5 fx</td><td>5.2 Gy</td><td>FAST-Forward；1 週；invasive 不需 RNI</td></tr>
+      <tr><td>5 fx weekly</td><td>28.5 / 30 Gy / 5 fx weekly</td><td>5.7 / 6.0 Gy</td><td>FAST；老年或交通不便</td></tr>
+    </tbody>
+  </table>
+  <div class="inline-note">
+    <strong>START B：</strong>40 Gy/15 fx vs 50 Gy/25 fx 10y LRR/OS 相當，cosmesis 較佳。
+    <strong>FAST-Forward：</strong>26 Gy/5 fx vs 40 Gy/15 fx 5y LR 非劣性。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.2 PMRT</h2>
+  <table>
+    <thead>
+      <tr><th style="width:24%">方案</th><th style="width:18%">總劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:44%">適用</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conventional</td><td>50 Gy / 25 fx</td><td>2.0 Gy</td><td>仍多預設；含 implant 複雜 reconstruction</td></tr>
+      <tr><td>Moderate hypo</td><td>40 Gy / 15 fx 或 42.56 / 16</td><td>2.67 Gy</td><td>RT CHARM、Wang trial 顯示安全</td></tr>
+      <tr><td>Implant + hypo</td><td>40 Gy / 15 fx</td><td>2.67 Gy</td><td>FABREC：reconstruction 病人 2y 皮膚 toxicity 與 conventional 相當</td></tr>
+      <tr><td>Chest wall boost</td><td>10 Gy / 5 fx 或 SIB</td><td>2.0 Gy</td><td>切緣陽、皮膚侵犯、廣泛 LVSI</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.3 RNI</h2>
+  <ul>
+    <li>Conventional：50 Gy / 25 fx，與 chest wall / WB 同步</li>
+    <li>Moderate hypo：40 Gy / 15 fx 或 42.56 / 16（RT CHARM、Wang trial）</li>
+    <li>Ultra-hypo + RNI：仍試驗中，非標準</li>
+    <li>處方：SCV / Axilla PTV D95 ≥95%；IMN PTV D90 可接受（不為 IMN 過增肺劑量）</li>
+  </ul>
+
+  <h2>4.4 Boost</h2>
+  <table>
+    <thead>
+      <tr><th style="width:26%">方案</th><th style="width:20%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Sequential conv</td><td>10 Gy / 5 fx</td><td>2.0 Gy</td><td>EORTC boost trial 標準</td></tr>
+      <tr><td>Sequential hypo</td><td>10–13 Gy / 4–5 fx</td><td>2.5–2.67 Gy</td><td>搭配 40 Gy/15 fx</td></tr>
+      <tr><td>High-risk boost</td><td>14–16 Gy / 7–8 fx</td><td>2.0 Gy</td><td>切緣陽、IBC、年輕高風險</td></tr>
+      <tr><td>SIB</td><td>WBRT 48 Gy + boost 53 Gy / 20 fx</td><td>varies</td><td>IMPORT HIGH；計畫複雜</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.5 APBI</h2>
+  <table>
+    <thead>
+      <tr><th style="width:24%">技術</th><th style="width:24%">劑量</th><th style="width:52%">來源</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>EBRT QD（首選）</strong></td><td>30 Gy / 5 fx QD</td><td>Florence；隔日</td></tr>
+      <tr><td>EBRT BID</td><td>38.5 Gy / 10 fx BID</td><td>NSABP B-39 / RTOG 0413；fx 間 ≥6 hr</td></tr>
+      <tr><td>Multicatheter brachy</td><td>32–34 Gy / 10 fx BID</td><td>GEC-ESTRO</td></tr>
+      <tr><td>SAVI / Mammosite</td><td>34 Gy / 10 fx BID</td><td>單一 device 操作較簡單</td></tr>
+      <tr><td>IORT（不推首選）</td><td>20–21 Gy 單次</td><td>TARGIT-A、ELIOT；長期 LR 較高</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.6 處方規格與 DVH</h2>
+  <ul>
+    <li><strong>D95 ≥ 95%</strong> prescription（多數中心）</li>
+    <li><strong>V95 ≥ 95%</strong> PTV volume</li>
+    <li><strong>D2 ≤ 107%</strong> prescription（hot spot）</li>
+    <li><strong>D50（mean）：</strong>應接近 prescription</li>
+    <li><strong>CI：</strong>0.9–1.1；<strong>HI（ICRU 83）：</strong>(D2-D98)/D50 越接近 0 越均勻</li>
+  </ul>
+
+  <h2>4.7 技術選擇</h2>
+  <table>
+    <thead>
+      <tr><th style="width:22%">技術</th><th style="width:38%">適用</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3D-CRT tangent</td><td>單純 WBRT、PMRT 不含 RNI</td><td>簡單成熟；複雜解剖受限</td></tr>
+      <tr><td>FIF</td><td>3D-CRT 加強均勻度</td><td>降 hot spots</td></tr>
+      <tr><td>IMRT</td><td>RNI 含 IMN、複雜解剖</td><td>conformity 佳；low-dose bath 變大</td></tr>
+      <tr><td>VMAT</td><td>RNI、APBI、複雜目標</td><td>治療快；setup 要求高</td></tr>
+      <tr><td>Hybrid (3D + IMRT)</td><td>limit low-dose spread</td><td>計畫費時</td></tr>
+      <tr><td>Proton</td><td>左側 + RNI 含 IMN、心劑量無法達標</td><td>降 contralateral 與 low-dose；可近性低；NRG-BR007</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.8 全身治療搭配時序</h2>
+  <table>
+    <thead>
+      <tr><th style="width:24%">藥物</th><th style="width:76%">與 RT 搭配</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Anthracycline</td><td>RT 於化療<strong>完成後</strong>開始（避免心毒性疊加）</td></tr>
+      <tr><td>Trastuzumab</td><td>可同步；左側 + RT 期間注意 mean heart dose</td></tr>
+      <tr><td>Pertuzumab</td><td>同 trastuzumab</td></tr>
+      <tr><td>T-DM1 / T-DXd</td><td>可同步；T-DXd 注意 ILD 風險</td></tr>
+      <tr><td>CDK4/6i（abemaciclib、palbociclib）</td><td>RT 期間<strong>暫停</strong>；RT 後 ≥5–7 天再 resume</td></tr>
+      <tr><td>Olaparib (OlympiA)</td><td>多數研究<strong>同步</strong>使用，未見明顯加重</td></tr>
+      <tr><td>Capecitabine</td><td>原則暫停；個案可 50% 減量同步</td></tr>
+      <tr><td>Endocrine therapy (TAM/AI)</td><td>可同步或 RT 後；近年偏向同步開始</td></tr>
+      <tr><td>Pembrolizumab (KN-522)</td><td>可同步；資料目前安全</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>禁忌：</strong>active scleroderma / SLE 為相對禁忌；懷孕為絕對禁忌；累積 cumulative dose 已達 tolerance 為相對禁忌（需 reirradiation 評估）。
+  </p>
+    </div>
+  </div>
+</section>
+<!-- ============ 乳癌 — OAR ============ -->
+<section class="chapter" id="breast-oar">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>5. OAR 限制</h1>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    限制以 conventional 50 Gy/25 fx 等效為基準；hypo 方案以 EQD2 換算（α/β = 3 for late）。40 Gy/15 fx ≈ 50 Gy/25 fx EQD2（late effect 略高 ~5–8%）。26 Gy/5 fx EQD2 對 late effect 約等於 41–43 Gy/25 fx。
+  </p>
+
+  <h2>5.1 心臟</h2>
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mean Heart Dose</td><td><strong>左 &lt;4 Gy（理想 &lt;2）<br>右 &lt;2 Gy（理想 &lt;1）</strong></td><td>每 1 Gy MHD 增加 IHD 風險 ~7.4%（Darby 2013）</td></tr>
+      <tr><td>V25</td><td>&lt;5–10%</td><td>QUANTEC；現代 DIBH 多遠低於此</td></tr>
+      <tr><td>LAD Dmax</td><td>&lt;20 Gy（理想 &lt;15）</td><td>左側或 IMN 必評</td></tr>
+      <tr><td>LAD V15</td><td>&lt;10%</td><td>—</td></tr>
+      <tr><td>LV V5</td><td>&lt;17%</td><td>輔助</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.2 肺</h2>
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>同側肺 V20</td><td><strong>&lt;30–35%</strong>（單純 WBRT &lt;20%）</td><td>含 RNI 可接受 &lt;35%</td></tr>
+      <tr><td>同側肺 V5</td><td>&lt;55–60%（含 RNI）</td><td>—</td></tr>
+      <tr><td>同側肺 mean</td><td>&lt;15 Gy</td><td>—</td></tr>
+      <tr><td>對側肺 V5</td><td><strong>&lt;10%</strong></td><td>IMRT/VMAT 易違反</td></tr>
+      <tr><td>雙肺 mean</td><td>&lt;8 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    同側 V20 ≥30% 症狀性肺炎 ~10–15%；既有 ILD 風險顯著增加。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.3 對側乳房</h2>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Dmax</td><td>&lt;3 Gy（理想 &lt;2）</td><td>—</td></tr>
+      <tr><td>Mean</td><td>&lt;1 Gy</td><td>每 1 Gy mean 增 second cancer 相對風險 ~10–14%（年齡相關）</td></tr>
+      <tr><td>V5</td><td>&lt;5%</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.4 其他</h2>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:24%">OAR</th><th style="width:30%">目標</th><th style="width:46%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>脊髓 (PRV)</td><td>Dmax &lt;45 Gy（多 &lt;40）</td><td>SCV field 必評</td></tr>
+      <tr><td>Brachial plexus</td><td>Dmax &lt;60 Gy（含 boost）</td><td>含 SCV 時 plexus 常於 PTV 內</td></tr>
+      <tr><td>食道</td><td>V35 &lt;30%；mean &lt;25 Gy</td><td>SCV / IMN 相關</td></tr>
+      <tr><td>甲狀腺</td><td>V25 &lt;60%</td><td>長期 hypothyroidism 風險</td></tr>
+      <tr><td>肱骨頭</td><td>Dmax &lt;50 Gy</td><td>RNI 含 axilla L3 注意</td></tr>
+      <tr><td>肝（右側）</td><td>Mean &lt;10 Gy</td><td>右側 + IMN + 大乳房</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.5 Implant / Reconstruction</h2>
+  <ul>
+    <li>Implant 表面避免 hot spot &gt;107%；過量加劇 capsular contracture</li>
+    <li>TE/Implant exchange：完成 RT 後 ≥6 個月再 exchange</li>
+    <li>Autologous flap（DIEP）較 implant 對 RT 耐受高</li>
+  </ul>
+
+  <h2>5.6 衝突處理</h2>
+  <p><strong>絕對不可超：</strong>spinal cord、brachial plexus、contralateral breast Dmax、heart V25 hard limit。</p>
+  <p><strong>可權衡：</strong>PTV 覆蓋 vs MHD（適度犧牲 PTV peripheral 以保 MHD &lt;4 Gy）。</p>
+  <p><strong>左側 + 心臟：</strong>優先 DIBH；無法 DIBH → IMRT/VMAT、partial wide tangents、prone、或 proton。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 乳癌 — 副作用 ============ -->
+<section class="chapter" id="breast-tox">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>6. 副作用</h1>
+
+  <h2>6.1 急性</h2>
+
+  <h3>6.1.1 皮膚反應（CTCAE v5.0）</h3>
+  <table>
+    <thead>
+      <tr><th style="width:10%">G</th><th style="width:38%">表現</th><th style="width:52%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Faint erythema、乾性脫皮</td><td>保溼霜（aqueous cream / Aquaphor）每日多次；避免摩擦、香皂、體香劑</td></tr>
+      <tr><td>2</td><td>Moderate erythema、patchy 濕性脫皮（皺褶處：腋下、IMF）</td><td>繼續保溼；濕性處 hydrocolloid（Mepilex Lite / DuoDERM）；不中斷治療</td></tr>
+      <tr><td>3</td><td>Confluent 濕性脫皮、出血</td><td>主動換藥；考慮短暫暫停 1–3 天 reepithelialize；G2-3 可考慮 mometasone</td></tr>
+      <tr><td>4</td><td>皮膚壞死、全層潰瘍</td><td>RT 暫停；外科會診</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text-muted);">
+    Mepitel Film（多 RCT）：預防性矽膠薄膜降低 G3 moist desquamation；高風險族群可考慮。
+  </p>
+
+  <h3>6.1.2 食道炎（SCV / IMN）</h3>
+  <p>多 W3–W5 出現；軟食、PPI、局部 lidocaine viscous；嚴重時短期類固醇。</p>
+
+  <h3>6.1.3 乳房 / 上肢淋巴水腫</h3>
+  <p>急性乳房水腫多自限；上肢水腫與 ALND + RNI 相關（AMAROS：SLN+ 1-2 顆 RT 替代 ALND 顯著降低）。</p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.2 急性皮膚處理流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[每週 OTV<br/>評估皮膚]:::startN
+    G1[G1 紅斑]:::actionN
+    G2[G2 patchy moist]:::actionN
+    G3[G3 confluent moist]:::actionN
+    G4[G4 壞死 / 全層潰瘍]:::actionN
+    M1[保溼<br/>持續治療]:::actionN
+    M2[Hydrocolloid<br/>持續治療]:::actionN
+    M3[換藥 + 評估暫停 1-3 天]:::actionN
+    M4[暫停 RT<br/>外科會診]:::actionN
+    F[完成療程]:::endN
+
+    A --> G1
+    A --> G2
+    A --> G3
+    A --> G4
+    G1 --> M1
+    G2 --> M2
+    G3 --> M3
+    G4 --> M4
+    M1 --> F
+    M2 --> F
+    M3 --> F
+    M4 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　急性皮膚反應分級處理</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.3 晚期</h2>
+  <table>
+    <thead>
+      <tr><th style="width:22%">副作用</th><th style="width:20%">時程</th><th style="width:58%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>放射性肺炎</td><td>3–6 月</td><td>HRCT + 症狀；prednisolone 0.5–1 mg/kg/day 漸減 4–8 週</td></tr>
+      <tr><td>乳房 / 胸壁纖維化</td><td>6 月-數年</td><td>物治、按摩；嚴重者 pentoxifylline + vit E</td></tr>
+      <tr><td>心血管事件</td><td>數年-10+y</td><td>左側 + AC：baseline + 每 3–5 年心血管評估</td></tr>
+      <tr><td>臂神經叢病變</td><td>數年-10+y</td><td>無有效治療；預防為主</td></tr>
+      <tr><td>肋骨骨折</td><td>1–5 年</td><td>低劑量機率小（&lt;5%）</td></tr>
+      <tr><td>慢性淋巴水腫</td><td>數月-數年</td><td>OT / lymphedema therapist；LVA、VLNT</td></tr>
+      <tr><td>色素沉著、telangiectasia</td><td>長期</td><td>cosmetic；雷射可改善</td></tr>
+      <tr><td>第二原發癌</td><td>10+y</td><td>對側乳癌、肺、sarcoma（罕見）</td></tr>
+      <tr><td>Cardiac valve disease</td><td>10+y</td><td>含於長期心追蹤</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 乳癌 — 追蹤 ============ -->
+<section class="chapter" id="breast-fu">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>7. 追蹤</h1>
+
+  <h2>7.1 治療中（OTV）</h2>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">頻率</th><th style="width:78%">項目</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>每週 1 次</td><td>皮膚 CTCAE、疲勞、疼痛、乳房水腫、上肢、體重、配合度</td></tr>
+      <tr><td>每週影像</td><td>kV CBCT / portal；DIBH 確認 baseline 穩定</td></tr>
+      <tr><td>異常時</td><td>G2+ 皮膚 → 提高每 2–3 天；肺炎徵兆 → CXR / HRCT</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.2 RT 後追蹤時序</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[完成 RT]:::startN
+    B[1 月<br/>急性副作用]:::actionN
+    C[3 月<br/>急性轉慢性]:::actionN
+    D[6 月<br/>cosmesis + 肺炎警覺]:::actionN
+    E[每 6-12 月<br/>長期]:::actionN
+    F[整合 MDT<br/>長期排程]:::endN
+
+    A --> B --> C --> D --> E --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　RT 完成後追蹤</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.3 各時期項目</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">時期</th>
+        <th style="width:32%">臨床</th>
+        <th style="width:25%">影像</th>
+        <th style="width:25%">特殊</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>RT 後 1 月</td><td>皮膚復原、急性收斂</td><td>—</td><td>後續全身治療銜接</td></tr>
+      <tr><td>3 月</td><td>色素變化、纖維化早期、上肢功能</td><td>—</td><td>咳嗽 / 呼吸不適 → HRCT</td></tr>
+      <tr><td>6 月</td><td>Cosmesis（Harvard scale）、纖維化</td><td>Mammography（治療側）</td><td>左側 baseline echo</td></tr>
+      <tr><td>1–2 年</td><td>每 3–6 月病史 + PE</td><td>每年 mammography</td><td>淋巴水腫 surveillance</td></tr>
+      <tr><td>3–5 年</td><td>每 6–12 月</td><td>每年 mammography</td><td>左側 + AC：每 3–5 年 echo</td></tr>
+      <tr><td>≥5 年</td><td>每年</td><td>每年 mammography（終身）</td><td>第二原發 surveillance；BRCA carrier MRI</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.4 特殊族群長期重點</h2>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:30%">族群</th><th style="width:70%">重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>左側 + AC chemo</td><td>baseline echo（RT 前 / 1 月內）；每 3–5 年 LVEF；高風險每年</td></tr>
+      <tr><td>含 RNI（含 axilla）</td><td>淋巴水腫 baseline + 前 2 年每 6 月；之後每年</td></tr>
+      <tr><td>BRCA1/2</td><td>每年 mammography + MRI 交替；對側手術討論</td></tr>
+      <tr><td>&lt;40 歲</td><td>對側嚴格 surveillance；生殖醫學討論</td></tr>
+      <tr><td>含 SCV field</td><td>甲狀腺 baseline + 每 1–2 年 TSH</td></tr>
+      <tr><td>Reconstruction</td><td>Implant 完整性、capsular contracture grade</td></tr>
+      <tr><td>Reirradiation</td><td>密切皮膚 + 軟組織纖維化；MRI 監測 recurrence</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 乳癌 — 文獻 ============ -->
+<section class="chapter" id="breast-ref">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">乳癌</span>8. 主要試驗與文獻</h1>
+
+  <h2>8.1 BCS 後 RT</h2>
+  <ol class="references">
+    <li>Kunkler IH, et al. PRIME II. N Engl J Med. 2023;388:585–594.</li>
+    <li>Hughes KS, et al. CALGB 9343. J Clin Oncol. 2013;31:2382–2387.</li>
+    <li>Whelan TJ, et al. OCOG 42.56 Gy/16 fx. N Engl J Med. 2010;362:513–520.</li>
+    <li>START Trialists. START A &amp; B. Lancet Oncol. 2008;9:331–341.</li>
+    <li>Murray Brunt A, et al. FAST-Forward. Lancet. 2020;395:1613–1626.</li>
+    <li>Bartelink H, et al. EORTC boost trial 22881-10882. Lancet Oncol. 2015;16:47–56.</li>
+  </ol>
+
+  <h2>8.2 PMRT &amp; RNI</h2>
+  <ol class="references">
+    <li>EBCTCG. PMRT 10y recurrence + 20y BC mortality. Lancet. 2014;383:2127–2135.</li>
+    <li>Whelan TJ, et al. MA.20. N Engl J Med. 2015;373:307–316.</li>
+    <li>Poortmans PM, et al. EORTC 22922/10925 (IMN + medial SCV). N Engl J Med. 2015;373:317–327.</li>
+    <li>Donker M, et al. AMAROS, EORTC 10981-22023. Lancet Oncol. 2014;15:1303–1310.</li>
+    <li>Wang SL, et al. Hypofractionated PMRT vs conventional. Lancet Oncol. 2019;20:352–360.</li>
+    <li>Poppe MM, et al. FABREC / Alliance A221505. J Clin Oncol. 2024.</li>
+    <li>Mamounas EP, et al. NRG/NSABP B-51 / RTOG 1304. SABCS 2023; full publication 2024.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.3 APBI / PBI</h2>
+  <ol class="references">
+    <li>Meattini I, et al. Florence trial. J Clin Oncol. 2020;38:4175–4183.</li>
+    <li>Vicini FA, et al. NSABP B-39 / RTOG 0413. Lancet. 2019;394:2155–2164.</li>
+    <li>Strnad V, et al. GEC-ESTRO multicatheter. Lancet. 2016;387:229–238.</li>
+    <li>Vaidya JS, et al. TARGIT-A. BMJ. 2020;370:m2836.</li>
+  </ol>
+
+  <h2>8.4 Re-irradiation</h2>
+  <ol class="references">
+    <li>Arthur DW, et al. NRG/RTOG 1014. Int J Radiat Oncol Biol Phys. 2020;106:946.</li>
+  </ol>
+
+  <h2>8.5 Consensus Guidelines</h2>
+  <ol class="references">
+    <li>Smith BD, et al. ASTRO WBRT guideline. Pract Radiat Oncol. 2018;8:145–152.</li>
+    <li>Recht A, et al. ASTRO/ASCO/SSO PMRT update. Pract Radiat Oncol. 2016;6:e219–e234.</li>
+    <li>Shaitelman SF, et al. ASTRO PBI guideline 2024. Pract Radiat Oncol. 2024;14:112–132.</li>
+    <li>Offersen BV, et al. ESTRO-ACROP target volume (early breast). Radiother Oncol. 2015;114:3–10.</li>
+    <li>Offersen BV, et al. ESTRO-ACROP post-mastectomy. Radiother Oncol. 2019;137:159–166.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">乳癌</span>BREAST</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.6 OAR / Toxicity</h2>
+  <ol class="references">
+    <li>Bentzen SM, et al. QUANTEC overview. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S3–S9.</li>
+    <li>Darby SC, et al. IHD risk after breast RT. N Engl J Med. 2013;368:987–998.</li>
+    <li>Marks LB, et al. QUANTEC lung. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S70–S76.</li>
+    <li>Stick LB, et al. Heart dose + cardiac comorbidity + death. Int J Radiat Oncol Biol Phys. 2017;97:346–354.</li>
+  </ol>
+
+  <h2>8.7 Atlas / 教科書</h2>
+  <ol class="references">
+    <li>RTOG / NRG Breast Cancer Atlas. <cite>www.nrgoncology.org</cite></li>
+    <li>ESTRO-ACROP target delineation atlas. <cite>www.estro.org</cite></li>
+    <li>Halperin EC, et al. Perez and Brady's Principles and Practice of Radiation Oncology. 7th ed.</li>
+    <li>Gunderson LL, Tepper JE. Clinical Radiation Oncology. 5th ed.</li>
+  </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 適應症 ============ -->
+<section class="chapter" id="lung-ind">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>1. 適應症</h1>
+
+  <h2>1.1 整體決策流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[NSCLC<br/>分期 + 功能評估]:::startN
+    B[Stage I-II<br/>不可手術 / 不願]:::actionN
+    C[Stage III<br/>局部進展]:::actionN
+    D[Stage IV<br/>寡轉移]:::actionN
+    E[術後]:::actionN
+    B1[SBRT<sup>a</sup>]:::actionN
+    C1[CCRT + durvalumab<sup>b</sup>]:::actionN
+    D1[Ablative RT 多病灶<sup>c</sup>]:::actionN
+    E1[PORT 個別評估<sup>d</sup>]:::actionN
+    F[計畫處方]:::endN
+
+    A --> B --> B1 --> F
+    A --> C --> C1 --> F
+    A --> D --> D1 --> F
+    A --> E --> E1 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　NSCLC RT 整體決策流程</div>
+  <div class="flowchart-footnote">
+    <ul>
+      <li><strong>a. SBRT：</strong>peripheral 與 central / ultra-central 處方不同（詳 1.2）</li>
+      <li><strong>b. PACIFIC：</strong>Stage III CCRT 後無進展者，durvalumab 鞏固 12 個月</li>
+      <li><strong>c. SABR-COMET / NRG-LU002：</strong>≤3-5 寡轉移病灶，所有病灶 ablative RT</li>
+      <li><strong>d. Lung ART：</strong>R0 完全切除 pN2 不需常規 PORT；R1 / R2 / 高風險仍考慮</li>
+    </ul>
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.2 早期 NSCLC（Stage I-II 不可手術）SBRT 適應症</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:32%">情境</th><th style="width:18%">SBRT</th><th style="width:50%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>cT1-2 cN0 medically inoperable</td><td><strong>標準</strong></td><td>peripheral 首選；central / ultra-central 採風險規範</td></tr>
+      <tr><td>cT1-2 cN0 願意接受非手術治療</td><td><strong>替代手術</strong></td><td>SBRT vs 手術 OS 相當（CHISEL、JCOG 0403、SPACE 等）</td></tr>
+      <tr><td>cT3 Pancoast tumor 不可手術</td><td>個別化</td><td>SBRT 對 chest wall 病灶 toxicity 較高；多採 CCRT</td></tr>
+      <tr><td>cN+</td><td>不適用</td><td>SBRT 僅限 N0；N+ 採 CCRT</td></tr>
+      <tr><td>多顆同步原發 NSCLC</td><td>逐一 SBRT 可</td><td>每顆獨立規劃；累積劑量需評估</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>Peripheral：</strong>距 PBT（proximal bronchial tree） 2 cm 以外 + 距其他關鍵 mediastinal OAR ≥2 cm。
+    <strong>Central：</strong>距 PBT &lt;2 cm。
+    <strong>Ultra-central：</strong>PTV 接觸或重疊 PBT、食道、心包膜、大血管。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.3 局部進展 NSCLC（Stage III）CCRT 適應症</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:32%">情境</th><th style="width:18%">建議</th><th style="width:50%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stage IIIA-IIIB unresectable + PS 0-1</td><td><strong>CCRT 標準</strong></td><td>60 Gy/30 fx + platinum-based chemo（cisplatin/etoposide 或 carboplatin/paclitaxel）</td></tr>
+      <tr><td>CCRT 完成後 PR/SD</td><td><strong>Durvalumab 鞏固</strong></td><td>PACIFIC：1y PFS 56% vs 35%；OS benefit confirmed</td></tr>
+      <tr><td>Stage III + PS ≥2 / 共病嚴重</td><td>Sequential CRT 或 RT alone</td><td>低 PS 病人毒性高；可考慮 hypofx 60 Gy/15 fx</td></tr>
+      <tr><td>Stage IIIA cN2 + 可手術</td><td>Trimodality 個別化</td><td>NAC + RT 50 Gy → surgery 或 CCRT alone</td></tr>
+      <tr><td>Driver mutation + 不可手術</td><td>CCRT + targeted maintenance（試驗中）</td><td>EGFR+ 可考慮 osimertinib（LAURA 證據）</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1.4 術後 RT（PORT）適應症</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:32%">情境</th><th style="width:18%">PORT</th><th style="width:50%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>R0 切除 pN0-N1</td><td>不需</td><td>—</td></tr>
+      <tr><td>R0 切除 pN2</td><td><strong>不常規</strong></td><td>Lung ART：R0 pN2 PORT 對 DFS 無 benefit；只在高風險（多區 N2、ENE+）個別考慮</td></tr>
+      <tr><td>R1 / R2 切除</td><td><strong>建議</strong></td><td>含切緣處 ± 區域；劑量 54-60 Gy（R1）、60-66 Gy（R2）</td></tr>
+      <tr><td>切除後局部復發風險高</td><td>個別化</td><td>多區 N2、ENE、close margin、bronchial stump 陽性</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.5 寡轉移 NSCLC（Oligometastatic）</h2>
+
+  <ul>
+    <li><strong>適應症：</strong>≤3-5 寡轉移病灶、原發控制中或同時治療、PS 0-1</li>
+    <li><strong>定義：</strong>Synchronous（diagnosis ≤6 個月內）vs metachronous</li>
+    <li><strong>處置：</strong>所有病灶接受 ablative RT（SBRT）或手術；原發病灶亦 definitive 治療</li>
+    <li><strong>證據：</strong>SABR-COMET（OS 41 vs 28 mo）、NRG-LU002（pending）</li>
+  </ul>
+
+  <h2>1.6 特殊情境</h2>
+
+  <h3>1.6.1 Central / Ultra-central SBRT</h3>
+  <ul>
+    <li>Central：50 Gy / 5 fx 或 60 Gy / 8 fx，避開 PBT</li>
+    <li>Ultra-central（PTV 接觸 PBT / 食道 / 大血管）：60 Gy / 15 fx 較安全；HILUS 試驗顯示 60 Gy / 8 fx 高致命毒性</li>
+    <li>HILUS：grade 5 toxicity 10%（PBT 距離 &lt;1 cm 風險最高）</li>
+  </ul>
+
+  <h3>1.6.2 NAC 後 RT</h3>
+  <ul>
+    <li>Trimodality（NAC + RT 50 Gy → surgery）vs definitive CCRT 60 Gy 結果相當（INT 0139）</li>
+    <li>術後若 ypN+ 或 ypT4 → 考慮 PORT boost 至 54-60 Gy</li>
+  </ul>
+
+  <h3>1.6.3 Re-irradiation</h3>
+  <ul>
+    <li>適應症：局部復發、無遠端轉移、距上次 RT ≥6-12 個月、PS 0-1</li>
+    <li>劑量：依累積 OAR 與既往劑量；多採 hypofx 或 SBRT</li>
+    <li>質子優於光子於 re-RT（降低 cumulative OAR dose）</li>
+    <li>食道、PBT、大血管 cumulative dose 為關鍵限制</li>
+  </ul>
+
+  <h3>1.6.4 Pancoast tumor（superior sulcus）</h3>
+  <ul>
+    <li>標準：NAC（45 Gy + cisplatin/etoposide）→ surgery → 完成 RT 至 60 Gy</li>
+    <li>不可手術者：definitive CCRT 60-66 Gy</li>
+    <li>brachial plexus 是劑量限制器官</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 模擬定位 ============ -->
+<section class="chapter" id="lung-sim">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>2. 模擬定位</h1>
+
+  <h2>2.1 體位與固定</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">姿勢</th><th style="width:38%">適應症</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Supine 雙手上舉</strong></td><td>絕大多數預設</td><td>arm rest 或 wing board；T-bar / vac-bag 固定</td></tr>
+      <tr><td>Prone</td><td>少用；姑息或下肺 SBRT</td><td>呼吸動作改變</td></tr>
+      <tr><td>Beam-eye-view 個別化</td><td>complex Stage III</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.1.1 Standard supine setup</h3>
+  <ul>
+    <li>Vac-bag / T-bar / arm rest 固定上肢</li>
+    <li>Knee fix 減少下背壓力</li>
+    <li>SBRT：建議 stereotactic body frame 或 vac-loc + abdominal compression（限制呼吸動作）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.2 呼吸動作管理</h2>
+
+  <p>NSCLC RT 核心議題。動作管理策略依腫瘤位置（上葉動作小、下葉動作大）與技術選擇。</p>
+
+  <h3>2.2.1 評估方法</h3>
+  <ul>
+    <li><strong>4D-CT</strong>（首選）：取得 10 phase 影像，量測 GTV 動作幅度</li>
+    <li><strong>Cine MRI</strong>：選擇性使用，無 ionizing radiation</li>
+    <li><strong>Fluoroscopy</strong>：傳統方法，僅評估</li>
+  </ul>
+
+  <h3>2.2.2 動作減少 / 補償策略</h3>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:24%">技術</th><th style="width:38%">原理</th><th style="width:38%">適用</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ITV-based</td><td>4D-CT 涵蓋全動作週期</td><td>大多數 conventional / SBRT 預設</td></tr>
+      <tr><td>DIBH</td><td>深吸氣閉氣降低肺體積動作</td><td>選擇性 SBRT、左下肺心臟劑量考量</td></tr>
+      <tr><td>ABC（Active Breath Control）</td><td>spirometer 控制氣道容積</td><td>需病人配合佳</td></tr>
+      <tr><td>Abdominal compression</td><td>降低 diaphragm 動作</td><td>SBRT 下葉病灶</td></tr>
+      <tr><td>Gating（RPM / SGRT）</td><td>呼吸週期特定相位 beam-on</td><td>動作 &gt;1 cm 病灶</td></tr>
+      <tr><td>Tracking（CyberKnife / MR-Linac）</td><td>real-time tumor tracking</td><td>SBRT 動作大病灶</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.3 影像取得</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">項目</th><th style="width:75%">建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Slice thickness</td><td>2-3 mm（SBRT 1-2 mm 較精確）</td></tr>
+      <tr><td>Scan range</td><td>cricoid 至 L2 下緣（含整個雙肺、橫膈、上腹）</td></tr>
+      <tr><td>FOV</td><td>≥50 cm，含雙側皮膚與肋骨完整</td></tr>
+      <tr><td>對比劑</td><td>Stage III mediastinal 評估常用；SBRT 不需</td></tr>
+      <tr><td>4D-CT</td><td><strong>原則必做</strong>（動作大病灶）</td></tr>
+      <tr><td>PET-CT 整合</td><td>診斷用 PET 影像 fusion 至 RT 計畫 CT；對 GTV 勾劃有助益</td></tr>
+      <tr><td>MRI 整合</td><td>Pancoast tumor、apical 病灶 brachial plexus 評估</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.4 BB 標記與 Fiducials</h2>
+  <ul>
+    <li><strong>Tattoo：</strong>中心點 + 雙側 lateral；SBRT 常加 anterior</li>
+    <li><strong>Fiducial markers：</strong>SBRT 動作大病灶可植入金 marker（bronchoscopic 或 percutaneous）</li>
+    <li><strong>Tracker（如 Calypso）：</strong>少用</li>
+    <li>Stage III：通常不需 fiducial，CBCT 對位足夠</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.5 計畫前查核</h2>
+  <ul>
+    <li>病理：組織學（adeno / squamous / large cell）、driver mutation 結果</li>
+    <li>分期：含 PET-CT 與 brain MRI（Stage II+ 必含）</li>
+    <li>肺功能：FEV1、DLCO（影響可治療肺體積）</li>
+    <li>共病：心臟（baseline echo / EKG）、ILD（HRCT 評估）</li>
+    <li>全身治療搭配：化療療程、durvalumab 銜接時程（CCRT 完成 ≤42 天內 start）</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 靶區勾劃 ============ -->
+<section class="chapter" id="lung-tgt">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>3. 靶區勾劃</h1>
+
+  <h2>3.1 GTV 定義</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:75%">勾劃</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>原發病灶（lung window）</td><td>Lung window（W:1500/L:-600）勾劃；spiculated edge 含 spiculation 全長</td></tr>
+      <tr><td>原發病灶（mediastinum window）</td><td>Mediastinum window（W:400/L:20）用於 chest wall / mediastinal 接觸</td></tr>
+      <tr><td>陽性淋巴結（≥1 cm 短軸或 PET+）</td><td>含 ≥1 cm 短徑、PET avid（SUV 視 background）、或穿刺證實之 LN</td></tr>
+      <tr><td>NAC 後 GTV</td><td>術前殘餘 + ITV；不縮小至化療前範圍</td></tr>
+      <tr><td>Atelectasis / 後肺實變</td><td>不含 atelectasis（PET 可助區辨）</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.2 ITV（Internal Target Volume）</h2>
+  <ul>
+    <li>4D-CT 全 phase 之 GTV 聯集為 ITV</li>
+    <li>適用：所有 conventional + 多數 SBRT（除 gating/tracking 病人）</li>
+    <li>動作 &lt;5 mm：可考慮 average phase 取代 ITV</li>
+    <li>動作 ≥10 mm：考慮 gating / tracking / DIBH 或 abdominal compression</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.3 CTV / PTV margin</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:25%">CTV margin</th><th style="width:25%">PTV margin</th><th style="width:25%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conventional Stage III</td><td>GTV + 5-8 mm</td><td>CTV/ITV + 5 mm</td><td>含 lung parenchyma 修剪 air gap</td></tr>
+      <tr><td>SBRT peripheral</td><td>無 CTV（GTV = CTV）</td><td>ITV + 5 mm</td><td>—</td></tr>
+      <tr><td>SBRT central</td><td>無 CTV 或 ITV + 3 mm</td><td>ITV + 5 mm</td><td>嚴格 OAR 約束</td></tr>
+      <tr><td>PORT</td><td>tumor bed + 5-10 mm</td><td>CTV + 5 mm</td><td>含 surgical clips、bronchial stump</td></tr>
+      <tr><td>Squamous（vs adeno）</td><td>+2 mm 額外</td><td>同上</td><td>squamous 常 lepidic spread 更明顯</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.4 區域淋巴結 CTV</h2>
+
+  <h3>3.4.1 Stage III definitive CCRT</h3>
+  <ul>
+    <li><strong>Involved-field RT (IFRT)：</strong>僅照射 PET+ 或穿刺證實之 LN 站，現代標準</li>
+    <li><strong>Elective Nodal Irradiation (ENI)：</strong>已不推薦（增加肺與食道毒性，OS 無 benefit）</li>
+    <li><strong>淋巴結站：</strong>使用 IASLC nodal map（含 1-14 站）</li>
+    <li><strong>常見涉及站：</strong>4R/4L、5/6（左肺）、7（subcarinal）、10R/10L（hilar）</li>
+  </ul>
+
+  <h3>3.4.2 PORT</h3>
+  <ul>
+    <li>R1 / R2：照射切緣 + 同側 mediastinum（依術前涉及站）</li>
+    <li>pN2：依切除是否完整、ENE 與否決定範圍</li>
+    <li>對側 mediastinum 通常不涵蓋</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.5 OAR 勾劃要點</h2>
+
+  <h3>3.5.1 肺</h3>
+  <ul>
+    <li>同側肺、對側肺分開勾劃</li>
+    <li>不含 main bronchus、trachea</li>
+    <li>SBRT：含 ipsilateral lung，但 contralateral 至少 V5 評估</li>
+    <li>Lung minus GTV：常用以 V20、mean dose 評估</li>
+  </ul>
+
+  <h3>3.5.2 心臟與心臟次結構</h3>
+  <ul>
+    <li><strong>Heart：</strong>含心包膜下緣至 PA bifurcation 上緣</li>
+    <li><strong>Atrium / ventricle：</strong>RTOG 0617 後重視，輔助 V50/V25 評估</li>
+    <li><strong>LAD：</strong>從 left main coronary 沿 anterior interventricular sulcus，PRV 5 mm</li>
+    <li>Pericardium 列為獨立 OAR（SBRT）</li>
+  </ul>
+
+  <h3>3.5.3 食道</h3>
+  <ul>
+    <li>從 cricoid 下緣至 GE junction</li>
+    <li>含整個食道壁（不含 lumen）</li>
+    <li>SBRT central：嚴格 OAR</li>
+  </ul>
+
+  <h3>3.5.4 脊髓 / 臂神經叢</h3>
+  <ul>
+    <li>Spinal cord PRV：cord + 5 mm</li>
+    <li>Brachial plexus：上肺尖、Pancoast 病灶必勾</li>
+    <li>從 C5-T1 nerve roots 經 anterior 與 middle scalene 至 axilla</li>
+  </ul>
+
+  <h3>3.5.5 SBRT 特殊 OAR</h3>
+  <ul>
+    <li><strong>Proximal Bronchial Tree (PBT)：</strong>從 trachea 至 lobar bronchi 第一分支；central / ultra-central SBRT 關鍵</li>
+    <li><strong>Great vessels：</strong>aorta、pulmonary artery、SVC、IVC 之外壁 + 5 mm 內</li>
+    <li><strong>Chest wall：</strong>含肋骨、肋間肌、皮下軟組織（含皮下 5 mm）</li>
+    <li><strong>Trachea：</strong>從 cricoid 至 carina</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 劑量與分次 ============ -->
+<section class="chapter" id="lung-dose">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>4. 劑量與分次</h1>
+
+  <h2>4.1 早期 NSCLC SBRT</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">情境</th><th style="width:22%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:42%">適用 / 備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Peripheral T1</td><td>54 Gy / 3 fx</td><td>18 Gy</td><td>RTOG 0236；BED10 ~150；首選</td></tr>
+      <tr><td>Peripheral T1-2</td><td>48 Gy / 4 fx</td><td>12 Gy</td><td>JCOG 0403、TROG CHISEL；替代 3 fx</td></tr>
+      <tr><td>Peripheral T1-2</td><td>50 Gy / 5 fx</td><td>10 Gy</td><td>RTOG 0813 5 fx 方案；可用於距 chest wall 近者</td></tr>
+      <tr><td>Central（&lt;2 cm to PBT）</td><td>50 Gy / 5 fx</td><td>10 Gy</td><td>RTOG 0813 主要方案；PBT 接觸需注意</td></tr>
+      <tr><td>Central</td><td>60 Gy / 8 fx</td><td>7.5 Gy</td><td>NCCN / NRG 替代；BED10 ~105</td></tr>
+      <tr><td>Ultra-central</td><td>60 Gy / 15 fx</td><td>4 Gy</td><td>HILUS 後保守方案；非 SBRT 嚴格定義</td></tr>
+    </tbody>
+  </table>
+
+  <div class="inline-note">
+    <strong>HILUS：</strong>ultra-central（PTV 接 PBT）60 Gy/8 fx grade 5 toxicity 10%。
+    <strong>RTOG 0813：</strong>central 50 Gy/5 fx MTD 確認，3y LC 89%。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.2 Stage III definitive CCRT</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">方案</th><th style="width:22%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:42%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Conventional 標準</strong></td><td>60 Gy / 30 fx</td><td>2.0 Gy</td><td>RTOG 0617 標準臂；同步 platinum doublet</td></tr>
+      <tr><td>劑量提升（不建議）</td><td>74 Gy / 37 fx</td><td>2.0 Gy</td><td>RTOG 0617 顯示 OS 較差，不採用</td></tr>
+      <tr><td>Hypofx（試驗中）</td><td>60 Gy / 15 fx</td><td>4 Gy</td><td>適合 PS 較差或不適合化療者</td></tr>
+      <tr><td>Sequential CRT</td><td>60-66 Gy / 30-33 fx</td><td>2.0 Gy</td><td>PS ≥2 或共病者</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4.3 PORT 劑量</h2>
+
+  <ul>
+    <li><strong>R0 高風險（個別考慮）：</strong>50-54 Gy / 25-27 fx</li>
+    <li><strong>R1（microscopic +）：</strong>54-60 Gy / 27-30 fx</li>
+    <li><strong>R2（gross +）：</strong>60-66 Gy / 30-33 fx</li>
+    <li>每次劑量 1.8-2.0 Gy</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.4 寡轉移 ablative RT</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">部位</th><th style="width:35%">劑量</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>肺寡轉移（peripheral）</td><td>54 Gy / 3 fx</td><td>同 primary SBRT</td></tr>
+      <tr><td>肝寡轉移</td><td>50 Gy / 5 fx</td><td>需考慮 normal liver 體積</td></tr>
+      <tr><td>骨寡轉移（脊椎）</td><td>30 Gy / 3 fx 或 24 Gy / 1 fx</td><td>SC-24 試驗（骨痛）</td></tr>
+      <tr><td>腦寡轉移（≤4 顆）</td><td>SRS：18-24 Gy 單次</td><td>SRS 取代 WBRT 為標準</td></tr>
+      <tr><td>腎上腺寡轉移</td><td>30-50 Gy / 3-10 fx</td><td>—</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.5 處方規格與 DVH</h2>
+
+  <h3>4.5.1 SBRT 處方</h3>
+  <ul>
+    <li><strong>Prescription isodose：</strong>60-90% 包覆 PTV（多採 80%）</li>
+    <li><strong>PTV D95 ≥ 95%</strong> prescription</li>
+    <li><strong>PTV V100 ≥ 95%</strong></li>
+    <li><strong>Dose heterogeneity：</strong>SBRT 接受 high heterogeneity（max 至 140%）</li>
+    <li><strong>R100% / R50%：</strong>conformity 指標（&lt;1.0 / &lt;3.5-5.0 依 PTV 大小）</li>
+  </ul>
+
+  <h3>4.5.2 Conventional 處方</h3>
+  <ul>
+    <li>D95 ≥ 95% prescription、V95 ≥ 95% PTV</li>
+    <li>D2 ≤ 107%（低 hot spot）</li>
+    <li>CI 0.9-1.1、HI 接近 0</li>
+  </ul>
+
+  <h2>4.6 技術選擇</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">技術</th><th style="width:38%">適用</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3D-CRT</td><td>少用；資源限制時</td><td>OAR conformity 差</td></tr>
+      <tr><td><strong>IMRT</strong></td><td>Stage III 主流</td><td>RTOG 1308 顯示 IMRT 優於 3D-CRT（毒性、QoL）</td></tr>
+      <tr><td>VMAT</td><td>Stage III、SBRT</td><td>治療快、conformity 佳</td></tr>
+      <tr><td>SBRT（多種 platform）</td><td>早期 + 寡轉移</td><td>CyberKnife、Linac SBRT、MR-Linac 各有優勢</td></tr>
+      <tr><td>Proton therapy</td><td>選擇性 Stage III、re-RT</td><td>NRG-LU001 早期 promising；尚未顯著 OS benefit</td></tr>
+      <tr><td>MR-Linac adaptive</td><td>SBRT 動作大、tumor shrinkage 顯著</td><td>每日 contour adapt</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.7 全身治療搭配</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:75%">搭配</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Stage III CCRT</strong></td><td>同步 platinum doublet（cisplatin/etoposide 或 carboplatin/paclitaxel weekly）</td></tr>
+      <tr><td><strong>CCRT 後 consolidation</strong></td><td><strong>Durvalumab</strong> 10 mg/kg q2w × 12 個月（PACIFIC）；CCRT 完成 ≤42 天內 start</td></tr>
+      <tr><td>EGFR+ Stage III</td><td>CCRT 後 osimertinib（LAURA：3y PFS 84% vs 13%）</td></tr>
+      <tr><td>SBRT + immunotherapy</td><td>試驗中（PEMBRO-RT、ISABR）；非標準</td></tr>
+      <tr><td>SBRT + chemotherapy</td><td>不需常規搭配；T2b 或高風險早期可個別化</td></tr>
+      <tr><td>Targeted therapy + RT</td><td>多數可同步；EGFR-TKI 同步可能增加肺炎風險</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    <strong>禁忌：</strong>active scleroderma / SLE 為相對禁忌；ILD（IPF）症狀性肺炎風險顯著高，個別評估；懷孕為絕對禁忌。
+  </p>
+
+  <h2>4.8 Re-irradiation</h2>
+  <ul>
+    <li><strong>適應症：</strong>局部復發、無遠端轉移、距首次 RT ≥6-12 個月、PS 0-1</li>
+    <li><strong>劑量：</strong>依 cumulative OAR；多採 hypofx 30-60 Gy / 5-15 fx 或 SBRT</li>
+    <li><strong>關鍵 OAR cumulative limit：</strong>食道 EQD2 cumulative &lt;100 Gy、cord cumulative &lt;65 Gy（含 6 個月恢復），PBT 個別評估</li>
+    <li><strong>質子優於光子</strong>於 re-RT（NRG-LU002 hypothesis）</li>
+  </ul>
+    </div>
+  </div>
+</section>
+<!-- ============ NSCLC — OAR ============ -->
+<section class="chapter" id="lung-oar">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>5. OAR 限制</h1>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    限制以 conventional 60 Gy/30 fx 為基準；SBRT 限制獨立列出。Hypofx 方案以 EQD2 換算（α/β = 3 for late、α/β = 10 for tumor）。
+  </p>
+
+  <h2>5.1 肺</h2>
+
+  <h3>5.1.1 Conventional CRT</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total lung V20</td><td><strong>&lt;35%</strong>（理想 &lt;30%）</td><td>QUANTEC；含 RNI 可接受 35%</td></tr>
+      <tr><td>Total lung V5</td><td>&lt;65%</td><td>—</td></tr>
+      <tr><td>Total lung mean</td><td>&lt;20 Gy（理想 &lt;15 Gy）</td><td>每 1 Gy mean 增 RP 風險</td></tr>
+      <tr><td>Contralateral lung V5</td><td>&lt;60%</td><td>IMRT/VMAT 易違反</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.1.2 SBRT</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:35%">目標（5 fx）</th><th style="width:35%">目標（3 fx）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total lung minus GTV V20</td><td>&lt;10-15%</td><td>&lt;10%</td></tr>
+      <tr><td>Total lung minus GTV V5</td><td>&lt;30%</td><td>—</td></tr>
+      <tr><td>Total lung minus GTV mean</td><td>&lt;6-8 Gy</td><td>&lt;6 Gy</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    既有 ILD（IPF）：lung V20 &lt;15%，且仔細評估風險；mean dose &lt;10 Gy 仍可能誘發 fatal pneumonitis。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.2 心臟</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標（CRT）</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mean heart dose</td><td><strong>&lt;20 Gy（理想 &lt;15 Gy）</strong></td><td>RTOG 0617：每 1 Gy 增 OS 影響顯著</td></tr>
+      <tr><td>V50</td><td>&lt;25%</td><td>—</td></tr>
+      <tr><td>V30</td><td>&lt;50%</td><td>—</td></tr>
+      <tr><td>V5</td><td>&lt;80%</td><td>—</td></tr>
+      <tr><td>Atrium V50</td><td>&lt;50%</td><td>RTOG 0617 secondary analysis 重要</td></tr>
+      <tr><td>LAD V15</td><td>&lt;10%</td><td>輔助</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    RTOG 0617 教訓：74 Gy 組 OS 較差，主要歸因於 cardiac dose（V5、V30 顯著相關）。心臟成為 NSCLC 主要劑量限制器官。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.3 食道</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mean dose</td><td>&lt;34 Gy</td><td>含同步化療時嚴格</td></tr>
+      <tr><td>V60</td><td>&lt;17%</td><td>QUANTEC（grade ≥3 食道炎）</td></tr>
+      <tr><td>V35</td><td>&lt;50%</td><td>—</td></tr>
+      <tr><td>Dmax</td><td>&lt;72 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    SBRT central / ultra-central：食道 Dmax 0.03 cc 限制 5 fx 27.5 Gy、3 fx 25.2 Gy（視為 critical）；超過顯著穿孔風險。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.4 脊髓 / 臂神經叢</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">OAR</th><th style="width:30%">目標（CRT）</th><th style="width:40%">SBRT（5 fx）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Cord PRV Dmax</td><td>&lt;50 Gy（理想 &lt;45）</td><td>&lt;30 Gy（HyTEC）</td></tr>
+      <tr><td>Brachial plexus Dmax</td><td>&lt;66 Gy</td><td>&lt;30 Gy</td></tr>
+      <tr><td>Cauda equina Dmax</td><td>—</td><td>&lt;32 Gy</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.5 SBRT 特殊 OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">OAR</th><th style="width:30%">5 fx</th><th style="width:40%">3 fx</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Proximal Bronchial Tree (PBT)</td><td>Dmax &lt;105% Rx 或 &lt;52.5 Gy</td><td>Dmax &lt;30 Gy</td></tr>
+      <tr><td>Trachea</td><td>Dmax &lt;52.5 Gy</td><td>—</td></tr>
+      <tr><td>Great vessels（aorta、PA）</td><td>Dmax &lt;55 Gy</td><td>Dmax &lt;45 Gy</td></tr>
+      <tr><td>Pericardium</td><td>Dmax &lt;52.5 Gy</td><td>—</td></tr>
+      <tr><td>Heart</td><td>Dmax &lt;38 Gy；V32 &lt;15 cc</td><td>Dmax &lt;30 Gy</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    Ultra-central（PTV 接觸 PBT）：60 Gy/15 fx 較 60 Gy/8 fx 安全顯著（HILUS）。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.6 其他 OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">OAR</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Chest wall（SBRT）</td><td>V30 &lt;30 cc</td><td>胸壁疼痛 / 肋骨骨折相關</td></tr>
+      <tr><td>Ribs（SBRT）</td><td>Dmax &lt;50 Gy（5 fx）</td><td>—</td></tr>
+      <tr><td>Skin（SBRT）</td><td>Dmax &lt;36 Gy（5 fx）</td><td>表淺病灶注意</td></tr>
+      <tr><td>Liver（右下肺鄰近）</td><td>Mean &lt;15 Gy</td><td>—</td></tr>
+      <tr><td>Stomach（SBRT 下肺）</td><td>Dmax &lt;30 Gy（5 fx）</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.7 衝突處理</h2>
+  <ul>
+    <li><strong>絕對不可超：</strong>cord PRV、brachial plexus Dmax、PBT（SBRT central）</li>
+    <li><strong>可權衡：</strong>PTV D95 vs lung V20、heart mean；可放棄部分 PTV 覆蓋以保 OAR</li>
+    <li><strong>PTV vs PBT 重疊（ultra-central）：</strong>降劑量至 60 Gy/15 fx 或考慮其他治療形式</li>
+    <li><strong>差肺功能 + 需 CCRT：</strong>考慮 sequential CRT、proton、或 hypofx 60 Gy/15 fx</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 副作用 ============ -->
+<section class="chapter" id="lung-tox">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>6. 副作用</h1>
+
+  <h2>6.1 急性副作用</h2>
+
+  <h3>6.1.1 食道炎（Stage III CCRT 主要急性毒性）</h3>
+  <table>
+    <thead>
+      <tr><th style="width:12%">G</th><th style="width:38%">表現</th><th style="width:50%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>輕微吞嚥不適</td><td>軟食、PPI、口腔保溼</td></tr>
+      <tr><td>2</td><td>明顯吞嚥痛、影響進食</td><td>+ Lidocaine viscous、Magic mouthwash、止痛、營養諮詢</td></tr>
+      <tr><td>3</td><td>嚴重吞嚥痛、體重下降 / 脫水</td><td>+ Opioids、IV 點滴、評估暫停 1-2 fx；考慮 PEG / NG tube</td></tr>
+      <tr><td>4</td><td>穿孔 / 危及生命</td><td>暫停 RT、外科會診</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.1.2 急性放射性肺炎</h3>
+  <ul>
+    <li>多 RT 後 1-3 個月（少數於 RT 期間）</li>
+    <li>表現：咳嗽、低熱、呼吸困難；HRCT 顯示 ground-glass 浸潤</li>
+    <li>處理：prednisolone 0.5-1 mg/kg/day 漸減 4-8 週；多數可緩解</li>
+    <li>嚴重 / 反覆 → 住院、IV 類固醇、O2 支持</li>
+  </ul>
+
+  <h3>6.1.3 其他急性</h3>
+  <ul>
+    <li><strong>疲勞：</strong>同步化療下普遍 G2-3，運動 + 睡眠</li>
+    <li><strong>皮膚反應：</strong>多 G1-2；保溼、避免摩擦</li>
+    <li><strong>骨髓抑制：</strong>同步化療相關，每週監測 CBC</li>
+    <li><strong>味覺改變：</strong>常見，多自限</li>
+    <li><strong>放射性氣管支氣管炎：</strong>SBRT central 可見，咳嗽/喘鳴</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.2 晚期副作用</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">副作用</th><th style="width:20%">時程</th><th style="width:56%">處理 / 預防</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>放射性肺纖維化</td><td>3-12 月</td><td>多無症狀；症狀性呼吸困難 → 類固醇試驗、肺復健</td></tr>
+      <tr><td>食道狹窄</td><td>3-12 月</td><td>內視鏡擴張；吞嚥困難評估</td></tr>
+      <tr><td>食道支氣管瘻管</td><td>數月-年</td><td>罕見但嚴重；多在 R-CHOP 或 retreatment 後</td></tr>
+      <tr><td>心血管事件（IHD、HF）</td><td>1-10+ 年</td><td>RTOG 0617 發現；長期心血管追蹤</td></tr>
+      <tr><td>胸壁疼痛 / 肋骨骨折</td><td>6-24 月</td><td>SBRT 多見；NSAID、保守處理</td></tr>
+      <tr><td>Brachial plexopathy</td><td>數年</td><td>感覺異常 → 無力；無有效治療</td></tr>
+      <tr><td>放射性脊髓病變</td><td>6 月-年</td><td>罕見；嚴格 cord PRV 控制</td></tr>
+      <tr><td>第二原發癌</td><td>10+ 年</td><td>肺癌、食道癌；吸菸者更高</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6.3 SBRT 特殊副作用</h2>
+
+  <ul>
+    <li><strong>胸壁疼痛：</strong>peripheral / chest-wall-touching SBRT 後 6-24 月發生率 ~10-30%；NSAID、神經痛藥物</li>
+    <li><strong>肋骨骨折：</strong>多無症狀；rib Dmax 與 chest wall V30 相關</li>
+    <li><strong>支氣管狹窄 / 阻塞：</strong>central SBRT 可見；bronchoscopic 評估</li>
+    <li><strong>大血管出血：</strong>ultra-central 罕見但致命；HILUS 警示</li>
+    <li><strong>Vagus / phrenic 神經病變：</strong>central / mediastinal 病灶；橫膈麻痺、聲音沙啞</li>
+    <li><strong>放射性氣管支氣管壞死：</strong>非常罕見；累積毒性</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.4 急性食道炎處理流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[每週 OTV<br/>評估吞嚥]:::startN
+    G1[G1 輕微]:::actionN
+    G2[G2 明顯吞嚥痛]:::actionN
+    G3[G3 體重下降 / 脫水]:::actionN
+    G4[G4 穿孔]:::actionN
+    M1[軟食 + PPI]:::actionN
+    M2[+ Lidocaine<br/>+ 止痛]:::actionN
+    M3[Opioids + IV<br/>NG / PEG 評估]:::actionN
+    M4[暫停 RT<br/>外科會診]:::actionN
+    F[完成療程]:::endN
+
+    A --> G1 --> M1 --> F
+    A --> G2 --> M2 --> F
+    A --> G3 --> M3 --> F
+    A --> G4 --> M4 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　急性食道炎分級處理</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 追蹤 ============ -->
+<section class="chapter" id="lung-fu">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>7. 追蹤</h1>
+
+  <h2>7.1 治療中（OTV）</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">頻率</th><th style="width:78%">項目</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>每週 1 次</td><td>體重、PS、皮膚、食道炎 CTCAE、咳嗽 / 呼吸困難、CBC（同步化療者）</td></tr>
+      <tr><td>每週影像</td><td>kV CBCT / 4D-CBCT；SBRT 每 fx 必對位</td></tr>
+      <tr><td>異常時</td><td>G2+ 食道炎 → 提高每 2-3 天；體重 ≥5% 下降 → 營養介入；新發呼吸困難 → CXR / SaO2</td></tr>
+      <tr><td>SBRT 計畫修正</td><td>大病灶 W2-W3 重新評估腫瘤縮小 → 考慮 adapt</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.2 RT 後追蹤時序</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[完成 RT]:::startN
+    B[1 月<br/>急性副作用]:::actionN
+    C[3 月<br/>HRCT baseline]:::actionN
+    D[6 月<br/>反應評估]:::actionN
+    E[每 3-6 月 × 2y<br/>每 6-12 月 ≥3y]:::actionN
+    F[長期追蹤<br/>整合 MDT]:::endN
+
+    A --> B --> C --> D --> E --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　NSCLC RT 後追蹤時序</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.3 各時期項目</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">時期</th>
+        <th style="width:32%">臨床評估</th>
+        <th style="width:25%">影像</th>
+        <th style="width:25%">特殊</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>RT 後 1 月</td><td>急性副作用收斂、PS、體重</td><td>—</td><td>Durvalumab 啟動（Stage III）</td></tr>
+      <tr><td>3 月</td><td>慢性肺反應、食道功能</td><td>HRCT（baseline 比對用）</td><td>有症狀 → 排除 RP</td></tr>
+      <tr><td>6 月</td><td>反應評估、慢性副作用</td><td>CT chest with contrast</td><td>RT-induced changes vs recurrence 區別</td></tr>
+      <tr><td>1-2 年</td><td>每 3-6 月 PE</td><td>每 3-6 月 CT chest</td><td>復發風險最高期</td></tr>
+      <tr><td>3-5 年</td><td>每 6-12 月</td><td>每 6-12 月 CT chest</td><td>第二原發 surveillance</td></tr>
+      <tr><td>≥5 年</td><td>每年</td><td>每年 LDCT chest（高風險）</td><td>戒菸支持持續</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.4 RT-induced changes vs recurrence 區別</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">特徵</th><th style="width:35%">RT changes（典型）</th><th style="width:35%">復發（warning）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>時程</td><td>3-12 月達 peak、之後穩定</td><td>持續增大或縮小後再增大</td></tr>
+      <tr><td>形態</td><td>線狀 / 三角形、依 RT field</td><td>球形 / 結節狀、與 field 無對應</td></tr>
+      <tr><td>邊界</td><td>清晰、依 isodose</td><td>spiculated、不規則</td></tr>
+      <tr><td>體積變化</td><td>穩定或縮小</td><td>進行性增大</td></tr>
+      <tr><td>PET</td><td>3 月內可能 +；6 月後應 −</td><td>6 月後仍 + 或新發 +</td></tr>
+      <tr><td>判讀困難時</td><td>3 個月後重複 imaging</td><td>切片 / PET / 短期追蹤</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.5 特殊族群長期重點</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">族群</th><th style="width:70%">重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Durvalumab consolidation</td><td>每月 PE + LFT；ICI-related pneumonitis 警覺；甲狀腺、腎上腺功能</td></tr>
+      <tr><td>SBRT 後</td><td>3 月 baseline HRCT；mass-like consolidation 為常見良性反應；持續 1-2 年穩定</td></tr>
+      <tr><td>Stage III CCRT 後</td><td>RP 風險最高 1-3 月；長期心血管追蹤（每 1-2 年 echo）</td></tr>
+      <tr><td>Driver mutation +</td><td>整合 targeted therapy；TKI 後 RT 改變顯影</td></tr>
+      <tr><td>Re-irradiation 後</td><td>累積晚期毒性風險高；密切監測纖維化、瘻管</td></tr>
+      <tr><td>持續吸菸者</td><td>戒菸介入；第二原發風險高</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NSCLC — 文獻 ============ -->
+<section class="chapter" id="lung-ref">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">NSCLC</span>8. 主要試驗與文獻</h1>
+
+  <h2>8.1 早期 NSCLC SBRT</h2>
+  <ol class="references">
+    <li>Timmerman R, et al. Stereotactic body radiation therapy for inoperable early stage lung cancer (RTOG 0236). JAMA. 2010;303:1070-1076.</li>
+    <li>Bezjak A, et al. Safety and efficacy of a five-fraction stereotactic body radiotherapy schedule for centrally located NSCLC (RTOG 0813). J Clin Oncol. 2019;37:1316-1325.</li>
+    <li>Ball D, et al. Stereotactic ablative radiotherapy versus standard radiotherapy in stage 1 NSCLC (TROG 09.02 CHISEL). Lancet Oncol. 2019;20:494-503.</li>
+    <li>Nagata Y, et al. Prospective trial of SBRT for stage I NSCLC (JCOG 0403). Int J Radiat Oncol Biol Phys. 2015;93:989-996.</li>
+    <li>Lindberg K, et al. SBRT for ultracentrally located NSCLC (HILUS). J Thorac Oncol. 2021;16:1200-1210.</li>
+    <li>Chang JY, et al. SABR vs surgery in operable stage I NSCLC (STARS / ROSEL pooled). Lancet Oncol. 2015;16:630-637.</li>
+  </ol>
+
+  <h2>8.2 Stage III CRT 與 immunotherapy</h2>
+  <ol class="references">
+    <li>Bradley JD, et al. Standard-dose vs high-dose CRT with or without cetuximab (RTOG 0617). Lancet Oncol. 2015;16:187-199.</li>
+    <li>Antonia SJ, et al. Durvalumab after chemoradiotherapy in stage III NSCLC (PACIFIC). N Engl J Med. 2017;377:1919-1929.</li>
+    <li>Spigel DR, et al. Five-year survival outcomes from the PACIFIC trial. J Clin Oncol. 2022;40:1301-1311.</li>
+    <li>Lu S, et al. Osimertinib after chemoradiotherapy in stage III EGFR-mutated NSCLC (LAURA). N Engl J Med. 2024;391:585-597.</li>
+    <li>Chun SG, et al. Impact of IMRT vs 3D-CRT on stage III NSCLC (RTOG 0617 secondary). J Clin Oncol. 2017;35:56-62.</li>
+    <li>Albain KS, et al. Radiotherapy plus chemotherapy with or without surgical resection for stage III NSCLC (INT 0139). Lancet. 2009;374:379-386.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.3 PORT</h2>
+  <ol class="references">
+    <li>Le Pechoux C, et al. Postoperative radiotherapy versus no PORT in completely resected stage IIIA-N2 NSCLC (Lung ART). Lancet Oncol. 2022;23:104-114.</li>
+    <li>Hui Z, et al. Postoperative chemoradiotherapy vs PORT in pIIIA-N2 NSCLC (PORT-C). JAMA Oncol. 2021;7:1178-1185.</li>
+    <li>PORT Meta-analysis Trialists Group. Postoperative radiotherapy in NSCLC: systematic review. Lancet. 1998;352:257-263.</li>
+  </ol>
+
+  <h2>8.4 寡轉移</h2>
+  <ol class="references">
+    <li>Palma DA, et al. Stereotactic ablative radiotherapy for oligometastatic cancers (SABR-COMET). Lancet. 2019;393:2051-2058.</li>
+    <li>Gomez DR, et al. Local consolidative therapy vs maintenance therapy in oligometastatic NSCLC. J Clin Oncol. 2019;37:1558-1565.</li>
+    <li>Iyengar P, et al. Consolidative radiotherapy in oligometastatic NSCLC. JAMA Oncol. 2018;4:e173501.</li>
+  </ol>
+
+  <h2>8.5 Consensus Guidelines</h2>
+  <ol class="references">
+    <li>Videtic GMM, et al. SBRT for early-stage NSCLC: ASTRO Evidence-Based Guideline. Pract Radiat Oncol. 2017;7:295-301.</li>
+    <li>Schneider BJ, et al. Lung Cancer Surveillance after Definitive Curative-Intent Therapy: ASCO Guideline. J Clin Oncol. 2020;38:753-766.</li>
+    <li>Daly ME, et al. Management of Stage III NSCLC: ASCO Guideline. J Clin Oncol. 2022;40:1356-1384.</li>
+    <li>Postmus PE, et al. Early and locally advanced NSCLC: ESMO Clinical Practice Guidelines. Ann Oncol. 2017;28:iv1-iv21.</li>
+    <li>Remon J, et al. Early and locally advanced NSCLC: ESMO Clinical Practice Guidelines update. Ann Oncol. 2021;32:1637-1642.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">肺癌</span>LUNG</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.6 OAR / Toxicity</h2>
+  <ol class="references">
+    <li>Bentzen SM, et al. Quantitative Analyses of Normal Tissue Effects in the Clinic (QUANTEC). Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S3-S9.</li>
+    <li>Marks LB, et al. QUANTEC lung. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S70-S76.</li>
+    <li>Werner-Wasik M, et al. QUANTEC esophagus. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S86-S93.</li>
+    <li>Grimm J, et al. High Dose per Fraction, Hypofractionated Treatment Effects in the Clinic (HyTEC). Int J Radiat Oncol Biol Phys. 2021;110:1-10.</li>
+    <li>Bradley JD, et al. Cardiac dose and survival in RTOG 0617 secondary analysis. JAMA Oncol. 2017;3:1366-1374.</li>
+  </ol>
+
+  <h2>8.7 Atlas / 教科書</h2>
+  <ol class="references">
+    <li>Kong FM, et al. RTOG consensus on lung CTV delineation. Int J Radiat Oncol Biol Phys. 2011;81:1442-1457.</li>
+    <li>NRG Oncology Lung Cancer Atlas. <cite>www.nrgoncology.org</cite></li>
+    <li>ESTRO ACROP target delineation atlas (lung). <cite>www.estro.org</cite></li>
+    <li>Halperin EC, et al. Perez and Brady's Principles and Practice of Radiation Oncology. 7th ed.</li>
+  </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 適應症 ============ -->
+<section class="chapter" id="prostate-ind">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>1. 適應症</h1>
+
+  <h2>1.1 整體決策流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[攝護腺癌<br/>分期 + 風險分層]:::startN
+    B[Very low / low risk]:::actionN
+    C[Intermediate risk]:::actionN
+    D[High / very high risk]:::actionN
+    E[術後生化復發]:::actionN
+    F[寡轉移]:::actionN
+    B1[AS 為主<br/>EBRT/SBRT/BT 替代]:::actionN
+    C1[EBRT ± short ADT<sup>a</sup><br/>或 SBRT 或 BT boost]:::actionN
+    D1[EBRT + long ADT<sup>b</sup><br/>± brachy boost]:::actionN
+    E1[Salvage RT<sup>c</sup><br/>± ADT]:::actionN
+    F1[Ablative RT<sup>d</sup><br/>+ systemic]:::actionN
+    G[計畫處方]:::endN
+
+    A --> B --> B1 --> G
+    A --> C --> C1 --> G
+    A --> D --> D1 --> G
+    A --> E --> E1 --> G
+    A --> F --> F1 --> G
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　攝護腺癌 RT 整體決策</div>
+  <div class="flowchart-footnote">
+    <ul>
+      <li><strong>a. Intermediate-risk 細分：</strong>favorable IR 不需 ADT；unfavorable IR 加 4-6 個月短期 ADT</li>
+      <li><strong>b. High / very high risk：</strong>長期 ADT 18-36 個月（STAMPEDE、DART 01.05）</li>
+      <li><strong>c. Salvage RT：</strong>術後 PSA &gt;0.2 ng/mL 確認復發或 PSA 持續上升；越早治療越好（PSA &lt;0.5 ng/mL）</li>
+      <li><strong>d. Oligometastatic：</strong>STOMP、ORIOLE、SABR-COMET：寡轉移 ablative RT 延遲全身治療</li>
+    </ul>
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.2 風險分層（NCCN-style）</h2>
+  <table>
+    <thead>
+      <tr><th style="width:18%">風險組</th><th style="width:46%">條件</th><th style="width:36%">RT 處置首選</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Very low</strong></td><td>cT1c、Gleason ≤6、PSA &lt;10、&lt;3 顆 + core、each ≤50%、PSA density &lt;0.15</td><td>AS 為主；不適合 AS 者考慮 SBRT / BT</td></tr>
+      <tr><td><strong>Low</strong></td><td>cT1-T2a、Gleason ≤6（GG 1）、PSA &lt;10</td><td>AS 為主；EBRT / SBRT / LDR brachy 可</td></tr>
+      <tr><td><strong>Favorable IR</strong></td><td>1 個 IR 因子、Gleason 3+4 (GG 2)、+ core &lt;50%</td><td>EBRT、SBRT、brachy（不需 ADT）</td></tr>
+      <tr><td><strong>Unfavorable IR</strong></td><td>≥2 個 IR 因子、Gleason 4+3 (GG 3)、≥50% + core</td><td>EBRT + 4-6 個月 ADT、或 EBRT + brachy boost</td></tr>
+      <tr><td><strong>High</strong></td><td>cT3a 或 Gleason 8-10 (GG 4-5) 或 PSA &gt;20</td><td>EBRT + 18-24 個月 ADT、考慮 brachy boost、考慮 PLN RT</td></tr>
+      <tr><td><strong>Very high</strong></td><td>cT3b-T4、Gleason 10、≥5 cores GG 4-5</td><td>EBRT + 24-36 個月 ADT + abiraterone（STAMPEDE）、PLN RT</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    IR 因子：cT2b-c、Gleason 3+4、PSA 10-20。Gleason 與 ISUP grade group 對照：3+3 → GG1、3+4 → GG2、4+3 → GG3、4+4 → GG4、9-10 → GG5。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.3 Definitive EBRT 適應症</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:30%">EBRT 方案</th><th style="width:45%">ADT 搭配</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Low risk</td><td>conv / moderate hypo / SBRT</td><td>不需</td></tr>
+      <tr><td>Favorable IR</td><td>conv / moderate hypo / SBRT</td><td>不需（個別考慮 4 個月）</td></tr>
+      <tr><td>Unfavorable IR</td><td>conv / moderate hypo</td><td><strong>4-6 個月</strong>（neoadjuvant + concurrent）</td></tr>
+      <tr><td>High</td><td>conv / moderate hypo + PLN</td><td><strong>18-24 個月</strong>（DART 01.05、EORTC 22961）</td></tr>
+      <tr><td>Very high</td><td>conv / moderate hypo + PLN</td><td><strong>24-36 個月 + abiraterone</strong>（STAMPEDE）</td></tr>
+      <tr><td>cN+ M0</td><td>conv + PLN</td><td>長期 ADT + abiraterone</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.4 Brachytherapy 適應症</h2>
+
+  <h3>1.4.1 Monotherapy</h3>
+  <ul>
+    <li><strong>LDR brachy（I-125 145 Gy 或 Pd-103 125 Gy）：</strong>Low-risk 與 favorable IR 首選之一</li>
+    <li><strong>HDR brachy monotherapy（27 Gy / 2 fx 或 36-38 Gy / 4 fx）：</strong>Low-risk 與 favorable IR 替代方案</li>
+  </ul>
+
+  <h3>1.4.2 Boost（搭配 EBRT）</h3>
+  <ul>
+    <li><strong>適應症：</strong>Unfavorable IR、High、Very high risk</li>
+    <li><strong>EBRT 部分：</strong>40-46 Gy / 20-23 fx（pelvis ± prostate）</li>
+    <li><strong>HDR boost：</strong>15 Gy × 1 fx 或 10.5 Gy × 2 fx</li>
+    <li><strong>LDR boost：</strong>I-125 110 Gy 或 Pd-103 100 Gy</li>
+    <li><strong>證據：</strong>ASCENDE-RT 試驗 IR/HR 病人 EBRT + LDR boost 顯著降低生化復發（vs EBRT 78 Gy）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.5 SBRT 適應症</h2>
+
+  <ul>
+    <li><strong>Low、favorable IR：</strong>SBRT 已成為主流選項（PACE-B、HYPO-RT-PC）</li>
+    <li><strong>Unfavorable IR：</strong>可考慮，搭配 4-6 個月 ADT</li>
+    <li><strong>High risk：</strong>新興試驗中（PACE-NODES、SCIMITAR）；尚未成標準</li>
+    <li><strong>Boost：</strong>SBRT boost (5-6.5 Gy × 3 fx) + EBRT 試驗中（hypo-FLAME、SCIMITAR）</li>
+  </ul>
+
+  <div class="inline-note">
+    <strong>HYPO-RT-PC：</strong>42.7 Gy / 7 fx EOD vs 78 Gy / 39 fx，5y FFS 84% 兩臂相當。
+    <strong>PACE-B：</strong>36.25 Gy / 5 fx SBRT vs 78 Gy / 39 fx 或 62 Gy / 20 fx，5y FFS 95% 非劣性。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.6 術後 RT</h2>
+
+  <h3>1.6.1 Adjuvant vs Salvage</h3>
+  <ul>
+    <li><strong>Salvage 取代 Adjuvant 為主流：</strong>RAVES、RADICALS-RT、GETUG-AFU17 三試驗 + meta-analysis (ARTISTIC) 顯示早期 salvage（PSA &lt;0.5）與 adjuvant 結果相當，但減少過度治療</li>
+    <li><strong>Adjuvant 仍考慮：</strong>多重高風險特徵（pT3b、margin+、Gleason 8-10、ENE+）合併 PSA 偵測中</li>
+  </ul>
+
+  <h3>1.6.2 Salvage RT 適應症</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">時機</th><th style="width:30%">PSA 閾值</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>術後 BCR 早期</td><td><strong>PSA &lt;0.5 ng/mL</strong></td><td>越早治療越好（GETUG-AFU16）</td></tr>
+      <tr><td>術後 BCR 較晚</td><td>PSA 0.5-1.0</td><td>仍 salvage 可，效果稍差</td></tr>
+      <tr><td>術後 PSA 持續可測</td><td>PSA &gt;0.2 確認 BCR</td><td>不等到 ≥0.5 才開始</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.6.3 ADT 搭配 salvage RT</h3>
+  <ul>
+    <li><strong>GETUG-AFU16：</strong>salvage RT + 6 個月 GnRH agonist 顯著改善 5y PFS（80% vs 62%）</li>
+    <li><strong>RTOG 0534：</strong>EBRT 加 PLN + 4-6 個月 ADT 較單純 prostate-only 改善 outcomes（特別 PSA &gt;0.34 或高風險者）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.7 寡轉移與低負荷轉移</h2>
+
+  <ul>
+    <li><strong>STOMP / ORIOLE：</strong>寡轉移（≤3 病灶）SBRT 顯著延遲 ADT 啟動</li>
+    <li><strong>STAMPEDE Arm H：</strong>低負荷 (low-volume) 轉移病人 prostate RT 改善 OS（high-volume 無效）</li>
+    <li><strong>低負荷定義：</strong>無 visceral metastasis、骨轉移 &lt;4 顆且無椎體外轉移（CHAARTED 定義）</li>
+    <li><strong>劑量：</strong>prostate-directed RT 採 conventional 或 hypo（55-60 Gy / 20 fx）</li>
+  </ul>
+
+  <h2>1.8 特殊情境</h2>
+
+  <h3>1.8.1 Pelvic LN Irradiation (PLN RT)</h3>
+  <ul>
+    <li><strong>POP-RT：</strong>High-risk N0 病人加照 PLN（whole pelvis）顯著降低 BCR（vs prostate-only）</li>
+    <li><strong>適應症：</strong>High / very high risk（cT3+、Gleason 8-10、PSA &gt;20）；cN+；Roach formula LN risk &gt;15-20%</li>
+    <li><strong>劑量：</strong>45-50.4 Gy 至 PLN，prostate boost 至 78-80 Gy</li>
+  </ul>
+
+  <h3>1.8.2 Re-irradiation</h3>
+  <ul>
+    <li>適應症：局部復發、無遠端轉移、距首次 RT ≥2 年</li>
+    <li>方案：HDR brachy（28-32 Gy / 4 fx）或 SBRT（30-35 Gy / 5 fx）</li>
+    <li>累積 OAR 限制為主要考量；rectal toxicity 風險高</li>
+  </ul>
+
+  <h3>1.8.3 Hereditary 與 Variant histology</h3>
+  <ul>
+    <li>BRCA2 carrier：RT 反應良好；可接受標準治療</li>
+    <li>Ductal、small cell variant：較侵襲；考慮加強 systemic + RT 個別化</li>
+    <li>Lynch syndrome：風險評估、追蹤</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 模擬定位 ============ -->
+<section class="chapter" id="prostate-sim">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>2. 模擬定位</h1>
+
+  <h2>2.1 體位與固定</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">姿勢</th><th style="width:38%">適應症</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Supine</strong></td><td>絕大多數預設</td><td>vacuum bag 或 knee/foot fix；雙手胸前交叉</td></tr>
+      <tr><td>Prone</td><td>少用；曾試圖降低 rectum dose</td><td>setup 重現性差，現代 IMRT/VMAT 已不需</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.2 Bladder / Rectum Protocol</h2>
+
+  <p>核心議題。膀胱與直腸體積每日變化大，影響重現性與 OAR dose。</p>
+
+  <h3>2.2.1 Bladder protocol</h3>
+  <ul>
+    <li><strong>原則：</strong>適度脹尿（comfortably full bladder）</li>
+    <li><strong>具體做法：</strong>排空膀胱後喝水 300-500 mL，等 30-45 分鐘</li>
+    <li><strong>目的：</strong>推開小腸、固定膀胱位置、減少 bladder dose 比例</li>
+    <li><strong>SBRT：</strong>原則同上，更嚴格的容積一致性（治療前 CBCT 確認）</li>
+  </ul>
+
+  <h3>2.2.2 Rectum protocol</h3>
+  <ul>
+    <li><strong>原則：</strong>排空直腸（empty rectum）</li>
+    <li><strong>具體做法：</strong>治療前排便、必要時 enema 或 laxatives</li>
+    <li><strong>飲食調整：</strong>低 gas-producing 食物（避免豆類、碳酸飲料）</li>
+    <li><strong>Rectal balloon（選擇性）：</strong>每日固定直腸位置與容積，但增加 rectal wall 接觸劑量</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.3 Fiducial Markers</h2>
+
+  <ul>
+    <li><strong>適應症：</strong>所有 dose-escalated EBRT、moderate hypo、SBRT</li>
+    <li><strong>類型：</strong>金 markers（最普及）、電磁 transponder（Calypso）</li>
+    <li><strong>植入方式：</strong>TRUS-guided 經會陰或經直腸植入 3-4 顆 markers（apex、mid、base）</li>
+    <li><strong>植入時機：</strong>RT 開始前 ≥7 天（讓 markers 穩定 + edema 消退）</li>
+    <li><strong>對位：</strong>每日 kV-kV 或 CBCT 對位 markers，PTV margin 可降至 3-5 mm</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.4 Rectal Spacer</h2>
+
+  <ul>
+    <li><strong>產品：</strong>SpaceOAR（PEG hydrogel）、Barrigel（hyaluronic acid）</li>
+    <li><strong>植入：</strong>TRUS 引導下注射於 Denonvilliers fascia 之 prostate 與 rectum 之間</li>
+    <li><strong>效果：</strong>分隔 prostate 與 rectum 約 1 cm，降低 rectum V70/V75 顯著</li>
+    <li><strong>適應症：</strong>SBRT、dose-escalated EBRT &gt;78 Gy、brachytherapy boost、re-RT</li>
+    <li><strong>注意：</strong>植入併發症罕見但包括感染、infection；長期已生物降解</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.5 影像取得</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">項目</th><th style="width:75%">建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Slice thickness</td><td>2-3 mm（SBRT 1-2 mm 較精確）</td></tr>
+      <tr><td>Scan range</td><td>L4-5 至 ischial tuberosity 下緣（含整個 pelvis）</td></tr>
+      <tr><td>FOV</td><td>≥45 cm，含雙側皮膚輪廓完整</td></tr>
+      <tr><td>對比劑</td><td>不常規；PLN 評估或解剖判讀困難時考慮</td></tr>
+      <tr><td>MRI 整合</td><td><strong>強烈建議</strong>多參數 MRI fusion 至 RT CT；T2 + DWI 對 GTV / EPE 評估有助益</td></tr>
+      <tr><td>PSMA PET</td><td>BCR 與 staging 用；指引 salvage 範圍與寡轉移定位</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2.6 計畫前查核</h2>
+  <ul>
+    <li>病理：Gleason / ISUP grade、percent core involvement、perineural invasion、EPE / SVI</li>
+    <li>分期：DRE、PSA history、MRI、bone scan / PSMA PET（高風險）</li>
+    <li>風險分層：NCCN 風險組分類確認</li>
+    <li>共病：心血管（影響 ADT 安全）、糖尿病、骨密度</li>
+    <li>泌尿功能：IPSS、AUA score、既往 TURP 史（影響 brachy 適應症）</li>
+    <li>性功能：baseline EPIC / SHIM</li>
+    <li>ADT 啟動時程：neoadjuvant 通常 RT 開始前 2 個月起</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 靶區勾劃 ============ -->
+<section class="chapter" id="prostate-tgt">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>3. 靶區勾劃</h1>
+
+  <h2>3.1 GTV / CTV 定義</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:75%">勾劃</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Definitive intact prostate</td><td>整個攝護腺 = CTV1（無 GTV / CTV 區分常見）</td></tr>
+      <tr><td>含 SVI（cT3b）</td><td>+ proximal 1-2 cm 精囊或全 SV（依風險）</td></tr>
+      <tr><td>含 EPE（cT3a）</td><td>CTV margin 含 EPE 區域 + 5 mm</td></tr>
+      <tr><td>Boost 區（focal）</td><td>MRI-defined dominant intraprostatic lesion；MRI fusion 勾劃</td></tr>
+      <tr><td>術後 prostate bed CTV</td><td>RTOG / EORTC consensus；含 surgical clips、anastomosis、bladder neck、retrovesical area</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.2 PTV margin</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:25%">PTV margin</th><th style="width:50%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conventional 含 fiducial + daily IGRT</td><td>5 mm（posterior 3 mm）</td><td>posterior 較窄保護 rectum</td></tr>
+      <tr><td>Conventional 無 fiducial</td><td>7-10 mm（posterior 5-7 mm）</td><td>不建議現代</td></tr>
+      <tr><td>SBRT</td><td>3-5 mm（posterior 3 mm）</td><td>fiducial 必要 + 嚴格 IGRT</td></tr>
+      <tr><td>Brachy boost EBRT</td><td>5-7 mm</td><td>同 conv</td></tr>
+      <tr><td>Post-op salvage</td><td>5-7 mm</td><td>—</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.3 Pelvic LN CTV（PLN RT）</h2>
+
+  <h3>3.3.1 RTOG / NRG consensus 區域</h3>
+  <ul>
+    <li><strong>Common iliac：</strong>aorta bifurcation 至 internal/external 分支處；血管 + 7 mm</li>
+    <li><strong>External iliac：</strong>common iliac 分支至 inguinal canal；血管 + 7 mm</li>
+    <li><strong>Internal iliac：</strong>含 hypogastric / obturator；血管 + 7 mm</li>
+    <li><strong>Obturator：</strong>obturator nerve 區域，含 medial pelvic side wall</li>
+    <li><strong>Presacral：</strong>S1-S3 levels 之 anterior sacrum + 1.5 cm</li>
+  </ul>
+
+  <h3>3.3.2 上界與適應症</h3>
+  <ul>
+    <li><strong>傳統 mini-pelvis（POP-RT 定義）：</strong>含 common iliac 至 L5/S1</li>
+    <li><strong>Extended pelvis：</strong>含至 aortic bifurcation（cN+ 病人）</li>
+    <li><strong>下界：</strong>obturator foramen 上緣（不過深）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.4 術後 prostate bed CTV</h2>
+
+  <p>主要 atlas：RTOG / EORTC consensus、ESTRO ACROP。</p>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">區段</th><th style="width:78%">勾劃範圍</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>下界</td><td>VUA（vesicourethral anastomosis）下方 5-8 mm</td></tr>
+      <tr><td>上界</td><td>cystectomy 後 vesical neck 上方 3 cm；SVI 切除後含 SV bed</td></tr>
+      <tr><td>前界</td><td>恥骨後上方至 bladder neck</td></tr>
+      <tr><td>後界</td><td>rectum 前壁 / mesorectal fascia</td></tr>
+      <tr><td>側界</td><td>obturator internus 內側、levator ani 內側</td></tr>
+      <tr><td>含結構</td><td>surgical clips、anastomosis、bladder neck、retrovesical area、SV bed（pT3b）</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.5 OAR 勾劃要點</h2>
+
+  <h3>3.5.1 直腸（Rectum）</h3>
+  <ul>
+    <li>從 anorectal junction（ischial tuberosity 上緣）至 rectosigmoid junction</li>
+    <li>含整個 rectal wall（不分內外壁）</li>
+    <li>SBRT 額外勾 rectum wall 5 mm 內層為 critical structure</li>
+  </ul>
+
+  <h3>3.5.2 膀胱（Bladder）</h3>
+  <ul>
+    <li>整個膀胱（包含 wall + lumen）</li>
+    <li>Bladder wall（外壁向內 5 mm）視 SBRT 為次結構</li>
+    <li>Trigone 區域（bladder neck + ureter 入口）為 hot spot 高風險區</li>
+  </ul>
+
+  <h3>3.5.3 尿道（Urethra）</h3>
+  <ul>
+    <li>SBRT 與 brachy 中為 critical OAR</li>
+    <li>Prostatic urethra：MRI 或 catheter-based 勾劃</li>
+    <li>Membranous urethra：尤需保護（incontinence）</li>
+  </ul>
+
+  <h3>3.5.4 其他</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:24%">OAR</th><th style="width:76%">勾劃要點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>股骨頭（femoral heads）</td><td>雙側分開勾劃，含至 lesser trochanter</td></tr>
+      <tr><td>Penile bulb</td><td>urogenital diaphragm 下方；ED 風險相關</td></tr>
+      <tr><td>Neurovascular bundle</td><td>勃起功能保留考量；MRI 可見</td></tr>
+      <tr><td>Small bowel / sigmoid</td><td>PLN RT 必勾；sigmoid V40 監控</td></tr>
+      <tr><td>Iliac vessels</td><td>不視為 OAR 但 PLN CTV 勾劃參照</td></tr>
+      <tr><td>Anal canal / sphincter</td><td>長期 incontinence 與功能保留</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 劑量與分次 ============ -->
+<section class="chapter" id="prostate-dose">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>4. 劑量與分次</h1>
+
+  <h2>4.1 Conventional EBRT</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">情境</th><th style="width:22%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:42%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Definitive low-IR</td><td>78 Gy / 39 fx</td><td>2.0 Gy</td><td>dose-escalated 標準</td></tr>
+      <tr><td>Definitive high-risk</td><td>78-80 Gy / 39-40 fx</td><td>2.0 Gy</td><td>+ PLN 至 45-50.4 Gy</td></tr>
+      <tr><td>PLN（部分劑量）</td><td>45-50.4 Gy / 25-28 fx</td><td>1.8-2.0 Gy</td><td>POP-RT、RTOG 0534</td></tr>
+      <tr><td>Salvage post-op</td><td>66-72 Gy / 33-36 fx</td><td>2.0 Gy</td><td>SAKK 09/10：高劑量 70 Gy 對 BCR 較佳</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.2 Moderate Hypofractionation</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">方案</th><th style="width:22%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:42%">來源 / 備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>CHHiP</strong></td><td>60 Gy / 20 fx</td><td>3.0 Gy</td><td>主流選擇；3y bRFS 90.6% 與 conv 相當</td></tr>
+      <tr><td>PROFIT</td><td>60 Gy / 20 fx</td><td>3.0 Gy</td><td>北美主流；同等效果</td></tr>
+      <tr><td>HYPRO</td><td>64.6 Gy / 19 fx</td><td>3.4 Gy</td><td>較積極；較多急性毒性</td></tr>
+      <tr><td>RTOG 0415</td><td>70 Gy / 28 fx</td><td>2.5 Gy</td><td>低風險病人；非劣性</td></tr>
+    </tbody>
+  </table>
+
+  <div class="inline-note">
+    <strong>CHHiP（3-arm RCT）：</strong>74/37 vs 60/20 vs 57/19，5y bRFS 88% / 91% / 86%。60/20 確認非劣性，已成英國標準。
+    <strong>PROFIT：</strong>78/39 vs 60/20 IR 病人 5y bRFS 同等。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.3 SBRT / Ultra-hypofractionation</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">方案</th><th style="width:22%">劑量 / 分次</th><th style="width:14%">/fx</th><th style="width:42%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>PACE-B</strong></td><td>36.25 Gy / 5 fx</td><td>7.25 Gy</td><td>EOD（每兩天 1 fx）；low + IR</td></tr>
+      <tr><td>HYPO-RT-PC</td><td>42.7 Gy / 7 fx</td><td>6.1 Gy</td><td>EOD；IR 病人 5y FFS 84%</td></tr>
+      <tr><td>常用 7×</td><td>40 Gy / 5 fx</td><td>8.0 Gy</td><td>focal boost 區可達此</td></tr>
+      <tr><td>SBRT + boost (focal)</td><td>36.25 + 4-5 boost / 5 fx</td><td>—</td><td>FLAME-style focal escalation</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    所有 SBRT：fiducial markers 必要、daily kV/CBCT IGRT 必要、考慮 rectal spacer。EOD（every other day）為標準。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.4 Brachytherapy</h2>
+
+  <h3>4.4.1 LDR brachytherapy</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">同位素</th><th style="width:25%">劑量</th><th style="width:50%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>I-125 monotherapy</td><td>145 Gy</td><td>低風險首選；半衰期 60d</td></tr>
+      <tr><td>Pd-103 monotherapy</td><td>125 Gy</td><td>半衰期 17d；較陡 dose rate</td></tr>
+      <tr><td>I-125 boost (+EBRT 45 Gy)</td><td>110 Gy</td><td>IR/HR ASCENDE-RT</td></tr>
+      <tr><td>Pd-103 boost (+EBRT 45 Gy)</td><td>100 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.4.2 HDR brachytherapy</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">情境</th><th style="width:25%">劑量</th><th style="width:50%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>HDR monotherapy</td><td>27 Gy / 2 fx 或 36-38 Gy / 4 fx</td><td>低風險；2 fx 於 1 implant</td></tr>
+      <tr><td>HDR boost (+EBRT 45 Gy)</td><td>15 Gy × 1 fx 或 10.5 Gy × 2 fx</td><td>IR/HR；多採 1 fx 簡化</td></tr>
+      <tr><td>HDR re-RT salvage</td><td>28-32 Gy / 4 fx</td><td>累積 OAR 限制嚴格</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.5 處方規格與 DVH</h2>
+
+  <h3>4.5.1 EBRT / SBRT</h3>
+  <ul>
+    <li><strong>D95 ≥ 95%</strong> prescription、V95 ≥ 95% PTV volume</li>
+    <li><strong>D2 ≤ 107%</strong>（hot spot）；SBRT 可至 110-120%</li>
+    <li><strong>CI 0.9-1.1、HI 接近 0</strong></li>
+  </ul>
+
+  <h3>4.5.2 LDR brachy 處方</h3>
+  <ul>
+    <li><strong>D90 ≥ 100% prescription</strong>（CTV）</li>
+    <li><strong>V100 ≥ 95%、V150 &lt; 60%、V200 &lt; 20%</strong></li>
+  </ul>
+
+  <h3>4.5.3 HDR brachy 處方</h3>
+  <ul>
+    <li><strong>V100 ≥ 95%、D90 ≥ 100%</strong></li>
+    <li><strong>V150 &lt; 35%、V200 &lt; 15%</strong></li>
+    <li>Urethra D10 &lt; 115%</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.6 技術選擇</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">技術</th><th style="width:38%">適用</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3D-CRT</td><td>已不建議於 dose-escalated</td><td>OAR conformity 差</td></tr>
+      <tr><td><strong>IMRT / VMAT</strong></td><td>conventional / moderate hypo 主流</td><td>conformity 佳；rectum sparing 顯著</td></tr>
+      <tr><td>SBRT (Linac)</td><td>low + IR + favorable</td><td>fiducial + daily kV 必要</td></tr>
+      <tr><td>CyberKnife</td><td>SBRT 替代</td><td>real-time tracking；治療時間長</td></tr>
+      <tr><td>MR-Linac adaptive</td><td>SBRT 高劑量 escalation</td><td>每日 contour adapt；無 fiducial</td></tr>
+      <tr><td>Proton therapy</td><td>選擇性使用</td><td>低 integral dose；OS benefit 未證實</td></tr>
+      <tr><td>LDR brachy</td><td>low-IR mono、IR/HR boost</td><td>單次 implant；劑量不可調</td></tr>
+      <tr><td>HDR brachy</td><td>同上 + re-RT</td><td>劑量可調；可短期分次</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.7 ADT 搭配</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">風險組</th><th style="width:25%">ADT 期間</th><th style="width:50%">依據</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Low / favorable IR</td><td>不需</td><td>—</td></tr>
+      <tr><td>Unfavorable IR</td><td>4-6 個月</td><td>RTOG 9408；neoadjuvant + concurrent</td></tr>
+      <tr><td>High</td><td>18-24 個月</td><td>EORTC 22961、DART 01.05</td></tr>
+      <tr><td>Very high</td><td>24-36 個月 + abiraterone</td><td>STAMPEDE M0/M1</td></tr>
+      <tr><td>Salvage post-op (PSA &gt;0.7)</td><td>6-24 個月</td><td>RTOG 0534、GETUG-AFU16</td></tr>
+      <tr><td>Pelvic node + (cN+)</td><td>長期 + abiraterone</td><td>STAMPEDE M0</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.7.1 ADT 種類</h3>
+  <ul>
+    <li><strong>GnRH agonist：</strong>leuprolide、goserelin（多數選擇）</li>
+    <li><strong>GnRH antagonist：</strong>degarelix、relugolix（口服）；無 testosterone flare</li>
+    <li><strong>Androgen receptor inhibitor：</strong>bicalutamide、enzalutamide、abiraterone（高風險加用）</li>
+  </ul>
+
+  <h3>4.7.2 ADT 啟動時機</h3>
+  <ul>
+    <li>Neoadjuvant：RT 開始前 2 個月起</li>
+    <li>Concurrent：RT 期間持續</li>
+    <li>Adjuvant：RT 完成後續用至期滿</li>
+  </ul>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    禁忌：active scleroderma / SLE 為相對禁忌；既往 pelvic RT 為相對禁忌（需 reirradiation 評估）；既往 TURP 為 brachy 相對禁忌；嚴重 LUTS（IPSS &gt;20）為 brachy 相對禁忌。
+  </p>
+    </div>
+  </div>
+</section>
+<!-- ============ Prostate — OAR ============ -->
+<section class="chapter" id="prostate-oar">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>5. OAR 限制</h1>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    限制以 conventional 78 Gy / 39 fx 為基準；hypo / SBRT 限制獨立列出。EQD2 換算 α/β = 3 for late toxicity（attention：rectum 與 bladder α/β 較低）。
+  </p>
+
+  <h2>5.1 直腸（Rectum）</h2>
+
+  <h3>5.1.1 Conventional / Moderate hypo</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標（78 Gy）</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>V75</td><td>&lt;15%</td><td>QUANTEC 嚴格</td></tr>
+      <tr><td>V70</td><td>&lt;20-25%</td><td>—</td></tr>
+      <tr><td>V65</td><td>&lt;35%</td><td>—</td></tr>
+      <tr><td>V60</td><td>&lt;50%</td><td>—</td></tr>
+      <tr><td>V50</td><td>&lt;60%</td><td>—</td></tr>
+      <tr><td>Dmax</td><td>&lt;79 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h3>5.1.2 SBRT（5 fx）</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>V36</td><td>&lt;1 cc</td><td>HyTEC</td></tr>
+      <tr><td>V32</td><td>&lt;5 cc</td><td>—</td></tr>
+      <tr><td>V29</td><td>&lt;15-20%</td><td>—</td></tr>
+      <tr><td>V18</td><td>&lt;50%</td><td>—</td></tr>
+      <tr><td>Rectal wall（5 mm 內層）</td><td>V36 &lt;1 cc</td><td>更嚴格</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.2 膀胱（Bladder）</h2>
+
+  <h3>5.2.1 Conventional</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標（78 Gy）</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>V80</td><td>&lt;15%</td><td>—</td></tr>
+      <tr><td>V75</td><td>&lt;25%</td><td>—</td></tr>
+      <tr><td>V70</td><td>&lt;35%</td><td>—</td></tr>
+      <tr><td>V65</td><td>&lt;50%</td><td>—</td></tr>
+      <tr><td>Dmax</td><td>&lt;80 Gy</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2.2 SBRT（5 fx）</h3>
+  <ul>
+    <li>V37 &lt;5-10 cc、V32 &lt;15 cc、Dmax &lt;38.5 Gy</li>
+    <li>Trigone 區域避免 hot spot</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.3 尿道（Urethra）</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>EBRT 78 Gy</td><td>V80 &lt;5%</td><td>非主要 OAR；fiducial 已對 prostate</td></tr>
+      <tr><td>SBRT (5 fx)</td><td>D10 &lt;42 Gy；Dmax &lt;42 Gy</td><td>—</td></tr>
+      <tr><td>HDR brachy</td><td>D10 &lt;115% prescription</td><td>關鍵；urethral stricture 風險</td></tr>
+      <tr><td>LDR brachy</td><td>D10 &lt;150% prescription</td><td>—</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.4 其他 OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">OAR</th><th style="width:38%">目標</th><th style="width:38%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>股骨頭（雙側）</td><td>V50 &lt;5%、Dmax &lt;52 Gy</td><td>骨壞死罕見但需控制</td></tr>
+      <tr><td>Penile bulb</td><td>Mean &lt;52.5 Gy；D70 &lt;70 Gy</td><td>ED 預測指標</td></tr>
+      <tr><td>Small bowel</td><td>V45 &lt;195 cc；Dmax &lt;52 Gy</td><td>PLN RT 必評</td></tr>
+      <tr><td>Sigmoid colon</td><td>V40 &lt;20 cc</td><td>PLN RT 相關</td></tr>
+      <tr><td>Anal canal / sphincter</td><td>Mean &lt;30 Gy</td><td>incontinence 相關</td></tr>
+      <tr><td>Cauda equina</td><td>Dmax &lt;52 Gy</td><td>extended PLN RT 注意</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.5 衝突處理</h2>
+  <ul>
+    <li><strong>絕對不可超：</strong>cauda equina、femoral head Dmax；SBRT urethra D10、rectal V36 (1 cc)</li>
+    <li><strong>可權衡：</strong>PTV D95 vs rectum V70/V75；HR 病人可放棄部分 PTV peripheral 覆蓋以保 rectum</li>
+    <li><strong>Rectum vs PTV 重疊（無 spacer）：</strong>建議 rectal spacer 植入 + 重新模擬</li>
+    <li><strong>SBRT 不達 OAR：</strong>降劑量至 moderate hypo (60/20) 或 conv (78/39)</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 副作用 ============ -->
+<section class="chapter" id="prostate-tox">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>6. 副作用</h1>
+
+  <h2>6.1 急性 GU 毒性</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:12%">G</th><th style="width:38%">表現</th><th style="width:50%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>輕微頻尿、夜尿</td><td>限水時段（晚 6 點後）、避免咖啡因</td></tr>
+      <tr><td>2</td><td>明顯頻尿 / 急尿、輕微 dysuria</td><td>+ Tamsulosin 0.4 mg HS、Phenazopyridine（短期）、NSAID</td></tr>
+      <tr><td>3</td><td>嚴重 LUTS、urinary retention、肉眼血尿</td><td>+ catheterization、住院、評估暫停 RT；排除 UTI</td></tr>
+      <tr><td>4</td><td>需手術介入、急性出血危及生命</td><td>暫停 RT、urology 急診</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.2 急性 GI 毒性</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:12%">G</th><th style="width:38%">表現</th><th style="width:50%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>輕微 tenesmus、頻便</td><td>低渣飲食、避免辛辣 / 咖啡因</td></tr>
+      <tr><td>2</td><td>明顯 tenesmus、便急、出血少量</td><td>+ Loperamide PRN、hydrocortisone enema、sucralfate enema</td></tr>
+      <tr><td>3</td><td>持續血便、需介入</td><td>+ Pentasa、評估暫停 RT、排除其他出血源</td></tr>
+      <tr><td>4</td><td>大量出血、穿孔</td><td>暫停 RT、surgery 評估</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.3 急性副作用處理流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[每週 OTV<br/>評估 LUTS / GI]:::startN
+    GU1[GU G1 輕微]:::actionN
+    GU2[GU G2 中度]:::actionN
+    GU3[GU G3 retention/血尿]:::actionN
+    GI1[GI G1 輕微]:::actionN
+    GI2[GI G2 出血少量]:::actionN
+    GI3[GI G3 持續血便]:::actionN
+    M1[衛教<br/>持續]:::actionN
+    M2[Tamsulosin<br/>持續]:::actionN
+    M3[導尿 / 住院<br/>評估暫停]:::actionN
+    M4[低渣飲食<br/>持續]:::actionN
+    M5[Enema 介入<br/>持續]:::actionN
+    M6[評估暫停<br/>排除出血源]:::actionN
+    F[完成療程]:::endN
+
+    A --> GU1 --> M1 --> F
+    A --> GU2 --> M2 --> F
+    A --> GU3 --> M3 --> F
+    A --> GI1 --> M4 --> F
+    A --> GI2 --> M5 --> F
+    A --> GI3 --> M6 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　急性 GU / GI 毒性分級處理</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.4 晚期副作用</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">副作用</th><th style="width:18%">時程</th><th style="width:58%">處理 / 預防</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>慢性血尿（cystitis）</td><td>1-5 年</td><td>cystoscopy 排除其他病因；hyperbaric O2、iAlu 灌注</td></tr>
+      <tr><td>尿道狹窄</td><td>6 月-3 年</td><td>內視鏡擴張；常見於 brachy 或 SBRT 後</td></tr>
+      <tr><td>慢性腸炎 / proctitis</td><td>6 月-2 年</td><td>sucralfate enema、APC 雷射止血；hyperbaric O2</td></tr>
+      <tr><td>直腸出血</td><td>6 月-3 年</td><td>排除其他源；APC 治療有效</td></tr>
+      <tr><td>失禁（incontinence）</td><td>數月-年</td><td>少見於 RT；多在 RT + 既往 TURP 後</td></tr>
+      <tr><td>勃起功能障礙（ED）</td><td>6 月-2 年</td><td>50-70% 病人；PDE5 抑制劑、injection、prosthesis</td></tr>
+      <tr><td>第二原發癌</td><td>10+ 年</td><td>bladder、rectum cancer 風險略增；SBRT 與 conv 相當</td></tr>
+      <tr><td>骨盆骨折</td><td>數年</td><td>含 sacrum、pubic ramus；少見</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.5 ADT 相關副作用</h2>
+
+  <ul>
+    <li><strong>Hot flashes：</strong>普遍；venlafaxine、SSRI 改善</li>
+    <li><strong>勃起功能障礙與性慾下降：</strong>幾乎所有病人</li>
+    <li><strong>體重增加 / 代謝症候群：</strong>飲食 + 運動介入</li>
+    <li><strong>骨密度下降：</strong>baseline DEXA + 補充 Ca/vit D；high-risk 加 bisphosphonate / denosumab</li>
+    <li><strong>心血管事件：</strong>既有 CVD 病人風險增加；GnRH antagonist 較 agonist 心血管事件少</li>
+    <li><strong>認知功能：</strong>輕度影響；長期使用注意</li>
+    <li><strong>疲勞與情緒影響：</strong>常見；運動有助益</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.6 SBRT 特殊副作用</h2>
+  <ul>
+    <li><strong>急性 GU 高峰較 conv 早（W2-3）：</strong>多數 6-12 週緩解</li>
+    <li><strong>晚期 GI / GU 與 conv 相當</strong>（PACE-B、HYPO-RT-PC 5 年資料）</li>
+    <li><strong>Rectal spacer 顯著降低 rectal toxicity</strong>（含 SBRT）</li>
+    <li><strong>Urinary retention：</strong>SBRT 後較 conv 略多；既有大型攝護腺 (&gt;80 cc) 風險高</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.7 Brachy 特殊副作用</h2>
+  <ul>
+    <li><strong>急性 retention：</strong>10-20% 病人需短期 catheterization</li>
+    <li><strong>Urethral stricture：</strong>5-10%（HDR &gt; LDR）</li>
+    <li><strong>Seed migration（LDR）：</strong>少見但可遷至肺；無臨床意義</li>
+    <li><strong>持續性 dysuria：</strong>數月至 1 年</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 追蹤 ============ -->
+<section class="chapter" id="prostate-fu">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>7. 追蹤</h1>
+
+  <h2>7.1 治療中（OTV）</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">頻率</th><th style="width:78%">項目</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>每週 1 次</td><td>體重、PS、IPSS、GU CTCAE、GI CTCAE、ADT 副作用（hot flashes、體重）</td></tr>
+      <tr><td>每 fx 影像</td><td>kV-kV（fiducial）或 CBCT；SBRT 必每 fx 對位</td></tr>
+      <tr><td>每週評估</td><td>膀胱 / 直腸容積一致性（CBCT）</td></tr>
+      <tr><td>異常時</td><td>G2+ GU/GI → 增加每週次數；urinary retention → 即刻處置</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.2 RT 後追蹤時序</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[完成 RT]:::startN
+    B[3 月<br/>急性副作用收斂]:::actionN
+    C[6 月<br/>首次 PSA]:::actionN
+    D[每 6 月 × 5y<br/>PSA + 副作用]:::actionN
+    E[每年 ≥5y<br/>長期追蹤]:::actionN
+    F[整合 MDT]:::endN
+
+    A --> B --> C --> D --> E --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　攝護腺癌 RT 後追蹤時序</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.3 PSA 追蹤</h2>
+
+  <h3>7.3.1 監測頻率</h3>
+  <ul>
+    <li>RT 後 3 個月：第 1 次 PSA</li>
+    <li>0-2 年：每 3-6 個月</li>
+    <li>2-5 年：每 6 個月</li>
+    <li>≥5 年：每年</li>
+  </ul>
+
+  <h3>7.3.2 PSA 動態解讀</h3>
+  <ul>
+    <li><strong>PSA bounce：</strong>RT 後 1-3 年常見；瞬時上升 ≤2 ng/mL 後下降；不視為復發</li>
+    <li><strong>PSA nadir：</strong>多在 RT 後 18-36 個月；nadir &lt;0.5 ng/mL 預後最佳</li>
+    <li><strong>Phoenix 定義 BCR：</strong>nadir + 2 ng/mL（不論時序）</li>
+    <li><strong>術後 BCR 定義：</strong>PSA ≥0.2 ng/mL 確認</li>
+    <li><strong>PSA doubling time &lt;6 個月：</strong>高風險，加速影像 + ADT 評估</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.4 各時期項目</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">時期</th>
+        <th style="width:32%">臨床評估</th>
+        <th style="width:25%">PSA / 影像</th>
+        <th style="width:25%">特殊</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>RT 後 3 月</td><td>急性副作用收斂、IPSS</td><td>第 1 次 PSA</td><td>ADT 持續</td></tr>
+      <tr><td>6 月</td><td>慢性副作用評估、ED</td><td>PSA</td><td>骨密度 baseline（ADT）</td></tr>
+      <tr><td>1-2 年</td><td>每 3-6 月 PE + IPSS</td><td>每 3-6 月 PSA</td><td>ADT 啟動 / 中止監測</td></tr>
+      <tr><td>3-5 年</td><td>每 6-12 月</td><td>每 6 月 PSA</td><td>BCR 警覺；PSA bounce 追蹤</td></tr>
+      <tr><td>≥5 年</td><td>每年</td><td>每年 PSA</td><td>第二原發 surveillance</td></tr>
+      <tr><td>BCR 啟動評估</td><td>—</td><td>PSMA PET、MRI prostate</td><td>排除 metastasis；評估 salvage</td></tr>
+    </tbody>
+  </table>
+
+  <h2>7.5 BCR 後評估與啟動</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:70%">處置</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Definitive RT 後 BCR</td><td>PSMA PET、MRI prostate；biopsy 評估 local；options：salvage prostatectomy / brachy / SBRT / cryotherapy / ADT alone</td></tr>
+      <tr><td>Salvage RT 後 BCR</td><td>PSMA PET 評估；多採 ADT；考慮 SBRT 寡轉移病灶</td></tr>
+      <tr><td>低 PSA &amp; PSA DT &gt;12 月</td><td>觀察或 IADT（intermittent）</td></tr>
+      <tr><td>高 PSA / PSA DT &lt;6 月 / cN+ 或 M+</td><td>啟動全身治療（ADT ± abiraterone / enzalutamide / docetaxel）</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.6 特殊族群長期重點</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">族群</th><th style="width:70%">重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>長期 ADT 病人</td><td>baseline + 每 1-2 年 DEXA；補充 Ca / vit D；心血管追蹤；代謝症候群監測</td></tr>
+      <tr><td>SBRT 後</td><td>PSA bounce 較 conv 多見；勿過早判定為 BCR</td></tr>
+      <tr><td>Brachy 後</td><td>seed 穩定後（&gt;6 月）才評估；urethral stricture 警覺</td></tr>
+      <tr><td>BRCA carrier</td><td>第二原發風險（乳癌 / 胰臟癌）；家族篩檢</td></tr>
+      <tr><td>術後 salvage</td><td>incontinence 與 ED 加重風險；功能評估持續</td></tr>
+      <tr><td>Re-irradiation 後</td><td>累積晚期毒性風險高；密切監測 GU/GI</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Prostate — 文獻 ============ -->
+<section class="chapter" id="prostate-ref">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">攝護腺癌</span>8. 主要試驗與文獻</h1>
+
+  <h2>8.1 Dose escalation 與 Hypofractionation</h2>
+  <ol class="references">
+    <li>Dearnaley DP, et al. Conventional vs hypofractionated high-dose intensity-modulated radiotherapy for prostate cancer (CHHiP). Lancet Oncol. 2016;17:1047-1060.</li>
+    <li>Catton CN, et al. Randomized trial of a hypofractionated radiation regimen for the treatment of localized prostate cancer (PROFIT). J Clin Oncol. 2017;35:1884-1890.</li>
+    <li>Lee WR, et al. Randomized phase III noninferiority study comparing two radiotherapy fractionation schedules in patients with low-risk prostate cancer (RTOG 0415). J Clin Oncol. 2016;34:2325-2332.</li>
+    <li>Incrocci L, et al. Hypofractionated versus conventionally fractionated radiotherapy for patients with localised prostate cancer (HYPRO). Lancet Oncol. 2016;17:1061-1069.</li>
+    <li>Michalski JM, et al. Effect of standard vs dose-escalated radiation therapy for patients with intermediate-risk prostate cancer (RTOG 0126). JAMA Oncol. 2018;4:e180039.</li>
+  </ol>
+
+  <h2>8.2 SBRT / Ultra-hypofractionation</h2>
+  <ol class="references">
+    <li>Widmark A, et al. Ultra-hypofractionated versus conventionally fractionated radiotherapy for prostate cancer (HYPO-RT-PC). Lancet. 2019;394:385-395.</li>
+    <li>Brand DH, et al. Intensity-modulated fractionated radiotherapy versus stereotactic body radiotherapy for prostate cancer (PACE-B). Lancet Oncol. 2019;20:1531-1543.</li>
+    <li>van As N, et al. PACE-B 5-year outcomes. NEJM Evid. 2024;3:EVIDoa2300325.</li>
+    <li>Kishan AU, et al. SBRT for localized prostate cancer: pooled analysis. JAMA Network Open. 2019;2:e188006.</li>
+    <li>Kerkmeijer LGW, et al. Focal boost to the intraprostatic tumor in external beam radiotherapy for patients with localized prostate cancer (FLAME). J Clin Oncol. 2021;39:787-796.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.3 Brachytherapy</h2>
+  <ol class="references">
+    <li>Morris WJ, et al. Androgen suppression combined with elective nodal and dose escalated radiation therapy (ASCENDE-RT). Int J Radiat Oncol Biol Phys. 2017;98:275-285.</li>
+    <li>Hoskin PJ, et al. Randomised trial of external beam radiotherapy alone or combined with high-dose-rate brachytherapy boost for localised prostate cancer (HDR-BT boost). Radiother Oncol. 2012;103:217-222.</li>
+    <li>Yamada Y, et al. American Brachytherapy Society consensus guidelines for high-dose-rate prostate brachytherapy. Brachytherapy. 2012;11:20-32.</li>
+  </ol>
+
+  <h2>8.4 ADT 整合</h2>
+  <ol class="references">
+    <li>Bolla M, et al. Duration of androgen suppression in the treatment of prostate cancer (EORTC 22961). N Engl J Med. 2009;360:2516-2527.</li>
+    <li>Zapatero A, et al. High-dose radiotherapy with short-term or long-term androgen deprivation in localised prostate cancer (DART 01.05). Lancet Oncol. 2015;16:320-327.</li>
+    <li>Jones CU, et al. Radiotherapy and short-term androgen deprivation for localized prostate cancer (RTOG 9408). N Engl J Med. 2011;365:107-118.</li>
+    <li>James ND, et al. Abiraterone for prostate cancer not previously treated with hormone therapy (STAMPEDE). N Engl J Med. 2017;377:338-351.</li>
+    <li>Attard G, et al. Abiraterone acetate and prednisolone with or without enzalutamide for high-risk non-metastatic prostate cancer (STAMPEDE platform). Lancet. 2022;399:447-460.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.5 Salvage / Adjuvant RT</h2>
+  <ol class="references">
+    <li>Kneebone A, et al. Adjuvant radiotherapy versus early salvage radiotherapy following radical prostatectomy (RAVES). Lancet Oncol. 2020;21:1331-1340.</li>
+    <li>Parker CC, et al. Timing of radiotherapy after radical prostatectomy (RADICALS-RT). Lancet. 2020;396:1413-1421.</li>
+    <li>Sargos P, et al. Adjuvant radiotherapy versus early salvage radiotherapy plus short-term androgen deprivation therapy (GETUG-AFU 17). Lancet Oncol. 2020;21:1341-1352.</li>
+    <li>Vale CL, et al. Adjuvant or early salvage radiotherapy for the treatment of localised and locally advanced prostate cancer (ARTISTIC meta-analysis). Lancet. 2020;396:1422-1431.</li>
+    <li>Carrie C, et al. Salvage radiotherapy with or without short-term hormone therapy for rising PSA concentration after radical prostatectomy (GETUG-AFU 16). Lancet Oncol. 2016;17:747-756.</li>
+    <li>Pollack A, et al. The addition of androgen deprivation therapy and pelvic lymph node treatment to prostate bed salvage radiotherapy (NRG/RTOG 0534 SPPORT). Lancet. 2022;399:1886-1901.</li>
+  </ol>
+
+  <h2>8.6 Pelvic LN RT 與寡轉移</h2>
+  <ol class="references">
+    <li>Murthy V, et al. Prostate-only versus whole-pelvic radiation therapy in high-risk and very high-risk prostate cancer (POP-RT). J Clin Oncol. 2021;39:1234-1242.</li>
+    <li>Parker CC, et al. Radiotherapy to the primary tumour for newly diagnosed, metastatic prostate cancer (STAMPEDE Arm H). Lancet. 2018;392:2353-2366.</li>
+    <li>Phillips R, et al. Outcomes of observation vs SBRT for oligometastatic prostate cancer (ORIOLE). JAMA Oncol. 2020;6:650-659.</li>
+    <li>Ost P, et al. Surveillance or metastasis-directed therapy for oligometastatic prostate cancer recurrence (STOMP). J Clin Oncol. 2018;36:446-453.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">攝護腺癌</span>PROSTATE</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.7 Consensus Guidelines 與 Atlas</h2>
+  <ol class="references">
+    <li>Morgan SC, et al. Hypofractionated radiation therapy for localized prostate cancer: ASTRO, ASCO, AUA evidence-based guideline. J Clin Oncol. 2018;36:3411-3430.</li>
+    <li>Lawton CAF, et al. RTOG GU radiation oncology specialists reach consensus on pelvic lymph node volumes for high-risk prostate cancer. Int J Radiat Oncol Biol Phys. 2009;74:383-387.</li>
+    <li>Salembier C, et al. ESTRO ACROP consensus guideline on CT- and MRI-based target volume delineation for primary radiation therapy of localized prostate cancer. Radiother Oncol. 2018;127:49-61.</li>
+    <li>Sanda MG, et al. Clinically Localized Prostate Cancer: AUA/ASTRO/SUO Guideline. J Urol. 2018;199:683-690.</li>
+    <li>Bentzen SM, et al. QUANTEC overview. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S3-S9.</li>
+    <li>Grimm J, et al. HyTEC: hypofractionated tolerance dose-volume effects. Int J Radiat Oncol Biol Phys. 2021;110:1-10.</li>
+  </ol>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  function initMermaid() {
+    if (!window.mermaid) {
+      setTimeout(initMermaid, 50);
+      return;
+    }
+    window.mermaid.initialize({
+      startOnLoad: true,
+      layout: 'elk',
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ffffff',
+        primaryTextColor: '#222',
+        primaryBorderColor: '#3d6b87',
+        lineColor: '#555',
+        fontFamily: '"Noto Sans TC", sans-serif',
+        fontSize: '21px'
+      },
+      flowchart: {
+        padding: 10,
+        nodeSpacing: 50,
+        rankSpacing: 90,
+        useMaxWidth: false
+      },
+      elk: {
+        'elk.algorithm': 'layered',
+        'elk.direction': 'RIGHT',
+        'elk.edgeRouting': 'ORTHOGONAL',
+        'elk.layered.spacing.nodeNodeBetweenLayers': '55',
+        'elk.spacing.nodeNode': '38'
+      }
+    });
+    window.mermaid.run();
+
+    /* SVG 響應式調整：只動 width/height，絕不碰任何 rect。
+       過去的 rect-hide JS 在 .page-banner 加入後會出現 timing race（getBBox 偶爾為 0），
+       導致整張流程圖被誤判為 background 而隱形。背景 rect 改用 CSS 處理（見 .flowchart svg rect.background CSS）。 */
+    setTimeout(() => {
+      document.querySelectorAll('.flowchart svg').forEach(svg => {
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+        svg.style.maxWidth = 'none';
+      });
+    }, 800);
+  }
+  window.addEventListener('load', initMermaid);
+</script>
+
+</body>
+</html>
