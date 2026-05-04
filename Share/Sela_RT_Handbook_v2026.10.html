@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sela RT Handbook v2026.10</title>
+<title>Sela RT Handbook v2026.11</title>
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
   import elkLayouts from 'https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.7/dist/mermaid-layout-elk.esm.min.mjs';
@@ -292,6 +292,137 @@
     letter-spacing: 2px;
   }
 
+  /* 癌種分隔頁 — 進入新癌種前的章節分頁 */
+  .cancer-divider {
+    background: var(--bg-card);
+    border-radius: 6px;
+    margin: 50px 0 16px;
+    box-shadow: 0 2px 12px rgba(31,41,51,0.05);
+    overflow: hidden;
+    position: relative;
+    min-height: 790px;
+    display: flex;
+    flex-direction: column;
+  }
+  .cancer-divider-top {
+    height: 12px;
+    background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+  }
+  .cancer-divider-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .cancer-divider-left {
+    padding: 88px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border-soft);
+  }
+  .cancer-divider-num {
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    color: var(--primary-mid);
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+  .cancer-divider-num .num {
+    color: var(--primary);
+    font-size: 14px;
+    margin-right: 8px;
+  }
+  .cancer-divider-zh {
+    color: var(--primary);
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: 8px;
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+  .cancer-divider-en {
+    color: var(--text-muted);
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+  }
+  .cancer-divider-line {
+    width: 60px;
+    height: 2px;
+    background: var(--primary);
+    margin-bottom: 32px;
+  }
+  .cancer-divider-meta {
+    color: var(--text-muted);
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 13px;
+    line-height: 1.9;
+    letter-spacing: 1px;
+  }
+  .cancer-divider-right {
+    background: var(--primary);
+    color: white;
+    padding: 88px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .cancer-divider-right::before {
+    content: "CHAPTERS";
+    position: absolute;
+    top: 56px;
+    left: 56px;
+    font-size: 10.5px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.45);
+    font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+  }
+  .cancer-divider-right ol {
+    list-style: none;
+    counter-reset: ch-counter;
+    padding: 0;
+    margin: 0;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .cancer-divider-right ol li {
+    counter-increment: ch-counter;
+    padding: 11px 0;
+    font-size: 14.5px;
+    color: white;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: baseline;
+  }
+  .cancer-divider-right ol li:last-child { border-bottom: none; }
+  .cancer-divider-right ol li::before {
+    content: counter(ch-counter, decimal-leading-zero);
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-right: 18px;
+    min-width: 22px;
+  }
+  .cancer-divider-right ol li a {
+    color: white;
+    text-decoration: none;
+    transition: letter-spacing 0.2s ease;
+    flex: 1;
+  }
+  .cancer-divider-right ol li a:hover {
+    letter-spacing: 2px;
+  }
+
   /* 章節結構 — Nordic 重整：
      .chapter 為邏輯容器（無視覺）；.page 為視覺單位
      .page-banner 為每癌頁首（letterhead 風格）
@@ -564,7 +695,7 @@
       size: A4 landscape;
       margin: 1.4cm 1.6cm 1.8cm;
       @bottom-center {
-        content: "Sela RT Handbook v2026.10 — " counter(page) " / " counter(pages);
+        content: "Sela RT Handbook v2026.11 — " counter(page) " / " counter(pages);
         font-family: "Noto Sans TC", sans-serif;
         font-size: 9pt;
         color: #666;
@@ -645,7 +776,7 @@
       <div class="meta">
         <div>
           <strong>VERSION</strong>
-          <span>v2026.10</span>
+          <span>v2026.11</span>
         </div>
         <div>
           <strong>UPDATED</strong>
@@ -653,7 +784,7 @@
         </div>
         <div>
           <strong>SCOPE</strong>
-          <span>乳癌、肺癌、攝護腺癌（持續擴充中）</span>
+          <span>乳癌、肺癌、攝護腺癌、B 細胞淋巴瘤（持續擴充中）</span>
         </div>
       </div>
     </div>
@@ -661,7 +792,7 @@
 
   <div class="cover-footer">
     <span>Sela RT Handbook</span>
-    <span>v2026.10</span>
+    <span>v2026.11</span>
   </div>
 </section>
 
@@ -669,16 +800,42 @@
 <nav class="toc">
   <h2>目 錄</h2>
   <ul class="toc-list">
-    <li><a href="#breast-ind" class="toc-link">乳癌　Breast</a></li>
-    <li class="toc-pending">頭頸　Head &amp; Neck</li>
-    <li><a href="#lung-ind" class="toc-link">肺　Lung</a></li>
-    <li><a href="#prostate-ind" class="toc-link">攝護腺　Prostate</a></li>
-    <li class="toc-pending">中樞神經　CNS</li>
-    <li class="toc-pending">消化道　GI</li>
-    <li class="toc-pending">婦科　Gynecologic</li>
-    <li class="toc-pending">血液　Hematologic</li>
+    <li><a href="#breast-divider" class="toc-link">乳癌　Breast Cancer</a></li>
+    <li class="toc-pending">頭頸癌　Head &amp; Neck Cancer</li>
+    <li><a href="#lung-divider" class="toc-link">肺癌　Lung Cancer</a></li>
+    <li><a href="#prostate-divider" class="toc-link">攝護腺癌　Prostate Cancer</a></li>
+    <li class="toc-pending">中樞神經腫瘤　CNS Tumor</li>
+    <li class="toc-pending">消化道癌　GI Cancer</li>
+    <li class="toc-pending">婦科癌　Gynecologic Cancer</li>
+    <li><a href="#bcell-divider" class="toc-link">B 細胞淋巴瘤　B-Cell Lymphoma</a></li>
   </ul>
 </nav>
+<!-- ============ 癌種分隔頁：乳癌 ============ -->
+<section class="cancer-divider" id="breast-divider">
+  <div class="cancer-divider-top"></div>
+  <div class="cancer-divider-body">
+    <div class="cancer-divider-left">
+      <div class="cancer-divider-num"><span class="num">01</span>SECTION</div>
+      <h2 class="cancer-divider-zh">乳癌</h2>
+      <div class="cancer-divider-en">BREAST</div>
+      <div class="cancer-divider-line"></div>
+      <div class="cancer-divider-meta">常見女性惡性腫瘤；輻射治療涵蓋 BCS 後 WBRT、PMRT、RNI、APBI、Boost</div>
+    </div>
+    <div class="cancer-divider-right">
+      <ol>
+        <li><a href="#breast-ind">適應症</a></li>
+        <li><a href="#breast-sim">模擬定位</a></li>
+        <li><a href="#breast-tgt">靶區勾劃</a></li>
+        <li><a href="#breast-dose">劑量與分次</a></li>
+        <li><a href="#breast-oar">OAR 限制</a></li>
+        <li><a href="#breast-tox">副作用</a></li>
+        <li><a href="#breast-fu">追蹤</a></li>
+        <li><a href="#breast-ref">文獻</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 乳癌 — 適應症 ============ -->
 <section class="chapter" id="breast-ind">
   <div class="page">
@@ -1705,6 +1862,32 @@ flowchart LR
     <li>Halperin EC, et al. Perez and Brady's Principles and Practice of Radiation Oncology. 7th ed.</li>
     <li>Gunderson LL, Tepper JE. Clinical Radiation Oncology. 5th ed.</li>
   </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 癌種分隔頁：肺癌 ============ -->
+<section class="cancer-divider" id="lung-divider">
+  <div class="cancer-divider-top"></div>
+  <div class="cancer-divider-body">
+    <div class="cancer-divider-left">
+      <div class="cancer-divider-num"><span class="num">03</span>SECTION</div>
+      <h2 class="cancer-divider-zh">肺癌</h2>
+      <div class="cancer-divider-en">LUNG</div>
+      <div class="cancer-divider-line"></div>
+      <div class="cancer-divider-meta">NSCLC 為主；早期 SBRT、Stage III CCRT + durvalumab、PORT、寡轉移</div>
+    </div>
+    <div class="cancer-divider-right">
+      <ol>
+        <li><a href="#lung-ind">適應症</a></li>
+        <li><a href="#lung-sim">模擬定位</a></li>
+        <li><a href="#lung-tgt">靶區勾劃</a></li>
+        <li><a href="#lung-dose">劑量與分次</a></li>
+        <li><a href="#lung-oar">OAR 限制</a></li>
+        <li><a href="#lung-tox">副作用</a></li>
+        <li><a href="#lung-fu">追蹤</a></li>
+        <li><a href="#lung-ref">文獻</a></li>
+      </ol>
     </div>
   </div>
 </section>
@@ -2776,6 +2959,32 @@ flowchart LR
     <li>ESTRO ACROP target delineation atlas (lung). <cite>www.estro.org</cite></li>
     <li>Halperin EC, et al. Perez and Brady's Principles and Practice of Radiation Oncology. 7th ed.</li>
   </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 癌種分隔頁：攝護腺癌 ============ -->
+<section class="cancer-divider" id="prostate-divider">
+  <div class="cancer-divider-top"></div>
+  <div class="cancer-divider-body">
+    <div class="cancer-divider-left">
+      <div class="cancer-divider-num"><span class="num">04</span>SECTION</div>
+      <h2 class="cancer-divider-zh">攝護腺癌</h2>
+      <div class="cancer-divider-en">PROSTATE</div>
+      <div class="cancer-divider-line"></div>
+      <div class="cancer-divider-meta">Definitive EBRT、SBRT、brachytherapy、salvage、ADT 整合</div>
+    </div>
+    <div class="cancer-divider-right">
+      <ol>
+        <li><a href="#prostate-ind">適應症</a></li>
+        <li><a href="#prostate-sim">模擬定位</a></li>
+        <li><a href="#prostate-tgt">靶區勾劃</a></li>
+        <li><a href="#prostate-dose">劑量與分次</a></li>
+        <li><a href="#prostate-oar">OAR 限制</a></li>
+        <li><a href="#prostate-tox">副作用</a></li>
+        <li><a href="#prostate-fu">追蹤</a></li>
+        <li><a href="#prostate-ref">文獻</a></li>
+      </ol>
     </div>
   </div>
 </section>
@@ -4035,6 +4244,1080 @@ flowchart LR
     </div>
   </div>
 </section>
+
+<!-- ============ 癌種分隔頁：B 細胞淋巴瘤 ============ -->
+<section class="cancer-divider" id="bcell-divider">
+  <div class="cancer-divider-top"></div>
+  <div class="cancer-divider-body">
+    <div class="cancer-divider-left">
+      <div class="cancer-divider-num"><span class="num">08</span>SECTION</div>
+      <h2 class="cancer-divider-zh">B 細胞淋巴瘤</h2>
+      <div class="cancer-divider-en">B-CELL LYMPHOMA</div>
+      <div class="cancer-divider-line"></div>
+      <div class="cancer-divider-meta">DLBCL、FL、MZL/MALT、PMBL、PCNSL、NLPHL；ISRT 概念為核心、低劑量 4 Gy / 2 fx 為 indolent 主流</div>
+    </div>
+    <div class="cancer-divider-right">
+      <ol>
+        <li><a href="#bcell-ind">適應症</a></li>
+        <li><a href="#bcell-sim">模擬定位</a></li>
+        <li><a href="#bcell-tgt">靶區勾劃</a></li>
+        <li><a href="#bcell-dose">劑量與分次</a></li>
+        <li><a href="#bcell-oar">OAR 限制</a></li>
+        <li><a href="#bcell-tox">副作用</a></li>
+        <li><a href="#bcell-fu">追蹤</a></li>
+        <li><a href="#bcell-ref">文獻</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 適應症 ============ -->
+<section class="chapter" id="bcell-ind">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>1. 適應症</h1>
+
+  <h2>1.1 整體決策流程</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[B 細胞淋巴瘤<br/>分類 + 分期]:::startN
+    B[Aggressive<br/>DLBCL/HGBL]:::actionN
+    C[Indolent<br/>FL/MZL/MALT]:::actionN
+    D[Localized 特殊<br/>原發部位]:::actionN
+    E[Salvage / palliative]:::actionN
+    B1[化療反應後<br/>consolidation ISRT<sup>a</sup>]:::actionN
+    C1[低劑量 ISRT<br/>(2-4 Gy/2 fx)<sup>b</sup>]:::actionN
+    D1[Definitive ISRT<br/>±化療<sup>c</sup>]:::actionN
+    E1[姑息性 RT<br/>2 Gy×2 / 4 Gy×1]:::actionN
+    F[計畫處方]:::endN
+
+    A --> B --> B1 --> F
+    A --> C --> C1 --> F
+    A --> D --> D1 --> F
+    A --> E --> E1 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　B 細胞淋巴瘤 RT 整體決策</div>
+  <div class="flowchart-footnote">
+    <ul>
+      <li><strong>a. DLBCL consolidation：</strong>R-CHOP × 6 後 PET-positive 部位、或 bulky disease（&gt;7.5 cm）、或 stage I-II 簡化方案</li>
+      <li><strong>b. Indolent low-dose：</strong>FORT、PLAT 試驗：4 Gy/2 fx 局部控制 5y 70-90%；可重複治療</li>
+      <li><strong>c. Definitive RT：</strong>gastric MALT 抗生素失敗、orbital MALT、CNS lymphoma boost、early-stage NLPHL</li>
+    </ul>
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.2 ISRT 概念（Involved-Site RT）</h2>
+
+  <p>取代過去 IFRT / EFRT，以縮小靶區、降低毒性為核心。</p>
+
+  <table>
+    <thead>
+      <tr><th style="width:18%">名詞</th><th style="width:42%">範圍</th><th style="width:40%">現況</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>EFRT</strong></td><td>Extended-field：含 involved + 鄰近 nodal regions</td><td>已淘汰（除特殊 Hodgkin 早期歷史試驗）</td></tr>
+      <tr><td><strong>IFRT</strong></td><td>Involved-field：整個 nodal region（如 mantle、inverted Y）</td><td>已被 ISRT 取代</td></tr>
+      <tr><td><strong>ISRT</strong></td><td>Involved-site：化療前 GTV + 動作不確定性 margin，僅限 involved sites</td><td><strong>現代標準</strong>（ILROG）</td></tr>
+      <tr><td><strong>INRT</strong></td><td>Involved-node：僅 involved nodes</td><td>需 PET-CT 治療姿勢；少用</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.3 DLBCL 適應症</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:18%">RT</th><th style="width:52%">劑量與備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stage I-II non-bulky 完成 R-CHOP × 4-6 達 CR</td><td>個別化</td><td>FLYER：年輕 low-IPI 病人 4 cycle 後 CR 可省略 RT；其他考慮 30 Gy ISRT</td></tr>
+      <tr><td>Stage I-II bulky（&gt;7.5 cm）</td><td><strong>建議</strong></td><td>30-36 Gy ISRT consolidation</td></tr>
+      <tr><td>Stage III-IV PET-positive residual</td><td><strong>建議</strong></td><td>30-40 Gy ISRT 至 PET-positive 部位</td></tr>
+      <tr><td>Skeletal disease 未達 CR</td><td>建議</td><td>30-36 Gy（骨骼病灶恢復評估困難）</td></tr>
+      <tr><td>Primary mediastinal B-cell（PMBL）</td><td>個別化</td><td>R-CHOP 後 PET-negative 可省（IELSG-26）；R-EPOCH 多免 RT</td></tr>
+      <tr><td>R-CHOP 不耐受 / 拒絕化療</td><td>建議</td><td>RT alone 40-50 Gy（少用，僅特殊情境）</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.4 Indolent Lymphoma 適應症</h2>
+
+  <h3>1.4.1 Follicular Lymphoma (FL)</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:18%">RT</th><th style="width:52%">劑量</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stage I-II FL（localized）</td><td><strong>標準</strong></td><td>24 Gy / 12 fx ISRT；10y FFS 50-60%、可治癒</td></tr>
+      <tr><td>Advanced FL palliative</td><td>低劑量首選</td><td>4 Gy / 2 fx（FORT 試驗）；可重複</td></tr>
+      <tr><td>Bulky symptomatic disease</td><td>建議</td><td>4 Gy / 2 fx 或 24 Gy 視預期反應</td></tr>
+      <tr><td>Refractory / 化療失敗</td><td>建議</td><td>4 Gy / 2 fx 重複治療多部位</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h3>1.4.2 Marginal Zone Lymphoma (MZL) / MALT</h3>
+  <table>
+    <thead>
+      <tr><th style="width:30%">部位</th><th style="width:18%">RT</th><th style="width:52%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Gastric MALT (H. pylori +)</td><td>抗生素首選</td><td>失敗者再 ISRT 24-30 Gy</td></tr>
+      <tr><td>Gastric MALT (H. pylori −)</td><td><strong>RT 首選</strong></td><td>24-30 Gy ISRT</td></tr>
+      <tr><td>Ocular adnexal MZL</td><td>RT 首選</td><td>24-30 Gy ISRT；考慮 4 Gy/2 fx</td></tr>
+      <tr><td>Cutaneous MZL</td><td>局部 RT</td><td>24 Gy 或 4 Gy×2</td></tr>
+      <tr><td>Salivary gland、thyroid、lung MALT</td><td>個別化</td><td>24-30 Gy</td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.4.3 Waldenström / LPL</h3>
+  <ul>
+    <li>Localized symptomatic：24 Gy ISRT（少見）</li>
+    <li>多數採系統治療為主</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 01　適應症</span>
+    </div>
+    <div class="page-content">
+      <h2>1.5 特殊情境</h2>
+
+  <h3>1.5.1 Primary CNS Lymphoma (PCNSL)</h3>
+  <ul>
+    <li>HD-MTX × 4-6 後 consolidation：autologous SCT 或 WBRT</li>
+    <li>WBRT 23.4 Gy（IELSG-32 reduced-dose）+ tumor bed boost；老年人 NCCN 偏好避 WBRT 以降神經毒性</li>
+    <li>Refractory / palliative：30-36 Gy WBRT</li>
+  </ul>
+
+  <h3>1.5.2 Cutaneous lymphomas</h3>
+  <ul>
+    <li>Localized cutaneous DLBCL leg type：30-40 Gy</li>
+    <li>Mycosis fungoides（T-cell 但常與 B-cell 並行討論）：localized lesions 8-30 Gy；TSEBT 36 Gy / 18 fx 至 12 Gy / 3 fx 短療程</li>
+  </ul>
+
+  <h3>1.5.3 NLPHL（Nodular Lymphocyte-Predominant Hodgkin）</h3>
+  <ul>
+    <li>Stage IA non-bulky：30 Gy ISRT alone（治癒率 90%+）</li>
+    <li>進展期：化療 + ISRT 30 Gy</li>
+  </ul>
+
+  <h3>1.5.4 TBI / TLI conditioning</h3>
+  <ul>
+    <li>HCT conditioning：12 Gy / 6 fx（每日 2 fx，BID）</li>
+    <li>NMA：2 Gy 單次或 4 Gy</li>
+    <li>對 GVHD-prone 病人，TLI（thoraco-abdominal） 替代 TBI</li>
+  </ul>
+
+  <h3>1.5.5 Re-irradiation</h3>
+  <ul>
+    <li>Indolent lymphoma 復發於先前 RT 部位：低劑量 4 Gy / 2 fx 多次治療通常安全</li>
+    <li>Aggressive lymphoma re-RT 個別評估累積 OAR</li>
+  </ul>
+
+  <h3>1.5.6 Palliative</h3>
+  <ul>
+    <li>4 Gy / 2 fx：indolent 多部位 palliation 標準</li>
+    <li>2 Gy / 1 fx 或 4 Gy / 1 fx：超短療程姑息（QUAD shot 變體）</li>
+    <li>30 Gy / 10 fx：長預期生命之 palliation</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 模擬定位 ============ -->
+<section class="chapter" id="bcell-sim">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>2. 模擬定位</h1>
+
+  <h2>2.1 體位與固定</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">部位</th><th style="width:40%">體位</th><th style="width:36%">固定</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>頸部 / SCV / mediastinum</td><td>Supine、雙手身側或上舉、下巴抬</td><td>Aquaplast mask（含頸肩）</td></tr>
+      <tr><td>Mediastinum 為主</td><td>Supine、雙手上舉</td><td>Vac-bag 或 wing board</td></tr>
+      <tr><td>Abdomen / pelvis</td><td>Supine、雙手胸前</td><td>Vac-bag、knee fix</td></tr>
+      <tr><td>Inguinal / iliac</td><td>Supine、frog leg 或併腿</td><td>Knee fix</td></tr>
+      <tr><td>Eye / orbit</td><td>Supine、頭部正中</td><td>Aquaplast mask + 開眼凝視</td></tr>
+      <tr><td>四肢 / 皮膚</td><td>依病灶位置</td><td>Vac-bag、bolus</td></tr>
+      <tr><td>TBI</td><td>Supine 或站立、距 source 4-5 m</td><td>專用 TBI 床或站立架</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.2 動作管理（縱膈 / 橫膈鄰近）</h2>
+
+  <ul>
+    <li><strong>4D-CT：</strong>mediastinal、cardiac、橫膈附近 disease 必做</li>
+    <li><strong>DIBH：</strong>左側 mediastinal mass、年輕病人考慮（降心臟劑量）</li>
+    <li><strong>ITV-based：</strong>中等動作病灶</li>
+    <li><strong>Free breathing 即可：</strong>頭頸、四肢、皮膚 lesions</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.3 Pre-chemo vs post-chemo 影像</h2>
+
+  <p>ISRT 概念之核心：化療前確定 GTV 範圍，之後勾劃以 pre-chemo extent 為基準。</p>
+
+  <ul>
+    <li><strong>必備影像：</strong>化療前 PET-CT、診斷 CT、必要時 MRI</li>
+    <li><strong>Co-registration：</strong>PET-CT 之 GTV fusion 至 RT planning CT（治療姿勢）</li>
+    <li><strong>姿勢調整：</strong>因為診斷 PET 通常 arms-down，需 mental adjustment 或重新做 simulation PET</li>
+    <li><strong>Post-chemo CTV：</strong>含 pre-chemo GTV 範圍，但考慮 normal tissue（如 lung、kidney）已恢復則不延伸至原 displacement 區</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.4 影像取得</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:25%">項目</th><th style="width:75%">建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Slice thickness</td><td>3-5 mm（CNS、orbit 可 1-2 mm）</td></tr>
+      <tr><td>Scan range</td><td>含 pre-chemo extent + 上下 5 cm 緩衝</td></tr>
+      <tr><td>對比劑</td><td>Stage III-IV、複雜 nodal pattern 建議；abdomen 與 mediastinum 尤其</td></tr>
+      <tr><td>4D-CT</td><td>橫膈附近、mediastinum 必做</td></tr>
+      <tr><td>PET-CT 整合</td><td>所有病人需 fusion；治療姿勢 PET 為理想</td></tr>
+      <tr><td>MRI</td><td>orbit、CNS、bone 病灶必含</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 02　模擬定位</span>
+    </div>
+    <div class="page-content">
+      <h2>2.5 計畫前查核</h2>
+  <ul>
+    <li>病理：subtype 確認（DLBCL、FL、MZL、PMBL 等）、雙打擊 / 三打擊（HGBL）、CD20、Ki-67</li>
+    <li>分期：Lugano staging（含 PET-CT、bone marrow 評估）、IPI / FLIPI</li>
+    <li>反應評估：interim PET（Deauville score）、end-of-treatment PET</li>
+    <li>共病：心臟（含 baseline echo）、肺功能（前 mediastinal 或 thoracic field）、生育需求</li>
+    <li>化療療程：R-CHOP / R-EPOCH 完成情況、cumulative anthracycline、cardiac toxicity</li>
+    <li>RT 啟動時程：化療完成後 3-6 週啟動，避免 mucositis 與骨髓抑制重疊</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 靶區勾劃 ============ -->
+<section class="chapter" id="bcell-tgt">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>3. 靶區勾劃</h1>
+
+  <h2>3.1 ISRT GTV / CTV 定義</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">層次</th><th style="width:76%">定義</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Pre-chemo GTV</td><td>化療前所有 PET-positive / clinically detectable 之疾病範圍</td></tr>
+      <tr><td>Post-chemo GTV</td><td>化療後仍可見 / PET-positive 之殘餘（若有）</td></tr>
+      <tr><td>CTV</td><td>Pre-chemo GTV + 動作 / 顯像 / 微觀延伸不確定性 margin（通常 1-2 cm，依部位調整；考慮正常解剖屏障如骨皮質、橫膈）</td></tr>
+      <tr><td>PTV</td><td>CTV + 0.5-1 cm（依 IGRT 方式）</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    重點：CTV 不延伸至化療<strong>已縮小</strong>之正常組織（如肺已 re-expansion 之 pleural cavity）。但仍需含 pre-chemo 之 nodal extent（即使縮小）。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.2 各部位 CTV margin 建議</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">部位</th><th style="width:24%">CTV margin</th><th style="width:52%">特殊考量</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Cervical / SCV nodes</td><td>1-1.5 cm</td><td>Spare bilateral parotid 與 cochlea</td></tr>
+      <tr><td>Mediastinum</td><td>1-1.5 cm</td><td>Lung re-expansion 後 CTV 不延伸進已恢復肺；Heart/lung sparing</td></tr>
+      <tr><td>Axilla</td><td>1.5 cm</td><td>Spare humeral head、breast tissue（女性）</td></tr>
+      <tr><td>Mesenteric / para-aortic</td><td>1.5-2 cm</td><td>Bowel motion 大；考慮 ITV</td></tr>
+      <tr><td>Pelvic / inguinal</td><td>1-1.5 cm</td><td>Spare bowel、bladder、gonads</td></tr>
+      <tr><td>Splenic involvement</td><td>含全脾</td><td>常為 Stage III-IV indolent</td></tr>
+      <tr><td>Gastric MALT</td><td>含全胃 + 1-1.5 cm</td><td>4D-CT 必做（呼吸動作）</td></tr>
+      <tr><td>Orbit</td><td>5 mm</td><td>Lens sparing 為核心</td></tr>
+      <tr><td>CNS（PCNSL WBRT）</td><td>整個顱內</td><td>下界至 C2 下緣</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h2>3.3 OAR 勾劃要點（依部位）</h2>
+
+  <h3>3.3.1 Mediastinal field</h3>
+  <ul>
+    <li>整體心臟、心臟次結構（atria、ventricles、LAD、RCA）</li>
+    <li>同側肺、對側肺（特別注意 V5、V20）</li>
+    <li>食道、甲狀腺（年輕病人）</li>
+    <li>女性：對側乳房（second cancer 風險）</li>
+    <li>Spinal cord（含 PRV）</li>
+  </ul>
+
+  <h3>3.3.2 Abdominal / pelvic field</h3>
+  <ul>
+    <li>Kidneys（雙側分開勾劃）</li>
+    <li>Liver（右側 field 必含）</li>
+    <li>Bowel（small + large 分開為佳）</li>
+    <li>Stomach（gastric MALT 自身為 CTV，週邊勾劃）</li>
+    <li>Bladder、rectum（pelvic field）</li>
+    <li>Gonads（年輕病人精囊 / 卵巢屏蔽考量）</li>
+  </ul>
+
+  <h3>3.3.3 Head/neck field</h3>
+  <ul>
+    <li>Parotid glands（雙側）、submandibular glands</li>
+    <li>Cochlea（小兒尤重）</li>
+    <li>Larynx、oral cavity</li>
+    <li>Brachial plexus（SCV field）</li>
+    <li>Spinal cord</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 03　靶區勾劃</span>
+    </div>
+    <div class="page-content">
+      <h3>3.3.4 Orbit field</h3>
+  <ul>
+    <li>Lens（必勾，劑量限制嚴格）</li>
+    <li>Lacrimal gland、cornea、retina</li>
+    <li>Optic nerves、optic chiasm</li>
+    <li>對側 orbit 結構</li>
+  </ul>
+
+  <h3>3.3.5 CNS field（PCNSL）</h3>
+  <ul>
+    <li>Hippocampus（雙側，劑量限制以保護記憶）</li>
+    <li>Lens、retina、optic nerves、cochlea</li>
+    <li>Brainstem、cribriform plate（below frontal sinus）</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 劑量與分次 ============ -->
+<section class="chapter" id="bcell-dose">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>4. 劑量與分次</h1>
+
+  <h2>4.1 Aggressive Lymphoma 劑量</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:24%">劑量 / 分次</th><th style="width:46%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>DLBCL stage I-II 達 CR</td><td>30 Gy / 15-17 fx</td><td>R-CHOP × 4-6 後 consolidation</td></tr>
+      <tr><td>DLBCL bulky 達 CR</td><td>30-36 Gy / 15-18 fx</td><td>—</td></tr>
+      <tr><td>DLBCL PR / PET+ residual</td><td>36-40 Gy / 18-20 fx</td><td>—</td></tr>
+      <tr><td>DLBCL refractory / no chemo</td><td>40-50 Gy / 20-25 fx</td><td>RT alone 罕見</td></tr>
+      <tr><td>PMBL</td><td>30 Gy / 15 fx</td><td>R-CHOP 後 PET-negative 可省（IELSG-26）</td></tr>
+      <tr><td>Burkitt lymphoma</td><td>不常規 RT</td><td>系統治療為主；CNS prophylaxis 用 IT chemo</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.2 Indolent Lymphoma 劑量</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:24%">劑量 / 分次</th><th style="width:46%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>FL stage I-II definitive</td><td><strong>24 Gy / 12 fx</strong></td><td>FORT 試驗：24 Gy 優於 4 Gy 於 stage I-II</td></tr>
+      <tr><td>FL palliative</td><td><strong>4 Gy / 2 fx</strong></td><td>FORT、PLAT 試驗；可重複</td></tr>
+      <tr><td>MZL gastric (H. pylori −)</td><td>24-30 Gy / 12-15 fx</td><td>—</td></tr>
+      <tr><td>MZL ocular adnexal</td><td>24-30 Gy / 12-15 fx</td><td>4 Gy×2 為替代</td></tr>
+      <tr><td>MZL cutaneous</td><td>24 Gy / 12 fx 或 4 Gy×2</td><td>—</td></tr>
+      <tr><td>Indolent palliative bulky</td><td>4 Gy / 2 fx</td><td>多部位可重複</td></tr>
+    </tbody>
+  </table>
+
+  <div class="inline-note">
+    <strong>FORT：</strong>indolent lymphoma 24 Gy 與 4 Gy/2 fx 比較，stage I-II 24 Gy 優於 4 Gy（ORR 91% vs 81%）；palliative 設定 4 Gy 足夠。
+    <strong>PLAT：</strong>FL 4 Gy/2 fx 局部 ORR 90%、CR 60%。
+  </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.3 特殊情境劑量</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">情境</th><th style="width:24%">劑量 / 分次</th><th style="width:46%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>NLPHL stage IA</td><td>30 Gy / 15-17 fx</td><td>RT alone 治癒 90%+</td></tr>
+      <tr><td>PCNSL consolidation</td><td>23.4 Gy WBRT + 9 Gy boost</td><td>IELSG-32 reduced-dose</td></tr>
+      <tr><td>PCNSL palliative</td><td>30-36 Gy / 15-20 fx WBRT</td><td>老年 / refractory</td></tr>
+      <tr><td>TSEBT (mycosis fungoides)</td><td>36 Gy / 18 fx 或 12 Gy / 3 fx</td><td>低劑量 12 Gy 縮短療程</td></tr>
+      <tr><td>Cutaneous DLBCL leg type</td><td>30-40 Gy</td><td>—</td></tr>
+      <tr><td>TBI HCT myeloablative</td><td>12 Gy / 6 fx BID</td><td>每日 2 fx，間隔 ≥6 hr</td></tr>
+      <tr><td>TBI NMA</td><td>2 Gy 單次</td><td>—</td></tr>
+      <tr><td>2 Gy / 1 fx 緊急止血</td><td>2 Gy 單次</td><td>SVC obstruction 等</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4.4 處方規格與 DVH</h2>
+
+  <ul>
+    <li><strong>D95 ≥ 95%</strong> prescription、V95 ≥ 95% PTV</li>
+    <li><strong>D2 ≤ 107%</strong> prescription</li>
+    <li>低劑量方案（4 Gy / 2 fx）之 DVH 約束相對寬鬆，OAR 通常自動達標</li>
+    <li>CI 0.9-1.1、HI 接近 0</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.5 技術選擇</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">技術</th><th style="width:38%">適用</th><th style="width:40%">特點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3D-CRT</td><td>Simple field（淋巴結單區、四肢）</td><td>計畫快、足夠</td></tr>
+      <tr><td>IMRT / VMAT</td><td>Mediastinal（心肺保護）、orbit、CNS、abdominal</td><td>conformity 佳；low-dose bath 風險（年輕、第二原發考量）</td></tr>
+      <tr><td>DIBH + 3D / IMRT</td><td>Mediastinal 左側、年輕 PMBL</td><td>降 mean heart dose 50%</td></tr>
+      <tr><td>Proton therapy</td><td>選擇性：PMBL、Hodgkin 年輕、PCNSL boost、re-RT</td><td>低 integral dose；可近性低</td></tr>
+      <tr><td>Electrons</td><td>Cutaneous lesions、TSEBT</td><td>表淺病灶；energy 6-9 MeV</td></tr>
+      <tr><td>TBI (extended SSD photon)</td><td>HCT conditioning</td><td>專用 TBI 床、距離 4-5 m</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 04　劑量與分次</span>
+    </div>
+    <div class="page-content">
+      <h2>4.6 化療搭配時序</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">藥物</th><th style="width:75%">搭配建議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>R-CHOP / R-EPOCH</td><td>RT 於完成後 3-6 週啟動（避骨髓抑制與 mucositis 重疊）</td></tr>
+      <tr><td>HD-MTX (CNS)</td><td>RT 後 ≥2-4 週再給 HD-MTX；同步顯著加重神經毒性</td></tr>
+      <tr><td>Rituximab maintenance</td><td>RT 期間可同步</td></tr>
+      <tr><td>BTK inhibitors（ibrutinib 等）</td><td>RT 期間可同步；少數案例報告 bleeding 風險</td></tr>
+      <tr><td>CAR-T 後 RT</td><td>3-6 週後啟動（lymphocyte 恢復）；bridging RT 為新興指引</td></tr>
+      <tr><td>Bridging RT 至 CAR-T</td><td>Apheresis 後至 CAR-T 輸注前；4-30 Gy 視時程</td></tr>
+      <tr><td>Polatuzumab、Loncastuximab</td><td>RT 期間可同步；資料有限</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    禁忌：active scleroderma / SLE 為相對禁忌；嚴重骨髓抑制（ANC &lt;1000、PLT &lt;50K）需先恢復；懷孕為絕對禁忌；既往同部位 RT 達 cumulative tolerance 為相對禁忌。
+  </p>
+    </div>
+  </div>
+</section>
+<!-- ============ B-cell — OAR ============ -->
+<section class="chapter" id="bcell-oar">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>5. OAR 限制</h1>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    淋巴瘤總劑量低於上皮腫瘤，OAR 限制相對寬鬆，但年輕病人之長期影響（second cancer、心血管事件、生育、神經認知）為核心考量。以下限制對應典型 24-40 Gy 處方；TBI / WBRT 限制獨立列出。
+  </p>
+
+  <h2>5.1 Mediastinal field 主要 OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標（30-36 Gy）</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mean heart dose</td><td>&lt;15 Gy（理想 &lt;5 Gy）</td><td>每 1 Gy 增 CV event 風險（Hodgkin 長期資料）</td></tr>
+      <tr><td>Heart V25</td><td>&lt;10%</td><td>—</td></tr>
+      <tr><td>Heart V30</td><td>&lt;5%</td><td>—</td></tr>
+      <tr><td>LAD V15</td><td>&lt;30%</td><td>年輕病人嚴格</td></tr>
+      <tr><td>Total lung V20</td><td>&lt;30%</td><td>—</td></tr>
+      <tr><td>Total lung mean</td><td>&lt;13.5 Gy</td><td>—</td></tr>
+      <tr><td>Spinal cord Dmax</td><td>&lt;45 Gy</td><td>—</td></tr>
+      <tr><td>Esophagus mean</td><td>&lt;30 Gy</td><td>—</td></tr>
+      <tr><td>Female breast (對側)</td><td>mean &lt;4 Gy；V4 &lt;10%</td><td>第二原發乳癌風險</td></tr>
+      <tr><td>Thyroid V25</td><td>&lt;63%</td><td>hypothyroidism</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.2 Abdominal / pelvic field 主要 OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Kidneys (combined)</td><td>mean &lt;15 Gy；V20 &lt;32%</td><td>QUANTEC</td></tr>
+      <tr><td>Single kidney mean</td><td>&lt;18 Gy</td><td>單側受照</td></tr>
+      <tr><td>Liver mean</td><td>&lt;30 Gy</td><td>低劑量方案不需考慮</td></tr>
+      <tr><td>Small bowel V15</td><td>&lt;120 cc</td><td>急性反應</td></tr>
+      <tr><td>Bladder V40</td><td>&lt;35%</td><td>—</td></tr>
+      <tr><td>Rectum V40</td><td>&lt;40%</td><td>—</td></tr>
+      <tr><td>Gonads (testis)</td><td>&lt;0.5-1 Gy（保育）</td><td>須陰囊屏蔽</td></tr>
+      <tr><td>Ovary</td><td>&lt;2-3 Gy（保育）</td><td>ovarian transposition 考慮</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.3 Orbit field OAR</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Lens Dmax</td><td><strong>&lt;5 Gy</strong>（cataract 風險顯著降）</td><td>lens-sparing 技術；&gt;10 Gy 必生 cataract</td></tr>
+      <tr><td>Lacrimal gland mean</td><td>&lt;26 Gy</td><td>dry eye 風險</td></tr>
+      <tr><td>Cornea mean</td><td>&lt;30 Gy</td><td>—</td></tr>
+      <tr><td>Retina Dmax</td><td>&lt;45 Gy</td><td>retinopathy</td></tr>
+      <tr><td>Optic nerve / chiasm Dmax</td><td>&lt;50 Gy</td><td>低劑量 ISRT 通常無虞</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.4 CNS field OAR (PCNSL / WBRT)</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">指標</th><th style="width:30%">目標</th><th style="width:40%">備註</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Hippocampus D100%</td><td>&lt;9 Gy；mean &lt;16 Gy</td><td>HA-WBRT；保護記憶（RTOG 0933）</td></tr>
+      <tr><td>Lens Dmax</td><td>&lt;7 Gy</td><td>—</td></tr>
+      <tr><td>Cochlea mean</td><td>&lt;35 Gy</td><td>聽力保護（小兒尤重）</td></tr>
+      <tr><td>Brainstem Dmax</td><td>&lt;54 Gy</td><td>低劑量 WBRT 無虞</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 05　OAR 限制</span>
+    </div>
+    <div class="page-content">
+      <h2>5.5 TBI 特殊限制</h2>
+
+  <ul>
+    <li><strong>Lung mean：</strong>&lt;9-10 Gy；以 lung block 屏蔽（V12 &lt;15-20%）</li>
+    <li><strong>Kidneys：</strong>mean &lt;12-14 Gy；屏蔽考量</li>
+    <li><strong>Lens：</strong>&lt;8 Gy（眼睛屏蔽）</li>
+    <li><strong>Liver：</strong>mean &lt;10 Gy（VOD 風險）</li>
+    <li><strong>Whole-body homogeneity：</strong>±5-10%</li>
+  </ul>
+
+  <h2>5.6 衝突處理</h2>
+  <ul>
+    <li><strong>絕對不可超：</strong>spinal cord PRV、optic chiasm（CNS field）、lens（orbit field）</li>
+    <li><strong>可權衡：</strong>PTV D95 vs heart mean、lung V20、kidney mean；indolent 低劑量方案優先保 OAR</li>
+    <li><strong>Mediastinal 年輕女性病人：</strong>強烈考慮 DIBH 或 proton 以保乳房 / 心臟</li>
+    <li><strong>差肺功能 + mediastinal field：</strong>考慮 proton 或 IMRT 嚴格 V20 控制</li>
+  </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 副作用 ============ -->
+<section class="chapter" id="bcell-tox">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>6. 副作用</h1>
+
+  <h2>6.1 急性副作用（依部位）</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">部位</th><th style="width:38%">急性副作用</th><th style="width:38%">處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mediastinal</td><td>食道炎、咳嗽、疲勞、骨髓抑制（化療後）</td><td>軟食、PPI、止痛；CBC 監測</td></tr>
+      <tr><td>Abdominal</td><td>噁心、嘔吐、食慾下降、腹瀉</td><td>5-HT3 antagonist、止瀉、營養諮詢</td></tr>
+      <tr><td>Pelvic</td><td>腸炎、膀胱炎、會陰皮膚反應</td><td>低渣飲食、Tamsulosin、保溼</td></tr>
+      <tr><td>Head/neck</td><td>口腔黏膜炎、味覺改變、唾液腺腫脹</td><td>Magic mouthwash、口腔保溼、止痛</td></tr>
+      <tr><td>Orbit</td><td>結膜炎、皮膚反應、頭痛</td><td>人工淚液、保溼</td></tr>
+      <tr><td>CNS WBRT</td><td>疲勞、噁心、頭痛、暫時掉髮</td><td>類固醇 PRN、止吐</td></tr>
+      <tr><td>Cutaneous</td><td>皮膚紅斑、剝落、色素沉著</td><td>保溼、避免摩擦</td></tr>
+      <tr><td>TBI</td><td>噁心、嘔吐、腮腺炎、疲勞、骨髓抑制（必發）</td><td>5-HT3 + steroids 預防、住院支持</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.2 晚期副作用</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">副作用</th><th style="width:18%">時程</th><th style="width:58%">備註 / 處理</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>第二原發癌</td><td>10-30 年</td><td>淋巴瘤倖存者最重要長期風險：乳癌（女性 mediastinal）、肺癌、甲狀腺癌、軟組織肉瘤；定期篩檢</td></tr>
+      <tr><td>心血管事件</td><td>5-30 年</td><td>IHD、HF、valvular disease、pericarditis；mediastinal field 主要；長期心血管追蹤</td></tr>
+      <tr><td>肺纖維化</td><td>6 月-數年</td><td>多無症狀；嚴重者類固醇</td></tr>
+      <tr><td>甲狀腺功能低下</td><td>1-10 年</td><td>頸部 / SCV / mediastinal field 後 30-50%；TSH 每年</td></tr>
+      <tr><td>不孕</td><td>數月-永久</td><td>RT 直接照射 gonads 或 TBI；事先生育保存諮詢</td></tr>
+      <tr><td>白內障</td><td>2-10 年</td><td>orbit、CNS field；lens dose 相關</td></tr>
+      <tr><td>神經認知衰退</td><td>1-5 年</td><td>WBRT 主要；老年顯著；HA-WBRT 改善</td></tr>
+      <tr><td>口乾</td><td>持續</td><td>頭頸 field 後；唾液替代品</td></tr>
+      <tr><td>生長發育</td><td>數年</td><td>小兒病人 RT 後骨骼、性成熟影響</td></tr>
+      <tr><td>骨折 / 骨壞死</td><td>數年</td><td>含照射部位；骨密度監測</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.3 急性副作用處理流程（依部位）</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[每週 OTV<br/>分級評估]:::startN
+    G1[G1 輕微]:::actionN
+    G2[G2 影響日常]:::actionN
+    G3[G3 需介入]:::actionN
+    G4[G4 危及生命]:::actionN
+    M1[衛教<br/>持續]:::actionN
+    M2[支持治療<br/>持續]:::actionN
+    M3[暫停 1-3 fx<br/>住院評估]:::actionN
+    M4[暫停 RT<br/>專科會診]:::actionN
+    F[完成療程]:::endN
+
+    A --> G1 --> M1 --> F
+    A --> G2 --> M2 --> F
+    A --> G3 --> M3 --> F
+    A --> G4 --> M4 --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　急性副作用分級處理通用框架</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 06　副作用</span>
+    </div>
+    <div class="page-content">
+      <h2>6.4 第二原發癌風險摘要</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:25%">族群 / 部位</th><th style="width:75%">主要風險與監測</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>女性 mediastinal RT &lt;30 歲</td><td>乳癌風險 4-7×；30 歲開始或 RT 後 8 年起每年 mammography + breast MRI</td></tr>
+      <tr><td>Mediastinal RT 任何性別</td><td>肺癌風險 4-6×；戒菸支持、low-dose CT 篩檢（高風險）</td></tr>
+      <tr><td>頸部 / mediastinal RT</td><td>甲狀腺癌風險 3-15×；每年觸診 + ultrasound 視臨床</td></tr>
+      <tr><td>Pelvic / abdominal RT</td><td>大腸癌、膀胱癌略增；標準篩檢提早</td></tr>
+      <tr><td>含化療（特別 alkylator）</td><td>AML / MDS 風險；長期 CBC</td></tr>
+      <tr><td>所有倖存者</td><td>避免吸菸；BMI、運動、健康飲食諮詢</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 追蹤 ============ -->
+<section class="chapter" id="bcell-fu">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>7. 追蹤</h1>
+
+  <h2>7.1 治療中（OTV）</h2>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:22%">頻率</th><th style="width:78%">項目</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>每週 1 次</td><td>體重、PS、CTCAE 部位特異副作用、CBC（化療後骨髓恢復中者更頻）</td></tr>
+      <tr><td>每 fx 影像</td><td>kV 對位 / CBCT；mediastinal、abdominal field 必每 fx</td></tr>
+      <tr><td>異常時</td><td>G2+ 副作用 → 提高評估頻率；中性球 &lt;500 → 暫停 RT 評估</td></tr>
+      <tr><td>計畫 adapt</td><td>大 mediastinal mass：W2-W3 重新影像評估縮小，可能 replan</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.2 RT 後追蹤時序</h2>
+  <div class="flowchart">
+    <pre class="mermaid">
+flowchart LR
+    classDef startN fill:#e8f0f5,stroke:#3d6b87,stroke-width:2.5px,color:#3d6b87,font-weight:600
+    classDef actionN fill:#ffffff,stroke:#3d6b87,stroke-width:1.5px,color:#222
+    classDef endN fill:#fff8e1,stroke:#b8860b,stroke-width:2.5px,color:#5c4900,font-weight:600
+
+    A[完成 RT]:::startN
+    B[3 月<br/>EOT-PET]:::actionN
+    C[6 月<br/>反應確認]:::actionN
+    D[每 3-6 月 × 2y<br/>復發監測]:::actionN
+    E[每年 ≥2y<br/>長期效應]:::actionN
+    F[整合 MDT<br/>survivorship]:::endN
+
+    A --> B --> C --> D --> E --> F
+    </pre>
+  </div>
+  <div class="flowchart-caption">圖　淋巴瘤 RT 後追蹤時序</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.3 反應評估（Lugano + Deauville）</h2>
+
+  <h3>7.3.1 Lugano 反應分類</h3>
+  <table class="compact-table">
+    <thead>
+      <tr><th style="width:24%">分類</th><th style="width:38%">PET-CT</th><th style="width:38%">CT 標準</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>CR (Complete Response)</td><td>Deauville 1-3 之 PET-positive 部位</td><td>所有 nodes &lt;1.5 cm；無新病灶</td></tr>
+      <tr><td>PR (Partial)</td><td>Deauville 4-5 但體積縮小</td><td>SPD 縮小 ≥50%</td></tr>
+      <tr><td>SD (Stable)</td><td>Deauville 4-5 體積無變化</td><td>SPD 縮小 &lt;50%</td></tr>
+      <tr><td>PD (Progressive)</td><td>Deauville 4-5 體積增大或新病灶</td><td>單病灶 LDi 增加 ≥50% 或新病灶</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.3.2 Deauville 5-point Score</h3>
+  <ul>
+    <li><strong>1：</strong>無 uptake</li>
+    <li><strong>2：</strong>uptake ≤ mediastinum（CR）</li>
+    <li><strong>3：</strong>mediastinum &lt; uptake ≤ liver（CR/PR 視臨床）</li>
+    <li><strong>4：</strong>uptake &gt; liver moderately（PR 或 residual disease）</li>
+    <li><strong>5：</strong>uptake &gt;&gt; liver 或新病灶（refractory / progressive）</li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.4 各時期項目</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">時期</th>
+        <th style="width:32%">臨床評估</th>
+        <th style="width:25%">影像</th>
+        <th style="width:25%">特殊</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>RT 後 3 月</td><td>急性副作用收斂</td><td>EOT-PET（DLBCL 必要）</td><td>Deauville 評分</td></tr>
+      <tr><td>6 月</td><td>慢性副作用、PS</td><td>CT (DLBCL CR 後 surveillance 不必常規 PET)</td><td>—</td></tr>
+      <tr><td>1-2 年</td><td>每 3-6 月 PE</td><td>每 6 月 CT (aggressive)；indolent 可較少</td><td>復發風險最高期</td></tr>
+      <tr><td>3-5 年</td><td>每 6-12 月</td><td>有症狀才影像</td><td>Indolent 持續復發風險</td></tr>
+      <tr><td>≥5 年</td><td>每年</td><td>有症狀才影像</td><td>長期 survivorship 整合追蹤</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:13px;color:var(--text-muted);">
+    DLBCL CR 達成後不建議常規 surveillance PET（false positive 與輻射）；以症狀驅動。Indolent 採臨床 + 必要 CT。
+  </p>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 07　追蹤</span>
+    </div>
+    <div class="page-content">
+      <h2>7.5 特殊族群長期重點</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:30%">族群</th><th style="width:70%">重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>女性 mediastinal RT &lt;30 歲</td><td>30 歲或 RT 後 8 年起每年 mammography + breast MRI；終身追蹤</td></tr>
+      <tr><td>Mediastinal RT 後</td><td>每年心血管 PE；baseline + 每 5 年 echo；戒菸支持；low-dose chest CT 篩檢肺癌</td></tr>
+      <tr><td>頸部 / SCV RT 後</td><td>每年 TSH；甲狀腺觸診；齲齒預防（口乾者）</td></tr>
+      <tr><td>WBRT 後</td><td>每年神經認知評估；年長者更頻；hippocampal sparing 結果改善</td></tr>
+      <tr><td>TBI / HCT 後</td><td>內分泌、生育、骨密度、心血管全面追蹤；長期專科 survivorship clinic</td></tr>
+      <tr><td>Pelvic RT + 化療後年輕</td><td>生育諮詢；婦產 / 泌尿追蹤</td></tr>
+      <tr><td>Indolent FL 復發於 RT 部位</td><td>低劑量 4 Gy/2 fx 重複治療通常安全</td></tr>
+      <tr><td>CAR-T 後 RT</td><td>CRS、neurotoxicity 風險評估；lymphocyte recovery 追蹤</td></tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B-cell — 文獻 ============ -->
+<section class="chapter" id="bcell-ref">
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h1><span class="site">B 細胞淋巴瘤</span>8. 主要試驗與文獻</h1>
+
+  <h2>8.1 DLBCL 與 Aggressive Lymphoma</h2>
+  <ol class="references">
+    <li>Poeschel V, et al. Four versus six cycles of CHOP chemotherapy in combination with six applications of rituximab in patients with aggressive B-cell lymphoma with favourable prognosis (FLYER). Lancet. 2019;394:2271-2281.</li>
+    <li>Persky DO, et al. Phase II study of rituximab plus three cycles of CHOP and involved-field radiotherapy for patients with limited-stage aggressive B-cell lymphoma (SWOG 0014). J Clin Oncol. 2008;26:2258-2263.</li>
+    <li>Lamy T, et al. R-CHOP 14 with or without radiotherapy in nonbulky limited-stage diffuse large B-cell lymphoma (LNH 03-1B). Blood. 2018;131:174-181.</li>
+    <li>Held G, et al. Role of radiotherapy to bulky disease in elderly patients with aggressive B-cell lymphoma. J Clin Oncol. 2014;32:1112-1118.</li>
+    <li>Pfreundschuh M, et al. CHOP-like chemotherapy plus rituximab versus CHOP-like chemotherapy alone in young patients with good-prognosis diffuse large-B-cell lymphoma (MInT). Lancet Oncol. 2006;7:379-391.</li>
+  </ol>
+
+  <h2>8.2 Indolent Lymphoma (FL / MZL)</h2>
+  <ol class="references">
+    <li>Hoskin PJ, et al. 4 Gy versus 24 Gy radiotherapy for patients with indolent lymphoma (FORT). Lancet Oncol. 2014;15:457-463.</li>
+    <li>Hoskin PJ, et al. 4 Gy versus 24 Gy radiotherapy for follicular and marginal zone lymphoma: long-term follow-up of the FORT trial. Br J Haematol. 2021;195:352-358.</li>
+    <li>Lowry L, et al. Reduced dose radiotherapy for local control in non-Hodgkin lymphoma (PLAT). Radiother Oncol. 2011;100:86-92.</li>
+    <li>Wirth A, et al. Long-term outcome for gastric marginal zone lymphoma treated with radiotherapy. Int J Radiat Oncol Biol Phys. 2013;87:481-487.</li>
+    <li>Goda JS, et al. Long-term outcome in localized extranodal mucosa-associated lymphoid tissue lymphomas treated with radiotherapy. Cancer. 2010;116:3815-3824.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.3 PMBL 與 NLPHL</h2>
+  <ol class="references">
+    <li>Martelli M, et al. Omission of radiotherapy in patients with primary mediastinal B-cell lymphoma achieving complete metabolic response after R-CHOP (IELSG-26). J Clin Oncol. 2014;32:1769-1775.</li>
+    <li>Dunleavy K, et al. Dose-adjusted EPOCH-rituximab therapy in primary mediastinal B-cell lymphoma. N Engl J Med. 2013;368:1408-1416.</li>
+    <li>Eichenauer DA, et al. Long-term course of patients with stage IA nodular lymphocyte-predominant Hodgkin lymphoma. Blood. 2020;136:2851-2860.</li>
+  </ol>
+
+  <h2>8.4 Primary CNS Lymphoma</h2>
+  <ol class="references">
+    <li>Ferreri AJM, et al. Whole-brain radiotherapy or autologous stem-cell transplantation as consolidation strategies after high-dose methotrexate-based chemoimmunotherapy in patients with primary CNS lymphoma (IELSG-32 R3). Lancet Haematol. 2017;4:e510-e523.</li>
+    <li>Omuro A, et al. Methotrexate, procarbazine, and vincristine followed by reduced-dose whole-brain radiotherapy and cytarabine for newly diagnosed primary CNS lymphoma (RTOG 0227). J Clin Oncol. 2015;33:2206-2213.</li>
+    <li>Gondi V, et al. Hippocampal-sparing whole-brain radiotherapy: a "how-to" technique using helical tomotherapy and linear accelerator-based intensity-modulated radiotherapy (RTOG 0933). Int J Radiat Oncol Biol Phys. 2010;78:1244-1252.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.5 ILROG Consensus 與技術指引</h2>
+  <ol class="references">
+    <li>Illidge T, et al. Modern radiation therapy for nodal non-Hodgkin lymphoma: target definition and dose guidelines from ILROG. Int J Radiat Oncol Biol Phys. 2014;89:49-58.</li>
+    <li>Yahalom J, et al. Modern radiation therapy for extranodal lymphomas: field and dose guidelines from ILROG. Int J Radiat Oncol Biol Phys. 2015;92:11-31.</li>
+    <li>Specht L, et al. Modern radiation therapy for primary cutaneous lymphomas: field and dose guidelines from ILROG. Int J Radiat Oncol Biol Phys. 2015;92:32-39.</li>
+    <li>Yahalom J, et al. ILROG emergency guidelines for radiation therapy of lymphomas during the COVID-19 pandemic. Blood. 2020;135:1829-1832.</li>
+  </ol>
+
+  <h2>8.6 反應評估與分期</h2>
+  <ol class="references">
+    <li>Cheson BD, et al. Recommendations for initial evaluation, staging, and response assessment of Hodgkin and non-Hodgkin lymphoma: the Lugano classification. J Clin Oncol. 2014;32:3059-3068.</li>
+    <li>Barrington SF, et al. Role of imaging in the staging and response assessment of lymphoma: consensus of the International Conference on Malignant Lymphomas Imaging Working Group. J Clin Oncol. 2014;32:3048-3058.</li>
+    <li>Meignan M, et al. Report on the First International Workshop on Interim-PET-Scan in Lymphoma (Deauville). Leuk Lymphoma. 2009;50:1257-1260.</li>
+  </ol>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-banner">
+      <span class="banner-cancer"><span class="banner-zh">B 細胞淋巴瘤</span>B-CELL LYMPHOMA</span>
+      <span class="banner-meta"><span class="banner-mark"></span>CH 08　文獻</span>
+    </div>
+    <div class="page-content">
+      <h2>8.7 倖存者長期追蹤</h2>
+  <ol class="references">
+    <li>Schaapveld M, et al. Second cancer risk up to 40 years after treatment for Hodgkin's lymphoma. N Engl J Med. 2015;373:2499-2511.</li>
+    <li>van Nimwegen FA, et al. Cardiovascular disease after Hodgkin lymphoma treatment: 40-year disease risk. JAMA Intern Med. 2015;175:1007-1017.</li>
+    <li>Travis LB, et al. Breast cancer following radiotherapy and chemotherapy among young women with Hodgkin disease. JAMA. 2003;290:465-475.</li>
+  </ol>
+    </div>
+  </div>
+</section>
+
 
 
 
