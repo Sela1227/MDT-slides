@@ -42,6 +42,12 @@
  --chosen-b: #6db895;
  --warn: #e07878;
  --warn-bg: #3f2828;
+
+ /* Hotel — Nordic heather (warm muted purple) */
+ --hotel:      #b08aa8;
+ --hotel-l:    #c8a3bf;
+ --hotel-bg:   #3a2e38;
+ --hotel-bg2:  #322830;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(84,137,212,0.15); }
 html { font-size: 16px; }
@@ -440,6 +446,94 @@ label.food-row.rejected .ck-mark::after {
 .hb-last { border-color: var(--primary); color: var(--primary); background: var(--conf-bg); }
 
 footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 14px 0 20px; letter-spacing: .08em; }
+
+/* Info button + collapsible detail panel */
+.info-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; margin-top: 7px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: .68rem; font-weight: 600;
+  color: var(--text-3); cursor: pointer;
+  font-family: inherit; letter-spacing: .04em;
+  transition: all .12s;
+  position: relative; z-index: 2;
+}
+.info-btn:hover, .info-btn.open {
+  color: var(--primary); border-color: var(--primary);
+  background: var(--conf-bg);
+}
+.info-btn::after { content: ' \203A'; }
+.info-btn.open::after { content: ' \02C5'; }
+
+.info-panel {
+  max-height: 0; overflow: hidden;
+  transition: max-height .3s ease, padding .25s ease, margin .25s ease;
+  background: var(--bg-2);
+  border-left: 3px solid var(--primary);
+  font-size: .8rem; line-height: 1.55;
+  margin: 0 12px; padding: 0 14px;
+  border-radius: 0 6px 6px 0;
+}
+.info-panel.open { max-height: 800px; padding: 12px 14px; margin: 0 12px 8px; }
+.info-panel.tier-tour { border-left-color: var(--tour); background: var(--tour-bg2); }
+.info-panel.tier-food { border-left-color: var(--food); background: var(--food-bg2); }
+.info-panel.tier-conf { border-left-color: var(--primary); background: var(--conf-bg2); }
+
+.ip-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 7px; }
+.ip-row:last-child { margin-bottom: 0; }
+.ip-label {
+  flex-shrink: 0; min-width: 52px;
+  font-weight: 700; color: var(--text);
+  font-size: .73rem; letter-spacing: .02em;
+}
+.ip-text { flex: 1; min-width: 0; font-size: .78rem; color: var(--text-2); }
+.ip-text b { color: var(--text); font-weight: 600; }
+
+
+/* Session info button positioning */
+.session .info-btn,
+label.session .info-btn,
+.session.pick .info-btn {
+  margin-top: 6px;
+  position: relative; z-index: 3;
+}
+
+
+.prog-sessions > .info-panel,
+.prog-sessions > .info-panel.open { margin: 0; border-radius: 0; }
+.prog-block > .info-panel,
+.prog-block > .info-panel.open { margin: 0; border-radius: 0; }
+.prog-block > .info-btn { margin: 8px 12px 10px; }
+
+
+/* Google Maps link button */
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 8px;
+  padding: 3px 8px;
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: .7rem;
+  font-weight: 600;
+  color: var(--primary-l);
+  text-decoration: none;
+  transition: all .12s;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.map-link:hover {
+  background: var(--conf-bg);
+  border-color: var(--primary);
+  color: var(--text);
+}
+.map-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+.map-link-text { font-size: .68rem; }
+
 </style>
 </head>
 <body>
@@ -473,11 +567,23 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></symbol>
  <symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5v2M15 11v2M15 17v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2z"/></symbol>
- <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+   <symbol id="i-gmaps" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 7 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
 </svg>
 
 <script>
 (function(){
+
+  window.toggleInfo = function(btn, e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    var pid = btn.getAttribute('data-panel');
+    if (!pid) return;
+    var panel = document.getElementById(pid);
+    if (!panel) return;
+    panel.classList.toggle('open');
+    btn.classList.toggle('open');
+  };
+
  function updateGroup(groupName, chosenInput) {
  var inputs = document.querySelectorAll('input.ck[name="' + groupName + '"]');
  for (var i = 0; i < inputs.length; i++) {
@@ -573,6 +679,39 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="ic-row"><svg width="14" height="14"><use href="#i-plane"/></svg> <span>Arlanda 貴賓室評價普通，吃的選擇少，用點數換不值</span></div>
 </div>
 
+<!-- Sweden travel briefing -->
+<div class="info-card">
+ <div class="ic-title">瑞典旅遊須知</div>
+
+ <div class="ip-row" style="margin-top:4px;"><div class="ip-label" style="color:var(--primary-l);">簽證</div><div class="ip-text" style="color:var(--text-2);">瑞典為<b>申根區</b>成員。台灣護照赴申根 <b>90 / 180 天免簽證</b>；2026 年起須先申請 <b>ETIAS 旅行授權</b>（€7，預計 2026 年實施），網路填寫護照資料即可，約 3 天核發。建議攜帶機票、住宿訂單英文版備查。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">貨幣</div><div class="ip-text" style="color:var(--text-2);"><b>瑞典克朗 SEK</b>，1 SEK ≈ NT$ 3.1。瑞典近乎<b>無現金社會</b>，連街頭小販都刷卡；建議帶 Visa/Mastercard + 一張備卡，現金可不用換。Apple Pay / Google Pay 普及。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">物價</div><div class="ip-text" style="color:var(--text-2);">高物價國家。<b>餐廳午餐 150–250 SEK</b>（套餐含主菜＋飲料）· <b>晚餐主菜 250–450 SEK</b> · 一杯咖啡 35–50 SEK · 超市礦泉水 15 SEK。整體比台北貴 2–3 倍，但會議區飯店供應的早餐通常很豐盛可吃飽。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">5 月天氣</div><div class="ip-text" style="color:var(--text-2);"><b>14–17°C / 7–8°C，日照 17 小時</b>。早晚溫差大需薄羽絨或厚外套，白天可只穿長袖加防風外套。降雨率約 22%，<b>建議帶折疊雨傘或防水外套</b>。日落 21:00+ 後仍亮，太陽眼鏡有用。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">穿著</div><div class="ip-text" style="color:var(--text-2);"><b>洋蔥式穿搭</b>：薄羽絨/輕暖外套 + 長袖上衣 + 長褲 + 防水鞋。室內暖氣足，要能脫到短袖。會議正裝可彈性，semi-formal 即可；Ekstedt 米其林晚餐建議稍正式。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">電壓插座</div><div class="ip-text" style="color:var(--text-2);"><b>220V / 50Hz，C 型 / F 型圓孔插頭</b>。台灣電器（手機、筆電充電器）多為 100–240V，帶歐規轉接頭即可。吹風機建議用飯店的（電壓不符可能燒掉）。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">網路</div><div class="ip-text" style="color:var(--text-2);"><b>歐洲 eSIM</b>（如 Airalo、Holafly）最方便，台灣出發前線上開通；7 天 5–10GB 約 NT$ 400–800。或台灣電信業者漫遊。Stockholmsmässan 會場 WiFi 穩定。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">語言</div><div class="ip-text" style="color:var(--text-2);">瑞典語為官方，但<b>英語普及度全球第一</b>，街頭隨便問都能溝通。菜單與標示多有英文版。「Tack」(Tack) = 謝謝，「Hej」(Hey) = 你好/再見。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">小費</div><div class="ip-text" style="color:var(--text-2);"><b>不強制</b>，因服務費已含。對服務滿意可給 5–10%。咖啡店、速食、計程車一般不給。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">時差</div><div class="ip-text" style="color:var(--text-2);">瑞典夏令時 = 台灣 <b>−6 小時</b>（5 月為夏令時）。建議飛機上多睡，抵達當天活動到 22:00 後再睡，可快速校時。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">緊急</div><div class="ip-text" style="color:var(--text-2)"><b>112</b>（警消救護通用）· 駐瑞典代表處 +46 8 728 8513（緊急）· 飯店 +46 8 400 549 02</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">安全</div><div class="ip-text" style="color:var(--text-2);">治安全球前段班，但<b>觀光區（Gamla Stan、T-Centralen）有扒手</b>，包包前背、後口袋勿放手機錢包。深夜 Södermalm 部分區域單獨女性宜小心。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">營業</div><div class="ip-text" style="color:var(--text-2);">店家通常 <b>10:00–18:00</b>，週日多縮短或公休。餐廳午餐 11:30–14:00 / 晚餐 17:00–22:00。<b>瑞典人下班＝休息</b>，不要傍晚後談公事。</div></div>
+
+ <div class="ip-row"><div class="ip-label" style="color:var(--primary-l);">退稅</div><div class="ip-text" style="color:var(--text-2);">單張消費 <b>SEK 200+ 可退 VAT</b>（約 25%），結帳時請店家開「Tax Free」單，機場海關蓋章後退款。Fjällräven、H&amp;M、ARKET 等台灣常買品牌瑞典購入較划算。</div></div>
+</div>
+
 <!-- ═══ 5/14 ═══ -->
 <div class="day-card">
  <div class="day-head">
@@ -597,7 +736,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">13:00</div>
  <div class="row-i"><svg><use href="#i-plane"/></svg></div>
  <div class="row-b">
- <div class="row-name">抵達 Arlanda 機場（ARN）</div>
+ <div class="row-name">抵達 Arlanda 機場（ARN）<a href="https://www.google.com/maps/place/?q=place_id:ChIJ_YMtw2OdX0YRM1xOfqKV-FI" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Stockholm Arlanda Airport"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">搭 Pendeltåg 通勤火車 → Ulriksdal 站，約 28 分鐘，出站右轉 1 分鐘到飯店</div>
  <span class="rtag rt-conf">固定</span>
  </div>
@@ -606,7 +745,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">14:30</div>
  <div class="row-i"><svg><use href="#i-hotel"/></svg></div>
  <div class="row-b">
- <div class="row-name">入住 AC Hotel by Marriott Ulriksdal</div>
+ <div class="row-name">入住 AC Hotel by Marriott Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">15:00 才能 check-in，可先寄放行李 · 附近有 Mall of Scandinavia 可先逛</div>
  </div>
  </div>
@@ -619,29 +758,29 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">15:30</div>
  <div class="row-i"><svg><use href="#i-tree"/></svg></div>
  <div class="row-b">
- <div class="row-name">Kungsträdgården 國王花園 → 市政廳外觀</div>
+ <div class="row-name">Kungsträdgården 國王花園 → 市政廳外觀<a href="https://www.google.com/maps/place/?q=place_id:ChIJBYJFRVmdX0YR_ACqwqyi8B0" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Kungsträdgården"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">確認有無殘櫻 · 沿途經過市政廳（1923年完工，瑞典象徵性建築，河岸邊上鏡）</div>
  <span class="rtag rt-tour">免費</span>
- </div>
- </div>
+ <button class="info-btn" type="button" data-panel="i-kungs" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-tour" id="i-kungs"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">市中心，T-Centralen 站步行 5 分</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">18 世紀皇室花園，現為市民聚會點。5 月可能有殘櫻</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">散步 20–30 分鐘</div></div><div class="ip-row"><div class="ip-label">順遊</div><div class="ip-text">往南至 Strömkajen 觀光船碼頭；西邊為市政廳（1923 年完工，諾貝爾晚宴會場）</div></div></div>
  <div class="row r-tour">
  <div class="row-t">16:15</div>
  <div class="row-i"><svg><use href="#i-camera"/></svg></div>
  <div class="row-b">
- <div class="row-name">騎士島（Riddarholmen）+ Evert Taube 雕像</div>
+ <div class="row-name">騎士島（Riddarholmen）+ Evert Taube 雕像<a href="https://www.google.com/maps/place/?q=place_id:ChIJX7Ltl-F3X0YRiBbicxCljus" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Riddarholmen"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">拍攝市政廳最佳角度 · 旁邊有騎士島教堂（瑞典歷代國王長眠之地）</div>
  <span class="rtag rt-tour">免費</span>
- </div>
- </div>
+ <button class="info-btn" type="button" data-panel="i-ridd" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-tour" id="i-ridd"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">T-bana 到 Gamla Stan 站步行 3 分</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">拍市政廳對岸最佳角度。島上有 Riddarholmen 教堂（瑞典皇室陵墓）</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">20–30 分鐘</div></div><div class="ip-row"><div class="ip-label">拍照</div><div class="ip-text">Evert Taube 雕像旁望向市政廳，黃昏時光最美</div></div></div>
  <div class="row r-tour">
  <div class="row-t">16:45</div>
  <div class="row-i"><svg><use href="#i-castle"/></svg></div>
  <div class="row-b">
- <div class="row-name">Gamla Stan 老城區：大教堂 → 大廣場 → 皇宮外觀</div>
+ <div class="row-name">Gamla Stan 老城區：大教堂 → 大廣場 → 皇宮外觀<a href="https://www.google.com/maps/place/?q=place_id:ChIJH5EbYuJ3X0YRe8ROxQLpCfI" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Stortorget"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">Storkyrkan 大教堂（30分，含聖喬治屠龍雕塑）→ Stortorget 大廣場（中世紀砍頭刑場，現在是市集廣場）→ 諾貝爾博物館外觀</div>
  <span class="rtag rt-tour">免費</span>
- </div>
- </div>
+ <button class="info-btn" type="button" data-panel="i-gamla" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-tour" id="i-gamla"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">Stockholm 中心島嶼，Gamla Stan T-bana 站</div></div><div class="ip-row"><div class="ip-label">必看</div><div class="ip-text">Storkyrkan 大教堂（聖喬治屠龍木雕）· Stortorget 主廣場 · 皇宮 · 諾貝爾博物館</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">1.5–2.5 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">繞過主廣場走小巷可避開人潮，找到當地工藝店</div></div></div>
 
  <div class="sec s-food">
  <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
@@ -651,40 +790,40 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="food-head">週四傳統 Ärtsoppa 豌豆湯日</div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">豌豆湯（Ärtsoppa）+ 煎薄餅</div><div class="f-rest">Ragnars Skafferi · 市政廳內 · 週四 11:00–14:00 · SEK 140 含沙拉麵包咖啡</div><div class="f-tip">低溫燉煮 12 小時，抵達後先放行李再去剛剛好</div></div>
- </div>
+ <div><div class="f-name">豌豆湯（Ärtsoppa）+ 煎薄餅<a href="https://www.google.com/maps/place/?q=place_id:ChIJaQYXjd93X0YRY4eR8P20u_0" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Ragnars Skafferi"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Ragnars Skafferi · 市政廳內 · 週四 11:00–14:00 · SEK 140 含沙拉麵包咖啡</div><div class="f-tip">低溫燉煮 12 小時，抵達後先放行李再去剛剛好</div><button class="info-btn" type="button" data-panel="f-ragnar" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-ragnar"><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Ragnars Skafferi · 市政廳（Stadshus）內</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text"><b>僅週四 11:00–14:00</b> 供應豌豆湯（瑞典軍隊與學校的週四傳統）</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">套餐 SEK 140，含沙拉、麵包、咖啡</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">低溫慢燉 12 小時的傳統黃豌豆湯，搭芥末和馬鬱蘭草</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">抵達後先放行李就剛好趕上午餐時段；同場拍市政廳外觀</div></div></div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-coffee"/></svg>
- <div><div class="f-name">Fika：肉桂捲（Kanelbullar）</div><div class="f-rest">Vete-Katten · 百年咖啡館，裝潢穿越 1920 年代</div><div class="f-tip">用手撕開每層吃，搭不加糖黑咖啡才道地</div></div>
- </div>
+ <div><div class="f-name">Fika：肉桂捲（Kanelbullar）<a href="https://www.google.com/maps/place/?q=place_id:ChIJCSWNMWedX0YR52I_TTl8Pv8" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Vete-Katten"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Vete-Katten · 百年咖啡館，裝潢穿越 1920 年代</div><div class="f-tip">用手撕開每層吃，搭不加糖黑咖啡才道地</div><button class="info-btn" type="button" data-panel="f-vete" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-vete"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Vete-Katten · Kungsgatan 55, Norrmalm</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週一至週日 07:30–19:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">肉桂捲 SEK 38–45，咖啡 SEK 30–45</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">1928 年開業，內部多個沙龍房間穿越 1920 年代</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">用手撕開每層吃，搭不加糖黑咖啡才正宗</div></div></div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">晚餐：Smak（已訂位）</div><div class="f-rest">北歐小份多樣式 · 自選 3–7 道菜 · 需提前訂位</div></div>
- </div>
+ <div><div class="f-name">晚餐：Smak（已訂位）<a href="https://www.google.com/maps/place/?q=place_id:ChIJpYipmV2dX0YRC7CLhAHIvVo" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Smak Stockholm"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">北歐小份多樣式 · 自選 3–7 道菜 · 需提前訂位</div><button class="info-btn" type="button" data-panel="f-smak" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-smak"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Oxtorgsgatan 14, Norrmalm</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">晚餐 17:00–22:00，週日休</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">3 道菜 SEK 525；7 道菜 SEK 925</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">3、5、7 道菜任選的「小份試味」北歐料理，每月換菜單</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">建議搭配葡萄酒對應方案；廚房開放式可看烹飪過程</div></div></div>
  <label class="food-row" data-group="d514">
  <input type="radio" name="d514" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">備選：Stockholms Gästabud</div><div class="f-rest">皇宮旁 · Gamla Stan 內</div><div class="f-tip">肉丸 + 綿密薯泥 + 瑞典啤酒 · 在地首選 · 服務極好</div></div>
- </label>
+ <div><div class="f-name">備選：Stockholms Gästabud<a href="https://www.google.com/maps/place/?q=place_id:ChIJm8qsClidX0YR0H6OcH7SycU" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Stockholms Gästabud"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">皇宮旁 · Gamla Stan 內</div><div class="f-tip">肉丸 + 綿密薯泥 + 瑞典啤酒 · 在地首選 · 服務極好</div><button class="info-btn" type="button" data-panel="f-gastabud" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-gastabud"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Slottsbacken 4, Gamla Stan（皇宮對面）</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 11:30–22:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">肉丸主餐 SEK 245；其他主菜 SEK 200–400</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">50+ 年傳統瑞典家常菜：馴鹿、鹿肉、肉丸</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">服務員親切會解說每道菜，第一次嘗瑞典料理首選</div></div></div>
  <label class="food-row" data-group="d514">
  <input type="radio" name="d514" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">備選：Restaurant Tradition</div><div class="f-rest">Gästabud 隔壁 · 同樣老牌瑞典料理</div><div class="f-tip">份量比 Gästabud 大 · 同樣有肉丸、馴鹿肉</div></div>
- </label>
+ <div><div class="f-name">備選：Restaurant Tradition<a href="https://www.google.com/maps/place/?q=place_id:ChIJq6qqqW6dX0YR4q_GAMMfhKQ" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Restaurant Tradition"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Gästabud 隔壁 · 同樣老牌瑞典料理</div><div class="f-tip">份量比 Gästabud 大 · 同樣有肉丸、馴鹿肉</div><button class="info-btn" type="button" data-panel="f-tradition" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-tradition"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Österlånggatan 1, Gamla Stan（離 Gästabud 很近）</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 12:00–22:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">主菜 SEK 200–380</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">老派瑞典料理，份量比 Gästabud 大，馴鹿菲力是亮點</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">若 Gästabud 客滿這家無痛備案；位置同一條街</div></div></div>
  <label class="food-row" data-group="d514">
  <input type="radio" name="d514" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">備選：魚湯（Kajsas Fisk）</div><div class="f-rest">Hötorgshallen 市場內 · 價格實惠</div><div class="f-tip">瑞典魚湯專賣 · 便宜又快 · 適合疲憊想省力用餐</div></div>
- </label>
+ <div><div class="f-name">備選：魚湯（Kajsas Fisk）<a href="https://www.google.com/maps/place/?q=place_id:ChIJt-rFEV-dX0YRkfr1r9LtGGk" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Restaurant Kajsas Fisk"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Hötorgshallen 市場內 · 價格實惠</div><div class="f-tip">瑞典魚湯專賣 · 便宜又快 · 適合疲憊想省力用餐</div><button class="info-btn" type="button" data-panel="f-kajsas" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-kajsas"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Hötorgshallen, Hötorget 13（地下市場）</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週一至五 11:00–18:00；週六 11:00–16:00；週日休</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">魚湯 SEK 120（含麵包沙拉吃到飽，可續湯）</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">60+ 年瑞典魚湯專賣店，便宜實惠的市場美食</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">疲憊或預算考量時最佳；快速用完不耽誤行程</div></div></div>
  </div>
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
  <div class="hs-body">
- <div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div>
+ <div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="hs-detail">Kolonnvägen 41, Solna · +46 8 400 549 02 · Ulriksdal 站步行 1 分鐘</div>
  </div>
  <span class="hbadge hb-in">入住 15:00</span>
@@ -718,7 +857,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-wrap">
  <div class="prog-block">
  <div class="ph2 ph-special"><span class="pht">09:00 – 17:00</span><span class="phl">Varian International Oncology Summit 2026</span><span class="phb">建議報名</span></div>
- </div>
+ <button class="info-btn" type="button" data-panel="c-varian" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-varian"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">Varian 主辦的會前峰會，鎖定使用 Varian 平台的臨床中心</div></div><div class="ip-row"><div class="ip-label">內容</div><div class="ip-text">產品線最新發展 · TrueBeam / Halcyon / Ethos 工作流程更新 · 用戶經驗分享</div></div><div class="ip-row"><div class="ip-label">注意</div><div class="ip-text">需另行報名，與 Pre-meeting Courses 時段衝突</div></div><div class="ip-row"><div class="ip-label">建議</div><div class="ip-text">若使用 Varian 設備且關注 ART/Ethos，這場優於同時段付費課程</div></div></div></div>
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:15 – 16:00</span><span class="phl">Pre-meeting Courses</span></div>
  <div class="prog-sessions">
@@ -728,9 +867,9 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">Clinical Bootcamp（乳癌 · 肺癌 · 腸胃 · 泌尿）</div></div><span class="s-badge sb-reg">需報名</span></div>
  </div>
  </div>
- <div class="prog-block"><div class="ph2 ph-plenary"><span class="pht">17:00 – 18:00</span><span class="phl">開幕典禮（Plenary Hall）</span><span class="phb">全體</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-plenary"><span class="pht">17:00 – 18:00</span><span class="phl">開幕典禮（Plenary Hall）</span><span class="phb">全體</span></div><button class="info-btn" type="button" data-panel="c-opening" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-opening"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">ESTRO 2026 正式開幕</div></div><div class="ip-row"><div class="ip-label">內容</div><div class="ip-text">主席致詞 · 大會主題揭幕 · 重要獎項頒發</div></div><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Plenary Hall（最大會場）</div></div><div class="ip-row"><div class="ip-label">提醒</div><div class="ip-text">不需報名，建議提早入座</div></div></div></div>
  <div class="prog-block"><div class="ph2 ph-evening"><span class="pht">18:15</span><span class="phl">Welcome &amp; Networking Evening（展覽區）</span></div></div>
- <div class="prog-block"><div class="ph2 ph-special"><span class="pht">19:00</span><span class="phl">HAL5 + PCCT Launch at ESTRO Booth</span></div></div>
+ <div class="prog-block"><div class="ph2 ph-special"><span class="pht">19:00</span><span class="phl">HAL5 + PCCT Launch at ESTRO Booth</span></div><button class="info-btn" type="button" data-panel="c-hal5" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-hal5"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">Varian 兩個重大產品發表會</div></div><div class="ip-row"><div class="ip-label">HAL5</div><div class="ip-text">Halcyon 第五代：更快治療速度、更高劑量率、AI 整合</div></div><div class="ip-row"><div class="ip-label">PCCT</div><div class="ip-text">Photon Counting CT 用於放療：更精準的密度與材質區分，劑量計算更準</div></div><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Varian 展場攤位（ESTRO 展覽區）</div></div></div></div>
  </div>
 
  <div class="paid-block">
@@ -742,7 +881,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
- <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 地鐵，約 35 分</div></div>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 地鐵，約 35 分</div></div>
  <span class="hbadge hb-stay">住宿中</span>
  </div>
 </div>
@@ -776,10 +915,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">教學講座</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺術後放療：證據與臨床實務</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
- <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">胸腔再放療（Re-irradiation in the thorax）：病人選擇與劑量</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺術後放療：證據與臨床實務</div><button class="info-btn" type="button" data-panel="c-1601" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1601"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">攝護腺切除後生化復發或高風險病人的搶救性與輔助性放療</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">PSA 閾值切點 · ADT 合併使用時機 · PSMA-PET 引導靶區的最新證據</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">ESTRO 指南近期更新，臨床實務各國差異大，本場整理當前共識</div></div></div><div class="ip-text">5/16 (六) 08:00 – 08:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">教學講座（Teaching Lecture）</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與「胸腔再放療」同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">輔助 vs 救治性放療時機、PSA 標準、PSMA-PET 影響、SABR 寡轉移</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">泌尿腫瘤臨床醫師、近期處理術後病人</div></div></div>
+ <label class="session pick" data-group="g16a"><input type="radio" name="g16a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">胸腔再放療（Re-irradiation in the thorax）：病人選擇與劑量</div><button class="info-btn" type="button" data-panel="c-1602" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1602"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">對曾接受胸腔放療的病人再次照射（復發肺癌、食道、縱膈）</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">累積劑量限制（食道、脊髓、肺）· 再照射間隔 · 質子 vs SBRT vs IMRT 技術選擇</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">過去視為禁忌，新影像與技術讓再放療成為合理選項</div></div></div><div class="ip-text">5/16 (六) 08:00 – 08:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">教學講座</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與「前列腺術後放療」同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">肺與縱膈再放療：累積劑量限制、間隔時間、SBRT 技術、毒性管理</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理復發性胸腔腫瘤、想精進再放療技術的醫師</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">SBRT 技術需求（疾病通用型）</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">RTT 主導的線上 ART 靶區定義</div></div></div>
  </div>
@@ -789,14 +928,14 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">專題討論 &amp; 辯論</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">轉移性前列腺癌：是否治療原發腫瘤？</div></div>
- <span class="s-badge sb-clash">四選一</span></label>
- <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 + 系統治療聯合推薦（ESTRO-ESMO）</div></div>
- <span class="s-badge sb-clash">四選一</span></label>
- <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 在臨床的實際價值</div></div>
- <span class="s-badge sb-clash">四選一</span></label>
- <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Offline ART 未來發展</div></div>
- <span class="s-badge sb-clash">四選一</span></label>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">轉移性前列腺癌：是否治療原發腫瘤？</div><button class="info-btn" type="button" data-panel="c-1603" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">四選一</span></label><div class="info-panel tier-conf" id="c-1603"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">低腫瘤負荷轉移性前列腺癌（mHSPC）是否同時治療原發腫瘤</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">STAMPEDE / HORRAD 試驗結果回顧 · 病人選擇條件 · 與系統治療搭配時序</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">STAMPEDE 顯示低負荷組總存活率提升，但選擇標準仍有爭議</div></div></div><div class="ip-text">5/16 (六) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">專題討論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">四選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">STAMPEDE 與 PEACE-1 後續：寡轉移定義、分子分型、放療配合系統治療</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">MDT 討論常遇到 mHSPC 的臨床醫師</div></div></div>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 + 系統治療聯合推薦（ESTRO-ESMO）</div><button class="info-btn" type="button" data-panel="c-1604" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">四選一</span></label><div class="info-panel tier-conf" id="c-1604"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">ESTRO 與 ESMO 聯合制定的放療 + 化療 / 免疫 / 標靶治療臨床推薦</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">各癌別聯合方案 · 序列性 vs 同步性 · 劑量調整原則</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">兩大歐洲學會首次共同發表，將影響全歐臨床標準</div></div></div><div class="ip-text">5/16 (六) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">聯合專題（ESTRO × ESMO）</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">四選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">跨疾病放療 × 系統治療的最新共識；免疫、標靶、化療整合策略</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">想了解最新整合治療指引的所有腫瘤科醫師</div></div></div>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 在臨床的實際價值</div><button class="info-btn" type="button" data-panel="c-1605" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">四選一</span></label><div class="info-panel tier-conf" id="c-1605"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">跳脫炒作，討論 AI 在放射腫瘤實際工作流程的價值</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">自動勾畫的時間節省 · 計畫優化的劑量改善 · 法規與驗證挑戰</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">判斷哪些 AI 工具值得導入科部、哪些還是研究階段</div></div></div><div class="ip-text">5/16 (六) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">專題討論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">四選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">從研究到實作：哪些 AI 工具真正改善臨床？投資回報、驗證、整合工作流</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">科主管、考慮 AI 採購、想了解實際成效的人</div></div></div>
+ <label class="session pick" data-group="g16b"><input type="radio" name="g16b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Offline ART 未來發展</div><button class="info-btn" type="button" data-panel="c-1606" onclick="toggleInfo(this,event)">詳細介紹</button><button class="info-btn" type="button" data-panel="c-1608" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">四選一</span></label><div class="info-panel tier-conf" id="c-1608"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">由 ESTRO 主席主持，邀請領域代表性學者討論放射腫瘤學的未來</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">AI 整合 · 個人化治療 · 全球醫療公平性 · 未來十年路線圖</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">一年一度的領域願景演講，全體必聽</div></div></div><div class="info-panel tier-conf" id="c-1606"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">分次間自適應放療（off-line ART）的未來方向</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">與 online ART 比較 · 工作流程整合 · 適應症選擇（頭頸、骨盆腔）</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">Offline ART 比 online 更易導入現有設備，但需要清晰標準</div></div></div><div class="ip-text">5/16 (六) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">專題討論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">四選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">Offline 自適應重新規劃週期、影像驅動策略、與 online ART 比較</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">物理師、臨床想理解 ART 演進路徑的醫師</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 四個有興趣場次同時段，點擊選一個</div>
  </div>
@@ -806,10 +945,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Presidential Symposium</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">自動化 Adaptive Radiotherapy（Streamlining with automation）</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">自動化 Adaptive Radiotherapy（Streamlining with automation）</div><button class="info-btn" type="button" data-panel="c-1607" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1607"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">透過自動化簡化自適應放療工作流程</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">Auto-contouring + auto-planning 整合 · QA 自動化 · 臨床試驗結果</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">ART 的最大瓶頸是工時，自動化可能讓 ART 普及到一般科部</div></div></div><div class="ip-text">5/16 (六) 10:30 – 11:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">原始研究發表：自動化勾畫、計畫驗證、QA 流程改善</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">對 ART 工作流自動化有興趣的物理師、臨床</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">可信賴 AI：不確定性與驗證</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Jens Overgaard Legacy Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Presidential Symposium（11:40）：放射腫瘤學未來</div></div><span class="s-badge sb-plenary">全體</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Presidential Symposium（11:40）：放射腫瘤學未來</div></div><span class="s-badge sb-plenary">全體</span></div><div class="ip-text">5/16 (六) 11:40 – 12:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">主席論壇 · <b>全體必參加</b></div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">ESTRO 主席針對放射腫瘤學未來 10 年的展望；通常涵蓋 AI、FLASH、個人化醫學</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">年度高光時刻，全體大會堂</div></div></div>
  </div>
  </div>
 
@@ -825,7 +964,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">15:15 – 16:30</span><span class="phl">專題討論 &amp; 辯論</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 5 天療程（Hypofractionation）—— 2035 可行？（辯論）</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 5 天療程（Hypofractionation）—— 2035 可行？（辯論）</div><button class="info-btn" type="button" data-panel="c-1609" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1609"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">辯論：乳癌 5 次分次（FAST-Forward）到 2035 年是否會成為標準</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">FAST-Forward 5 年數據 · 英國採用率 · 其他國家阻力 · 心臟劑量爭議</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">UK 已大量採用，歐陸與北美還在觀望，本場決定性辯論</div></div></div><div class="ip-text">5/16 (六) 15:15 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">辯論（Debate）</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">乳癌超分次放療最終形態：FAST-Forward 後續、5 天 vs 1 天方案、全乳 vs 部分乳房</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理乳癌放療、想精進方案決策的臨床</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EFOMP：AI 與醫療器材法規</div></div><span class="s-badge sb-joint">聯合</span></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">現代放療調試的風險與現實</div></div></div>
  </div>
@@ -836,7 +975,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 輔助靶區勾畫（Next-gen delineation：影像 · AI · 模型）</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 輔助靶區勾畫（Next-gen delineation：影像 · AI · 模型）</div><button class="info-btn" type="button" data-panel="c-1610" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1610"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">次世代靶區勾畫：影像 + AI + 臨床模型整合</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">Deep learning auto-segmentation 最新模型 · 商業化工具比較 · 臨床採用門檻</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">已是日常工作中最快被 AI 取代的環節，值得跟進</div></div></div><div class="ip-text">5/16 (六) 17:00 – 18:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers（原始研究發表）</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">深度學習 OAR 與 GTV 勾畫、不確定性量化、與人類專家比較研究</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">想看最新 AI 勾畫研究成果的人</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">寡轉移長期證據 · 乳癌 2 · 婦科癌 1</div></div></div>
  </div>
  </div>
@@ -844,9 +983,9 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2" class="ph2 ph-extra"><span class="pht">付費 Workshop</span><span class="phl">Contouring Workshops（需另行報名）</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Pelvic nodes contouring（14:30–16:30）</div></div><span class="s-badge sb-reg">付費</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Pelvic nodes contouring（14:30–16:30）</div></div><span class="s-badge sb-reg">付費</span></div><div class="ip-text">5/16 (六) 14:30 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text"><b>付費 Workshop</b>，需另行報名</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與下午其他場次衝突</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">骨盆淋巴結勾畫實作：解剖標誌、不同癌種共識、最新影像導引</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">常處理婦科、泌尿、直腸癌想精進淋巴結勾畫的人</div></div></div>
  </div>
- </div>
+ <button class="info-btn" type="button" data-panel="c-karolinska" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-karolinska"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">Karolinska 醫院放射腫瘤科參訪（公司安排）</div></div><div class="ip-row"><div class="ip-label">成員</div><div class="ip-text">RAD 成員 + Varian 合作項目訪問</div></div><div class="ip-row"><div class="ip-label">預期內容</div><div class="ip-text">通常包含科部導覽 · 工作流程展示 · 研究計畫介紹 · 跨國交流</div></div><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Solna 區，與飯店同一區域，交通極方便</div></div><div class="ip-row"><div class="ip-label">議程</div><div class="ip-text">待 Varian 確認後通知</div></div></div></div>
  </div>
 
  <div class="sec s-tour">
@@ -856,11 +995,11 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="flex-block">
  <div class="fb-title">可配合 17:00 後或整個早上空檔</div>
  <label class="fb-opt" data-group="t516"><input type="radio" name="t516" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-boat"/></svg>
- <div><div class="fb-opt-name">群島渡輪遊</div><div class="fb-opt-desc">市中心碼頭出發 · 北歐最美群島風光 · 約 3 小時</div></div></label>
+ <div><div class="fb-opt-name">群島渡輪遊<a href="https://www.google.com/maps/place/?q=place_id:ChIJx2wugWCdX0YRESbzi9wBIr4" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 T-Centralen"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="fb-opt-desc">市中心碼頭出發 · 北歐最美群島風光 · 約 3 小時</div><button class="info-btn" type="button" data-panel="i-archipelago" onclick="toggleInfo(this,event)">詳細介紹</button></div></label><div class="info-panel tier-tour" id="i-archipelago"><div class="ip-row"><div class="ip-label">碼頭</div><div class="ip-text">Strömkajen（市中心，皇宮旁）</div></div><div class="ip-row"><div class="ip-label">行程</div><div class="ip-text">Stockholm 群島由 30,000+ 個島嶼組成。常見路線到 Vaxholm、Sandhamn</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">SEK 200–350，視路線與營運公司（Stromma / Waxholmsbolaget）</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">3–4 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">5 月微涼必備外套，上層甲板拍照最佳</div></div></div>
  <label class="fb-opt" data-group="t516"><input type="radio" name="t516" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-museum"/></svg>
- <div><div class="fb-opt-name">Östermalmshallen 美食市集</div><div class="fb-opt-desc">週六 09:30–17:00 · 起司 · 海鮮 · 糕點</div></div></label>
+ <div><div class="fb-opt-name">Östermalmshallen 美食市集<a href="https://www.google.com/maps/place/?q=place_id:ChIJOWEJJFudX0YRWjW0uiJOeD0" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Östermalms Food Hall"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="fb-opt-desc">週六 09:30–17:00 · 起司 · 海鮮 · 糕點</div><button class="info-btn" type="button" data-panel="i-osterhall" onclick="toggleInfo(this,event)">詳細介紹</button></div></label><div class="info-panel tier-tour" id="i-osterhall"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">Östermalmstorg 廣場，T-bana Östermalmstorg 站出口直達</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週六 09:30–17:00；週日休館</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">1888 年的最高級室內市場，海鮮、起司、鵝肝、肉乾、糕點</div></div><div class="ip-row"><div class="ip-label">預算</div><div class="ip-text">午餐 SEK 200–500</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">Lisa Elmqvist 蝦肉三明治必嘗。提早去避免人擠</div></div></div>
  <label class="fb-opt" data-group="t516"><input type="radio" name="t516" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-music"/></svg>
- <div><div class="fb-opt-name">ABBA 博物館</div><div class="fb-opt-desc">Djurgården 島 · 需提前預訂指定時段</div></div></label>
+ <div><div class="fb-opt-name">ABBA 博物館<a href="https://www.google.com/maps/place/?q=place_id:ChIJBf9B06qCX0YRR46XNXjwFUo" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 ABBA The Museum"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="fb-opt-desc">Djurgården 島 · 需提前預訂指定時段</div><button class="info-btn" type="button" data-panel="i-abba" onclick="toggleInfo(this,event)">詳細介紹</button></div></label><div class="info-panel tier-tour" id="i-abba"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Djurgårdsvägen 68, Djurgården</div></div><div class="ip-row"><div class="ip-label">交通</div><div class="ip-text">7 號電車到 Liljevalchs/Gröna Lund 站</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 10:00–18:00，週末延長</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">成人約 SEK 250–290，需指定入場時段</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">互動式體驗：唱 ABBA、跳 ABBA、與虛擬團員同台</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">1.5–2 小時</div></div><div class="ip-row"><div class="ip-label">重要</div><div class="ip-text"><b>必須提前線上預約</b>，現場常售完</div></div></div>
  </div>
 
  <div class="sec s-food">
@@ -871,21 +1010,21 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="food-head">週六推薦：Östermalm 午餐 → Fika → Lilla Ego 晚餐</div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">蝦肉三明治（Räksmörgås）</div><div class="f-rest">Lisa Elmqvist · Östermalmshallen · 90 年老店 · SEK 195</div><div class="f-tip">北極甜蝦直送 · 用刀叉吃 · 擠一點檸檬更好吃</div></div>
- </div>
+ <div><div class="f-name">蝦肉三明治（Räksmörgås）<a href="https://www.google.com/maps/place/?q=place_id:ChIJOWEJJFudX0YR7o0qOwys26M" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Lisa Elmqvist"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Lisa Elmqvist · Östermalmshallen · 90 年老店 · SEK 195</div><div class="f-tip">北極甜蝦直送 · 用刀叉吃 · 擠一點檸檬更好吃</div><button class="info-btn" type="button" data-panel="f-lisa" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-lisa"><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Lisa Elmqvist · Östermalmshallen 內</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週一至五 11:00–22:00；週六 11:00–17:00；週日休</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">蝦肉三明治 SEK 195；龍蝦三明治 SEK 350+</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">1926 年至今的海鮮老店，蝦肉三明治是傳奇</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">用刀叉吃，擠檸檬不加美乃滋；午餐尖峰時段可能要等</div></div></div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-coffee"/></svg>
- <div><div class="f-name">Fika：超大肉桂捲（Saturnus）</div><div class="f-rest">大到兩人分著吃 · 搭濃縮咖啡</div><div class="f-tip">用手撕開每層吃，不要直接咬</div></div>
- </div>
+ <div><div class="f-name">Fika：超大肉桂捲（Saturnus）<a href="https://www.google.com/maps/place/?q=place_id:ChIJxdfXvkKdX0YRB4MmZg08enI" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Café Saturnus"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">大到兩人分著吃 · 搭濃縮咖啡</div><div class="f-tip">用手撕開每層吃，不要直接咬</div><button class="info-btn" type="button" data-panel="f-saturnus" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-saturnus"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Eriksbergsgatan 6, Östermalm</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週一至五 07:30–18:00；週末 09:00–18:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">超大肉桂捲 SEK 75；咖啡 SEK 35</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">以「Stockholm 最大肉桂捲」聞名，直徑 15 公分以上</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">兩人分一個剛好；先拍照再吃，太大不好下口</div></div></div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">晚餐：Lilla Ego</div><div class="f-rest">Vasastan · 季節性北歐料理</div><div class="f-tip">鹿肉排必點 · 需提前訂位</div></div>
- </div>
+ <div><div class="f-name">晚餐：Lilla Ego<a href="https://www.google.com/maps/place/?q=place_id:ChIJ3x_sRnCdX0YRp4dr2VnNLpU" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Lilla Ego"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Vasastan · 季節性北歐料理</div><div class="f-tip">鹿肉排必點 · 需提前訂位</div><button class="info-btn" type="button" data-panel="f-lillaego" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-lillaego"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Västmannagatan 69, Vasastan</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">晚餐 17:30–23:00，週日週一休</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">主菜 SEK 280–420</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">季節性北歐料理，<b>鹿肉排是招牌</b>，常被選為 Stockholm 最佳</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">需訂位，週末要提前 2 週</div></div></div>
  </div>
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
- <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → 市中心：Pendeltåg 約 10 分，每 15 分一班</div></div>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="hs-detail">飯店 → 市中心：Pendeltåg 約 10 分，每 15 分一班</div></div>
  <span class="hbadge hb-stay">住宿中</span>
  </div>
 </div>
@@ -908,10 +1047,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="alert info">
  <svg width="14" height="14"><use href="#i-info"/></svg>
  <span>18:00 起保留 Karolinska Hospital Site Visit（公司安排，議程待確認）· 彈性活動請於 <b>17:00 前結束</b></span>
- </div>
+ <a href="https://www.google.com/maps/place/?q=place_id:ChIJzbgJxV-dX0YRugh44LMgJW8" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Karolinska University Hospital Solna"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="alert gold">
  <svg width="14" height="14"><use href="#i-star"/></svg>
- <span>今日有 <b>9 個有興趣場次</b> · 08:00 / 08:45 / 10:30 / 15:15 衝突，<b>點擊圓圈</b>勾選</span>
+ <span>今日有 <b>10 個有興趣場次</b> · 08:00 / 08:45 / 10:30 / 15:15 衝突，<b>點擊圓圈</b>勾選 · 13:00 RaySearch 午餐研討會不衝堂可參加</span>
  </div>
 
  <div class="sec s-conf">
@@ -923,10 +1062,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">Meet-the-Expert &amp; 教學講座</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肺癌 SBRT —— 30 年發展：創新與前路</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
- <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Adaptive RT：從離線到即時</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肺癌 SBRT —— 30 年發展：創新與前路</div><button class="info-btn" type="button" data-panel="c-1701" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1701"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">SBRT 在肺癌的 30 年演進：從早期肺癌到現代擴展應用</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">中央型病灶安全劑量 · 超大分次（single fraction）· 與免疫治療合併</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">回顧加展望，了解肺癌 SBRT 完整脈絡</div></div></div><div class="ip-text">5/17 (日) 08:00 – 08:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">教學講座</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 Adaptive RT 同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">肺癌 SBRT 從 1990 年代到 2026：劑量演進、技術迭代、未解問題</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">想全景理解肺癌 SBRT 的臨床醫師</div></div></div>
+ <label class="session pick" data-group="g17a"><input type="radio" name="g17a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Adaptive RT：從離線到即時</div><button class="info-btn" type="button" data-panel="c-1702" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1702"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">線上自適應放療（online ART）的最新發展</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">MR-Linac vs CBCT 引導 · 即時重新計畫的時間效率 · 臨床證據累積</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">Online ART 從研究進入臨床，是否該採購相關設備的決策關鍵</div></div></div><div class="ip-text">5/17 (日) 08:00 – 08:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">教學講座</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與肺癌 SBRT 同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">Offline → Online → Real-time：影像導引、AI 加速計畫、未來方向</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">科室考慮升級 ART 設備或工作流</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">粒子治療最新趨勢</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 肺癌 SBRT vs Adaptive RT，同時段，點擊選一個</div>
@@ -935,10 +1074,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">聯合專題 &amp; 辯論</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Stage IV NSCLC 放療角色再探（ESTRO-IASLC）</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
- <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 能否只靠 Radiobiology 改善？（辯論）</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Stage IV NSCLC 放療角色再探（ESTRO-IASLC）</div><button class="info-btn" type="button" data-panel="c-1703" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1703"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">第四期非小細胞肺癌放療的角色重新定義（ESTRO-IASLC 聯合）</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">寡轉移病灶 SABR · 緩解性放療 · 免疫治療後的鞏固性放療</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">過去視為僅做症狀控制，現在有意願轉向積極治療的證據增加</div></div></div><div class="ip-text">5/17 (日) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">聯合專題（ESTRO × IASLC）</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 Re-irradiation 辯論同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">免疫治療時代的 IV 期放療：寡轉移、寡進展、整合系統治療時機</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">臨床、MDT 討論轉移性 NSCLC</div></div></div>
+ <label class="session pick" data-group="g17b"><input type="radio" name="g17b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 能否只靠 Radiobiology 改善？（辯論）</div><button class="info-btn" type="button" data-panel="c-1704" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1704"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">辯論：再放療只憑放射生物學模型（BED, EQD2）足夠？還是需要影像或生物標記？</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">α/β 比值假設可靠性 · 組織恢復時間 · 影像生物標記的補充角色</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">臨床上每天都在做的決策，本場挑戰常見假設</div></div></div><div class="ip-text">5/17 (日) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">辯論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 Stage IV NSCLC 同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">再放療容差：純放射生物學模型 vs 影像生物標記 vs 臨床直覺</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理復發、想了解再放療理論基礎的醫師、物理師</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EORTC：未來放療試驗設計</div></div><span class="s-badge sb-joint">聯合</span></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-AAPM：即時分次內自適應新發展</div></div><span class="s-badge sb-joint">聯合</span></div>
  </div>
@@ -950,12 +1089,12 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Highlights</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 推動放射腫瘤學</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 推動放射腫瘤學</div><button class="info-btn" type="button" data-panel="c-1705" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1705"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">AI 真正改變放射腫瘤學的領域</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">Auto-contouring · Auto-planning · 影像引導 · 臨床決策支援</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">從 hype 中辨識出真正落地的應用</div></div></div><div class="ip-text">5/17 (日) 10:30 – 11:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 FLASH/Cardiac STAR 同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">原始研究：AI 在工作流、預後預測、決策支援的最新應用</div></div></div>
  <label class="session pick" data-group="g17c"><input type="radio" name="g17c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">FLASH &amp; Cardiac STAR 的崛起</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <span class="s-badge sb-clash">二選一</span></label><div class="ip-text">5/17 (日) 10:30 – 11:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 AI 推動放射腫瘤學同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">FLASH（超高劑量率）最新動物與人體試驗；心臟 STAR 治療室性心律不整</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">前沿且具話題性的兩大新興技術</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Interdisciplinary Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Lancet Oncology 頂尖臨床試驗（11:40）</div></div><span class="s-badge sb-plenary">全體</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Lancet Oncology 頂尖臨床試驗（11:40）</div><button class="info-btn" type="button" data-panel="c-1707" onclick="toggleInfo(this,event)">詳細介紹</button></div><span class="s-badge sb-plenary">全體</span></div><div class="info-panel tier-conf" id="c-1707"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">本年度頂尖放射腫瘤臨床試驗 Highlights，由 Lancet Oncology 編輯主持</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">前一年發表的關鍵試驗回顧 · 對臨床實務的影響評估</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">一年一度的關鍵試驗整理，全體必聽</div></div></div><div class="ip-text">5/17 (日) 11:40 – 12:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text"><b>全體大會</b> · Highlights</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">Lancet Oncology 評選的本年度頂尖放療臨床試驗發表</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">一場掌握年度最重要的試驗結果</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> AI 推動放射腫瘤學 vs FLASH/Cardiac STAR，點擊選一個（11:40 全體必參加）</div>
  </div>
@@ -963,12 +1102,22 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block"><div class="ph2 ph-lunch"><span class="pht">13:00 – 14:00</span><span class="phl">午餐 &amp; 衛星專題</span></div></div>
 
  <div class="prog-block">
+ <div class="ph2 ph-special"><span class="pht">13:00 – 14:00</span><span class="phl">RaySearch Lunch Symposium 2026</span><span class="phb">需報名</span></div>
+ <div class="prog-sessions">
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Adaptive Planning: At the Heart of RaySearch</div><div class="s-sub">Johan Löf, Founder &amp; CEO of RaySearch · 13:00–13:20</div><button class="info-btn" type="button" data-panel="c-raysearch" onclick="toggleInfo(this,event)">詳細介紹</button></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Bringing Adaptive Radiotherapy to the Heart of Every Clinic</div><div class="s-sub">Dr Susan Lalondrelle, Royal Marsden Hospital · 13:20–13:40</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">RayVolution in oART: From Concept to Treatment Delivery</div><div class="s-sub">Geert De Kerf, Iridium Netwerk · 13:40–14:00</div></div></div>
+ </div>
+ <div class="info-panel tier-conf" id="c-raysearch"><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">5/17 (日) 13:00 – 14:00 · 與午餐時段重疊</div></div><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Stockholmsmässan, Room A12+13</div></div><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">Adaptive Radiotherapy 三場 20 分鐘演講：CEO 願景 + 臨床經驗 + 物理師實作</div></div><div class="ip-row"><div class="ip-label">講者</div><div class="ip-text">Johan Löf（RaySearch 創辦人/CEO）· Dr Susan Lalondrelle（Royal Marsden）· Geert De Kerf（Iridium Netwerk）</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">RaySearch 是 RayStation 治療計畫系統開發商，本場聚焦 oART 概念到臨床交付的完整流程</div></div><div class="ip-row"><div class="ip-label">衝堂</div><div class="ip-text"><b>不衝堂</b>：5/17 該時段是大會午餐時間（無正式議程），可吃午餐 + 聽 RaySearch；午餐由 RaySearch 提供</div></div><div class="ip-row"><div class="ip-label">注意</div><div class="ip-text">需先在 lyyti.fi 線上報名鎖定座位</div></div></div>
+ </div>
+
+ <div class="prog-block">
  <div class="ph2"><span class="pht">14:10 – 16:30</span><span class="phl">Highlights + 專題討論</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺 SBRT 進階（增強版 vs 標準版）（辯論）</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
- <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肝癌 / 肝轉移 Ablative 治療（ESTRO-CIRSE）</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺 SBRT 進階（增強版 vs 標準版）（辯論）</div><button class="info-btn" type="button" data-panel="c-1708" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1708"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">辯論：前列腺 SBRT 是否需要 MRI 引導 boost / 焦點劑量增強</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">PACE-B 後續分析 · MRI-guided boost 證據（HypoFLAME）· 標準 5 次分次的成熟度</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">5 次分次已是新標準，下一步是否進階仍有辯論</div></div></div><div class="ip-text">5/17 (日) 15:15 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">辯論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與肝癌 Ablative 同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">PACE-B 後續：標準 5 次 SBRT 是否需要再強化？MR-Linac 的角色</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理前列腺癌、考慮 SBRT 方案調整的醫師</div></div></div>
+ <label class="session pick" data-group="g17d"><input type="radio" name="g17d" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">肝癌 / 肝轉移 Ablative 治療（ESTRO-CIRSE）</div><button class="info-btn" type="button" data-panel="c-1709" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1709"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">肝癌與肝轉移的消融性放療（ESTRO-CIRSE 與介入放射科聯合）</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">SBRT vs RFA / TACE · 跨科決策樹 · 大型病灶的處理</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">與介入放射科共識，影響跨科轉診流程</div></div></div><div class="ip-text">5/17 (日) 15:15 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">聯合專題（ESTRO × CIRSE 介入放射科）</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與前列腺 SBRT 同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">放療 vs 介入消融（RFA、TACE、SIRT）：適應症、療效比較、整合策略</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理肝癌、與 IR 跨科合作的醫師</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">膀胱癌保留器官：放療的地位（辯論）</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 前列腺 SBRT vs 肝癌 Ablative，點擊選一個</div>
@@ -979,7 +1128,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">17:00 – 18:00</span><span class="phl">Proffered Papers</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">頭頸癌 3</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">頭頸癌 3</div><button class="info-btn" type="button" data-panel="c-1710" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1710"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">頭頸癌領域的 Proffered Papers（口頭報告）</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">臨床試驗結果 · 影像生物標記 · 重要研究亮點</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">聽到尚未發表的最新研究，搶先一年</div></div></div><div class="ip-text">5/17 (日) 17:00 – 18:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">原始研究發表：頭頸癌放療最新臨床與技術進展</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">乳癌 3 · 前列腺癌 1 · 上消化道癌</div></div></div>
  </div>
  </div>
@@ -987,8 +1136,8 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2" class="ph2 ph-extra"><span class="pht">付費 Workshop</span><span class="phl">Contouring Workshops（需另行報名）</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Liver cancer SBRT contouring（10:30–12:30）</div><div class="s-sub">與 AI / FLASH 場次衝突</div></div><span class="s-badge sb-reg">付費</span></div>
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Rectal cancer boost contouring（14:30–16:30）</div><div class="s-sub">與前列腺 SBRT / 肝癌 Ablative 衝突</div></div><span class="s-badge sb-reg">付費</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Liver cancer SBRT contouring（10:30–12:30）</div><div class="s-sub">與 AI / FLASH 場次衝突</div></div><span class="s-badge sb-reg">付費</span></div><div class="ip-text">5/17 (日) 10:30 – 12:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text"><b>付費 Workshop</b>，需另行報名</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 AI / FLASH 場次衝突</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">肝癌 SBRT 勾畫實作：4D-CT 整合、運動管理、OAR 約束</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Rectal cancer boost contouring（14:30–16:30）</div><div class="s-sub">與前列腺 SBRT / 肝癌 Ablative 衝突</div></div><span class="s-badge sb-reg">付費</span></div><div class="ip-text">5/17 (日) 14:30 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text"><b>付費 Workshop</b>，需另行報名</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與前列腺 SBRT / 肝癌 Ablative 衝突</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">直腸癌 boost 區域勾畫：MRI 整合、TNT 後縮野策略</div></div></div>
  </div>
  </div>
 
@@ -1007,11 +1156,11 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="flex-block">
  <div class="fb-title">確保 17:00 前可返回</div>
  <label class="fb-opt" data-group="t517"><input type="radio" name="t517" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-castle"/></svg>
- <div><div class="fb-opt-name">皇后島宮 Drottningholm</div><div class="fb-opt-desc">UNESCO 遺址 · 渡輪 45 分 · 整個早上，13:00 前可返回</div></div></label>
+ <div><div class="fb-opt-name">皇后島宮 Drottningholm<a href="https://www.google.com/maps/place/?q=place_id:ChIJTa8W3bl1X0YRWIg3JXEDljk" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Drottningholm Palace"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="fb-opt-desc">UNESCO 遺址 · 渡輪 45 分 · 整個早上，13:00 前可返回</div><button class="info-btn" type="button" data-panel="i-drott" onclick="toggleInfo(this,event)">詳細介紹</button></div></label><div class="info-panel tier-tour" id="i-drott"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">Lake Mälaren 上的小島，市中心西 11 公里</div></div><div class="ip-row"><div class="ip-label">交通</div><div class="ip-text">T-bana 到 Brommaplan + 公車 30 分；或夏季觀光船從市政廳 90 分</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">SEK 180（含中文語音導覽）</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">UNESCO 世界遺產，瑞典皇室現居地。可參觀宮殿、皇家劇院、中國閣</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">3–4 小時（含交通）</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">13:00 前要返回，建議走地鐵+公車路線（穩定不受天氣影響）</div></div></div>
  <label class="fb-opt" data-group="t517"><input type="radio" name="t517" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-tree"/></svg>
- <div><div class="fb-opt-name">Djurgården 島散步</div><div class="fb-opt-desc">Skansen + 自然步道 · 時間彈性，可隨時折返</div></div></label>
+ <div><div class="fb-opt-name">Djurgården 島散步<a href="https://www.google.com/maps/place/?q=place_id:ChIJ6aESt1OdX0YREXqgCoBZnZM" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Djurgårdsbron"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="fb-opt-desc">Skansen + 自然步道 · 時間彈性，可隨時折返</div><button class="info-btn" type="button" data-panel="i-djur" onclick="toggleInfo(this,event)">詳細介紹</button></div></label><div class="info-panel tier-tour" id="i-djur"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">城東皇家獵場島</div></div><div class="ip-row"><div class="ip-label">交通</div><div class="ip-text">7 號電車或從 Gamla Stan 步行過 Djurgårdsbron 橋（15 分）</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">多家博物館聚集（Vasa、ABBA、Skansen、Nordic）+ 海岸步道</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">1.5–3 小時（取決於停留博物館）</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">天氣好時沿 Djurgårdsbrunnsviken 海岸步道走，超北歐風</div></div></div>
  <label class="fb-opt" data-group="t517"><input type="radio" name="t517" class="ck"><span class="ck-mark"></span><svg width="15" height="15"><use href="#i-train"/></svg>
- <div><div class="fb-opt-name">地鐵藝術之旅</div><div class="fb-opt-desc">T-bana 各站藝術裝置 · 免費 · 可隨時中斷，最適合碎片時間</div></div></label>
+ <div><div class="fb-opt-name">地鐵藝術之旅<a href="https://www.google.com/maps/place/?q=place_id:ChIJx2wugWCdX0YRESbzi9wBIr4" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 T-Centralen"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="fb-opt-desc">T-bana 各站藝術裝置 · 免費 · 可隨時中斷，最適合碎片時間</div><button class="info-btn" type="button" data-panel="i-tbana" onclick="toggleInfo(this,event)">詳細介紹</button></div></label><div class="info-panel tier-tour" id="i-tbana"><div class="ip-row"><div class="ip-label">路線</div><div class="ip-text">T-Centralen → Solna Centrum → Stadion → Tekniska Högskolan</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">通勤票即可：單次 SEK 42 或 24h 票 SEK 175</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">90+ 站有公共藝術。T-Centralen 藍白洞穴藝術最有名</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">彈性 1–2 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">不用出站，從車廂內移動就好；下載 SL 地圖 app 看作品介紹</div></div></div>
  </div>
 
  <div class="sec s-food">
@@ -1024,19 +1173,19 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <input type="radio" name="d517" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">瑞典肉丸（Köttbullar）— Meatballs for the People</div><div class="f-rest">鹿肉 / 馴鹿 / 麋鹿等多種選擇</div><div class="f-tip">鹿肉肉丸必點 · 搭紅醋栗果醬（Lingonsylt）才道地</div></div>
- </label>
+ <div><div class="f-name">瑞典肉丸（Köttbullar）— Meatballs for the People<a href="https://www.google.com/maps/place/?q=place_id:ChIJbYc9vPl3X0YR00NA50Rzmxw" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Meatballs for the People"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">鹿肉 / 馴鹿 / 麋鹿等多種選擇</div><div class="f-tip">鹿肉肉丸必點 · 搭紅醋栗果醬（Lingonsylt）才道地</div><button class="info-btn" type="button" data-panel="f-meatballs" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-meatballs"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Nytorgsgatan 30, Södermalm</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週日至四 11:30–22:00；週五週六 11:30–23:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">肉丸盤 SEK 159–229（牛/豬/麋鹿/鹿/野豬）</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">專賣肉丸，可選擇不同肉類組合</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">紅醋栗醬（Lingonsylt）無限續，套餐已含薯泥；現場排隊但流動快</div></div></div>
  <label class="food-row" data-group="d517">
  <input type="radio" name="d517" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">Restaurant Pelikan</div><div class="f-rest">Södermalm · 百年老店 · 昏黃燈光年代感</div><div class="f-tip">份量驚人 · 手工熬製紅醋栗果醬</div></div>
- </label>
+ <div><div class="f-name">Restaurant Pelikan<a href="https://www.google.com/maps/place/?q=place_id:ChIJrSV1Pfd3X0YRxwhoxSQ-Cug" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Restaurant Pelikan"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Södermalm · 百年老店 · 昏黃燈光年代感</div><div class="f-tip">份量驚人 · 手工熬製紅醋栗果醬</div><button class="info-btn" type="button" data-panel="f-pelikan" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-pelikan"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Blekingegatan 40, Södermalm</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週一至四 16:00–24:00；週五 16:00–01:00；週六 14:00–01:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">主菜 SEK 220–340</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">1733 年至今，啤酒大廳風格，份量驚人，老店氛圍</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">點馴鹿肉丸或雞排，配 Pripps Blå 啤酒最對味</div></div></div>
  </div>
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
- <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">Karolinska Hospital 也在 Solna，與飯店非常近</div></div>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="hs-detail">Karolinska Hospital 也在 Solna，與飯店非常近</div></div>
  <span class="hbadge hb-stay">住宿中</span>
  </div>
 </div>
@@ -1075,7 +1224,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:00 – 08:40</span><span class="phl">教學講座</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">鼻咽癌（NPC）靶區勾畫 2026 新進展</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">鼻咽癌（NPC）靶區勾畫 2026 新進展</div><button class="info-btn" type="button" data-panel="c-1801" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1801"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">鼻咽癌 2026 年新版靶區勾畫指引</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">MRI 與 PET 整合 · 高低風險亞區劃分更新 · 兒童與年輕成人病人特殊考量</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">NPC 是亞洲常見癌，新指引直接影響日常勾畫實務</div></div></div><div class="ip-text">5/18 (一) 08:00 – 08:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">教學講座</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">NPC GTV/CTV 勾畫最新共識：MRI 序列選擇、退縮策略、低風險區域減量</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理 NPC、想更新 contouring 標準的臨床</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">生物標記驅動放療試驗</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">量子計算在放療的潛力</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">定量 CBCT 最新發展</div></div></div>
@@ -1085,10 +1234,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:45 – 10:00</span><span class="phl">聯合 Pitch &amp; 辯論</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 × 靶向放射核素治療（ESTRO-EANM）</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
- <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 + 免疫治療最佳化</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">放療 × 靶向放射核素治療（ESTRO-EANM）</div><button class="info-btn" type="button" data-panel="c-1802" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1802"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">外照射放療與標靶放射核素治療（Lu-177 PSMA, Ac-225）的整合</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">前列腺癌雙模治療 · NETs 病人選擇 · 劑量計算挑戰 · 安全評估</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">新興典範，與核醫科的合作模式正在成形</div></div></div><div class="ip-text">5/18 (一) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">聯合專題（ESTRO × EANM 核醫）</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與頭頸 + 免疫同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">PSMA、DOTA、Lu-177 等核醫治療與 EBRT 的整合：時序、劑量計算、安全性</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">想了解 RLT 興起後放療的角色</div></div></div>
+ <label class="session pick" data-group="g18a"><input type="radio" name="g18a" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 + 免疫治療最佳化</div><button class="info-btn" type="button" data-panel="c-1803" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1803"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">頭頸癌放療 + 免疫檢查點抑制劑的最佳化</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">時序（同步 / 序列）· 病人選擇生物標記 · 副作用管理</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">KEYNOTE-689 結果出爐後，臨床方案需重新調整</div></div></div><div class="ip-text">5/18 (一) 08:45 – 10:00</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">專題討論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與放療×核醫同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">頭頸癌 RT + 免疫：HPV+ 降階、HPV− 強化、放療時機</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">臨床主力放療，常處理 HNSCC</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">直腸癌試驗大戰：一個病例四種策略（辯論）</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> 放療 × 核醫 vs 頭頸 + 免疫，點擊選一個</div>
@@ -1099,14 +1248,14 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">10:30 – 12:40</span><span class="phl">Proffered Papers + 頒獎 + Highlights</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 臨床實務</div></div>
- <span class="s-badge sb-clash">三選一</span></label>
+ <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">Re-irradiation 臨床實務</div><button class="info-btn" type="button" data-panel="c-1804" onclick="toggleInfo(this,event)">詳細介紹</button><button class="info-btn" type="button" data-panel="c-1805" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">三選一</span></label><div class="info-panel tier-conf" id="c-1805"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">頭頸癌領域的 Proffered Papers（最新研究）</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">臨床試驗 · 影像生物標記 · 治療技術創新</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">一年一度頭頸癌新發現</div></div></div><div class="info-panel tier-conf" id="c-1804"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">再放療的實務操作要點</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">案例選擇 · 劑量限制設定 · 技術選擇 · 不同部位特殊考量</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">臨床馬上能用的實務指引</div></div></div><div class="ip-text">5/18 (一) 10:30 – 11:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">三選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">頭頸癌最新臨床與技術原始研究發表</div></div></div><div class="ip-text">5/18 (一) 10:30 – 11:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與頭頸癌 4 / AI 治療計畫同時段，三選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">再放療臨床原始研究：劑量、安全性、長期追蹤</div></div></div>
  <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">頭頸癌 4</div></div>
  <span class="s-badge sb-clash">三選一</span></label>
- <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 治療計畫創新</div></div>
- <span class="s-badge sb-clash">三選一</span></label>
+ <label class="session pick" data-group="g18b"><input type="radio" name="g18b" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">AI 治療計畫創新</div><button class="info-btn" type="button" data-panel="c-1806" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">三選一</span></label><div class="info-panel tier-conf" id="c-1806"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">AI 驅動的治療計畫最新創新</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">生成式 AI 計畫 · 多目標優化 · 不確定性量化 · 商業工具比較</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">Treatment planning 是 AI 介入第二快的環節</div></div></div><div class="ip-text">5/18 (一) 10:30 – 11:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">三選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">AI 自動計畫、優化、品質保證等原創研究</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title"><svg width="11" height="11" style="vertical-align:middle"><use href="#i-award"/></svg> Iridium 192 Award（11:10）</div></div><span class="s-badge sb-award">頒獎</span></div>
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Donal Hollywood Award &amp; Best Papers（11:40）</div></div><span class="s-badge sb-plenary">全體</span></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Highlights + Donal Hollywood Award &amp; Best Papers（11:40）</div><button class="info-btn" type="button" data-panel="c-1807" onclick="toggleInfo(this,event)">詳細介紹</button></div><span class="s-badge sb-plenary">全體</span></div><div class="info-panel tier-conf" id="c-1807"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">紀念已故 ESTRO 前主席 Donal Hollywood 的頒獎演講 + 年度最佳論文</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">Donal Hollywood Award · Best Papers · 年度研究亮點</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">一年一度的最佳研究頒獎，全體必聽</div></div></div><div class="ip-text">5/18 (一) 11:40 – 12:40</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text"><b>全體大會</b> · 頒獎 + 最佳論文</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">Donal Hollywood 獎頒發；本屆會議最佳論文發表</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">年度榮譽時刻</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> Re-irradiation vs 頭頸癌 4 vs AI 治療計畫，三選一（11:40 全體必參加）</div>
  </div>
@@ -1116,10 +1265,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">14:10 – 16:30</span><span class="phl">Highlights + 聯合專題</span></div>
  <div class="prog-sessions">
- <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺癌：影像、治療與全球視野（ESTRO-ASTRO）</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
- <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">NSCLC 劑量強化辯論</div></div>
- <span class="s-badge sb-clash">二選一</span></label>
+ <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">前列腺癌：影像、治療與全球視野（ESTRO-ASTRO）</div><button class="info-btn" type="button" data-panel="c-1808" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1808"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">ESTRO 與 ASTRO 聯合：前列腺癌影像、治療與全球差異</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">PSMA-PET 全球可近性 · 治療標準歐美差異 · 低中所得國家的策略</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">跨大西洋共識，影響全球指引方向</div></div></div><div class="ip-text">5/18 (一) 15:15 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">聯合專題（ESTRO × ASTRO 美國）</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 NSCLC 劑量強化同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">歐美視角：PSMA-PET 應用、SBRT vs 中等分次、ADT 配合策略</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">想看歐美治療差異、學習雙方優點的醫師</div></div></div>
+ <label class="session pick" data-group="g18c"><input type="radio" name="g18c" class="ck"><span class="ck-mark"></span><div class="s-body"><div class="s-title">NSCLC 劑量強化辯論</div><button class="info-btn" type="button" data-panel="c-1809" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ <span class="s-badge sb-clash">二選一</span></label><div class="info-panel tier-conf" id="c-1809"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">辯論：非小細胞肺癌是否該採用劑量強化（dose escalation）</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">RTOG 0617 結果反思 · 適形性提升後的新證據 · 與系統治療的整合</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">0617 試驗以後幾乎沒人做劑量強化，但 IMRT 進步後是否該重新考慮</div></div></div><div class="ip-text">5/18 (一) 15:15 – 16:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">辯論</div></div><div class="ip-row"><div class="ip-label">衝突</div><div class="ip-text">與 ESTRO-ASTRO 前列腺同時段，二選一</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">III 期 NSCLC 標準 60Gy 是否需要強化？BED 與毒性平衡、影像導引限劑</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">處理可手術或不可手術 NSCLC 的臨床</div></div></div>
  </div>
  <div class="clash-note"><svg width="12" height="12"><use href="#i-warn"/></svg> ESTRO-ASTRO 前列腺 vs NSCLC 劑量，點擊選一個</div>
  </div>
@@ -1136,17 +1285,17 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
 
  <div class="prog-block">
  <div class="ph2 ph-plenary"><span class="pht">18:15 – 19:15</span><span class="phl">General Assembly（大會年度會員大會）</span><span class="phb">全體</span></div>
- </div>
+ <button class="info-btn" type="button" data-panel="c-ga" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-ga"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">ESTRO 全體會員年度大會</div></div><div class="ip-row"><div class="ip-label">內容</div><div class="ip-text">財務報告 · 委員會更替 · 章程變更投票 · 戰略方向</div></div><div class="ip-row"><div class="ip-label">時長</div><div class="ip-text">約 1 小時</div></div><div class="ip-row"><div class="ip-label">提醒</div><div class="ip-text">會員可投票；非會員可旁聽</div></div></div></div>
 
  <div class="prog-block">
  <div class="ph2 ph-evening"><span class="pht">21:30</span><span class="phl">ESTRO Party：Rock Festival 2026</span></div>
  <div class="prog-sessions">
  <div class="session">
  <svg width="13" height="13" style="flex-shrink:0;margin-top:4px;"><use href="#i-music"/></svg>
- <div class="s-body"><div class="s-title">Stockholm Waterfront · Nils Erikson Plan 4</div><div class="s-sub">ESTROnauts · Gantry 270 · The ProTones &nbsp;|&nbsp; €35 含歡迎飲料 · 現場限量購票 · 不退票</div></div>
+ <div class="s-body"><div class="s-title">Stockholm Waterfront · Nils Erikson Plan 4<a href="https://www.google.com/maps/place/?q=place_id:ChIJ24bpQ2CdX0YRtCXQif1v9Zw" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Stockholm Waterfront (Rock Festival)"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="s-sub">ESTROnauts · Gantry 270 · The ProTones &nbsp;|&nbsp; €35 含歡迎飲料 · 現場限量購票 · 不退票</div></div>
  </div>
  </div>
- </div>
+ <button class="info-btn" type="button" data-panel="c-party" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-party"><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Stockholm Waterfront, Nils Erikson Plan 4（中央車站旁）</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">21:30 開始 · 三組樂團輪流演出</div></div><div class="ip-row"><div class="ip-label">樂團</div><div class="ip-text">ESTROnauts（ESTRO 內部團）· Gantry 270（學界團）· The ProTones（業界團）</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">€35，含歡迎飲料</div></div><div class="ip-row"><div class="ip-label">購票</div><div class="ip-text"><b>限量現場購買</b>，於報名區 Party Ticket Desk · <b>不退票</b></div></div><div class="ip-row"><div class="ip-label">衣著</div><div class="ip-text">半正式即可，舒適為主，可跳舞</div></div></div></div>
  </div>
 
  <div class="sec s-food">
@@ -1159,14 +1308,14 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <input type="radio" name="d518" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">Bistro Bestick</div><div class="f-rest">精緻擺盤 · 牛肉比例高的肉丸</div><div class="f-tip">GA（19:15）後步行可達 · 適合快速優雅一餐</div></div>
- </label>
+ <div><div class="f-name">Bistro Bestick<a href="https://www.google.com/maps/place/?q=place_id:ChIJbUwut2CdX0YRc2Ctv0LIzIM" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Bistro Bestick City"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">精緻擺盤 · 牛肉比例高的肉丸</div><div class="f-tip">GA（19:15）後步行可達 · 適合快速優雅一餐</div><button class="info-btn" type="button" data-panel="f-bestick" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-bestick"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Sergelgatan 23（市中心）</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">午晚餐均供應</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">肉丸主菜 SEK 245</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">精緻擺盤的瑞典肉丸，比傳統小館高級</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">GA 結束 19:15 後步行可達，21:30 前用完餐剛好趕 Party</div></div></div>
  <label class="food-row" data-group="d518">
  <input type="radio" name="d518" class="ck">
  <span class="ck-mark"></span>
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">Den Gyldene Freden（1722 年創立）</div><div class="f-rest">300 年老店 · Gamla Stan</div><div class="f-tip">據說諾貝爾文學獎評審常來 · 體驗瑞典最古老餐廳</div></div>
- </label>
+ <div><div class="f-name">Den Gyldene Freden（1722 年創立）<a href="https://www.google.com/maps/place/?q=place_id:ChIJo2D60OJ3X0YRpSgBrukx24o" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Den Gyldene Freden"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">300 年老店 · Gamla Stan</div><div class="f-tip">據說諾貝爾文學獎評審常來 · 體驗瑞典最古老餐廳</div><button class="info-btn" type="button" data-panel="f-freden" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-food" id="f-freden"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Österlånggatan 51, Gamla Stan</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週二至六 17:00–23:00；週日週一休</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">主菜 SEK 320–480</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">1722 年開業，瑞典最古老仍營業的餐廳。<b>諾貝爾文學獎評審傳統聚會地</b></div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">氛圍古典，適合慢慢品味歷史；訂位優先</div></div></div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-ticket"/></svg>
  <div><div class="f-name">Rock Festival Party</div><div class="f-rest">Party 票在報名區 Party Ticket Desk 購買 · 限量 · 不退票</div></div>
@@ -1175,7 +1324,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
- <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 約 35 分</div></div>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="hs-detail">飯店 → ESTRO 會場：Pendeltåg + T18 約 35 分</div></div>
  <span class="hbadge hb-stay">住宿中</span>
  </div>
 </div>
@@ -1209,15 +1358,15 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">08:30 – 09:10</span><span class="phl">Proffered Papers &amp; 教學講座</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 用於同質化與臨床決策</div></div></div>
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Re-irradiation 實務技巧</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">AI 用於同質化與臨床決策</div><button class="info-btn" type="button" data-panel="c-1901" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1901"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">AI 用於降低臨床差異與輔助決策</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">Inter-observer variability 降低 · 多中心一致性 · 決策支援系統</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">從個別科部走向全球同質化的關鍵一步</div></div></div><div class="ip-text">5/19 (二) 08:30 – 09:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">Proffered Papers / 教學講座</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">AI 工具如何協助 MDT 一致性、預後分層、治療選擇</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">Re-irradiation 實務技巧</div><button class="info-btn" type="button" data-panel="c-1902" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1902"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">再放療的進階實務技巧</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">案例分享 · 劑量重建方法 · 影像融合策略</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">結合 5/17 與 5/18 的概念與辯論，本場做總結性整理</div></div></div><div class="ip-text">5/19 (二) 08:30 – 09:10</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">教學講座</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">常見部位再放療實作要點：累積劑量、影像配準、技術選擇</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">放療用於良性與功能性疾病</div></div></div>
  </div>
  </div>
  <div class="prog-block">
  <div class="ph2"><span class="pht">09:15 – 10:30</span><span class="phl">專題討論</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">免疫調節 × 放療：最大化治療成效</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">免疫調節 × 放療：最大化治療成效</div><button class="info-btn" type="button" data-panel="c-1903" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1903"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">放療作為免疫調節劑：如何最大化治療成效</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">Abscopal effect 機轉 · 劑量分次模式選擇 · 與 ICI 合併時序</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">從基礎到臨床的整合視角，少見而完整</div></div></div><div class="ip-text">5/19 (二) 09:15 – 10:30</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">專題討論</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">Abscopal 效應證據更新、SBRT 配合 ICI 時序、未來雙特異性藥物搭配</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">對 RT-IO 整合領域感興趣</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO-EANO：腦轉移 —— 應延後局部治療？（辯論）</div></div><span class="s-badge sb-joint">聯合</span></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">器官保存策略：頭頸 · 膀胱 · 乳癌</div></div></div>
  </div>
@@ -1226,14 +1375,14 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="prog-block">
  <div class="ph2"><span class="pht">11:00 – 12:15</span><span class="phl">辯論 &amp; 專題</span></div>
  <div class="prog-sessions">
- <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO 指南的臨床落地：從共識到實踐</div></div></div>
+ <div class="session pick"><div class="s-dot"></div><div class="s-body"><div class="s-title">ESTRO 指南的臨床落地：從共識到實踐</div><button class="info-btn" type="button" data-panel="c-1904" onclick="toggleInfo(this,event)">詳細介紹</button></div></div><div class="info-panel tier-conf" id="c-1904"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">ESTRO 指南從共識到臨床實踐：障礙與成功案例</div></div><div class="ip-row"><div class="ip-label">重點</div><div class="ip-text">導入流程 · 教育訓練 · 績效指標 · 國家層級採用差異</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">寫得好不如做得到，本場分享導入經驗</div></div></div><div class="ip-text">5/19 (二) 11:00 – 12:15</div></div><div class="ip-row"><div class="ip-label">類型</div><div class="ip-text">專題討論</div></div><div class="ip-row"><div class="ip-label">內容重點</div><div class="ip-text">ESTRO 過去 5 年發表指南的實際採用率、障礙、推廣策略</div></div><div class="ip-row"><div class="ip-label">適合對象</div><div class="ip-text">科主管、想將指南落實成 SOP 的人</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">臨床試驗 vs 技術：誰改變了更多？（辯論）</div></div></div>
  <div class="session"><div class="s-dot"></div><div class="s-body"><div class="s-title">Oligo 策略：乳癌 &amp; 婦科 SABR 前沿</div></div></div>
  </div>
  </div>
  <div class="prog-block">
  <div class="ph2 ph-plenary"><span class="pht">12:25 – 13:30</span><span class="phl">Closing Debate：「Dear Radiation Oncology — We have a dream」</span><span class="phb">閉幕</span></div>
- </div>
+ <button class="info-btn" type="button" data-panel="c-closing" onclick="toggleInfo(this,event)">詳細介紹</button><div class="info-panel tier-conf" id="c-closing"><div class="ip-row"><div class="ip-label">主題</div><div class="ip-text">ESTRO 2026 閉幕辯論</div></div><div class="ip-row"><div class="ip-label">形式</div><div class="ip-text">由領域代表性學者展望放射腫瘤學的未來夢想與挑戰</div></div><div class="ip-row"><div class="ip-label">時長</div><div class="ip-text">約 1 小時</div></div><div class="ip-row"><div class="ip-label">為什麼</div><div class="ip-text">一年一度的領域願景時刻，溫暖且鼓舞人心</div></div></div></div>
  </div>
 
  <div class="sec s-tour">
@@ -1244,11 +1393,11 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">14:00</div>
  <div class="row-i"><svg><use href="#i-camera"/></svg></div>
  <div class="row-b">
- <div class="row-name">Fotografiska 攝影博物館</div>
+ <div class="row-name">Fotografiska 攝影博物館<a href="https://www.google.com/maps/place/?q=place_id:ChIJhaN0M_l3X0YRpOq8uRb_RcA" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Fotografiska Museum"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">開到 23:00 · 頂樓咖啡館俯瞰波羅的海 · 充裕時間慢慢逛</div>
  <span class="rtag rt-tour">安排</span>
- </div>
- </div>
+ <button class="info-btn" type="button" data-panel="i-foto" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-tour" id="i-foto"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Stadsgårdshamnen 22, Södermalm</div></div><div class="ip-row"><div class="ip-label">交通</div><div class="ip-text">T-bana Slussen 站步行 5 分</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 09:00–23:00（週四至週日延長至 01:00）</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">成人 SEK 175–205</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">當代攝影展，常有大師作品。<b>頂樓咖啡館視野絕佳</b>，可看老城區與波羅的海</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">2–3 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">傍晚去最棒：先看展，上頂樓配公主蛋糕欣賞日落</div></div></div>
 
  <div class="sec s-food">
  <div class="sec-icon"><svg width="14" height="14"><use href="#i-food"/></svg></div>
@@ -1258,17 +1407,17 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="food-head">最後完整的自由下午 · 最好的告別方式</div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-coffee"/></svg>
- <div><div class="f-name">Fika：公主蛋糕（Prinsesstårta）</div><div class="f-rest">Fotografiska 頂樓咖啡館 · 淡綠色杏仁膏 · 俯瞰波羅的海</div><div class="f-tip">用刀切，不要用叉挖 · 搭黑咖啡才是瑞典吃法</div></div>
- </div>
+ <div><div class="f-name">Fika：公主蛋糕（Prinsesstårta）<a href="https://www.google.com/maps/place/?q=place_id:ChIJhaN0M_l3X0YRpOq8uRb_RcA" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Fotografiska Museum"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Fotografiska 頂樓咖啡館 · 淡綠色杏仁膏 · 俯瞰波羅的海</div><div class="f-tip">用刀切，不要用叉挖 · 搭黑咖啡才是瑞典吃法</div><button class="info-btn" type="button" data-panel="f-princess" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-princess"><div class="ip-row"><div class="ip-label">地點</div><div class="ip-text">Fotografiska 5 樓頂樓咖啡館</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">公主蛋糕 SEK 65；咖啡 SEK 45</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">360° 城市與波羅的海全景。淡綠色杏仁膏覆蓋的瑞典經典蛋糕</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text"><b>用刀切公主蛋糕</b>不要用叉挖；搭黑咖啡才是瑞典吃法；傍晚景色最佳</div></div></div>
  <div class="food-row">
  <svg width="14" height="14"><use href="#i-food"/></svg>
- <div><div class="f-name">晚餐：Restaurant Ekstedt</div><div class="f-rest">Humlegårdsgatan · 全程明火烹飪 · 北歐頂級體驗</div><div class="f-tip">⚑ 強烈建議現在就訂位，瑞典最難訂的餐廳之一</div></div>
- </div>
+ <div><div class="f-name">晚餐：Restaurant Ekstedt<a href="https://www.google.com/maps/place/?q=place_id:ChIJhThAV1udX0YRWy5QWVtNNWY" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Restaurant Ekstedt"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="f-rest">Humlegårdsgatan · 全程明火烹飪 · 北歐頂級體驗</div><div class="f-tip">⚑ 強烈建議現在就訂位，瑞典最難訂的餐廳之一</div><button class="info-btn" type="button" data-panel="f-ekstedt" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-ekstedt"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Humlegårdsgatan 17, Östermalm</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">週二至六晚餐</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">套餐 SEK 1,795（4 道）/ SEK 2,295（6 道）</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">Niklas Ekstedt 主廚的<b>明火料理</b>（無瓦斯爐電爐），全程木材、火坑、煙燻烹飪。<b>米其林一星</b></div></div><div class="ip-row"><div class="ip-label">預訂</div><div class="ip-text"><b>瑞典最難訂之一，建議提前 2 個月以上</b></div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">穿正式但舒適；菜單依當天食材變動；強烈建議搭酒方案</div></div></div>
  </div>
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
- <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">明日 12:00 前退房</div></div>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="hs-detail">明日 12:00 前退房</div></div>
  <span class="hbadge hb-last">最後一夜</span>
  </div>
 </div>
@@ -1297,10 +1446,10 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">09:00</div>
  <div class="row-i"><svg><use href="#i-coffee"/></svg></div>
  <div class="row-b">
- <div class="row-name">Fabrique 肉桂捲（最後一次 Fika）</div>
+ <div class="row-name">Fabrique 肉桂捲（最後一次 Fika）<a href="https://www.google.com/maps/place/?q=place_id:ChIJdX3Rq1udX0YRSf6kGNOkDSo" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Fabrique"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">斯德哥爾摩多家分店 · 剛出爐最好吃 · 行李退房後輕裝出發</div>
- </div>
- </div>
+ <button class="info-btn" type="button" data-panel="f-fabrique" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-food" id="f-fabrique"><div class="ip-row"><div class="ip-label">多家分店</div><div class="ip-text">T-Centralen、Östermalm、Vasastan、Gamla Stan</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 07:00–19:00</div></div><div class="ip-row"><div class="ip-label">價格</div><div class="ip-text">肉桂捲 SEK 38；咖啡 SEK 30</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">石爐烘焙，全 Stockholm 分店最多的精品麵包店。剛出爐最香</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">早起前往可看到師傅在櫃檯後現烤；外帶到機場路上完美</div></div></div>
 
  <div class="sec s-tour">
  <div class="sec-icon"><svg width="14" height="14"><use href="#i-museum"/></svg></div>
@@ -1310,33 +1459,33 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">10:00</div>
  <div class="row-i"><svg><use href="#i-boat"/></svg></div>
  <div class="row-b">
- <div class="row-name">瓦薩博物館（Vasa Museum）</div>
+ <div class="row-name">瓦薩博物館（Vasa Museum）<a href="https://www.google.com/maps/place/?q=place_id:ChIJrymDbVSdX0YRQTLBtPGa8M8" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Vasa Museum"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">留 1.5–2 小時 · 帶薄外套（室內偏涼）· 可繞船一圈</div>
  <span class="rtag rt-conf">固定</span>
- </div>
- </div>
+ <button class="info-btn" type="button" data-panel="i-vasa" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </div><div class="info-panel tier-tour" id="i-vasa"><div class="ip-row"><div class="ip-label">地址</div><div class="ip-text">Galärvarvsvägen 14, Djurgården</div></div><div class="ip-row"><div class="ip-label">交通</div><div class="ip-text">7 號電車到 Nordiska museet/Vasamuseet 站</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 10:00–17:00（夏季延長至 18:00）</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">成人 SEK 220–250</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">1628 年首航即沉沒的 17 世紀戰艦。1961 年打撈，<b>世界唯一保存完整 17 世紀艦船</b></div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">1.5–2 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">室內偏冷帶薄外套；中文語音導覽免費；早上光線最好</div></div></div>
  <label class="row r-tour" data-group="t520">
  <input type="radio" name="t520" class="ck">
  <span class="ck-mark"></span>
  <div class="row-t">11:30</div>
  <div class="row-i"><svg><use href="#i-museum"/></svg></div>
  <div class="row-b">
- <div class="row-name">維京博物館（The Viking Museum）</div>
+ <div class="row-name">維京博物館（The Viking Museum）<a href="https://www.google.com/maps/place/?q=place_id:ChIJnd3epESdX0YRo-AGQwgCTYk" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 The Viking Museum"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">就在瓦薩旁邊 · 約 30 分鐘 · 英文語音導覽</div>
  <span class="rtag rt-opt">擇一</span>
- </div>
- </label>
+ <button class="info-btn" type="button" data-panel="i-viking" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-tour" id="i-viking"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">Djurgården，瓦薩博物館旁步行 1 分</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 10:00–18:00</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">成人 SEK 195–230</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">互動式維京歷史，含 11 分鐘 Ragnfrid Saga 室內遊樂設施</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">1–1.5 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">偏娛樂性、適合家庭。想看真品文物可選 Historiska Museum（市中心）</div></div></div>
  <label class="row r-tour" data-group="t520">
  <input type="radio" name="t520" class="ck">
  <span class="ck-mark"></span>
  <div class="row-t">11:30</div>
  <div class="row-i"><svg><use href="#i-museum"/></svg></div>
  <div class="row-b">
- <div class="row-name">北歐博物館（Nordic Museum）</div>
+ <div class="row-name">北歐博物館（Nordic Museum）<a href="https://www.google.com/maps/place/?q=place_id:ChIJxagZg1OdX0YRGKnPhRyci9c" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Nordic Museum"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">步行 3 分鐘 · 北歐文化互動展 · 快速走 45 分</div>
  <span class="rtag rt-opt">擇一</span>
- </div>
- </label>
+ <button class="info-btn" type="button" data-panel="i-nordic" onclick="toggleInfo(this,event)">詳細介紹</button></div>
+ </label><div class="info-panel tier-tour" id="i-nordic"><div class="ip-row"><div class="ip-label">位置</div><div class="ip-text">Djurgården，瓦薩博物館旁</div></div><div class="ip-row"><div class="ip-label">時間</div><div class="ip-text">通常 10:00–17:00</div></div><div class="ip-row"><div class="ip-label">票價</div><div class="ip-text">成人 SEK 180–220</div></div><div class="ip-row"><div class="ip-label">特色</div><div class="ip-text">500 年瑞典 / 北歐文化生活展示。建築本身為哥德式宮殿風，氣派</div></div><div class="ip-row"><div class="ip-label">耗時</div><div class="ip-text">45 分–1.5 小時</div></div><div class="ip-row"><div class="ip-label">小撇步</div><div class="ip-text">時間少時可挑「Saami 民族」「瑞典時尚」「室內裝飾」幾個展廳重點看</div></div></div>
 
  <div class="sec s-util">
  <div class="sec-icon"><svg width="14" height="14"><use href="#i-train"/></svg></div>
@@ -1346,7 +1495,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">12:00</div>
  <div class="row-i"><svg><use href="#i-hotel"/></svg></div>
  <div class="row-b">
- <div class="row-name">退房 → 步行 1 分鐘到 Ulriksdal 站</div>
+ <div class="row-name">退房 → 步行 1 分鐘到 Ulriksdal 站<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <span class="rtag rt-conf">固定</span>
  </div>
  </div>
@@ -1354,7 +1503,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
  <div class="row-t">12:30</div>
  <div class="row-i"><svg><use href="#i-train"/></svg></div>
  <div class="row-b">
- <div class="row-name">Pendeltåg 直達 Arlanda 機場</div>
+ <div class="row-name">Pendeltåg 直達 Arlanda 機場<a href="https://www.google.com/maps/place/?q=place_id:ChIJ_YMtw2OdX0YRM1xOfqKV-FI" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 Stockholm Arlanda Airport"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div>
  <div class="row-desc">約 28 分鐘 · 13:00 前抵達 · 留充裕報到時間</div>
  <span class="rtag rt-conf">固定</span>
  </div>
@@ -1367,7 +1516,7 @@ footer { text-align: center; font-size: .72rem; color: var(--text-3); padding: 1
 
  <div class="hotel-strip">
  <svg width="16" height="16"><use href="#i-hotel"/></svg>
- <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal</div><div class="hs-detail">退房 → Ulriksdal 站（步行 1 分）→ Pendeltåg 直達機場 約 28 分</div></div>
+ <div class="hs-body"><div class="hs-name">AC Hotel by Marriott Stockholm Ulriksdal<a href="https://www.google.com/maps/place/?q=place_id:ChIJ2z_SyoudX0YR2qN-454-P9w" target="_blank" rel="noopener" class="map-link" title="在 Google Maps 開啟 AC Hotel Stockholm Ulriksdal"><svg><use href="#i-gmaps"/></svg><span class="map-link-text">地圖</span></a></div><div class="hs-detail">退房 → Ulriksdal 站（步行 1 分）→ Pendeltåg 直達機場 約 28 分</div></div>
  <span class="hbadge hb-out">退房 12:00</span>
  </div>
 </div>
