@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Symposium on GU Oncology - Progress Update</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sage: #8FA68E;
+            --sage-light: #B8C5B7;
+            --sage-dark: #6B7B6A;
+            --charcoal: #2C3531;
+            --warm-white: #FEFCFA;
+            --stone: #F5F3F0;
+            --mist: #E8E6E3;
+            --ocean: #7A9CC6;
+            --ocean-light: #A4BDDC;
+            --success: #6B8E6B;
+            --warning: #B8860B;
+            --attention: #CC8C69;
+            --text-primary: #2C3531;
+            --text-secondary: #5A6B5D;
+            --text-muted: #8B9A8E;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--warm-white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .presentation {
+            max-width: 100vw;
+        }
+
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--sage-light) 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(100px, -100px);
+        }
+
+        /* Cover Slide */
+        .cover {
+            background: linear-gradient(135deg, var(--sage-dark) 0%, var(--charcoal) 100%);
+            color: var(--warm-white);
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .cover::before {
+            background: radial-gradient(circle, var(--ocean) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 300px;
+            height: 150px;
+            background: var(--sage);
+            opacity: 0.1;
+            border-radius: 100%;
+            transform: translate(-150px, 75px);
+        }
+
+        .eyebrow {
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sage-light);
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .main-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title .highlight {
+            color: var(--sage-light);
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: var(--mist);
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        .date-venue {
+            font-size: 16px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .presenter {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            text-align: right;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Content Slides */
+        .content-slide {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .slide-header {
+            margin-bottom: 60px;
+        }
+
+        .slide-number {
+            font-size: 12px;
+            color: var(--sage);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .slide-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 36px;
+            color: var(--charcoal);
+            font-weight: 400;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--sage);
+        }
+
+        .slide-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        /* Progress Status Cards */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .status-card {
+            background: var(--warm-white);
+            border: 1px solid var(--mist);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            text-align: center;
+        }
+
+        .status-card.completed {
+            border-left: 4px solid var(--success);
+            background: linear-gradient(135deg, rgba(107, 142, 107, 0.05) 0%, var(--warm-white) 100%);
+        }
+
+        .status-card.in-progress {
+            border-left: 4px solid var(--warning);
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.05) 0%, var(--warm-white) 100%);
+        }
+
+        .status-card.pending {
+            border-left: 4px solid var(--attention);
+            background: linear-gradient(135deg, rgba(204, 140, 105, 0.05) 0%, var(--warm-white) 100%);
+        }
+
+        .status-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .status-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .status-card.completed .status-label { color: var(--success); }
+        .status-card.in-progress .status-label { color: var(--warning); }
+        .status-card.pending .status-label { color: var(--attention); }
+
+        .status-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .status-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Detailed Schedule */
+        .schedule-table {
+            background: var(--stone);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .schedule-header {
+            background: var(--charcoal);
+            color: white;
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 2.5fr 1fr;
+            gap: 16px;
+            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .schedule-row {
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 2.5fr 1fr;
+            gap: 16px;
+            border-bottom: 1px solid var(--mist);
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .schedule-row:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-row:nth-child(even) {
+            background: var(--warm-white);
+        }
+
+        .time-slot {
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .duration {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .session-topic {
+            color: var(--text-primary);
+        }
+
+        .session-topic.keynote {
+            color: var(--sage-dark);
+            font-weight: 500;
+        }
+
+        .session-topic.break {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .session-notes {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* Decision Items */
+        .decision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .decision-item {
+            background: var(--warm-white);
+            border: 1px solid var(--mist);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .decision-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--success);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .decision-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--success);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .decision-text {
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Action Items */
+        .action-section {
+            margin-top: 40px;
+            padding: 32px;
+            background: var(--stone);
+            border-radius: 16px;
+            border-left: 6px solid var(--sage);
+        }
+
+        .action-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .action-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .action-priority {
+            flex-shrink: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+
+        .action-priority.high { background: var(--attention); }
+        .action-priority.medium { background: var(--warning); }
+        .action-priority.low { background: var(--sage); }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-content h4 {
+            color: var(--charcoal);
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .action-content p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Navigation dots */
+        .slide-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--sage);
+            opacity: 1;
+            transform: scale(1.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+            
+            .main-title {
+                font-size: 36px;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .decision-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .schedule-header,
+            .schedule-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .slide-nav {
+                display: none;
+            }
+        }
+
+        /* Animation */
+        .slide {
+            opacity: 0;
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .slide {
+                page-break-after: always;
+                min-height: 100vh;
+            }
+            
+            .slide-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Cover -->
+        <section class="slide cover">
+            <div class="eyebrow">PROGRESS REPORT · 進度追蹤</div>
+            <h1 class="main-title">
+                International Symposium<br>
+                on <span class="highlight">Genitourinary Oncology</span>
+            </h1>
+            <p class="subtitle">
+                放射線治療的新角色、新疆界、新未來<br>
+                規劃完成，講師邀請進行中
+            </p>
+            <div class="date-venue">
+                <div><strong>2026年10月31日（六）09:00-16:00</strong></div>
+                <div>濱秀國際會議廳</div>
+            </div>
+            <div class="presenter">
+                彰濱秀傳紀念醫院<br>
+                放射腫瘤科<br>
+                <strong>林伯儒 主任</strong>
+            </div>
+        </section>
+
+        <!-- Slide 2: Progress Overview -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">01 / PROGRESS OVERVIEW</div>
+                <h2 class="slide-title">執行進度總覽</h2>
+                <p class="slide-subtitle">提案核准後規劃推進狀況，6講題架構完成，關鍵里程碑達成度</p>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-card completed">
+                    <div class="status-icon">✅</div>
+                    <div class="status-label">已完成</div>
+                    <h3 class="status-title">規劃定案</h3>
+                    <p class="status-desc">5講題架構確定，學分申請方向明確，參與對象範圍確認</p>
+                </div>
+
+                <div class="status-card in-progress">
+                    <div class="status-icon">📞</div>
+                    <div class="status-label">進行中</div>
+                    <h3 class="status-title">講師邀請</h3>
+                    <p class="status-desc">Dr. Hsu 聯繫中，外院專家邀請啟動，本院講師預備確認中</p>
+                </div>
+
+                <div class="status-card pending">
+                    <div class="status-icon">⏰</div>
+                    <div class="status-label">待完成</div>
+                    <h3 class="status-title">最終確認</h3>
+                    <p class="status-desc">預計6月底完成講師陣容確認，7月啟動宣傳準備</p>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <h3 class="action-title">本次報告重點</h3>
+                <div style="color: var(--text-secondary); margin-bottom: 20px; font-size: 15px;">
+                    8項決策事項已完成，詳細講師邀請策略啟動中，向癌醫會議報告目前執行狀況。
+                </div>
+                
+                <div class="action-list">
+                    <div class="action-item">
+                        <div class="action-priority high"></div>
+                        <div class="action-content">
+                            <h4>Dr. Hsu 邀請狀況</h4>
+                            <p>UCSF 聯繫管道建立，正在確認實體來台或線上參與方式</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-priority high"></div>
+                        <div class="action-content">
+                            <h4>外院專家邀請</h4>
+                            <p>歐宴全教授、王紹全醫師、葉郁棻醫師等優先名單邀請中，張正雄院長預備確認中</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-priority medium"></div>
+                        <div class="action-content">
+                            <h4>學分申請準備</h4>
+                            <p>放腫/泌尿/血腫/護理 4個學會學分申請資料準備中</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Detailed Schedule -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">02 / DETAILED AGENDA</div>
+                <h2 class="slide-title">詳細議程規劃</h2>
+                <p class="slide-subtitle">完整 8 小時活動時程，6 場學術講題與行政時段安排</p>
+            </div>
+
+            <div class="schedule-table">
+                <div class="schedule-header">
+                    <div>時間</div>
+                    <div>時長</div>
+                    <div>主題</div>
+                    <div>備註</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">08:30 - 09:00</div>
+                    <div class="duration">30 分鐘</div>
+                    <div class="session-topic break">報到</div>
+                    <div class="session-notes">接待安排</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">09:00 - 09:05</div>
+                    <div class="duration">5 分鐘</div>
+                    <div class="session-topic">開場</div>
+                    <div class="session-notes">主辦人致詞</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">09:05 - 09:55</div>
+                    <div class="duration">50 分鐘</div>
+                    <div class="session-topic keynote">Keynote - Dr. I-Chow Hsu (UCSF)</div>
+                    <div class="session-notes">攝護腺癌近接治療與 UCSF 經驗</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">09:55 - 10:10</div>
+                    <div class="duration">15 分鐘</div>
+                    <div class="session-topic break">中場休息</div>
+                    <div class="session-notes">茶敘/點心</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">10:10 - 11:00</div>
+                    <div class="duration">50 分鐘</div>
+                    <div class="session-topic">攝護腺癌機械人手術</div>
+                    <div class="session-notes">歐宴全教授(童綜合) / 楊哲學醫師(彰濱)</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">11:00 - 11:50</div>
+                    <div class="duration">50 分鐘</div>
+                    <div class="session-topic">泌尿癌的藥物治療</div>
+                    <div class="session-notes">王紹全醫師(中山泌尿科)</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">11:50 - 13:00</div>
+                    <div class="duration">70 分鐘</div>
+                    <div class="session-topic break">午餐時間</div>
+                    <div class="session-notes">午餐餐盒 (事前報名)</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">13:00 - 13:50</div>
+                    <div class="duration">50 分鐘</div>
+                    <div class="session-topic">NGS / 免疫療法</div>
+                    <div class="session-notes">張正雄院長(彰濱)</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">13:50 - 14:40</div>
+                    <div class="duration">50 分鐘</div>
+                    <div class="session-topic">Ra-223 / Lu-177 用於泌尿癌</div>
+                    <div class="session-notes">葉郁棻醫師(義大血腫) / 劉育昌副院長(彰濱)</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">14:40 - 15:00</div>
+                    <div class="duration">20 分鐘</div>
+                    <div class="session-topic break">中場休息</div>
+                    <div class="session-notes">茶敘/點心</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">15:00 - 15:50</div>
+                    <div class="duration">50 分鐘</div>
+                    <div class="session-topic">放射線治療在泌尿癌</div>
+                    <div class="session-notes">林伯儒主任(彰濱) + 趙梓淵主任(高秀)</div>
+                </div>
+                
+                <div class="schedule-row">
+                    <div class="time-slot">15:50</div>
+                    <div class="duration">—</div>
+                    <div class="session-topic break">賦歸</div>
+                    <div class="session-notes">—</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; padding: 20px; background: var(--stone); border-radius: 8px; border-left: 4px solid var(--sage);">
+                <strong style="color: var(--sage-dark);">議程重點：</strong>
+                6場主題演講，涵蓋外科/藥物/NGS免疫/核醫/放療完整泌尿癌治療，申請4學會CME學分，中部各院開放報名
+            </div>
+        </section>
+
+        <!-- Slide 4: Decision Items -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">03 / EXECUTION STATUS</div>
+                <h2 class="slide-title">執行現況</h2>
+                <p class="slide-subtitle">8 項關鍵規劃事項已完成決議，現進入實際執行階段</p>
+            </div>
+
+            <div class="decision-grid">
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>活動定位：</strong>確認以泌尿癌為主體、放射線治療為輔，5場講題完整涵蓋泌尿癌治療各面向。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>參與對象：</strong>擴大邀請中部各大醫院泌尿科/放腫科，採開放報名制，午餐需事前報名。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>學分申請：</strong>同時申請放腫/泌尿/血腫/護理 4個學會CME學分，提升參與動機。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>講師與主題：</strong>6講題架構確定，包含外科/藥物/NGS免疫/核醫/放療，講師邀請名單已啟動。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>高秀議題：</strong>納入放射線治療講題中，由林主任與趙主任共同分享體系經驗。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>講師策略：</strong>外院專家優先邀請，本院醫師為備案，確保講師陣容品質。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>餐點安排：</strong>提供午餐餐盒（事前報名）+ 上下午中場休息茶點，完善接待服務。
+                    </div>
+                </div>
+
+                <div class="decision-item">
+                    <div class="decision-number">✓</div>
+                    <div class="decision-text">
+                        <strong>長官邀請：</strong>邀請總院長、彰濱黃院長、癌醫張院長等體系長官與會指導。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Next Steps -->
+        <section class="slide content-slide">
+            <div class="slide-header">
+                <div class="slide-number">04 / NEXT MILESTONES</div>
+                <h2 class="slide-title">後續執行重點</h2>
+                <p class="slide-subtitle">講師邀請進行中，預計6月底完成陣容確認，7月啟動宣傳準備</p>
+            </div>
+
+            <div class="action-section">
+                <h3 class="action-title">目前執行進度</h3>
+                
+                <div class="action-list">
+                    <div class="action-item">
+                        <div class="action-priority high"></div>
+                        <div class="action-content">
+                            <h4>Dr. Hsu 聯繫狀況</h4>
+                            <p>UCSF 正式邀請函準備中，確認實體來台或線上參與方式，預計5月中旬獲得回覆</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-priority high"></div>
+                        <div class="action-content">
+                            <h4>外院講師邀請</h4>
+                            <p>歐宴全教授、王紹全醫師、葉郁棻醫師邀請信發送中，張正雄院長、趙梓淵主任預備確認中</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-priority medium"></div>
+                        <div class="action-content">
+                            <h4>學分申請作業</h4>
+                            <p>4學會CME申請資料準備完成，待講師確認後正式送件申請</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-priority medium"></div>
+                        <div class="action-content">
+                            <h4>宣傳材料製作</h4>
+                            <p>邀請函設計草案完成，海報與議程手冊設計待講師陣容確認後啟動</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-priority low"></div>
+                        <div class="action-content">
+                            <h4>報名系統建置</h4>
+                            <p>中部各院開放報名機制規劃中，含午餐事前登記功能</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Navigation -->
+    <div class="slide-nav">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+    </div>
+
+    <script>
+        // Smooth scroll navigation
+        const dots = document.querySelectorAll('.nav-dot');
+        const slides = document.querySelectorAll('.slide');
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                slides[index].scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                updateActiveDot(index);
+            });
+        });
+
+        function updateActiveDot(activeIndex) {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        }
+
+        // Update active dot on scroll
+        window.addEventListener('scroll', () => {
+            let current = 0;
+            slides.forEach((slide, index) => {
+                const rect = slide.getBoundingClientRect();
+                if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                    current = index;
+                }
+            });
+            updateActiveDot(current);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const current = document.querySelector('.nav-dot.active');
+            const currentIndex = Array.from(dots).indexOf(current);
+            
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentIndex < slides.length - 1) {
+                    dots[currentIndex + 1].click();
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    dots[currentIndex - 1].click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
