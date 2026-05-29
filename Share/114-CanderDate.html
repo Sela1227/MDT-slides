@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>114年癌症品質指標監測總覽 ｜ 彰濱秀傳紀念醫院</title>
+<style>
+:root{
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC","Helvetica Neue",sans-serif;
+  --border-radius-md:8px; --border-radius-lg:12px;
+  --color-background-page:#f6f5ef;
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f1efe8;
+  --color-background-tertiary:#eceae2;
+  --color-background-success:#EAF3DE;
+  --color-background-warning:#FAEEDA;
+  --color-background-info:#E6F1FB;
+  --color-text-primary:#23241f;
+  --color-text-secondary:#5f5e5a;
+  --color-text-tertiary:#8a8980;
+  --color-text-success:#3B6D11;
+  --color-text-warning:#854F0B;
+  --color-text-info:#185FA5;
+  --color-border-tertiary:rgba(0,0,0,.12);
+  --color-border-secondary:rgba(0,0,0,.22);
+  --color-border-info:#85B7EB;
+  --brand:#5aa469; --brand-dark:#3d7a4d; --brand-soft:#e3f0e4;
+  --fill-pass:#639922; --fill-fail:#EF9F27; --fill-na:#cdcabe;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --color-background-page:#171816;
+    --color-background-primary:#232320;
+    --color-background-secondary:#2a2a26;
+    --color-background-tertiary:#33332e;
+    --color-background-success:#27500A;
+    --color-background-warning:#633806;
+    --color-background-info:#0C447C;
+    --color-text-primary:#ececea;
+    --color-text-secondary:#aba9a1;
+    --color-text-tertiary:#86847c;
+    --color-text-success:#C0DD97;
+    --color-text-warning:#FAC775;
+    --color-text-info:#B5D4F4;
+    --color-border-tertiary:rgba(255,255,255,.13);
+    --color-border-secondary:rgba(255,255,255,.26);
+    --color-border-info:#185FA5;
+    --brand:#6fae7c; --brand-dark:#3a6e48; --brand-soft:#22332450;
+    --fill-pass:#97C459; --fill-fail:#EF9F27; --fill-na:#55544d;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--color-background-page);color:var(--color-text-primary);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 64px}
+header.hdr{background:linear-gradient(180deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:26px 0;margin-bottom:0}
+header.hdr .wrap{padding-bottom:0}
+.hdr-org{font-size:13px;opacity:.92;letter-spacing:.02em}
+.hdr-title{font-size:25px;font-weight:600;margin:8px 0 2px}
+.hdr-sub{font-size:14px;opacity:.95}
+.bar-area{background:var(--color-background-page);position:sticky;top:0;z-index:5;padding:14px 0 8px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:22px 0}
+.mcard{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+.mlab{font-size:12.5px;color:var(--color-text-secondary)}
+.mval{font-size:26px;font-weight:600;line-height:1.25;margin-top:2px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tlab{font-size:12px;color:var(--color-text-tertiary);margin-right:2px}
+.btn{font-size:13px;padding:6px 13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--color-background-secondary)}
+.btn.on{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.btn.print{margin-left:auto;color:var(--color-text-secondary)}
+.sep{width:1px;height:18px;background:var(--color-border-tertiary);margin:0 4px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--color-text-secondary);margin:14px 0 4px}
+.legend .dot{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:3px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 18px;margin-bottom:16px;page-break-inside:avoid}
+.chead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.cname{font-size:17px;font-weight:600}
+.csum{font-size:12.5px;color:var(--color-text-secondary)}
+.ind{padding:11px 0;border-top:0.5px solid var(--color-border-tertiary)}
+.ind:first-of-type{border-top:none}
+.tag{font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-tertiary);color:var(--color-text-secondary);white-space:nowrap}
+.iname{font-size:14px;flex:1;min-width:130px}
+.st{font-size:11px;padding:2px 10px;border-radius:var(--border-radius-md);white-space:nowrap;font-weight:600}
+.barrow{display:flex;align-items:center;gap:11px}
+.track{position:relative;height:9px;border-radius:6px;background:var(--color-background-tertiary);flex:1;min-width:60px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.mark{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--color-text-primary);opacity:.55}
+.rate{font-size:14.5px;font-weight:600;min-width:56px;text-align:right}
+.meta{font-size:11.5px;color:var(--color-text-tertiary);min-width:122px;text-align:right;line-height:1.45}
+details{margin-top:8px}
+summary{cursor:pointer;font-size:13px;color:var(--color-text-secondary);list-style:none;user-select:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸";margin-right:6px;display:inline-block;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+.disc{font-size:13px;color:var(--color-text-secondary);line-height:1.75;margin-top:7px;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+footer{font-size:12px;color:var(--color-text-tertiary);text-align:center;margin-top:30px;line-height:1.7}
+@media print{
+  body{background:#fff}
+  .bar-area{position:static;border:none}.toolbar,.btn.print{display:none}
+  header.hdr{background:#3d7a4d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,.mcard,.st,.fill,.mark,.track,.disc{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  details > *{display:block!important}
+}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap">
+  <div class="hdr-org">秀傳醫療財團法人彰濱秀傳紀念醫院　Chang Bing Show Chwan Memorial Hospital</div>
+  <div class="hdr-title">114年度癌症品質指標監測總覽</div>
+  <div class="hdr-sub">1.3 品質指標 ｜ 114年01–12月　院內品質指標與核心測量指標</div>
+</div></header>
+<div class="wrap">
+  <div class="bar-area"><div class="toolbar" id="toolbar"></div></div>
+  <div id="app"></div>
+  <footer>對照基準：CCAP＝癌症醫療品質管理考核資訊系統回饋之核心測量指標平均值；自訂閾值＝多專科團隊自行訂定。<br>「越低越佳」之負向指標（死亡率、切緣過近、NSCLC-NOS）依方向性判定達標。本表由附件資料整理，僅供內部監測與檢討使用。</footer>
+</div>
+<script>
+const C="CCAP",T="自訂";
+const D=[
+{c:"肝癌",disc:"整體表現良好。持續以「早期肝癌治癒性治療優先」並強化治療後影像追蹤；針對二林監獄收容人、出院後未預掛門診或失聯風險個案，建議出院前完成回診及影像預約，由個管師主動追蹤。排程性治療（如RFA）遇連假或術前評估較多時，及早啟動跨科協調縮短等待時間。",ind:[
+{n:"指標1",t:"核心+院內",name:"極早期/早期肝癌接受治癒性療法",num:19,den:19,th:90.55,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心+院內",name:"治療後3個月內影像追蹤",num:27,den:28,th:95.32,tk:C,dir:"+",st:"pass"},
+{n:"指標3",t:"核心",name:"治療後1年內影像追蹤≥3次",num:26,den:27,th:93.96,tk:C,dir:"+",st:"pass"},
+{n:"指標4",t:"核心+院內",name:"根除手術切緣無殘留癌細胞",num:10,den:10,th:96.58,tk:C,dir:"+",st:"pass"},
+{n:"指標5",t:"核心",name:"BCLC 0+A+B 等待治療≤45天",num:34,den:35,th:77.92,tk:C,dir:"+",st:"pass"}]},
+{c:"攝護腺癌",disc:"同意監測值及未達閾值分析。指標3（低風險以主動監測為初始治療）、指標5（局部侵犯型接受根除術）未達閾值；臨床醫師制定治療策略時除臨床考量外，會與病人及家屬討論，綜合臨床評估與病人意願確認治療計畫。",ind:[
+{n:"指標1",t:"核心+院內",name:"治療前肛診檢查",num:37,den:38,th:98.03,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心",name:"確診前3個月內PSA檢查",num:36,den:36,th:97.03,tk:C,dir:"+",st:"pass"},
+{n:"指標3",t:"核心",name:"低風險以主動監測為初始治療",num:1,den:4,th:56.78,tk:C,dir:"+",st:"fail"},
+{n:"指標4",t:"核心",name:"局部侵犯型放療BED≥150Gy+荷爾蒙",num:2,den:2,th:96.79,tk:C,dir:"+",st:"pass"},
+{n:"指標5",t:"核心",name:"局部侵犯型接受攝護腺根除術",num:1,den:5,th:40.96,tk:C,dir:"+",st:"fail"},
+{n:"指標6",t:"院內",name:"第三期放療合併荷爾蒙治療",num:4,den:4,th:96.73,tk:C,dir:"+",st:"pass"}]},
+{c:"膀胱癌",disc:"指標1部分，醫師於TURB-T時顧慮膀胱損傷致標本未取得固有肌肉層，且分母少易受極端值影響；建議視臨床狀況盡量刮取至固有肌肉層以利分期，並於病歷註記未取得原因。",ind:[
+{n:"指標1",t:"核心",name:"TURBT標本可見固有肌肉層",num:2,den:12,th:84.14,tk:C,dir:"+",st:"fail"},
+{n:"指標2",t:"核心+院內",name:"膀胱切除完成病理分期",num:0,den:0,th:100,tk:C,dir:"+",st:"na"},
+{n:"指標3",t:"核心",name:"根除術骨盆腔淋巴結≥10顆",num:0,den:0,th:72.92,tk:C,dir:"+",st:"na"}]},
+{c:"頭頸癌",disc:"後續強化既往病史納入急性病情評估，特別針對曾接受頭頸部放療且合併腦中風病史者，出現急性神經症狀或意識改變時及早安排腦部影像及頸動脈／腦血管檢查，以釐清病情變化與死因判斷。",ind:[
+{n:"指標1",t:"核心",name:"術後6週內開始輔助治療",num:8,den:8,th:88.74,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心",name:"術後30天死亡率",num:1,den:18,th:0.38,tk:C,dir:"-",st:"fail"},
+{n:"指標3",t:"核心",name:"放療後90天死亡率",num:0,den:12,th:0.31,tk:C,dir:"-",st:"pass"},
+{n:"指標4",t:"核心+院內",name:"同步化放療後90天死亡率",num:0,den:4,th:2.66,tk:C,dir:"-",st:"pass"},
+{n:"指標5",t:"核心+院內",name:"頸部淋巴結病理檢查≥15顆",num:13,den:13,th:88.53,tk:C,dir:"+",st:"pass"},
+{n:"指標6",t:"核心+院內",name:"病理切緣<4mm比例",num:4,den:16,th:44.67,tk:C,dir:"-",st:"pass"}]},
+{c:"婦癌—子宮頸癌",disc:"婦癌個案數少，指標易受少數個案影響；未符合個案已於114/08/27團隊會議逐案分析與討論，後續持續加強檢查安排以提升達成率。",ind:[
+{n:"指標1",t:"核心",name:"CIN3/CIS以錐狀手術完整治療",num:9,den:9,th:95.46,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心",name:"IA2以上骨盆腔淋巴結≥12顆",num:0,den:0,th:86.9,tk:C,dir:"+",st:"na"},
+{n:"指標3",t:"核心",name:"放療於63天內完成",num:1,den:1,th:89.09,tk:C,dir:"+",st:"pass"},
+{n:"指標4",t:"核心",name:"治療含近接放射治療",num:0,den:1,th:84.5,tk:C,dir:"+",st:"fail"},
+{n:"指標5",t:"核心",name:"IB2/IIA2~IVA合併化療",num:1,den:1,th:89.47,tk:C,dir:"+",st:"pass"}]},
+{c:"婦癌—卵巢癌",disc:"「卵巢惡性腫瘤確診病人治療前接受骨盆腔及腹部CT之比率」未達監測閾值；相關原因分析及改善措施已於品質指標報告完成說明，後續持續追蹤改善情形。",ind:[
+{n:"指標1",t:"核心+院內",name:"治療前骨盆腔+腹部CT檢查",num:1,den:2,th:88.26,tk:C,dir:"+",st:"fail"},
+{n:"指標2",t:"核心",name:"手術紀錄殘存腫瘤狀態及大小",num:0,den:0,th:95.94,tk:C,dir:"+",st:"na"},
+{n:"指標3",t:"核心",name:"首次手術無殘存腫瘤比率",num:0,den:0,th:60.25,tk:C,dir:"+",st:"na"}]},
+{c:"婦癌—子宮內膜癌",disc:"婦癌個案數少，指標易受少數個案影響；未符合個案已於114/08/27團隊會議逐案分析與討論，後續持續加強檢查安排以提升達成率。",ind:[
+{n:"指標1",t:"核心",name:"治療前影像檢查(CT/MRI/PET)",num:3,den:3,th:94.03,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心",name:"Type I 第I/II期完整分期手術",num:1,den:1,th:93.52,tk:C,dir:"+",st:"pass"},
+{n:"指標3",t:"核心+院內",name:"Type I IB-g3/II期術後輔助治療",num:0,den:0,th:90.16,tk:C,dir:"+",st:"na"},
+{n:"指標4",t:"核心+院內",name:"Type I III-IVA期術後輔助治療",num:0,den:0,th:93.78,tk:C,dir:"+",st:"na"},
+{n:"指標5",t:"核心",name:"術後60天內開始治療",num:2,den:2,th:95.26,tk:C,dir:"+",st:"pass"},
+{n:"指標6",t:"核心",name:"Type II 完整分期手術",num:1,den:1,th:88.94,tk:C,dir:"+",st:"pass"},
+{n:"指標7",t:"核心",name:"Type II 術後輔助治療",num:1,den:1,th:89.53,tk:C,dir:"+",st:"pass"}]},
+{c:"血液淋巴癌",disc:"DLBCL確診後4週內治療為3/5（60%）。未達成個案皆具明確臨床因素（高齡、病人／家屬拒絕治療、需完成檢查評估、合併感染）導致時程延後；團隊認為處置符合臨床照護原則並尊重病人自主，同意本次結果。",ind:[
+{n:"指標1",t:"院內",name:"DLBCL確診後4週內接受治療",num:3,den:5,th:90,tk:T,dir:"+",st:"fail"},
+{n:"指標2",t:"院內",name:"DLBCL治療前LDH檢查",num:5,den:5,th:95,tk:T,dir:"+",st:"pass"},
+{n:"指標3",t:"院內",name:"淋巴瘤首次療程影像追蹤",num:10,den:10,th:95,tk:T,dir:"+",st:"pass"}]},
+{c:"胃癌",disc:"院內品質指標及核心測量指標均達預期閾值，整體表現穩定，後續持續例行監測。",ind:[
+{n:"指標1",t:"核心+院內",name:"I-IIIC期R0切除(邊界陰性)",num:11,den:11,th:96.06,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心",name:"術後30天死亡率",num:0,den:15,th:1.69,tk:C,dir:"-",st:"pass"},
+{n:"指標3",t:"核心",name:"II-III期術後輔助化療",num:4,den:4,th:83.75,tk:C,dir:"+",st:"pass"},
+{n:"指標4",t:"核心",name:"內視鏡切除後1年內胃鏡追蹤",num:1,den:1,th:83.48,tk:C,dir:"+",st:"pass"}]},
+{c:"大腸直腸癌",disc:"指標1（malignant polyp 12週內治癒性切除）已於114/11/13團隊會議完成討論，同意處置。指標2有1例未達，建議臨床科與病理科合作術中完整取得淋巴結。指標5（結腸III期術後6週內化療）未達個案具實際臨床因素（身體狀況差、營養不良、耐受性），建議加強營養師會診；指標4建議追蹤紀錄增加日期以利稽核。",ind:[
+{n:"指標1",t:"核心+院內",name:"malignant polyp 12週內治癒性切除",num:1,den:2,th:85.23,tk:C,dir:"+",st:"fail"},
+{n:"指標2",t:"核心+院內",name:"結腸癌淋巴結病理≥12顆",num:45,den:46,th:96.35,tk:C,dir:"+",st:"pass"},
+{n:"指標3",t:"核心+院內",name:"II/III期直腸癌6週內開始治療",num:11,den:11,th:95.74,tk:C,dir:"+",st:"pass"},
+{n:"指標4",t:"院內",name:"全大腸檢查紀錄(術前後6個月)",num:56,den:59,th:90,tk:T,dir:"+",st:"pass"},
+{n:"指標5",t:"院內",name:"結腸癌III期術後6週內化療",num:14,den:18,th:80,tk:T,dir:"+",st:"fail"},
+{n:"指標6",t:"院內",name:"II/III期直腸癌CCRT完成",num:12,den:12,th:80,tk:T,dir:"+",st:"pass"}]},
+{c:"乳癌",disc:"未完成檢查或未執行處置個案多具合理臨床判斷（腫瘤局部明確、影像／理學已支持診斷、術前高度懷疑淋巴結轉移）。部分指標雖較往年改善仍未達院內目標，未來持續提高檢查、哨兵淋巴結取樣及放腫科轉介執行率；不適合或拒絕治療者務必於病歷與會議紀錄完整記載原因及溝通過程。",ind:[
+{n:"指標1",t:"核心+院內",name:"哨兵淋巴結取樣(臨床1/2期)",num:14,den:20,th:75,tk:T,dir:"+",st:"fail"},
+{n:"指標2",t:"核心",name:"≥4淋巴結陽性全切除後放療",num:3,den:4,th:87.92,tk:C,dir:"+",st:"fail"},
+{n:"指標3",t:"核心",name:"HER2陽性+淋巴轉移anti-HER2",num:0,den:0,th:97.46,tk:C,dir:"+",st:"na"},
+{n:"指標4",t:"院內",name:"治療前3個月乳房X光攝影",num:79,den:84,th:92.57,tk:T,dir:"+",st:"pass"},
+{n:"指標5",t:"院內",name:"術前組織學確診",num:45,den:52,th:95,tk:T,dir:"+",st:"fail"}]},
+{c:"胸腔癌—肺癌",disc:"整體執行良好，診斷率及NSCLC次分類達院內閾值。臨床IB–II期核心指標75%未達80%閾值，未達標個案具肺功能不佳等合理臨床因素；IIIA期相關指標因無符合個案，建議持續監測並加強特殊個案原因記錄。",ind:[
+{n:"指標1",t:"核心+院內",name:"IB-II期縱膈淋巴結取樣≥3站",num:3,den:4,th:80,tk:C,dir:"+",st:"fail"},
+{n:"指標2",t:"核心+院內",name:"IIIA期縱膈淋巴結取樣≥3站",num:0,den:0,th:80,tk:C,dir:"+",st:"na"},
+{n:"指標3",t:"院內",name:"肺癌組織/病理學診斷率",num:61,den:61,th:98,tk:T,dir:"+",st:"pass"},
+{n:"指標4",t:"院內",name:"NSCLC-NOS無法細分比例",num:0,den:59,th:5,tk:T,dir:"-",st:"pass"},
+{n:"指標5",t:"院內",name:"IIIA期直接肺葉/全肺切除",num:0,den:0,th:90,tk:T,dir:"+",st:"na"},
+{n:"指標6",t:"院內",name:"IIIA期非手術治療",num:0,den:0,th:80,tk:T,dir:"+",st:"na"}]},
+{c:"胸腔癌—食道癌",disc:"結果整體良好，R0切除率、淋巴結≥15顆比率皆100%，術後30天死亡率0%。本期無符合誘導性化放療後手術條件之個案，該指標為NA；團隊同意分析結果，後續持續監測。",ind:[
+{n:"指標1",t:"核心+院內",name:"R0切除(切除端無殘餘癌)",num:1,den:1,th:94.39,tk:C,dir:"+",st:"pass"},
+{n:"指標2",t:"核心",name:"淋巴結病理檢查≥15顆",num:1,den:1,th:85.58,tk:C,dir:"+",st:"pass"},
+{n:"指標3",t:"核心",name:"術後30天死亡率",num:0,den:1,th:1.39,tk:C,dir:"-",st:"pass"},
+{n:"指標4",t:"核心",name:"cT4N0M0/N1-3M0引導性化放療",num:0,den:0,th:93.49,tk:C,dir:"+",st:"na"}]}
+];
+
+const ST={
+  pass:{l:"達標",bg:"var(--color-background-success)",fg:"var(--color-text-success)",fill:"var(--fill-pass)"},
+  fail:{l:"未達閾值",bg:"var(--color-background-warning)",fg:"var(--color-text-warning)",fill:"var(--fill-fail)"},
+  na:{l:"不適用",bg:"var(--color-background-tertiary)",fg:"var(--color-text-tertiary)",fill:"var(--fill-na)"}
+};
+const rate=i=>i.den>0?i.num/i.den*100:null;
+const pct=x=>x===null?"—":x.toFixed(1)+"%";
+let filt={view:"all",type:"all"};
+
+function toolbar(){
+  document.getElementById('toolbar').innerHTML=
+   `<span class="tlab">檢視</span>
+    <button class="btn ${filt.view==='all'?'on':''}" data-v="all">全部</button>
+    <button class="btn ${filt.view==='fail'?'on':''}" data-v="fail">僅未達閾值</button>
+    <span class="sep"></span>
+    <span class="tlab">類型</span>
+    <button class="btn ${filt.type==='all'?'on':''}" data-t="all">不限</button>
+    <button class="btn ${filt.type==='核心'?'on':''}" data-t="核心">核心指標</button>
+    <button class="btn ${filt.type==='院內'?'on':''}" data-t="院內">院內指標</button>
+    <button class="btn print" id="printBtn">列印 / 存成 PDF</button>`;
+  document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{filt.view=b.dataset.v;draw()});
+  document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{filt.type=b.dataset.t;draw()});
+  document.getElementById('printBtn').onclick=()=>{document.querySelectorAll('details').forEach(d=>d.open=true);window.print();};
+}
+
+function draw(){
+  toolbar();
+  const all=D.flatMap(s=>s.ind);
+  const P=all.filter(i=>i.st==='pass').length,F=all.filter(i=>i.st==='fail').length,N=all.filter(i=>i.st==='na').length;
+  const achv=(P/(P+F)*100).toFixed(0);
+  let h=`<div class="metrics">
+    <div class="mcard"><div class="mlab">指標總數</div><div class="mval">${all.length}</div></div>
+    <div class="mcard"><div class="mlab">達標</div><div class="mval" style="color:var(--color-text-success)">${P}</div></div>
+    <div class="mcard"><div class="mlab">未達閾值</div><div class="mval" style="color:var(--color-text-warning)">${F}</div></div>
+    <div class="mcard"><div class="mlab">不適用（分母0）</div><div class="mval" style="color:var(--color-text-tertiary)">${N}</div></div>
+    <div class="mcard"><div class="mlab">有效指標達標率</div><div class="mval">${achv}%</div></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--fill-pass)"></span>達標</span>
+    <span><span class="dot" style="background:var(--fill-fail)"></span>未達閾值</span>
+    <span><span class="dot" style="background:var(--fill-na)"></span>不適用</span>
+    <span><span class="dot" style="width:2px;height:12px;background:var(--color-text-primary);opacity:.55"></span>閾值／基準位置</span>
+  </div>`;
+  D.forEach(s=>{
+    const inds=s.ind.filter(i=>(filt.view==='all'||i.st==='fail')&&(filt.type==='all'||i.t.includes(filt.type)));
+    if(!inds.length)return;
+    const sp=s.ind.filter(i=>i.st==='pass').length,sf=s.ind.filter(i=>i.st==='fail').length,sn=s.ind.filter(i=>i.st==='na').length;
+    h+=`<div class="card"><div class="chead"><span class="cname">${s.c}</span>
+      <span class="csum">達標 ${sp}${sf?` · <span style="color:var(--color-text-warning)">未達 ${sf}</span>`:''}${sn?` · NA ${sn}`:''}</span></div>`;
+    inds.forEach(i=>{
+      const r=rate(i),st=ST[i.st],w=r===null?0:Math.min(r,100),mk=Math.min(i.th,100);
+      const dt=i.dir==='-'?`<span class="tag" style="background:var(--color-background-info);color:var(--color-text-info)">越低越佳</span>`:'';
+      h+=`<div class="ind">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+          <span class="tag">${i.n}</span><span class="tag">${i.t}</span>${dt}
+          <span class="iname">${i.name}</span>
+          <span class="st" style="background:${st.bg};color:${st.fg}">${st.l}</span></div>
+        <div class="barrow">
+          <div class="track"><div class="fill" style="width:${w}%;background:${st.fill}"></div><div class="mark" style="left:${mk}%"></div></div>
+          <span class="rate">${pct(r)}</span>
+          <span class="meta">${i.num}/${i.den} · 閾值 ${i.th}%<br>${i.tk==='CCAP'?'CCAP 基準':'自訂閾值'}</span></div></div>`;
+    });
+    h+=`<details><summary>團隊討論</summary><div class="disc">${s.disc}</div></details></div>`;
+  });
+  document.getElementById('app').innerHTML=h;
+}
+draw();
+</script>
+</body>
+</html>
