@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>口腔癌品質指標導讀｜個案管理師 × 癌症登記師</title>
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  範本使用說明                                                  ║
+  ║  • 舞台 1280×720（16:9）自動縮放滿版。改 4:3 改 .stage 尺寸。  ║
+  ║  • 每頁結構：.shdr（標題貼上方）＋ .sbody（內容填滿下方）。    ║
+  ║    .sbody.spread = 內容上下平均分配（指標頁、回顧頁）。        ║
+  ║  • 逐步揭示：body 區塊加 class="frag"，按方向鍵一步步帶出；    ║
+  ║    用目錄／圓點跳頁會直接顯示整頁。                            ║
+  ║  • 導覽：→／空白／簡報筆＝下一步；←＝上一步；F 全螢幕；M 目錄。 ║
+  ║  • 元件：.tag /.frac(.stk+.viz) /.why /.roles /.pitfall /     ║
+  ║    .ctable /.cards /.versus；換內容、留結構即可。              ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f3a4d; --blue:#25506b; --numer:#3f7d9a;
+    --fog:#eef2f5; --fog-2:#e3ebf0; --paper:#ffffff; --line:#cdd9e1;
+    --text:#2b3a44; --muted:#5f7281;
+    --pos:#3f7d6e; --neg:#b06a4f; --warn:#b07d33; --reg:#5a6e54;
+    --num-font:"Space Grotesk","PingFang TC","Microsoft JhengHei",sans-serif;
+    --cjk:"PingFang TC","Microsoft JhengHei","Noto Sans TC","Heiti TC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:var(--cjk);color:var(--text);background:#16313f;-webkit-font-smoothing:antialiased;
+    letter-spacing:.01em;line-break:strict;word-break:normal;text-wrap:pretty}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  .nb{white-space:nowrap}
+  h1,h2,h3.t,.lead,.vh{text-wrap:balance}
+
+  .deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  .stage{position:absolute;width:1280px;height:720px;left:50%;top:50%;
+    transform:translate(-50%,-50%) scale(1);transform-origin:center center;
+    background:var(--paper);overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;
+    transition:opacity .35s ease;display:flex;flex-direction:column;justify-content:flex-start;padding:40px 60px}
+  .slide.active{opacity:1;visibility:visible}
+  .slide.active .reveal{animation:rise .5s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* 標題在上、內容填滿下方 */
+  .shdr{position:relative;z-index:1;flex:0 0 auto}
+  .sbody{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;margin-top:20px}
+  .sbody.spread{justify-content:space-between}
+
+  /* 背景大號編號 */
+  .ghost{position:absolute;top:-26px;right:30px;font-family:var(--num-font);font-weight:700;
+    font-size:248px;line-height:1;color:var(--blue);opacity:.055;z-index:0;pointer-events:none;user-select:none}
+
+  .ey{font-size:16px;letter-spacing:.2em;color:var(--numer);text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:11px}
+  .ey::before{content:"";width:28px;height:3px;background:var(--numer)}
+  h2{font-size:40px;font-weight:800;color:var(--ink);line-height:1.25}
+  .lead{font-size:20px;color:#3a4d59;line-height:1.65;max-width:1040px;margin-top:12px}
+  b.k{color:var(--blue)}
+
+  .cards{display:grid;gap:18px}
+  .cards.c2{grid-template-columns:1fr 1fr}
+  .cards.c3{grid-template-columns:1fr 1fr 1fr}
+  .card{background:var(--fog);border:1px solid var(--line);border-radius:15px;padding:24px 26px;
+    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(31,58,77,.55);border-color:#b9cad6}
+  .card .ic{width:44px;height:44px;border-radius:11px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .card .ic svg{width:24px;height:24px;stroke:var(--numer);fill:none;stroke-width:1.7}
+  .card h4{font-size:21px;color:var(--blue);margin-bottom:10px;display:flex;align-items:center;gap:9px}
+  .card p{font-size:17.5px;color:#3d4f5b;line-height:1.65}
+  .card ul{list-style:none;margin-top:5px}
+  .card li{font-size:17.5px;color:#3d4f5b;padding-left:20px;position:relative;margin-top:9px;line-height:1.55}
+  .card li::before{content:"";position:absolute;left:2px;top:12px;width:6px;height:6px;border-radius:50%;background:var(--numer)}
+
+  .cover{background:linear-gradient(155deg,#1c3848 0%,#25506b 58%,#2d6480 100%);padding:0 76px;justify-content:center}
+  .cover .ce{font-size:16px;letter-spacing:.26em;color:#9fc0d2;text-transform:uppercase;margin-bottom:24px}
+  .cover h1{font-size:62px;line-height:1.18;font-weight:800;color:#fff}
+  .cover h1 em{font-style:normal;color:#bfe0ef}
+  .cover p{margin-top:22px;font-size:21px;color:#cfe0ea;max-width:820px;line-height:1.7}
+  .cover .aud{margin-top:34px;display:flex;gap:14px}
+  .cover .aud .w{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 18px;color:#eaf3f8;font-size:18px;transition:transform .2s,background .2s}
+  .cover .aud .w:hover{transform:translateY(-3px);background:rgba(255,255,255,.16)}
+  .cover .aud svg{width:21px;height:21px;stroke:#bfe0ef;fill:none;stroke-width:1.7}
+  .cover .mt{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+  .cover .mt span{font-size:14px;padding:7px 15px;border:1px solid rgba(255,255,255,.26);border-radius:30px;color:#dbe9f1}
+
+  .head{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .no{font-family:var(--num-font);font-weight:700;color:var(--numer);font-size:19px}
+  .tag{font-size:14px;font-weight:600;padding:5px 13px;border-radius:30px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .tag.pos{background:#e6f0ec;color:var(--pos);border:1px solid #bcdad0}
+  .tag.neg{background:#f4e7e1;color:var(--neg);border:1px solid #e3c6ba}
+  .tag.dim{background:var(--fog);color:var(--muted);border:1px solid var(--line)}
+  .tag svg{width:14px;height:14px}
+  h3.t{font-size:38px;font-weight:800;color:var(--ink);line-height:1.2;margin-top:8px}
+
+  .why{display:flex;gap:14px;background:linear-gradient(90deg,#fbf6ec,#fdfaf3);border:1px solid #ecdcbf;border-left:5px solid var(--warn);border-radius:12px;padding:17px 22px}
+  .why svg{width:24px;height:24px;stroke:var(--warn);fill:none;stroke-width:1.7;flex:0 0 24px;margin-top:2px}
+  .why .x{font-size:18px;color:#5f4d24;line-height:1.55}
+  .why .x b{color:#4a3a16}
+
+  .frac{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 28px;display:flex;gap:30px;align-items:center;box-shadow:0 14px 30px -22px rgba(31,58,77,.5)}
+  .frac .stk{flex:1;min-width:0}
+  .frac .eq{display:flex;align-items:center;gap:16px}
+  .frac .lab{font-family:var(--num-font);font-weight:700;color:var(--ink);font-size:21px}
+  .frac .body{flex:1}
+  .frac .bar{height:2px;background:var(--ink);margin:11px 0}
+  .frac .pt{display:flex;gap:12px;align-items:flex-start}
+  .frac .role{font-size:13px;font-weight:700;letter-spacing:.06em;padding:4px 9px;border-radius:7px;white-space:nowrap;margin-top:2px}
+  .frac .num .role{background:#e7f0f4;color:var(--numer)}
+  .frac .den .role{background:#e9eef1;color:var(--ink)}
+  .frac .tx{font-size:18px;line-height:1.45}
+  .frac .num .tx{color:#27536e;font-weight:600}
+  .frac .den .tx{color:#3d4f5b}
+  .frac .tx em{font-style:normal;color:var(--muted);font-size:14.5px;display:block;margin-top:2px}
+  .viz{flex:0 0 396px}
+  .viz svg{width:100%;height:auto;display:block}
+
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .rb{border:1px solid var(--line);border-radius:13px;padding:16px 20px;background:var(--fog);transition:transform .2s ease,box-shadow .2s ease}
+  .rb:hover{transform:translateY(-3px);box-shadow:0 12px 26px -18px rgba(31,58,77,.5)}
+  .rb .rh{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;margin-bottom:8px}
+  .rb.ccm .rh{color:var(--blue)} .rb.reg .rh{color:var(--reg)}
+  .rb .rh svg{width:19px;height:19px;fill:none;stroke-width:1.7}
+  .rb.ccm .rh svg{stroke:var(--blue)} .rb.reg .rh svg{stroke:var(--reg)}
+  .rb ul{list-style:none} .rb li{font-size:15.5px;color:#3d4f5b;line-height:1.5;padding-left:17px;position:relative;margin-top:6px}
+  .rb li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%}
+  .rb.ccm li::before{background:var(--blue)} .rb.reg li::before{background:var(--reg)}
+  .fld{font-family:var(--num-font);font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:5px;padding:0 6px;color:var(--ink);white-space:nowrap}
+
+  .pitfall{display:flex;gap:12px;background:#fbeeea;border:1px solid #ecccc0;border-radius:12px;padding:15px 20px}
+  .pitfall svg{width:21px;height:21px;stroke:var(--neg);fill:none;stroke-width:1.8;flex:0 0 21px;margin-top:2px}
+  .pitfall .x{font-size:16.5px;color:#7a4736;line-height:1.5}
+  .pitfall .x b{color:#623425}
+
+  .scope{display:flex;gap:16px}
+  .scope .s{flex:1;border:1px solid var(--line);border-radius:13px;padding:20px 24px;transition:transform .2s ease,box-shadow .2s ease}
+  .scope .s:hover{transform:translateY(-3px);box-shadow:0 12px 26px -18px rgba(31,58,77,.45)}
+  .scope .in{background:#e9f1ed;border-color:#bcdad0} .scope .out{background:#f4ece8;border-color:#e3c6ba}
+  .scope .h{font-weight:700;font-size:18px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .scope .in .h{color:var(--pos)} .scope .out .h{color:var(--neg)}
+  .scope .s p{font-size:16.5px;color:#3d4f5b;line-height:1.55}
+  .scope code{font-family:var(--num-font);font-size:14.5px;background:#fff;border:1px solid var(--line);padding:0 6px;border-radius:5px;color:var(--ink);white-space:nowrap}
+
+  .versus{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .vbox{border-radius:15px;padding:24px 26px;transition:transform .2s ease,box-shadow .2s ease}
+  .vbox:hover{transform:translateY(-4px);box-shadow:0 16px 34px -20px rgba(0,0,0,.4)}
+  .vbox.hard{background:linear-gradient(160deg,#25506b,#2d6480);color:#eaf1f5}
+  .vbox.soft{background:var(--fog);border:1px solid var(--line)}
+  .vbox .vh{font-size:23px;font-weight:800;margin-bottom:4px}
+  .vbox.hard .vh{color:#fff} .vbox.soft .vh{color:var(--ink)}
+  .vbox .vs{font-size:15px;margin-bottom:13px}
+  .vbox.hard .vs{color:#bfe0ef} .vbox.soft .vs{color:var(--muted)}
+  .vbox ul{list-style:none}
+  .vbox li{font-size:17px;line-height:1.55;padding-left:18px;position:relative;margin-top:9px}
+  .vbox li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%}
+  .vbox.hard li{color:#dceaf1} .vbox.hard li::before{background:#9fc0d2}
+  .vbox.soft li{color:#3d4f5b} .vbox.soft li::before{background:var(--reg)}
+
+  .ctable{width:100%;border-collapse:collapse;font-size:17px}
+  .ctable th,.ctable td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line)}
+  .ctable thead th{background:var(--blue);color:#eaf1f5;font-weight:600}
+  .ctable tbody tr{transition:background .15s}
+  .ctable tbody tr:nth-child(even){background:var(--fog)}
+  .ctable tbody tr:hover{background:#e2ecf1}
+  .ctable .nc{font-family:var(--num-font);font-weight:700;color:var(--blue);white-space:nowrap}
+
+  .rules{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .ru{background:linear-gradient(160deg,#25506b,#2d6480);color:#eaf1f5;border-radius:14px;padding:18px 20px;transition:transform .2s ease}
+  .ru:hover{transform:translateY(-4px)}
+  .ru .rn{font-family:var(--num-font);font-weight:700;font-size:13px;color:#9fc0d2;letter-spacing:.1em}
+  .ru b{display:block;font-size:19px;color:#fff;margin:7px 0 6px}
+  .ru p{font-size:15px;color:#cfe0ea;line-height:1.55}
+
+  .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--fog-2);padding-top:11px;line-height:1.5}
+
+  /* 口腔示意圖（換癌別時整塊抽換） */
+  .oral{display:grid;grid-template-columns:0.92fr 1.08fr;gap:30px;align-items:center}
+  .oral .pic{text-align:center}
+  .oral .pic svg{width:100%;max-width:360px;height:auto}
+  .oral .pic .cap{font-size:14px;color:var(--muted);margin-top:6px}
+  .orallegend{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;margin-top:14px}
+  .orallegend span{display:flex;align-items:center;gap:9px;font-size:16px;color:#3d4f5b}
+  .orallegend i{width:14px;height:14px;border-radius:4px;flex:0 0 14px}
+  .orallegend code{font-family:var(--num-font);font-size:13px;color:var(--muted)}
+  .oral .exc{font-size:14.5px;color:#7a4736;margin-top:14px;line-height:1.55}
+  .oral .exc code{font-family:var(--num-font);font-size:12.5px;background:#fff;border:1px solid #e3c6ba;padding:0 5px;border-radius:5px;color:#7a4736;white-space:nowrap}
+  .cover .motif{position:absolute;right:46px;top:50%;transform:translateY(-50%);width:300px;height:300px;opacity:.15;pointer-events:none;z-index:0}
+  .cover .reveal{position:relative;z-index:1}
+
+  /* 逐步揭示 */
+  .frag{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
+  .frag.show{opacity:1;transform:none}
+
+  .chrome{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:14px;padding:0 18px;background:rgba(16,40,53,.72);backdrop-filter:blur(6px);z-index:30;color:#cfe0ea}
+  .chrome .title{font-size:13px;color:#9fc0d2;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+  .chrome button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf3f8;border-radius:8px;width:32px;height:30px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .chrome button:hover{background:rgba(255,255,255,.2)}
+  .chrome .count{font-family:var(--num-font);font-size:14px;color:#eaf3f8;min-width:56px;text-align:center}
+  .dots{display:flex;gap:6px;align-items:center}
+  .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:.2s}
+  .dots i.on{background:#7fc4e0;transform:scale(1.35)}
+  @media(max-width:720px){.dots{display:none}}
+
+  .menu{position:fixed;inset:0;background:rgba(16,40,53,.92);z-index:40;display:none;padding:60px;overflow:auto}
+  .menu.open{display:block}
+  .menu h5{color:#9fc0d2;font-size:14px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:22px}
+  .menu ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 30px;max-width:1000px}
+  .menu li{display:flex;gap:12px;align-items:baseline;color:#dceaf1;font-size:17px;padding:9px 13px;border-radius:8px;cursor:pointer;border:1px solid transparent}
+  .menu li:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)}
+  .menu li .mn{font-family:var(--num-font);font-weight:700;color:#7fc4e0;font-size:14px;min-width:26px}
+  .menu .close{position:absolute;top:24px;right:30px;color:#cfe0ea;font-size:28px;cursor:pointer;background:none;border:none}
+</style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="stage" id="stage">
+
+    <!-- 1 封面 -->
+    <section class="slide cover active" data-title="封面">
+      <div class="motif"><svg viewBox="0 0 200 200" fill="none" stroke="#cfe9f5" stroke-width="2.2" stroke-linecap="round">
+        <path d="M18,100 Q100,28 182,100 Q100,172 18,100 Z"/>
+        <path d="M44,100 Q100,52 156,100 Q100,148 44,100 Z"/>
+        <ellipse cx="100" cy="114" rx="40" ry="20"/>
+        <path d="M100,96 V132"/>
+        <path d="M72,82 v10 M86,79 v12 M100,78 v13 M114,79 v12 M128,82 v10"/>
+      </svg></div>
+      <div class="reveal">
+        <div class="ce">癌症診療品質指標・教學導讀</div>
+        <h1>口腔癌品質指標<br><em>怎麼算？為什麼算？</em></h1>
+        <p>六支強制申報指標，逐一拆解：誰被框進<strong>分母</strong>、誰算進<strong>分子</strong>，這個比率到底在衡量哪一塊品質。</p>
+        <div class="aud">
+          <div class="w"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個案管理師</div>
+          <div class="w"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v3h6V3M9 11h6M9 15h4"/></svg>癌症登記師</div>
+        </div>
+        <div class="mt">
+          <span>依據　衛福部國健署 <span class="nb">115 年版</span></span>
+          <span>口腔癌強制申報　<span class="nb">6 項</span></span>
+          <span>適用　<span class="nb">113/1/1</span> 起新診斷</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 導論① 先框分母 -->
+    <section class="slide" data-title="導論：先框分母">
+      <div class="shdr">
+        <div class="ey reveal">指標導論</div>
+        <h2 class="reveal">讀一支指標，先看三件事</h2>
+        <p class="lead reveal">每支指標都是一個比率：<b class="k">分子 ÷ 分母</b>。真正的功夫在框分母——確定誰納入、誰排除；分母一錯，整支就錯。後面六支都照同一套邏輯來看。</p>
+      </div>
+      <div class="sbody">
+        <div class="cards c3">
+          <div class="card">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16"/></svg></div>
+            <h4>① 先框分母</h4>
+            <p>先確定納入與排除條件（誰算、誰不算）。分子一定落在分母之內，所以分母框錯，整支指標就跟著錯。</p>
+          </div>
+          <div class="card">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 11l6-6 6 6"/><path d="M6 19h12"/></svg></div>
+            <h4>② 看方向</h4>
+            <p><span class="nb"><b style="color:var(--pos)">正向 ↑</b></span> 越高越好（達標的越多）；<br><span class="nb"><b style="color:var(--neg)">負向 ↓</b></span> 越低越好——多為死亡率、近切緣這類不該發生的事。</p>
+          </div>
+          <div class="card">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></div>
+            <h4>③ 看面向</h4>
+            <p><span class="nb"><b>過程面</b></span>＝有沒有做對的事（如術後及時放療、淋巴結取夠）；<br><span class="nb"><b>結果面</b></span>＝做完之後發生什麼（如術後死亡率）。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 導論② 對象與範圍 -->
+    <section class="slide" data-title="導論：對象與範圍">
+      <div class="shdr">
+        <div class="ey reveal">指標導論</div>
+        <h2 class="reveal">口腔癌的範圍，與監測對象</h2>
+      </div>
+      <div class="sbody">
+        <div class="oral">
+          <div class="pic">
+            <svg viewBox="0 0 380 330" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40,165 Q190,48 340,165 Q190,282 40,165 Z" fill="#e7c4b9" stroke="#b06a4f" stroke-width="2.5"/>
+              <path d="M78,165 Q190,80 302,165 Q190,250 78,165 Z" fill="#ffffff" stroke="#dbb6ab" stroke-width="1"/>
+              <path d="M86,162 Q190,92 294,162 Q190,130 86,162 Z" fill="#d7e3ec"/>
+              <path d="M80,165 Q110,140 118,165 Q110,190 80,165 Z" fill="#cdb9d6"/>
+              <path d="M300,165 Q270,140 262,165 Q270,190 300,165 Z" fill="#cdb9d6"/>
+              <path d="M104,130 Q190,110 276,130 Q190,122 104,130 Z" fill="#d8b48f"/>
+              <g fill="#ffffff" stroke="#d7c3b3" stroke-width="1">
+                <rect x="110" y="126" width="17" height="18" rx="3"/><rect x="131" y="126" width="17" height="18" rx="3"/><rect x="152" y="126" width="17" height="18" rx="3"/><rect x="173" y="126" width="17" height="18" rx="3"/><rect x="194" y="126" width="17" height="18" rx="3"/><rect x="215" y="126" width="17" height="18" rx="3"/><rect x="236" y="126" width="17" height="18" rx="3"/><rect x="257" y="126" width="17" height="18" rx="3"/>
+              </g>
+              <ellipse cx="190" cy="180" rx="72" ry="34" fill="#d6a094" stroke="#b06a4f" stroke-width="1.8"/>
+              <path d="M190,150 Q194,180 190,210" stroke="#bd8475" stroke-width="1.6" fill="none"/>
+              <ellipse cx="168" cy="168" rx="14" ry="7" fill="#e0b3a8" opacity="0.7"/>
+              <path d="M132,210 Q190,234 248,210 Q190,220 132,210 Z" fill="#cfe0d8"/>
+            </svg>
+            <div class="cap">口腔癌涵蓋部位示意（ICD-O-3 C00–C06）</div>
+          </div>
+          <div>
+            <div class="card" style="padding:18px 22px">
+              <h4 style="margin-bottom:6px"><svg viewBox="0 0 24 24" style="width:21px;height:21px;stroke:var(--blue);fill:none;stroke-width:1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>監測對象：Class 1 ＋ 2</h4>
+              <ul>
+                <li><b>Class 1</b>：本院診斷 ＋ 本院接受全部或部分首次療程。</li>
+                <li><b>Class 2</b>：他院診斷 ＋ 本院接受<b>全部</b>首次療程。</li>
+              </ul>
+            </div>
+            <div class="orallegend">
+              <span><i style="background:#b06a4f"></i>唇　<code>C00</code></span>
+              <span><i style="background:#c98879"></i>舌　<code>C02</code></span>
+              <span><i style="background:#c79a6d"></i>牙齦　<code>C03</code></span>
+              <span><i style="background:#6fa392"></i>口底　<code>C04</code></span>
+              <span><i style="background:#6f93ad"></i>顎　<code>C05</code></span>
+              <span><i style="background:#8e72a3"></i>頰黏膜　<code>C06</code></span>
+            </div>
+            <div class="exc"><b>排除：</b>口咽 <code>C019</code> <code>C024</code> <code>C051</code> <code>C052</code>、下咽、喉、鼻咽、主唾液腺。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 院內 vs 強制申報 -->
+    <section class="slide" data-title="院內品管 vs 強制申報">
+      <div class="shdr">
+        <div class="ey reveal">指標地圖</div>
+        <h2 class="reveal">兩種指標，別搞混</h2>
+        <p class="lead reveal">這堂課聚焦國健署強制申報的 <span class="nb">6 項</span>硬指標。院內品管的面向更廣，但真正要申報的就是這 <span class="nb">6 項</span>。</p>
+      </div>
+      <div class="sbody">
+        <div class="versus">
+          <div class="vbox hard">
+            <div class="vh">國健署強制申報・<span class="nb">6 項</span></div>
+            <div class="vs">癌登師申報　資料多來自癌登資料庫</div>
+            <ul>
+              <li>術後 <span class="nb">6 週</span>內輔助治療</li>
+              <li>術後 <span class="nb">30 天</span>死亡率</li>
+              <li>放療後 <span class="nb">90 天</span>死亡率</li>
+              <li>CCRT 後 <span class="nb">90 天</span>死亡率</li>
+              <li>頸部廓清淋巴結 <span class="nb">≥ 15 顆</span></li>
+              <li>根除術切緣 <span class="nb">&lt; 4mm</span></li>
+            </ul>
+          </div>
+          <div class="vbox soft">
+            <div class="vh">院內品管／認證面向</div>
+            <div class="vs">較廣，不在本堂申報範圍</div>
+            <ul>
+              <li>組織診斷率、術前完整評估率</li>
+              <li>MDT 討論率、CCRT 完成率</li>
+              <li>放療中斷率（<span class="nb">&lt; 15%</span>）</li>
+              <li>其他院內監測項目</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 指標1 -->
+    <section class="slide" data-title="指標1 術後6週輔助治療">
+      <div class="ghost">01</div>
+      <div class="shdr">
+        <div class="head reveal">
+          <span class="no">指標 1</span>
+          <span class="tag pos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M6 11l6-6 6 6"/></svg>正向</span>
+          <span class="tag dim">過程面</span><span class="tag dim">證據 1+</span>
+        </div>
+        <h3 class="t reveal">術後 <span class="nb">6 週</span>內開始輔助治療</h3>
+      </div>
+      <div class="sbody spread">
+        <div class="why frag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M3 12h1M20 12h1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg><div class="x"><b>為什麼算：</b>術後放療若拖過 <span class="nb">6 週</span>才開始，局部復發率明顯升高。傷口約 <span class="nb">4 週</span>癒合，及早銜接才能清除殘存癌細胞。</div></div>
+      <div class="frac frag">
+        <div class="stk"><div class="eq"><span class="lab">比率 =</span><div class="body">
+          <div class="pt num"><span class="role">分子</span><span class="tx">手術 → 開始輔助治療 <span class="nb">≤ 42 天</span>的人</span></div>
+          <div class="bar"></div>
+          <div class="pt den"><span class="role">分母</span><span class="tx">開刀後「有接受」術後放療或化放療的口腔癌病人<em>沒做輔助治療的人不在分母</em></span></div>
+        </div></div></div>
+        <div class="viz"><svg viewBox="0 0 400 168" xmlns="http://www.w3.org/2000/svg">
+          <text x="2" y="40" style="font-family:'Space Grotesk',monospace" font-size="44" font-weight="700" fill="#25506b">≤42<tspan font-size="19" fill="#5f7281"> 天</tspan></text>
+          <text x="2" y="64" font-size="14" fill="#5f7281">手術 → 開始輔助治療的天數</text>
+          <rect x="24" y="96" width="200" height="38" rx="8" fill="#e6f0ec" stroke="#bcdad0"/>
+          <rect x="224" y="96" width="152" height="38" rx="8" fill="#f4e7e1" stroke="#e3c6ba"/>
+          <circle cx="38" cy="115" r="6" fill="#25506b"/>
+          <text x="38" y="156" text-anchor="middle" font-size="12" fill="#1f3a4d">手術日</text>
+          <line x1="224" y1="88" x2="224" y2="146" stroke="#b06a4f" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="224" y="156" text-anchor="middle" font-size="12" fill="#b06a4f">第 42 天</text>
+          <g transform="translate(140,115)"><circle r="14" fill="#3f7d6e"/><path d="M-6 0l4 4 8-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <text x="140" y="88" text-anchor="middle" font-size="12" font-weight="600" fill="#3f7d6e">如期開始 ✓</text>
+          <text x="300" y="120" text-anchor="middle" font-size="12.5" fill="#b06a4f">超過→復發↑</text>
+        </svg></div>
+      </div>
+      <div class="roles frag">
+        <div class="rb ccm"><div class="rh"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個管師現場</div><ul><li>開完刀立刻盯放療／化療排程，別拖過第 <span class="nb">6 週</span>。</li><li>提醒醫師、協助約診，追蹤是否如期開始。</li></ul></div>
+        <div class="rb reg"><div class="rh"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>癌登申報</div><ul><li>分子＝<span class="nb">min（放療日 <span class="fld">4.2.1.3</span>、化療日 <span class="fld">4.3.4</span>）</span> − 手術日 <span class="fld">4.1.2</span> <span class="nb">≤ 42</span>。</li><li>分母＝手術方式 <span class="fld">4.1.4</span>=30~90 且 手術日 &lt; 放療或化療開始日。</li></ul></div>
+      </div>
+      <div class="pitfall frag"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div class="x"><b>容易算錯：</b>分母只算「有接受術後輔助治療」的人；沒做的本來就不納入分母，不是漏報。化放療含同步或依序皆可。</div></div>
+      </div>
+    </section>
+
+    <!-- 6 指標2 -->
+    <section class="slide" data-title="指標2 術後30天死亡">
+      <div class="ghost">02</div>
+      <div class="shdr">
+        <div class="head reveal">
+          <span class="no">指標 2</span>
+          <span class="tag neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>負向</span>
+          <span class="tag dim">結果面</span><span class="tag dim">證據 2+</span>
+        </div>
+        <h3 class="t reveal">手術後 <span class="nb">30 天</span>內死亡率</h3>
+      </div>
+      <div class="sbody spread">
+        <div class="why frag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M3 12h1M20 12h1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg><div class="x"><b>為什麼算：</b>手術後早期死亡反映<b>手術本身與術前評估</b>的品質——病人是否適合手術、術前風險評估是否完整、術後併發症是否及時處理。</div></div>
+      <div class="frac frag">
+        <div class="stk"><div class="eq"><span class="lab">比率 =</span><div class="body">
+          <div class="pt num"><span class="role">分子</span><span class="tx">分母中，手術後 <span class="nb">30 天</span>內死亡的人</span></div>
+          <div class="bar"></div>
+          <div class="pt den"><span class="role">分母</span><span class="tx">接受口腔癌手術的人<em>排除緩和治療</em></span></div>
+        </div></div></div>
+        <div class="viz"><svg viewBox="0 0 400 168" xmlns="http://www.w3.org/2000/svg">
+          <text x="2" y="40" style="font-family:'Space Grotesk',monospace" font-size="44" font-weight="700" fill="#b06a4f">30<tspan font-size="19" fill="#5f7281"> 天</tspan></text>
+          <text x="2" y="64" font-size="14" fill="#5f7281">手術後死亡觀察窗</text>
+          <rect x="24" y="96" width="352" height="38" rx="8" fill="#f7ede4" stroke="#e3c6ba"/>
+          <circle cx="38" cy="115" r="6" fill="#25506b"/>
+          <text x="38" y="156" text-anchor="middle" font-size="12" fill="#1f3a4d">手術日</text>
+          <text x="362" y="156" text-anchor="middle" font-size="12" fill="#b06a4f">第 30 天</text>
+          <g transform="translate(200,115)"><circle r="14" fill="#b06a4f"/><path d="M0 -6 L0 5 M-5 0 L0 5 L5 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <text x="200" y="88" text-anchor="middle" font-size="12.5" font-weight="600" fill="#b06a4f">死亡越少越好 ↓</text>
+        </svg></div>
+      </div>
+      <div class="roles frag">
+        <div class="rb ccm"><div class="rh"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個管師現場</div><ul><li>術前評估完整：ECOG、營養、共病；高風險提早介入。</li><li>術後密切追蹤併發症，及早發現惡化。</li></ul></div>
+        <div class="rb reg"><div class="rh"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>癌登申報</div><ul><li>分母＝手術方式 <span class="fld">4.1.4</span>=30~90 且 緩和 <span class="fld">4.4</span>=0。</li><li>分子＝生存 <span class="fld">5.4</span>=0 且 <span class="nb">（死亡日 <span class="fld">5.3</span> − 手術日 <span class="fld">4.1.2</span>）≤ 30</span>。含死亡檔。</li></ul></div>
+      </div>
+      <div class="pitfall frag"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div class="x"><b>容易算錯：</b>緩和治療的手術要排除。死亡日需勾死亡檔，別只看院內紀錄，否則出院後死亡會漏掉。</div></div>
+      </div>
+    </section>
+
+    <!-- 7 指標3 -->
+    <section class="slide" data-title="指標3 放療後90天死亡">
+      <div class="ghost">03</div>
+      <div class="shdr">
+        <div class="head reveal">
+          <span class="no">指標 3</span>
+          <span class="tag neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>負向</span>
+          <span class="tag dim">結果面</span><span class="tag dim">證據 4</span>
+        </div>
+        <h3 class="t reveal">放療（不含化療）後 <span class="nb">90 天</span>內死亡率</h3>
+      </div>
+      <div class="sbody spread">
+        <div class="why frag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M3 12h1M20 12h1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg><div class="x"><b>為什麼算：</b>治療後早期死亡反映<b>治療適應症選擇</b>與<b>支持照護品質</b>——這位病人是否適合積極放療、治療期間支持是否到位。</div></div>
+      <div class="frac frag">
+        <div class="stk"><div class="eq"><span class="lab">比率 =</span><div class="body">
+          <div class="pt num"><span class="role">分子</span><span class="tx">分母中，放療開始後 <span class="nb">90 天</span>內死亡的人</span></div>
+          <div class="bar"></div>
+          <div class="pt den"><span class="role">分母</span><span class="tx">接受放療（不含化療）的口腔癌病人<em>排除緩和治療</em></span></div>
+        </div></div></div>
+        <div class="viz"><svg viewBox="0 0 400 168" xmlns="http://www.w3.org/2000/svg">
+          <text x="2" y="40" style="font-family:'Space Grotesk',monospace" font-size="44" font-weight="700" fill="#b06a4f">90<tspan font-size="19" fill="#5f7281"> 天</tspan></text>
+          <text x="2" y="64" font-size="14" fill="#5f7281">放療後死亡觀察窗</text>
+          <rect x="24" y="96" width="352" height="38" rx="8" fill="#f7ede4" stroke="#e3c6ba"/>
+          <circle cx="38" cy="115" r="6" fill="#25506b"/>
+          <text x="38" y="156" text-anchor="middle" font-size="12" fill="#1f3a4d">放療開始</text>
+          <text x="362" y="156" text-anchor="middle" font-size="12" fill="#b06a4f">第 90 天</text>
+          <g transform="translate(200,115)"><circle r="14" fill="#b06a4f"/><path d="M0 -6 L0 5 M-5 0 L0 5 L5 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <text x="200" y="88" text-anchor="middle" font-size="12.5" font-weight="600" fill="#b06a4f">死亡越少越好 ↓</text>
+        </svg></div>
+      </div>
+      <div class="roles frag">
+        <div class="rb ccm"><div class="rh"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個管師現場</div><ul><li>放療期間盯皮膚／黏膜炎、進食量、脫水。</li><li>高齡、虛弱者加強營養與支持，降低中斷風險。</li></ul></div>
+        <div class="rb reg"><div class="rh"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>癌登申報</div><ul><li>分母＝放療日 <span class="fld">4.2.1.3</span>≠0 且 劑量 <span class="fld">4.2.2.2.2</span>&gt;0 且 化療 <span class="fld">4.3.3</span>=0 且 緩和 <span class="fld">4.4</span>=0。</li><li>分子＝生存 <span class="fld">5.4</span>=0 且 <span class="nb">（死亡日 − 放療日）≤ 90</span>。</li></ul></div>
+      </div>
+      <div class="pitfall frag"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div class="x"><b>容易算錯：</b>這支「<b>不含化療</b>」，有併化療歸指標 4。注意<b>標靶治療不算化療</b>，別誤排。</div></div>
+      </div>
+    </section>
+
+    <!-- 8 指標4 -->
+    <section class="slide" data-title="指標4 CCRT後90天死亡">
+      <div class="ghost">04</div>
+      <div class="shdr">
+        <div class="head reveal">
+          <span class="no">指標 4</span>
+          <span class="tag neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>負向</span>
+          <span class="tag dim">結果面</span><span class="tag dim">證據 4</span>
+        </div>
+        <h3 class="t reveal">同步化放療（CCRT）後 <span class="nb">90 天</span>內死亡率</h3>
+      </div>
+      <div class="sbody spread">
+        <div class="why frag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M3 12h1M20 12h1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg><div class="x"><b>為什麼算：</b>同步化放療毒性更重，早期死亡更能反映<b>病人篩選是否適當</b>與<b>治療期間支持照護</b>的品質。</div></div>
+      <div class="frac frag">
+        <div class="stk"><div class="eq"><span class="lab">比率 =</span><div class="body">
+          <div class="pt num"><span class="role">分子</span><span class="tx">分母中，CCRT 開始後 <span class="nb">90 天</span>內死亡的人</span></div>
+          <div class="bar"></div>
+          <div class="pt den"><span class="role">分母</span><span class="tx">接受同步化學治療及放射治療的口腔癌病人<em>排除緩和治療</em></span></div>
+        </div></div></div>
+        <div class="viz"><svg viewBox="0 0 400 168" xmlns="http://www.w3.org/2000/svg">
+          <text x="2" y="40" style="font-family:'Space Grotesk',monospace" font-size="44" font-weight="700" fill="#b06a4f">90<tspan font-size="19" fill="#5f7281"> 天</tspan></text>
+          <text x="2" y="64" font-size="14" fill="#5f7281">CCRT 後死亡觀察窗</text>
+          <rect x="24" y="96" width="352" height="38" rx="8" fill="#f7ede4" stroke="#e3c6ba"/>
+          <circle cx="38" cy="115" r="6" fill="#25506b"/>
+          <text x="38" y="156" text-anchor="middle" font-size="12" fill="#1f3a4d">CCRT 開始</text>
+          <text x="362" y="156" text-anchor="middle" font-size="12" fill="#b06a4f">第 90 天</text>
+          <g transform="translate(200,115)"><circle r="14" fill="#b06a4f"/><path d="M0 -6 L0 5 M-5 0 L0 5 L5 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <text x="200" y="88" text-anchor="middle" font-size="12.5" font-weight="600" fill="#b06a4f">死亡越少越好 ↓</text>
+        </svg></div>
+      </div>
+      <div class="roles frag">
+        <div class="rb ccm"><div class="rh"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個管師現場</div><ul><li>CCRT 毒性大，緊盯黏膜炎、吞嚥、體重、血球。</li><li>必要時協助營養管路、住院支持。</li></ul></div>
+        <div class="rb reg"><div class="rh"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>癌登申報</div><ul><li>分母＝放療日≠0 且 劑量&gt;0 且 化療 <span class="fld">4.3.3</span>&gt;0（排除 82,83,85,86,87,88,99）且 化療日≠0 且 緩和=0。</li><li>分子＝生存=0 且 <span class="nb">（死亡日 − min(放療,化療日)）≤ 90</span>。</li></ul></div>
+      </div>
+      <div class="pitfall frag"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div class="x"><b>容易算錯：</b>化療代碼排除非細胞毒項目；標靶不算化療。指標 3 與 4 差在「有沒有併化療」。</div></div>
+      </div>
+    </section>
+
+    <!-- 9 指標5 -->
+    <section class="slide" data-title="指標5 頸廓淋巴≥15顆">
+      <div class="ghost">05</div>
+      <div class="shdr">
+        <div class="head reveal">
+          <span class="no">指標 5</span>
+          <span class="tag pos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M6 11l6-6 6 6"/></svg>正向</span>
+          <span class="tag dim">過程面</span><span class="tag dim">證據 1+</span><span class="tag dim">113 修訂</span>
+        </div>
+        <h3 class="t reveal">頸部廓清，淋巴結病理 <span class="nb">≥ 15 顆</span></h3>
+      </div>
+      <div class="sbody spread">
+        <div class="why frag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M3 12h1M20 12h1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg><div class="x"><b>為什麼算：</b>反映<b>手術與病理檢查的完整性</b>。淋巴結取得足夠、病理檢查完整，分期才會準確；取太少容易低估期別，影響後續治療決策。</div></div>
+      <div class="frac frag">
+        <div class="stk"><div class="eq"><span class="lab">比率 =</span><div class="body">
+          <div class="pt num"><span class="role">分子</span><span class="tx">分母中，淋巴結病理檢查 <span class="nb">≥ 15 顆</span>的人</span></div>
+          <div class="bar"></div>
+          <div class="pt den"><span class="role">分母</span><span class="tx">第一個癌是口腔癌、且接受頸部淋巴廓清術的人<em>第二原發不算</em></span></div>
+        </div></div></div>
+        <div class="viz"><svg viewBox="0 0 400 168" xmlns="http://www.w3.org/2000/svg">
+          <text x="2" y="40" style="font-family:'Space Grotesk',monospace" font-size="44" font-weight="700" fill="#25506b">≥15<tspan font-size="19" fill="#5f7281"> 顆</tspan></text>
+          <text x="2" y="64" font-size="14" fill="#5f7281">頸部廓清淋巴結病理數</text>
+          <circle cx="26" cy="104" r="7" fill="#3f7d6e"/><circle cx="46" cy="104" r="7" fill="#3f7d6e"/><circle cx="66" cy="104" r="7" fill="#3f7d6e"/><circle cx="86" cy="104" r="7" fill="#3f7d6e"/><circle cx="106" cy="104" r="7" fill="#3f7d6e"/><circle cx="126" cy="104" r="7" fill="#3f7d6e"/><circle cx="146" cy="104" r="7" fill="#3f7d6e"/><circle cx="166" cy="104" r="7" fill="#3f7d6e"/><circle cx="186" cy="104" r="7" fill="#3f7d6e"/><circle cx="206" cy="104" r="7" fill="#3f7d6e"/><circle cx="226" cy="104" r="7" fill="#3f7d6e"/><circle cx="246" cy="104" r="7" fill="#3f7d6e"/><circle cx="266" cy="104" r="7" fill="#3f7d6e"/><circle cx="286" cy="104" r="7" fill="#3f7d6e"/><circle cx="306" cy="104" r="7" fill="#3f7d6e"/>
+          <circle cx="326" cy="104" r="7" fill="#c3d9d0"/><circle cx="346" cy="104" r="7" fill="#c3d9d0"/><circle cx="366" cy="104" r="7" fill="#c3d9d0"/>
+          <path d="M18 124 V132 M18 132 H314 M314 124 V132" stroke="#3f7d6e" stroke-width="1.5" fill="none"/>
+          <text x="166" y="152" text-anchor="middle" font-size="13" font-weight="600" fill="#3f7d6e">達標門檻 15 顆</text>
+          <text x="346" y="134" text-anchor="middle" font-size="11.5" fill="#5f7281">更多更完整</text>
+        </svg></div>
+      </div>
+      <div class="roles frag">
+        <div class="rb ccm"><div class="rh"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個管師現場</div><ul><li>協助確認病理報告有清楚記錄淋巴結顆數。</li><li>顆數偏低時回饋團隊，留意是否影響分期判讀。</li></ul></div>
+        <div class="rb reg"><div class="rh"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>癌登申報</div><ul><li>分子＝區域淋巴結檢查數目 <span class="fld">2.14</span>=15~90。</li><li>分母＝發生順序 <span class="fld">2.2</span>=01 且 手術方式 <span class="fld">4.1.4</span>=30~80。</li></ul></div>
+      </div>
+      <div class="pitfall frag"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div class="x"><b>容易算錯：</b>「第一個癌」＝發生順序 01，多重原發第二顆不納入。分母只算<b>有做頸部廓清</b>的人。手術方式碼是 <span class="nb">30~80</span>（與其他指標的 30~90 不同）。</div></div>
+      </div>
+    </section>
+
+    <!-- 10 指標6 -->
+    <section class="slide" data-title="指標6 切緣<4mm">
+      <div class="ghost">06</div>
+      <div class="shdr">
+        <div class="head reveal">
+          <span class="no">指標 6</span>
+          <span class="tag neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>負向</span>
+          <span class="tag dim">過程面・有效性</span><span class="tag dim">證據 1+</span><span class="tag dim">111 修訂</span>
+        </div>
+        <h3 class="t reveal">根除術病理切緣 <span class="nb">&lt; 4mm</span></h3>
+      </div>
+      <div class="sbody spread">
+        <div class="why frag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M3 12h1M20 12h1M5.6 5.6l.7.7M17.7 17.7l.7.7M5.6 18.4l.7-.7M17.7 6.3l.7-.7"/></svg><div class="x"><b>為什麼算：</b>陽性切緣與近切緣都與預後相關，NCCN 將近切緣列為<b>預後不利因子</b>。目標是切緣 <span class="nb">≥ 4mm</span>，所以「<span class="nb">&lt; 4mm</span>」越少越好。</div></div>
+      <div class="frac frag">
+        <div class="stk"><div class="eq"><span class="lab">比率 =</span><div class="body">
+          <div class="pt num"><span class="role">分子</span><span class="tx">分母中，病理切緣 <span class="nb">&lt; 4mm</span> 的人（多切緣取最近距離）</span></div>
+          <div class="bar"></div>
+          <div class="pt den"><span class="role">分母</span><span class="tx">口腔鱗癌施行根除性手術、且有記錄病理切緣的人<em>排除切緣不詳、非侵襲癌</em></span></div>
+        </div></div></div>
+        <div class="viz"><svg viewBox="0 0 400 168" xmlns="http://www.w3.org/2000/svg">
+          <text x="2" y="40" style="font-family:'Space Grotesk',monospace" font-size="44" font-weight="700" fill="#b06a4f">4<tspan font-size="19" fill="#5f7281"> mm</tspan></text>
+          <text x="2" y="64" font-size="14" fill="#5f7281">病理切緣安全距離（目標 ≥4mm）</text>
+          <rect x="24" y="100" width="176" height="34" rx="6" fill="#f4e7e1" stroke="#e3c6ba"/>
+          <rect x="200" y="100" width="176" height="34" rx="6" fill="#e6f0ec" stroke="#bcdad0"/>
+          <line x1="200" y1="92" x2="200" y2="146" stroke="#1f3a4d" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="200" y="158" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1f3a4d">4 mm</text>
+          <text x="112" y="122" text-anchor="middle" font-size="12.5" fill="#b06a4f">&lt;4mm 近切緣</text>
+          <text x="288" y="122" text-anchor="middle" font-size="12.5" fill="#3f7d6e">≥4mm 目標</text>
+          <text x="112" y="88" text-anchor="middle" font-size="12" font-weight="600" fill="#b06a4f">警示 ↓</text>
+        </svg></div>
+      </div>
+      <div class="roles frag">
+        <div class="rb ccm"><div class="rh"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>個管師現場</div><ul><li>切緣近或陽性的病人，留意是否需追加放療或再手術。</li><li>協助銜接後續治療，別讓高風險個案空窗。</li></ul></div>
+        <div class="rb reg"><div class="rh"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>癌登申報</div><ul><li>分子＝切緣距離 <span class="fld">4.1.5.1</span> &lt; "040"（含切緣陽性碼 "987"）。</li><li>分母＝組織型態 <span class="fld">2.8</span>=8050~8086 且 手術 <span class="fld">4.1.4</span>=30~90 且 切緣不為 "991"、"999"。</li></ul></div>
+      </div>
+      <div class="pitfall frag"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div class="x"><b>容易算錯：</b>只算<b>鱗癌</b>（8050~8086）＋<b>根除術</b>。切緣不詳、非侵襲癌排除；多切緣取<b>最近</b>距離。<b>"987" 併入分子</b>（非排除）。</div></div>
+      </div>
+    </section>
+
+    <!-- 11 回顧 -->
+    <section class="slide" data-title="重點回顧">
+      <div class="shdr">
+        <div class="ey reveal">重點回顧</div>
+        <h2 class="reveal">六支指標，一張表記起來</h2>
+      </div>
+      <div class="sbody spread">
+        <table class="ctable">
+          <thead><tr><th>指標</th><th>正/負向</th><th>面向</th><th>關鍵數值</th><th>核心一句話</th></tr></thead>
+          <tbody>
+            <tr><td>1 術後輔助治療</td><td style="color:var(--pos);font-weight:600">正向 ↑</td><td>過程</td><td class="nc">≤ 42 天</td><td>開完刀 <span class="nb">6 週</span>內接上放療／化放療</td></tr>
+            <tr><td>2 術後死亡</td><td style="color:var(--neg);font-weight:600">負向 ↓</td><td>結果</td><td class="nc">30 天</td><td>反映手術與術前評估品質</td></tr>
+            <tr><td>3 放療後死亡</td><td style="color:var(--neg);font-weight:600">負向 ↓</td><td>結果</td><td class="nc">90 天</td><td>不含化療；標靶不算化療</td></tr>
+            <tr><td>4 CCRT 後死亡</td><td style="color:var(--neg);font-weight:600">負向 ↓</td><td>結果</td><td class="nc">90 天</td><td>含同步化放療；毒性更高</td></tr>
+            <tr><td>5 頸廓淋巴結</td><td style="color:var(--pos);font-weight:600">正向 ↑</td><td>過程</td><td class="nc">≥ 15 顆</td><td>取夠才分期準；第一原發</td></tr>
+            <tr><td>6 切緣 &lt; 4mm</td><td style="color:var(--neg);font-weight:600">負向 ↓</td><td>過程</td><td class="nc">&lt; 4mm</td><td>鱗癌＋根除術；越少越好</td></tr>
+          </tbody>
+        </table>
+        <div class="rules">
+          <div class="ru"><div class="rn">RULE 01</div><b>先框分母</b><p>每支先問「分母是誰、排除誰」。框錯分母，分子再對也沒用。</p></div>
+          <div class="ru"><div class="rn">RULE 02</div><b>正負向看方向</b><p>正向（1、5）越高越好；<br>負向（2、3、4、6）越低越好。</p></div>
+          <div class="ru"><div class="rn">RULE 03</div><b>口腔 ≠ 頭頸</b><p>只收 <span class="nb">C00–C06</span>；<br>化療排除非細胞毒代碼、標靶不算化療。</p></div>
+        </div>
+        <div class="foot">資料依據：衛福部國健署「癌症診療核心測量指標」強制申報 60 項（115 年版），口腔癌 6 項，適用 113/1/1 起新診斷。癌登欄位代碼依國健署定義摘錄，正式申報以最新作業手冊與專家會議更新為準。</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="chrome">
+  <button id="menuBtn" title="目錄 (M)">☰</button>
+  <span class="title" id="slideTitle">封面</span>
+  <div class="dots" id="dots"></div>
+  <button id="prev" title="上一步 (←)">‹</button>
+  <span class="count" id="count">1 / 1</span>
+  <button id="next" title="下一步 (→)">›</button>
+  <button id="fs" title="全螢幕 (F)">⛶</button>
+</div>
+
+<div class="menu" id="menu">
+  <button class="close" id="menuClose">×</button>
+  <h5>目錄　跳頁</h5>
+  <ol id="menuList"></ol>
+</div>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var idx=0,N=slides.length;
+  var fragN=slides.map(function(s){return 0;}); // 各頁已揭示的 frag 數
+  var countEl=document.getElementById('count'),titleEl=document.getElementById('slideTitle');
+  var dotsEl=document.getElementById('dots'),menu=document.getElementById('menu'),menuList=document.getElementById('menuList');
+
+  function fit(){var s=Math.min(window.innerWidth/1280,(window.innerHeight-46)/720);
+    stage.style.transform='translate(-50%,-50%) scale('+s+')';}
+  window.addEventListener('resize',fit);fit();
+
+  slides.forEach(function(sl,i){
+    var d=document.createElement('i');d.addEventListener('click',function(){go(i,true)});dotsEl.appendChild(d);
+    var li=document.createElement('li');li.innerHTML='<span class="mn">'+(i+1)+'</span>'+(sl.dataset.title||('第 '+(i+1)+' 頁'));
+    li.addEventListener('click',function(){go(i,true);closeMenu()});menuList.appendChild(li);
+  });
+  var dots=Array.prototype.slice.call(dotsEl.children);
+
+  function frags(i){return slides[i].querySelectorAll('.frag');}
+  function applyFrags(i){var fs=frags(i),n=fragN[i];Array.prototype.forEach.call(fs,function(f,k){f.classList.toggle('show',k<n);});}
+
+  // showAll=true（跳頁/往回）整頁顯示；否則往前進入時從 0 開始逐步揭示
+  function go(n,showAll){
+    n=Math.max(0,Math.min(N-1,n));
+    slides[idx].classList.remove('active');
+    idx=n;slides[idx].classList.add('active');
+    fragN[idx]= showAll ? frags(idx).length : 0;
+    applyFrags(idx);
+    var rv=slides[idx].querySelectorAll('.reveal');
+    rv.forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation='';});
+    countEl.textContent=(idx+1)+' / '+N;titleEl.textContent=slides[idx].dataset.title||'';
+    dots.forEach(function(d,i){d.classList.toggle('on',i===idx);});
+  }
+  function next(){
+    if(fragN[idx]<frags(idx).length){fragN[idx]++;applyFrags(idx);}
+    else go(idx+1,false);
+  }
+  function prev(){
+    if(fragN[idx]>0){fragN[idx]--;applyFrags(idx);}
+    else go(idx-1,true);
+  }
+
+  document.getElementById('next').addEventListener('click',next);
+  document.getElementById('prev').addEventListener('click',prev);
+  document.getElementById('fs').addEventListener('click',function(){
+    if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+    else{document.exitFullscreen&&document.exitFullscreen();}
+  });
+  function openMenu(){menu.classList.add('open');}function closeMenu(){menu.classList.remove('open');}
+  document.getElementById('menuBtn').addEventListener('click',openMenu);
+  document.getElementById('menuClose').addEventListener('click',closeMenu);
+
+  stage.addEventListener('click',function(e){
+    var r=stage.getBoundingClientRect();
+    if(e.clientX<r.left+r.width*0.25)prev();else next();
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(menu.classList.contains('open')){if(e.key==='Escape')closeMenu();return;}
+    switch(e.key){
+      case 'ArrowRight':case 'ArrowDown':case ' ':case 'PageDown':e.preventDefault();next();break;
+      case 'ArrowLeft':case 'ArrowUp':case 'PageUp':e.preventDefault();prev();break;
+      case 'Home':go(0,true);break;case 'End':go(N-1,true);break;
+      case 'f':case 'F':document.getElementById('fs').click();break;
+      case 'm':case 'M':openMenu();break;
+    }
+  });
+  go(0,true);
+})();
+</script>
+</body>
+</html>
