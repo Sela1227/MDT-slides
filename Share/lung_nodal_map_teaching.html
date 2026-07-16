@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>肺癌淋巴分區圖譜 — 個管師教學</title>
+<title>肺癌淋巴分區圖譜 — 彰濱秀傳癌症中心 個管師訓練</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -41,6 +41,14 @@ body{
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
 /* ---------- header ---------- */
+.orgbar{background:var(--slate);color:#fff}
+.orgbar .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.orgbar .org{font-size:13.5px;font-weight:600;letter-spacing:.03em}
+.orgbar .prog{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:#A9BAC4;
+  border-left:1px solid rgba(255,255,255,.22);padding-left:14px}
+.orgbar .by{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:#93A6B0;letter-spacing:.06em}
+.orgbar .by b{color:#D7E0E5;font-weight:500}
+@media(max-width:640px){.orgbar .by{margin-left:0;width:100%;padding-top:2px}}
 .masthead{border-bottom:1px solid var(--line);background:var(--surface);}
 .masthead .wrap{padding-top:44px;padding-bottom:36px}
 .eyebrow{
@@ -249,6 +257,15 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
 </style>
 </head>
 <body>
+
+<div class="orgbar">
+  <div class="wrap">
+    <span class="org">彰濱秀傳癌症中心</span>
+    <span class="prog">個管師訓練</span>
+    <span class="by">作者　<b>林伯儒 醫師</b></span>
+  </div>
+</div>
+
 
 <header class="masthead">
   <div class="wrap">
@@ -520,10 +537,11 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
 
 <footer>
   <div class="wrap">
-    <p>教學用途，非臨床決策工具。分期以主治醫師判讀與病理報告正本為準。<br>
+    <p><strong style="color:var(--ink)">彰濱秀傳癌症中心　個管師訓練</strong>　·　作者：林伯儒 醫師<br>
+    教學用途，非臨床決策工具。分期以主治醫師判讀與病理報告正本為準。<br>
     本教材一律使用 IASLC 的 station 命名；若院內報告使用 group（Naruke）分群，請先行對照確認。<br>
     參考：IASLC Lymph Node Map（Rusch et al.）· AJCC Cancer Staging Manual, 9th edition（2025 生效）· IASLC N-descriptor 修訂建議<br>
-    V1.2 · 圖譜改為解剖式前面觀（支氣管樹、主動脈弓、奇靜脈、無名靜脈、食道）；station 12／13／14 拆分為獨立節點<br>V1.1 · 依臨床審查修訂（N2a 定義、4R 完整邊界、station/group 術語、ENE 與淋巴結取樣的表述強度）</p>
+    V1.3 · 加上機構抬頭與作者署名<br>V1.2 · 圖譜改為解剖式前面觀（支氣管樹、主動脈弓、奇靜脈、無名靜脈、食道）；station 12／13／14 拆分為獨立節點<br>V1.1 · 依臨床審查修訂（N2a 定義、4R 完整邊界、station/group 術語、ENE 與淋巴結取樣的表述強度）</p>
   </div>
 </footer>
 
