@@ -94,10 +94,23 @@ h2{font-size:22px;font-weight:600;letter-spacing:-.005em}
 
 /* ---------- svg ---------- */
 svg.map{width:100%;height:auto;display:block;touch-action:manipulation}
-.lung{fill:#F0F3F4;stroke:#C3CDD3;stroke-width:1.5}
-.airway{fill:none;stroke:#B7C3C9;stroke-linecap:round}
-.aorta{fill:none;stroke:#D8C2BE;stroke-width:11;stroke-linecap:round}
-.eso{fill:none;stroke:#DCE2E0;stroke-width:9;stroke-linecap:round;stroke-dasharray:1 0}
+.lung{fill:#EFF2F3;stroke:#BCC8CE;stroke-width:1.6}
+.fissure{fill:none;stroke:#CDD7DC;stroke-width:1.2;stroke-dasharray:5 4}
+.airway{fill:none;stroke:#9FB6C2;stroke-linecap:round;stroke-linejoin:round}
+.lumen{fill:#DCE8EE;stroke:#9FB6C2;stroke-width:1.4}
+.ring{stroke:#9FB6C2;stroke-width:1.2;opacity:.85}
+.aorta{fill:none;stroke:#D7BDB8;stroke-width:12;stroke-linecap:round}
+.vein{fill:none;stroke:#B9CBD8;stroke-width:10;stroke-linecap:round}
+.eso{fill:none;stroke:#CFD8D2;stroke-width:10;stroke-linecap:round;stroke-dasharray:7 5}
+.bone{fill:#E4E9EB;stroke:#C3CDD3;stroke-width:1.2}
+.zone4r{fill:var(--brand);opacity:.07}
+.zone4r-line{fill:none;stroke:var(--brand);stroke-width:1;stroke-dasharray:3 3;opacity:.6}
+/* 解剖分區配色（認識分區模式） */
+.node.zn-supraclavicular circle{fill:#9C5B52;stroke:#9C5B52}
+.node.zn-upper circle,.node.zn-aortic circle,.node.zn-inferior circle{fill:#5B7A94;stroke:#5B7A94}
+.node.zn-hilar circle{fill:#71805A;stroke:#71805A}
+.node.zn-intra circle{fill:#A3B08C;stroke:#A3B08C}
+.node[class*="zn-"] text{fill:#fff}
 .guide{stroke:var(--brand);stroke-width:1;stroke-dasharray:4 4;opacity:.75}
 .guidetxt{font-family:var(--mono);font-size:8.5px;fill:var(--brand);letter-spacing:.04em}
 .orient{font-family:var(--mono);font-size:9.5px;fill:var(--muted);letter-spacing:.14em}
@@ -271,43 +284,117 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
           </div>
         </div>
 
-        <svg class="map" viewBox="80 34 440 508" role="img" aria-label="縱膈與肺門淋巴結分區示意圖">
-          <!-- lungs -->
-          <path class="lung" d="M160,95 C105,150 95,320 118,440 C132,510 190,525 215,470 C245,405 248,200 210,120 C197,95 175,85 160,95 Z"/>
-          <path class="lung" d="M440,95 C495,150 505,320 482,440 C468,510 410,525 385,470 C355,405 352,200 390,120 C403,95 425,85 440,95 Z"/>
-          <!-- esophagus (behind) -->
-          <path class="eso" d="M303,60 L303,300 L305,500"/>
-          <!-- aortic arch -->
-          <path class="aorta" d="M348,300 C346,238 372,210 400,218 C428,226 434,260 430,300 L430,470"/>
-          <!-- trachea + bronchi -->
-          <path class="airway" style="stroke-width:26" d="M300,58 L300,298"/>
-          <path class="airway" style="stroke-width:19" d="M289,296 L232,344"/>
-          <path class="airway" style="stroke-width:17" d="M311,296 L380,342"/>
-          <path class="airway" style="stroke-width:13" d="M232,344 L198,392"/>
-          <path class="airway" style="stroke-width:12" d="M380,342 L416,388"/>
-          <path class="airway" style="stroke-width:8" d="M198,392 L166,446"/>
-          <path class="airway" style="stroke-width:8" d="M416,388 L448,442"/>
+        <svg class="map" viewBox="86 30 610 640" role="img" aria-label="IASLC 淋巴結分區解剖示意圖：前面觀，含支氣管樹、主動脈弓、奇靜脈與食道">
 
-          <!-- guides -->
-          <line class="guide" x1="316" y1="60" x2="316" y2="298"/>
-          <text class="guidetxt" x="322" y="115">氣管左側緣 = 2R/4R 的左界</text>
-          <line class="guide" x1="150" y1="92" x2="450" y2="92"/>
-          <text class="guidetxt" x="150" y="86">鎖骨下緣／胸骨柄上緣 —— 以上為第 1 站</text>
-          <line class="guide" x1="300" y1="40" x2="300" y2="92"/>
+          <!-- ===== 肺輪廓 ===== -->
+          <path class="lung" d="M212,102 C154,118 122,194 112,294 C104,390 108,488 122,564 C129,606 148,630 184,632 L290,634 C310,600 316,542 314,470 C312,404 318,362 307,332 C317,300 315,240 307,190 C299,140 264,98 234,96 C226,95 218,99 212,102 Z"/>
+          <path class="lung" d="M552,102 C610,118 642,194 652,294 C660,390 656,488 642,564 C635,606 616,630 580,632 L502,634 C488,602 482,572 488,542 C498,502 510,472 502,442 C496,412 472,402 468,382 C464,357 478,342 482,332 C472,300 478,240 488,190 C496,140 530,98 550,96 Z"/>
+          <!-- 葉間裂 -->
+          <path class="fissure" d="M120,268 L306,352"/>
+          <path class="fissure" d="M126,486 L308,398"/>
+          <path class="fissure" d="M646,300 L488,438"/>
 
-          <!-- orientation -->
-          <text class="orient" x="128" y="52">患者右 / RIGHT</text>
-          <text class="orient" x="472" y="52" text-anchor="end">患者左 / LEFT</text>
-          <text class="organtxt" x="300" y="50" text-anchor="middle">氣管</text>
-          <text class="organtxt" x="440" y="205" text-anchor="middle">主動脈弓</text>
-          <text class="organtxt" x="300" y="530" text-anchor="middle">食道（虛線＝位於氣管後方）</text>
+          <!-- ===== 骨性標記 ===== -->
+          <path class="bone" d="M292,104 L364,88 L366,97 L294,113 Z"/>
+          <path class="bone" d="M470,88 L542,104 L540,113 L468,97 Z"/>
+          <rect class="bone" x="368" y="86" width="30" height="12" rx="3"/>
+          <text class="organtxt" x="272" y="118" text-anchor="end">鎖骨</text>
+
+          <!-- ===== 食道（後方，先畫＝被氣管遮住） ===== -->
+          <path class="eso" d="M381,46 L381,298 L384,660"/>
+
+          <!-- ===== 主動脈（後方） ===== -->
+          <path class="aorta" d="M424,302 C419,238 448,210 478,222 C505,233 508,268 504,302"/>
+          <path class="aorta" style="stroke-width:11" d="M504,302 C502,344 468,362 460,404 L451,656"/>
+          <text class="organtxt" x="478" y="207" text-anchor="middle">主動脈弓</text>
+          <text class="organtxt" x="437" y="600" text-anchor="middle">降主動脈</text>
+
+          <!-- ===== 靜脈 ===== -->
+          <path class="vein" d="M344,182 L344,296"/>
+          <path class="vein" style="stroke-width:9" d="M424,192 C392,172 362,172 346,184"/>
+          <path class="vein" style="stroke-width:8" d="M388,290 C374,274 354,274 346,290"/>
+          <text class="organtxt" x="332" y="178" text-anchor="end">無名靜脈 ＝ 4R 上界</text>
+          <text class="organtxt" x="326" y="232" text-anchor="end">上腔靜脈</text>
+          <text class="organtxt" x="300" y="274" text-anchor="end">奇靜脈弓 ＝ 4R 下界</text>
+
+          <!-- ===== 4R 跨中線示意區 ===== -->
+          <rect class="zone4r" x="330" y="200" width="68" height="82" rx="4"/>
+          <rect class="zone4r-line" x="330" y="200" width="68" height="82" rx="4"/>
+
+          <!-- ===== 支氣管樹 ===== -->
+          <!-- 氣管 -->
+          <rect class="lumen" x="363" y="44" width="36" height="256" rx="6"/>
+          <g class="ring">
+            <line x1="363" y1="62" x2="399" y2="62"/><line x1="363" y1="84" x2="399" y2="84"/>
+            <line x1="363" y1="106" x2="399" y2="106"/><line x1="363" y1="128" x2="399" y2="128"/>
+            <line x1="363" y1="150" x2="399" y2="150"/><line x1="363" y1="172" x2="399" y2="172"/>
+            <line x1="363" y1="194" x2="399" y2="194"/><line x1="363" y1="216" x2="399" y2="216"/>
+            <line x1="363" y1="238" x2="399" y2="238"/><line x1="363" y1="260" x2="399" y2="260"/>
+            <line x1="363" y1="282" x2="399" y2="282"/>
+          </g>
+          <!-- 右側 -->
+          <path class="airway" style="stroke-width:22" d="M369,296 L312,332"/>
+          <path class="airway" style="stroke-width:17" d="M312,332 L298,394"/>
+          <path class="airway" style="stroke-width:14" d="M314,330 L262,308"/>
+          <path class="airway" style="stroke-width:7" d="M262,308 L236,268 M262,308 L220,296 M262,308 L240,342"/>
+          <path class="airway" style="stroke-width:3.5" d="M236,268 L214,240 M236,268 L248,236 M220,296 L188,282 M220,296 L192,312 M240,342 L212,356 M240,342 L232,376"/>
+          <path class="airway" style="stroke-width:12" d="M298,392 L252,418"/>
+          <path class="airway" style="stroke-width:8" d="M252,418 L216,464"/>
+          <path class="airway" style="stroke-width:5" d="M216,464 L186,510"/>
+          <path class="airway" style="stroke-width:2.5" d="M186,510 L164,540 M186,510 L196,546"/>
+          <path class="airway" style="stroke-width:4" d="M216,464 L182,458 M252,418 L228,388"/>
+          <path class="airway" style="stroke-width:14" d="M298,394 L288,462"/>
+          <path class="airway" style="stroke-width:8" d="M288,462 L248,502 M288,462 L280,532 M288,462 L312,510"/>
+          <path class="airway" style="stroke-width:3.5" d="M248,502 L214,528 M248,502 L238,544 M280,532 L262,570 M280,532 L296,566 M312,510 L308,556"/>
+          <!-- 左側 -->
+          <path class="airway" style="stroke-width:20" d="M393,296 L478,342"/>
+          <path class="airway" style="stroke-width:14" d="M476,340 L524,318"/>
+          <path class="airway" style="stroke-width:7" d="M524,318 L556,282 M524,318 L580,306 M524,318 L548,358"/>
+          <path class="airway" style="stroke-width:3.5" d="M556,282 L578,252 M556,282 L544,248 M580,306 L612,292 M580,306 L610,322 M548,358 L578,372 M548,358 L556,392"/>
+          <path class="airway" style="stroke-width:15" d="M478,342 L496,406"/>
+          <path class="airway" style="stroke-width:11" d="M496,404 L548,428"/>
+          <path class="airway" style="stroke-width:8" d="M548,428 L584,472"/>
+          <path class="airway" style="stroke-width:5" d="M584,472 L616,514"/>
+          <path class="airway" style="stroke-width:2.5" d="M616,514 L638,544 M616,514 L608,548"/>
+          <path class="airway" style="stroke-width:4" d="M584,472 L618,466 M548,428 L570,398"/>
+          <path class="airway" style="stroke-width:12" d="M496,406 L490,470"/>
+          <path class="airway" style="stroke-width:7" d="M490,470 L520,506 M490,470 L486,534 M490,470 L556,498"/>
+          <path class="airway" style="stroke-width:3.5" d="M520,506 L544,540 M486,534 L468,566 M486,534 L502,570 M556,498 L582,528"/>
+
+          <text class="organtxt" x="381" y="40" text-anchor="middle">氣管</text>
+          <text class="organtxt" x="381" y="668" text-anchor="middle">食道（虛線＝位於氣管後方）</text>
+
+          <!-- ===== 定義線 ===== -->
+          <line class="guide" x1="398" y1="46" x2="398" y2="300"/>
+          <line class="guide" x1="200" y1="162" x2="396" y2="162"/>
+          <text class="guidetxt" x="200" y="144">氣管左側緣 ＝ 2R／4R 的左界</text>
+          <text class="guidetxt" x="200" y="156">4R 由此跨過中線抵達此線</text>
+          <line class="guide" x1="290" y1="96" x2="546" y2="96"/>
+          <text class="guidetxt" x="290" y="76">鎖骨與胸骨柄上緣 —— 以上為 station 1（永遠 N3）</text>
+          <line class="guide" x1="381" y1="46" x2="381" y2="96"/>
+
+          <!-- ===== 方位 ===== -->
+          <text class="orient" x="120" y="52">患者右 · RIGHT</text>
+          <text class="orient" x="662" y="52" text-anchor="end">患者左 · LEFT</text>
+          <text class="orient" x="391" y="60" text-anchor="start" style="font-size:8">前面觀</text>
 
           <g id="nodes"></g>
         </svg>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.7;margin-top:8px">
+          前面觀示意圖，非等比解剖圖。station 12／13／14 每一葉都有，圖上各側僅畫一條代表鏈。<br>
+          橘色網底＝station 4R 的範圍，注意它<strong>跨過中線</strong>抵達氣管左側緣。
+        </p>
 
-        <div class="legend" id="legend">
-          <span><i class="dot" style="background:#fff;border:1.6px solid var(--muted)"></i>未分類</span>
-          <span><i class="dot" style="background:var(--n1)"></i>N1 · 肺內／肺門</span>
+        <div class="legend" id="legExplore">
+          <span><i class="dot" style="background:#9C5B52"></i>Station 1 · 鎖骨上</span>
+          <span><i class="dot" style="background:#5B7A94"></i>Station 2–9 · 縱膈</span>
+          <span><i class="dot" style="background:#71805A"></i>Station 10–11 · 肺門／葉間</span>
+          <span><i class="dot" style="background:#A3B08C"></i>Station 12–14 · 肺內</span>
+          <span><i class="dot" style="background:#fff;border:1.6px dashed var(--muted)"></i>虛線＝不在此平面（3a 在前、3p 在後）</span>
+          <span style="color:var(--muted)">解剖分區 ≠ N 分期</span>
+        </div>
+        <div class="legend" id="legAssess" style="display:none">
+          <span><i class="dot" style="background:var(--n1)"></i>N1 · 同側肺門／肺內</span>
           <span><i class="dot" style="background:var(--n2)"></i>N2 · 同側縱膈</span>
           <span><i class="dot" style="background:var(--n3)"></i>N3 · 對側或鎖骨上</span>
           <span><i class="dot" style="background:#fff;border:3px solid var(--brand)"></i>已選（報告有轉移）</span>
@@ -436,7 +523,7 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
     <p>教學用途，非臨床決策工具。分期以主治醫師判讀與病理報告正本為準。<br>
     本教材一律使用 IASLC 的 station 命名；若院內報告使用 group（Naruke）分群，請先行對照確認。<br>
     參考：IASLC Lymph Node Map（Rusch et al.）· AJCC Cancer Staging Manual, 9th edition（2025 生效）· IASLC N-descriptor 修訂建議<br>
-    V1.1 · 依臨床審查修訂（N2a 定義、4R 完整邊界、station/group 術語、ENE 與淋巴結取樣的表述強度）</p>
+    V1.2 · 圖譜改為解剖式前面觀（支氣管樹、主動脈弓、奇靜脈、無名靜脈、食道）；station 12／13／14 拆分為獨立節點<br>V1.1 · 依臨床審查修訂（N2a 定義、4R 完整邊界、station/group 術語、ENE 與淋巴結取樣的表述強度）</p>
   </div>
 </footer>
 
@@ -445,105 +532,126 @@ const STATIONS = [
  {id:"1R",n:"低位頸／鎖骨上（右）",en:"Low cervical, supraclavicular, sternal notch",side:"R",zone:"supraclavicular",
   loc:"環狀軟骨下緣到鎖骨、胸骨柄上緣之間，氣管中線右側。",
   bd:"上：環狀軟骨下緣。下：鎖骨與胸骨柄上緣。左右以氣管中線分 1R／1L。",
-  why:"只要這裡有轉移，不論腫瘤在哪一側，一律是 N3。這是「能不能開刀」的分水嶺。",x:252,y:70},
+  why:"只要這裡有轉移，不論腫瘤在哪一側，一律是 N3。這是「能不能開刀」的分水嶺。",x:350,y:62},
  {id:"1L",n:"低位頸／鎖骨上（左）",en:"Low cervical, supraclavicular, sternal notch",side:"L",zone:"supraclavicular",
   loc:"同 1R，位於氣管中線左側。",
   bd:"上：環狀軟骨下緣。下：鎖骨與胸骨柄上緣。",
-  why:"同 1R，永遠是 N3。理學檢查摸得到的鎖骨上結就在這裡，門診常由個管師先發現。",x:348,y:70},
+  why:"同 1R，永遠是 N3。理學檢查摸得到的鎖骨上結就在這裡，門診常由個管師先發現。",x:412,y:62},
 
  {id:"2R",n:"上氣管旁（右）",en:"Upper paratracheal, right",side:"R",zone:"upper",
   loc:"胸骨柄上緣以下，到無名靜脈與氣管交會處的下緣。",
   bd:"左界不是中線，而是<strong>氣管的左側緣</strong>。",
-  why:"右肺上葉腫瘤最常見的縱膈轉移路徑之一。左界的定義是最常被誤解的地方。",x:262,y:140},
+  why:"右肺上葉腫瘤最常見的縱膈轉移路徑之一。左界的定義是最常被誤解的地方。",x:346,y:140},
  {id:"2L",n:"上氣管旁（左）",en:"Upper paratracheal, left",side:"L",zone:"upper",
   loc:"胸骨柄上緣以下，到主動脈弓上緣。",
   bd:"右界為氣管左側緣。所以 2L 的範圍比 2R 窄。",
-  why:"左上葉腫瘤的上縱膈引流站。範圍窄，影像上容易與 4L 混淆。",x:332,y:140},
+  why:"左上葉腫瘤的上縱膈引流站。範圍窄，影像上容易與 4L 混淆。",x:416,y:140},
 
  {id:"3a",n:"血管前",en:"Prevascular",side:"M",zone:"upper",dashed:true,
   loc:"位於大血管<strong>前方</strong>的前縱膈脂肪內（此圖為冠狀示意，實際在更前方）。",
   bd:"前：胸骨後。後：上腔靜脈（右）／左頸動脈（左）。",
-  why:"標準縱膈鏡摸不到這裡，需要靠影像或前縱膈切開術。報告若寫 3a，代表用了特殊術式。",x:238,y:166},
+  why:"標準縱膈鏡摸不到這裡，需要靠影像或前縱膈切開術。報告若寫 3a，代表用了特殊術式。",x:300,y:206},
  {id:"3p",n:"氣管後",en:"Retrotracheal",side:"M",zone:"upper",dashed:true,
   loc:"氣管<strong>後方</strong>，貼著食道與脊椎前方（虛線＝位於氣管背側）。",
   bd:"上：胸廓入口。下：隆突。",
-  why:"位置隱蔽，常需 EBUS 或 EUS 才採得到。屬中線站，兩側原發都算 N2。",x:300,y:190},
+  why:"位置隱蔽，常需 EBUS 或 EUS 才採得到。屬中線站，兩側原發都算 N2。",x:381,y:196},
 
  {id:"4R",n:"下氣管旁（右）",en:"Lower paratracheal, right",side:"R",zone:"upper",
   loc:"氣管右側，從無名靜脈與氣管交會下緣延伸至奇靜脈下緣。",
   bd:"上：innominate vein 下緣與氣管交會處。下：azygos vein 下緣。左界：<strong>跨過中線，到氣管左側緣</strong>。<br><span style=\"font-family:var(--mono);font-size:10.5px\">4R extends across the midline to the left lateral border of the trachea.</span>",
-  why:"右肺所有葉別最重要的縱膈引流站，EBUS 必採。右肺原發若 4R 陽性 → N2。<strong>很多人會把 4R 畫太小</strong>——它是跨中線的。",x:262,y:232},
+  why:"右肺所有葉別最重要的縱膈引流站，EBUS 必採。右肺原發若 4R 陽性 → N2。<strong>很多人會把 4R 畫太小</strong>——它是跨中線的。",x:346,y:246},
  {id:"4L",n:"下氣管旁（左）",en:"Lower paratracheal, left",side:"L",zone:"upper",
   loc:"從主動脈弓上緣到左主支氣管上緣。",
   bd:"右界為氣管左側緣；外側界為動脈韌帶。",
-  why:"左肺原發的關鍵站。右肺原發若出現 4L → 對側縱膈 → N3，治療方向整個改變。",x:330,y:276},
+  why:"左肺原發的關鍵站。右肺原發若出現 4L → 對側縱膈 → N3，治療方向整個改變。",x:410,y:272},
 
  {id:"5",n:"主動脈下（AP window）",en:"Subaortic",side:"L",zone:"aortic",
   loc:"主動脈弓<strong>下方</strong>、動脈韌帶外側，左肺動脈上方。",
   bd:"上：主動脈弓下緣。下：左肺動脈上緣。此站<strong>只有左側有</strong>。",
-  why:"左上葉腫瘤的第一線引流站。縱膈鏡採不到，需 VATS 或 Chamberlain 術式。",x:388,y:288},
+  why:"左上葉腫瘤的第一線引流站。縱膈鏡採不到，需 VATS 或 Chamberlain 術式。",x:458,y:290},
  {id:"6",n:"主動脈旁",en:"Para-aortic (ascending aorta / phrenic)",side:"L",zone:"aortic",
   loc:"升主動脈與主動脈弓的<strong>前外側</strong>。",
   bd:"上：主動脈弓上緣切線。下：主動脈弓下緣。<strong>只有左側有</strong>。",
-  why:"與第 5 站常一起被侵犯。右肺原發若出現 6 → N3。",x:440,y:236},
+  why:"與第 5 站常一起被侵犯。右肺原發若出現 6 → N3。",x:508,y:232},
 
  {id:"7",n:"隆突下",en:"Subcarinal",side:"M",zone:"inferior",
   loc:"氣管分叉<strong>正下方</strong>，兩側主支氣管之間。",
   bd:"上：隆突。下：右側到中葉支氣管上緣、左側到下葉支氣管上緣。",
-  why:"位於正中線，<strong>左右肺原發都算 N2；station 7 永遠不會因左右不同而變成 N3</strong>。任何肺葉都可能轉移到這裡，EBUS 必採。",x:300,y:342},
+  why:"位於正中線，<strong>左右肺原發都算 N2；station 7 永遠不會因左右不同而變成 N3</strong>。任何肺葉都可能轉移到這裡，EBUS 必採。",x:381,y:348},
  {id:"8R",n:"食道旁（右，隆突下）",en:"Paraesophageal, right",side:"R",zone:"inferior",
   loc:"隆突以下，緊貼食道右側壁。",
   bd:"上：接第 7 站下界。下：橫膈。",
-  why:"下葉腫瘤的引流路徑。位置深，多靠 EUS 採檢。",x:276,y:404},
+  why:"下葉腫瘤的引流路徑。位置深，多靠 EUS 採檢。",x:353,y:430},
  {id:"8L",n:"食道旁（左，隆突下）",en:"Paraesophageal, left",side:"L",zone:"inferior",
   loc:"隆突以下，緊貼食道左側壁。",
   bd:"上：接第 7 站下界。下：橫膈。",
-  why:"同 8R。若術後要放療，此站入 CTV 時食道劑量必然上升。",x:326,y:404},
+  why:"同 8R。若術後要放療，此站入 CTV 時食道劑量必然上升。",x:409,y:430},
  {id:"9R",n:"肺韌帶（右）",en:"Pulmonary ligament, right",side:"R",zone:"inferior",
   loc:"下肺韌帶內，靠近下肺靜脈。",
   bd:"上：下肺靜脈。下：橫膈。",
-  why:"右下葉腫瘤才較常見。手術中順手取樣，臨床上較少單獨陽性。",x:262,y:468},
+  why:"右下葉腫瘤才較常見。手術中順手取樣，臨床上較少單獨陽性。",x:338,y:556},
  {id:"9L",n:"肺韌帶（左）",en:"Pulmonary ligament, left",side:"L",zone:"inferior",
   loc:"下肺韌帶內，靠近下肺靜脈。",
   bd:"上：下肺靜脈。下：橫膈。",
-  why:"左下葉腫瘤的引流站。與 8L 位置接近，報告需看清楚寫的是哪一站。",x:340,y:468},
+  why:"左下葉腫瘤的引流站。與 8L 位置接近，報告需看清楚寫的是哪一站。",x:426,y:556},
 
  {id:"10R",n:"肺門（右）",en:"Hilar, right",side:"R",zone:"hilar",
   loc:"奇靜脈下緣以下，緊鄰右主支氣管與肺門血管。",
-  bd:"近端：奇靜脈下緣。遠端：葉間區。",
-  why:"分界關鍵：10 站以下屬 N1（同側），治療上仍屬可切除範圍。",x:230,y:356},
+  bd:"近端：奇靜脈下緣。遠端：葉間區（葉間裂反摺處）。",
+  why:"分界關鍵：<strong>station 10 以下（含）屬 N1</strong>，仍在可切除範圍內。10 站的上界正是 4R 的下界，兩站緊鄰。",x:312,y:332},
  {id:"10L",n:"肺門（左）",en:"Hilar, left",side:"L",zone:"hilar",
   loc:"主動脈弓下緣以下，緊鄰左主支氣管與肺門血管。",
-  bd:"近端：主動脈弓下緣。遠端：葉間區。",
-  why:"同 10R。注意左側的上界不是奇靜脈而是主動脈弓。",x:386,y:356},
+  bd:"近端：<strong>主動脈弓下緣</strong>（不是奇靜脈）。遠端：葉間區。",
+  why:"N1。左右兩側的上界定義不同——右邊看奇靜脈，左邊看主動脈弓，這點常被記反。",x:480,y:344},
  {id:"11R",n:"葉間（右）",en:"Interlobar, right",side:"R",zone:"hilar",
-  loc:"右側葉支氣管起始處之間。",
-  bd:"11s：上葉與中葉間；11i：中葉與下葉間。",
-  why:"N1。術中冰凍切片常查這一站，用來決定要不要擴大切除。",x:196,y:398},
+  loc:"右側各葉支氣管起始處之間，位於葉間裂內。",
+  bd:"11s：上葉與中葉之間；11i：中葉與下葉之間。",
+  why:"N1。術中冰凍切片常查這一站，用來決定切除範圍。報告可能細分寫成 11s／11i。",x:294,y:378},
  {id:"11L",n:"葉間（左）",en:"Interlobar, left",side:"L",zone:"hilar",
-  loc:"左側上葉與下葉支氣管之間。",
-  bd:"位於左葉間裂內。",
-  why:"N1。左側無中葉，故無 11s／11i 之分。",x:418,y:394},
- {id:"12-14R",n:"葉／節／節下（右）",en:"Lobar, segmental, subsegmental",side:"R",zone:"hilar",
-  loc:"更周邊：12 = 葉支氣管旁，13 = 節支氣管旁，14 = 節下支氣管旁。",
-  bd:"隨支氣管分支逐級往肺周邊延伸。",
-  why:"N1。這些站幾乎都是切除標本中才發現，不會靠術前 EBUS 取得。",x:162,y:452},
- {id:"12-14L",n:"葉／節／節下（左）",en:"Lobar, segmental, subsegmental",side:"L",zone:"hilar",
-  loc:"同右側，位於左肺支氣管樹周邊。",
-  bd:"隨支氣管分支逐級往肺周邊延伸。",
-  why:"N1。報告若只寫「12」而沒寫側別，需回頭對照手術記錄的切除葉別。",x:450,y:448}
+  loc:"左側上葉與下葉支氣管之間，位於左葉間裂內。",
+  bd:"左肺僅一條葉間裂。",
+  why:"N1。左側無中葉，故<strong>無 11s／11i 之分</strong>。",x:506,y:388},
+ {id:"12R",n:"葉支氣管旁（右）",en:"Lobar, right",side:"R",zone:"intra",
+  loc:"緊貼各葉支氣管（上葉／中葉／下葉）遠端。",
+  bd:"位於葉間區遠端、節支氣管近端之間。",
+  why:"N1。每一葉都有 12 站，圖上僅畫代表位置。報告若只寫「12」而無側別，需回頭對照手術記錄的切除葉別。",x:252,y:418},
+ {id:"13R",n:"節支氣管旁（右）",en:"Segmental, right",side:"R",zone:"intra",
+  loc:"緊貼肺節支氣管。",
+  bd:"12 站遠端、14 站近端。",
+  why:"N1。幾乎只會在切除標本中發現，術前 EBUS 到不了這裡。",x:216,y:464},
+ {id:"14R",n:"節下支氣管旁（右）",en:"Subsegmental, right",side:"R",zone:"intra",
+  loc:"肺實質內最周邊的一級，緊貼節下支氣管。",
+  bd:"13 站遠端。",
+  why:"N1。要靠病理切片才驗得到。周邊型小腫瘤若 14 站陽性，代表已有淋巴引流。",x:186,y:510},
+ {id:"12L",n:"葉支氣管旁（左）",en:"Lobar, left",side:"L",zone:"intra",
+  loc:"緊貼左上葉或左下葉支氣管遠端。",
+  bd:"位於葉間區遠端、節支氣管近端之間。",
+  why:"N1。每一葉都有 12 站，圖上僅畫代表位置。",x:548,y:428},
+ {id:"13L",n:"節支氣管旁（左）",en:"Segmental, left",side:"L",zone:"intra",
+  loc:"緊貼左肺各節支氣管。",
+  bd:"12 站遠端、14 站近端。",
+  why:"N1。幾乎只會在切除標本中發現。",x:584,y:472},
+ {id:"14L",n:"節下支氣管旁（左）",en:"Subsegmental, left",side:"L",zone:"intra",
+  loc:"左肺實質內最周邊的一級。",
+  bd:"13 站遠端。",
+  why:"N1。要靠病理切片才驗得到。",x:616,y:514}
 ];
 
-const ZONE_LABEL = {supraclavicular:"鎖骨上區 · Supraclavicular",upper:"上縱膈 · Superior mediastinal (1–4)",
-  aortic:"主動脈區 · Aortic (5–6，僅左側)",inferior:"下縱膈 · Inferior mediastinal (7–9)",
-  hilar:"肺門／肺內 · Hilar & intrapulmonary (10–14)"};
+const ZONE_LABEL = {supraclavicular:"鎖骨上區 · Supraclavicular（station 1）",
+  upper:"上縱膈 · Superior mediastinal（station 2–4）",
+  aortic:"主動脈區 · Aortic（station 5–6，僅左側）",
+  inferior:"下縱膈 · Inferior mediastinal（station 7–9）",
+  hilar:"肺門／葉間 · Hilar & interlobar（station 10–11）",
+  intra:"肺內 · Intrapulmonary（station 12–14）"};
 const CAT_COLOR = {N1:"var(--n1)",N2:"var(--n2)",N3:"var(--n3)"};
+const ZONE_ORDER = ["supraclavicular","upper","aortic","inferior","hilar","intra"];
 
 function categoryOf(st, tumorSide){
-  if(st.zone === "supraclavicular") return "N3";
-  if(st.zone === "hilar") return st.side === tumorSide ? "N1" : "N3";
-  if(st.side === "M") return "N2";
-  return st.side === tumorSide ? "N2" : "N3";
+  if(st.zone === "supraclavicular") return "N3";                       // station 1 恆為 N3
+  if(st.zone === "hilar" || st.zone === "intra")                       // station 10–14
+    return st.side === tumorSide ? "N1" : "N3";
+  if(st.side === "M") return "N2";                                     // station 3a/3p/7 位於中線
+  return st.side === tumorSide ? "N2" : "N3";                          // station 2,4,5,6,8,9
 }
 
 /* ---- render nodes ---- */
@@ -558,10 +666,10 @@ STATIONS.forEach(st=>{
   g.dataset.id = st.id;
   const c = document.createElementNS(NS,"circle");
   c.setAttribute("cx",st.x); c.setAttribute("cy",st.y);
-  c.setAttribute("r", st.id.length>3 ? 17 : 14);
+  c.setAttribute("r", 13);
   const t = document.createElementNS(NS,"text");
   t.setAttribute("x",st.x); t.setAttribute("y",st.y+.5);
-  if(st.id.length>3) t.setAttribute("font-size","7.5");
+  t.setAttribute("font-size", st.id.length>2 ? "8.5" : "10");
   t.textContent = st.id;
   g.append(c,t);
   g.addEventListener("click",()=>onNode(st.id));
@@ -571,7 +679,7 @@ STATIONS.forEach(st=>{
 
 /* ---- table ---- */
 const tb = document.getElementById("tbody");
-["supraclavicular","upper","aortic","inferior","hilar"].forEach(z=>{
+ZONE_ORDER.forEach(z=>{
   const zr = document.createElement("tr"); zr.className="zonerow";
   zr.innerHTML = '<td colspan="3">'+ZONE_LABEL[z]+'</td>'; tb.appendChild(zr);
   STATIONS.filter(s=>s.zone===z).forEach(s=>{
@@ -593,9 +701,12 @@ function paint(){
   document.querySelectorAll(".node").forEach(g=>{
     const st = STATIONS.find(s=>s.id===g.dataset.id);
     g.classList.remove("cat-N1","cat-N2","cat-N3","picked","active");
+    ZONE_ORDER.forEach(z=>g.classList.remove("zn-"+z));
     if(mode==="assess"){
       g.classList.add("cat-"+categoryOf(st,tumorSide));
       if(picked.has(st.id)) g.classList.add("picked");
+    } else {
+      g.classList.add("zn-"+st.zone);
     }
     if(activeId===st.id) g.classList.add("active");
   });
@@ -666,6 +777,8 @@ function setMode(m){
   $("mAssess").setAttribute("aria-pressed", m==="assess");
   $("sidepick").classList.toggle("on", m==="assess");
   $("readout").classList.toggle("on", m==="assess");
+  $("legExplore").style.display = m==="assess" ? "none" : "flex";
+  $("legAssess").style.display  = m==="assess" ? "flex" : "none";
   if(m==="explore"){ picked.clear(); }
   refreshReadout();
   if(activeId) showDetail(STATIONS.find(s=>s.id===activeId));
