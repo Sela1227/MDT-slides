@@ -355,7 +355,7 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
 <section>
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">03</span><h2>N 分期怎麼算</h2></div>
-    <p class="sec-sub">第 9 版最大的改變：把舊版的 N2 拆成 N2a 與 N2b。原因是<strong>只侵犯一站縱膈</strong>的病人，預後明顯比多站好——而這個差異會一路影響到要不要做術後放療。</p>
+    <p class="sec-sub">AJCC 第 9 版正式採用 IASLC 提出的 N2a／N2b 分類，以區分單站與多站縱膈淋巴結轉移。single-station 與 multi-station 的預後差異，IASLC 資料庫早已描述，第 9 版是把它<strong>正式納入分期描述子</strong>——而這個區分會一路影響到要不要做術後放療。</p>
     <div class="rules">
       <div class="rule r1">
         <h3>N1</h3>
@@ -364,13 +364,13 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
       </div>
       <div class="rule r2a">
         <h3>N2a</h3>
-        <p>同側縱膈或隆突下淋巴結轉移，且<strong>只有單一站別</strong>。第 9 版新設，預後較佳。</p>
-        <div class="st9">單站，例如只有 7；或只有 4R</div>
+        <p>同側縱膈淋巴結（<strong>包括 station 7</strong>）僅侵犯<strong>單一站</strong>。相較 N2b 預後較佳，但仍屬 Stage III。</p>
+        <div class="st9">Single ipsilateral mediastinal station<br>例如只有 station 4R；或只有 station 7</div>
       </div>
       <div class="rule r2b">
         <h3>N2b</h3>
-        <p>同側縱膈／隆突下轉移，<strong>侵犯兩站以上</strong>。預後較 N2a 差，全身性風險高。</p>
-        <div class="st9">例如 4R + 7；或 4L + 5 + 7</div>
+        <p>同側縱膈淋巴結<strong>侵犯兩站以上</strong>。預後較 N2a 差，全身性復發風險高。</p>
+        <div class="st9">Multiple ipsilateral mediastinal stations<br>例如 4R + 7；或 4L + 5 + 7</div>
       </div>
       <div class="rule r3">
         <h3>N3</h3>
@@ -380,19 +380,24 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
     </div>
     <div class="cards" style="margin-top:20px">
       <div class="card">
-        <div class="k">記住這三件事</div>
-        <h4>第 7 站兩邊都算 N2</h4>
-        <p>隆突下位於正中，不論腫瘤在左在右，侵犯 7 站都算同側縱膈，是 N2 不是 N3。第 3a、3p 站同理。</p>
+        <div class="k">必記 01</div>
+        <h4>Station 7 永遠是 N2</h4>
+        <p>隆突下位於正中，不論腫瘤在左在右，侵犯 station 7 都算同側縱膈。<strong>station 7 永遠不會因左右不同而變成 N3。</strong>station 3a、3p 同理。</p>
       </div>
       <div class="card">
-        <div class="k">記住這三件事</div>
-        <h4>4R 的左界是氣管左緣</h4>
-        <p>右側氣管旁區並非以中線為界，而是延伸到氣管的左側緣。所以緊貼氣管左前方的結，仍可能被判為 4R。</p>
+        <div class="k">必記 02</div>
+        <h4>4R 跨過中線</h4>
+        <p>右側氣管旁區<strong>不是</strong>以中線為界，而是延伸到氣管的左側緣（上界 innominate vein 下緣，下界 azygos vein 下緣）。緊貼氣管左前方的結仍可能是 4R——這一站最常被畫太小。</p>
       </div>
       <div class="card">
-        <div class="k">記住這三件事</div>
-        <h4>5、6 站只有左邊有</h4>
-        <p>主動脈下（AP window）與主動脈旁站，解剖上只存在於左側。左上葉腫瘤常轉移到這裡，是 N2；右肺腫瘤跑到 5 或 6 就是 N3。</p>
+        <div class="k">必記 03</div>
+        <h4>Station 5、6 只有左側有</h4>
+        <p>主動脈下（AP window）與主動脈旁站，解剖上只存在於左側。左上葉腫瘤常轉移到這裡，是 N2；右肺腫瘤跑到 station 5 或 6 就是 N3。</p>
+      </div>
+      <div class="card">
+        <div class="k">術語陷阱</div>
+        <h4>Station ≠ Group</h4>
+        <p>IASLC 官方用的是 <strong>station 1–14</strong>。若院內病理報告寫「group 3」「group 1–9」，那是院內慣用或 <strong>Naruke 分群</strong>，編號邏輯與 IASLC 不完全對應。讀報告時先確認用的是哪一套，溝通與登錄一律回到 station。</p>
       </div>
     </div>
   </div>
@@ -406,11 +411,11 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
       <table>
         <thead><tr><th style="width:26%">報告寫法</th><th style="width:24%">臨床意義</th><th>個管跟進</th></tr></thead>
         <tbody>
-          <tr><td class="st">pN2a<br>single station</td><td>單站縱膈轉移，Stage IIIA（依 T 而定）</td><td>確認驅動基因（EGFR／ALK）與 PD-L1 是否已送檢；輔助化療排程；追蹤是否已有 PET-CT 與腦部 MRI</td></tr>
-          <tr><td class="st">pN2b<br>multi-station</td><td>多站縱膈轉移，全身性復發風險較高</td><td>同上，並提早介入營養與體能評估；MDT 討論排入</td></tr>
+          <tr><td class="st">pN2a<br>single station</td><td>同側縱膈單站轉移。<strong>相較 N2b 預後較佳，但仍屬 Stage III</strong>，需要完整的輔助治療評估</td><td>確認驅動基因（EGFR／ALK）與 PD-L1 是否已送檢；輔助化療排程；追蹤是否已有 PET-CT 與腦部 MRI。<strong>不可向病人傳達「只有一顆沒關係」</strong></td></tr>
+          <tr><td class="st">pN2b<br>multi-station</td><td>同側縱膈多站轉移，全身性復發風險較高</td><td>同上，並提早介入營養與體能評估；MDT 討論排入</td></tr>
           <tr><td class="st">cN3</td><td>對側縱膈或鎖骨上，通常不開刀</td><td>轉銜同步化放療或全身治療路徑；病人常誤以為「只是淋巴結」，需衛教說明治療方向改變的原因</td></tr>
-          <tr><td class="st">ENE (+)<br>extranodal extension</td><td>腫瘤穿出淋巴結被膜</td><td>標記為術後放療的評估對象，提醒主治確認</td></tr>
-          <tr><td class="st">15 顆取樣<br>1 顆陽性</td><td>淋巴結負荷低，清掃充分</td><td>可作為與病人溝通預後的正向訊息之一，但仍需完成全身治療</td></tr>
+          <tr><td class="st">ENE (+)<br>extranodal extension</td><td>腫瘤穿出淋巴結被膜，屬<strong>局部復發的高危險因子</strong></td><td>可列入 MDT 討論 PORT 的考量因素之一。<strong>目前無 guideline 認定 ENE(+) 即需 PORT</strong>，不要在病人面前預告放療</td></tr>
+          <tr><td class="st">15 顆取樣<br>1 顆陽性</td><td>淋巴結負荷低</td><td>仍須確認是否完成 <strong>systematic mediastinal lymph node dissection</strong> 或符合 systematic sampling 標準——顆數多 ≠ 一定清乾淨，關鍵是<strong>採了哪幾站</strong>。確認後方可作為溝通預後的參考</td></tr>
           <tr><td class="st">"skip metastasis"</td><td>N1 陰性但 N2 陽性，跳站轉移</td><td>不影響 N 分期判定，但屬預後相對較好的 N2 亞型，常見於上葉腫瘤</td></tr>
         </tbody>
       </table>
@@ -429,7 +434,9 @@ footer p{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1
 <footer>
   <div class="wrap">
     <p>教學用途，非臨床決策工具。分期以主治醫師判讀與病理報告正本為準。<br>
-    參考：IASLC Lymph Node Map（Rusch et al.）· AJCC Cancer Staging Manual, 9th edition（2025 生效）· IASLC N-descriptor 修訂建議</p>
+    本教材一律使用 IASLC 的 station 命名；若院內報告使用 group（Naruke）分群，請先行對照確認。<br>
+    參考：IASLC Lymph Node Map（Rusch et al.）· AJCC Cancer Staging Manual, 9th edition（2025 生效）· IASLC N-descriptor 修訂建議<br>
+    V1.1 · 依臨床審查修訂（N2a 定義、4R 完整邊界、station/group 術語、ENE 與淋巴結取樣的表述強度）</p>
   </div>
 </footer>
 
@@ -463,9 +470,9 @@ const STATIONS = [
   why:"位置隱蔽，常需 EBUS 或 EUS 才採得到。屬中線站，兩側原發都算 N2。",x:300,y:190},
 
  {id:"4R",n:"下氣管旁（右）",en:"Lower paratracheal, right",side:"R",zone:"upper",
-  loc:"從無名靜脈與氣管交會下緣，到奇靜脈下緣。",
-  bd:"左界同樣延伸到<strong>氣管左側緣</strong>。",
-  why:"右肺所有葉別最重要的縱膈引流站，EBUS 必採。右肺原發若 4R 陽性 → N2。",x:262,y:232},
+  loc:"氣管右側，從無名靜脈與氣管交會下緣延伸至奇靜脈下緣。",
+  bd:"上：innominate vein 下緣與氣管交會處。下：azygos vein 下緣。左界：<strong>跨過中線，到氣管左側緣</strong>。<br><span style=\"font-family:var(--mono);font-size:10.5px\">4R extends across the midline to the left lateral border of the trachea.</span>",
+  why:"右肺所有葉別最重要的縱膈引流站，EBUS 必採。右肺原發若 4R 陽性 → N2。<strong>很多人會把 4R 畫太小</strong>——它是跨中線的。",x:262,y:232},
  {id:"4L",n:"下氣管旁（左）",en:"Lower paratracheal, left",side:"L",zone:"upper",
   loc:"從主動脈弓上緣到左主支氣管上緣。",
   bd:"右界為氣管左側緣；外側界為動脈韌帶。",
@@ -483,7 +490,7 @@ const STATIONS = [
  {id:"7",n:"隆突下",en:"Subcarinal",side:"M",zone:"inferior",
   loc:"氣管分叉<strong>正下方</strong>，兩側主支氣管之間。",
   bd:"上：隆突。下：右側到中葉支氣管上緣、左側到下葉支氣管上緣。",
-  why:"位於正中線，<strong>左右肺原發都算 N2</strong>，不會是 N3。任何肺葉都可能轉移到這裡，EBUS 必採。",x:300,y:342},
+  why:"位於正中線，<strong>左右肺原發都算 N2；station 7 永遠不會因左右不同而變成 N3</strong>。任何肺葉都可能轉移到這裡，EBUS 必採。",x:300,y:342},
  {id:"8R",n:"食道旁（右，隆突下）",en:"Paraesophageal, right",side:"R",zone:"inferior",
   loc:"隆突以下，緊貼食道右側壁。",
   bd:"上：接第 7 站下界。下：橫膈。",
@@ -627,7 +634,7 @@ function computeN(){
   }
   const n2 = sel.filter(s=>categoryOf(s,tumorSide)==="N2").map(s=>s.id);
   if(n2.length===1) return {n:"N2a",color:"var(--n2)",
-    why:"同側縱膈只侵犯單一站（"+n2[0]+"）→ 第 9 版的 N2a，預後較 N2b 佳。"};
+    why:"同側縱膈僅侵犯單一站（station "+n2[0]+"）→ N2a。相較 N2b 預後較佳，但仍屬 Stage III。"};
   if(n2.length>1) return {n:"N2b",color:"var(--n2)",
     why:"同側縱膈侵犯 "+n2.length+" 站（"+n2.join("、")+"）→ N2b。"};
   const n1 = sel.map(s=>s.id);
@@ -681,18 +688,18 @@ $("reset").onclick = ()=>{ picked.clear(); refreshReadout(); paint(); };
 
 /* ---- quiz ---- */
 const QUIZ = [
- {q:"右上葉腺癌，術後病理：4R 有 1 顆轉移，其餘 14 顆陰性。N 分期是？",
+ {q:"右上葉腺癌，術後病理：station 4R 有 1 顆轉移，其餘 14 顆陰性。N 分期是？",
   o:["N1","N2a","N2b","N3"],a:1,
-  f:"4R 是右側縱膈站，對右肺原發而言屬同側縱膈 → N2。只有單一站 → 第 9 版的 N2a。"},
+  f:"4R 對右肺原發而言屬同側縱膈 → N2；僅單一站 → <strong>N2a</strong>。注意：這仍是 Stage III，輔助治療評估不能省。"},
  {q:"左上葉腺癌，報告：station 5 與 station 7 皆有轉移。N 分期是？",
   o:["N2a","N2b","N3","N1"],a:1,
-  f:"5 站是左側特有的主動脈下站，對左肺原發是同側縱膈；7 站是中線，兩側都算 N2。兩站 → N2b。"},
- {q:"右下葉腺癌，EBUS 顯示 4L 有轉移，4R 陰性。N 分期是？",
+  f:"station 5 是左側特有的主動脈下站，對左肺原發是同側縱膈；station 7 位於中線，兩側都算 N2。共兩站 → <strong>N2b</strong>。"},
+ {q:"右下葉腺癌，EBUS 顯示 station 4L 有轉移，4R 陰性。N 分期是？",
   o:["N2a","N2b","N3","N1"],a:2,
-  f:"腫瘤在右肺，4L 是<strong>對側</strong>縱膈 → N3。這一題是最常見的誤判：看到「4」就以為是 N2。"},
- {q:"左下葉腺癌，只有 11L 與 12L 陽性，縱膈全部陰性。N 分期是？",
+  f:"腫瘤在右肺，4L 是<strong>對側</strong>縱膈 → N3。這是最常見的誤判：看到「4」就以為是 N2。側別比編號重要。"},
+ {q:"左下葉腺癌，只有 station 11L 與 12L 陽性，縱膈全部陰性。N 分期是？",
   o:["N0","N1","N2a","N3"],a:1,
-  f:"11 與 12 站屬肺門／肺內，且與腫瘤同側 → N1。第 10 站以下（含）都是 N1 的範圍。"}
+  f:"station 11 與 12 屬肺門／肺內，且與腫瘤同側 → N1。station 10 以下（含）都是 N1 的範圍。"}
 ];
 const qWrap = document.getElementById("quiz");
 QUIZ.forEach((item,i)=>{
