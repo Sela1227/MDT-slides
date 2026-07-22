@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>放腫文獻週報 · 2026-07-19</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232E; --paper:#FBFCFB; --panel:#FFFFFF; --line:#E4E9EA;
+    --muted:#5C6B72; --teal:#0F7A83; --teal-deep:#0A5960;
+    --signal:#B8501C; --signal-bg:#FBF1EA;
+    --t-green:#2E8B57; --t-red:#C0392B; --t-amber:#C08A22; --t-blue:#3A6EA5;
+    --shadow:0 1px 2px rgba(22,35,46,.04),0 8px 24px rgba(22,35,46,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:"Noto Serif TC",serif;line-height:1.7;
+    font-size:16px;padding:0 20px;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:48px 0 80px}
+  code,.mono{font-family:"IBM Plex Mono",monospace}
+
+  /* Masthead */
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  .kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--teal-deep);font-weight:500}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(30px,6vw,46px);
+    line-height:1.05;letter-spacing:-.02em;margin:10px 0 14px}
+  .mast-meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:"IBM Plex Mono",monospace;
+    font-size:13px;color:var(--muted)}
+  .mast-meta b{color:var(--ink);font-weight:500}
+
+  /* count strip */
+  .counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;
+    overflow:hidden;margin:26px 0 44px}
+  .count{background:var(--panel);padding:12px 10px;text-align:center}
+  .count .n{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:22px;line-height:1}
+  .count .l{font-size:11.5px;color:var(--muted);margin-top:5px;letter-spacing:.02em}
+  .count.zero .n{color:#AAB4B7}
+
+  /* section heads */
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin:46px 0 4px}
+  .sec-head h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:21px;
+    letter-spacing:-.01em}
+  .sec-head .en{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+    letter-spacing:.04em}
+  .sec-note{font-size:13.5px;color:var(--muted);margin:6px 0 18px;max-width:64ch}
+
+  /* featured band */
+  .featured{background:var(--signal-bg);border:1px solid #E6D6C8;border-radius:14px;
+    padding:26px 26px 10px;margin:14px 0 8px}
+  .flag{display:inline-flex;align-items:center;gap:7px;font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);
+    font-weight:500;margin-bottom:4px}
+  .flag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--signal)}
+
+  /* entry */
+  .entry{display:grid;grid-template-columns:20px 1fr;gap:14px;
+    padding:16px 0;border-top:1px solid var(--line)}
+  .entry:first-of-type{border-top:none}
+  .featured .entry{border-top-color:#EBDDD0}
+  .tier{width:11px;height:11px;border-radius:50%;margin-top:9px;flex:none}
+  .tier.g{background:var(--t-green)} .tier.r{background:var(--t-red)}
+  .tier.a{background:var(--t-amber)} .tier.b{background:var(--t-blue)}
+  .entry h3{font-size:16.5px;font-weight:600;line-height:1.4;margin-bottom:5px}
+  .entry h3 a{color:var(--ink);text-decoration:none;background:
+    linear-gradient(var(--teal),var(--teal)) 0 92%/0 1.5px no-repeat;
+    transition:background-size .25s}
+  .entry h3 a:hover{background-size:100% 1.5px;color:var(--teal-deep)}
+  .take{font-size:14.5px;color:#31424C;margin-bottom:7px}
+  .take b{color:var(--ink);font-weight:600}
+  .cite{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+  .cite .j{color:var(--teal-deep);font-weight:500}
+  .cite a{color:var(--muted);text-decoration:none;border-bottom:1px dotted #B7C0C3}
+  .cite a:hover{color:var(--teal-deep);border-bottom-color:var(--teal)}
+
+  /* tier legend */
+  .legend{display:flex;flex-wrap:wrap;gap:14px 20px;font-size:12.5px;color:var(--muted);
+    margin:8px 0 4px;padding:14px 0;border-top:1px solid var(--line)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+  footer{margin-top:56px;padding-top:22px;border-top:2px solid var(--ink);
+    font-size:12.5px;color:var(--muted);font-family:"IBM Plex Mono",monospace;line-height:1.9}
+  footer b{color:var(--ink);font-weight:500}
+  .zero-row{margin-top:6px}
+  @media(max-width:520px){
+    body{padding:0 15px}.wrap{padding:32px 0 60px}
+    .entry{grid-template-columns:16px 1fr;gap:11px}
+    .featured{padding:20px 18px 6px}
+  }
+  @media print{
+    body{background:#fff}.featured{background:#fff;border-color:#ccc}
+    .entry h3 a,.cite a{color:#000}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <div class="kicker">放射腫瘤科 · PubMed 每週追蹤</div>
+    <h1>本週文獻週報</h1>
+    <div class="mast-meta">
+      <span>期間 <b>2026-07-12 → 07-19</b></span>
+      <span>來源 <b>NCBI My Bibliography 警示</b></span>
+      <span>9 組追蹤 · <b>234 篇</b>命中</span>
+      <span>排序 <b>放腫優先 · 會改變 practice 者置頂</b></span>
+    </div>
+  </header>
+
+  <div class="counts">
+    <div class="count"><div class="n">39</div><div class="l">攝護腺 RT</div></div>
+    <div class="count"><div class="n">72</div><div class="l">乳癌 RT</div></div>
+    <div class="count"><div class="n">13</div><div class="l">食道 RT</div></div>
+    <div class="count"><div class="n">9</div><div class="l">HCC RT</div></div>
+    <div class="count"><div class="n">80</div><div class="l">頭頸 RT</div></div>
+    <div class="count"><div class="n">10</div><div class="l">黏膜炎</div></div>
+    <div class="count"><div class="n">11</div><div class="l">Checkmate</div></div>
+    <div class="count zero"><div class="n">0</div><div class="l">Doxepin</div></div>
+    <div class="count zero"><div class="n">0</div><div class="l">NPC PET</div></div>
+  </div>
+
+  <!-- FEATURED -->
+  <div class="sec-head">
+    <h2>會改變治療方針的精選</h2><span class="en">// practice-changing</span>
+  </div>
+  <p class="sec-note">跨癌別挑出本週最可能影響臨床決策的 11 篇：指引改版、隨機試驗與去強化／新輔助整合方向。點標題直達 PubMed。</p>
+
+  <div class="featured">
+    <div class="flag">攝護腺 · 指引改版</div>
+    <div class="entry">
+      <span class="tier b"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42457454/" target="_blank" rel="noopener">EAU-EANM-ESTRO-ESUR-ISUP-SIOG 攝護腺癌指引 2026 更新 · Part I：篩檢、診斷與根治性局部治療</a></h3>
+        <p class="take">六大學會聯合指引改版。<b>局部治療（含根治性放療、劑量分次、ADT 搭配）的最新共識</b>，放腫端需通盤對齊；建議與 Part II 一起讀。</p>
+        <div class="cite"><span class="j">Eur Urol</span><span>PMID 42457454</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier b"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42457456/" target="_blank" rel="noopener">同上 · Part II：復發與轉移性攝護腺癌的治療</a></h3>
+        <p class="take">生化復發、寡轉移與 mCRPC 段落的更新，牽動 salvage RT、轉移導向治療與系統治療的排序。</p>
+        <div class="cite"><span class="j">Eur Urol</span><span>PMID 42457456</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42448001/" target="_blank" rel="noopener">NRG/RTOG 0534 SPPORT：攝護腺切除後 salvage RT 加 ADT 與骨盆淋巴照射的生活品質結果</a></h3>
+        <p class="take">SPPORT 先前已證實加 ADT＋PLNRT 改善無生化失敗存活；<b>本篇補上病人自述生活品質的權衡</b>，是 salvage 是否升級照射野／加荷爾蒙的關鍵佐證。</p>
+        <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 42448001</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42350643/" target="_blank" rel="noopener">乳癌：術前 SBRT + durvalumab + oleclumab（ER⁺HER2⁻）隨機二期</a></h3>
+        <p class="take">荷爾蒙陽性「冷腫瘤」的<b>術前放療結合雙免疫（PD-L1＋CD73）隨機二期</b>，探索放療免疫增敏在 luminal 乳癌的可行性。</p>
+        <div class="cite"><span class="j">Nat Med</span><span>PMID 42350643</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41759682/" target="_blank" rel="noopener">SHIFT：早期乳癌超大分割全乳照射 + 序貫瘤床 boost 多中心二期</a></h3>
+        <p class="take">延續 FAST-Forward 之後的再減次趨勢，<b>ultra-hypofractionation 加 boost 的早期安全性</b>資料。</p>
+        <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41759682</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier a"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41692352/" target="_blank" rel="noopener">RADCOMP：質子 vs 光子區域淋巴照射後臨床甲狀腺低下（前瞻相關性研究）</a></h3>
+        <p class="take">RADCOMP 隨機試驗內的前瞻子研究，比較質子與光子對甲狀腺劑量與臨床甲低——質子在區域淋巴照射的取捨佐證。</p>
+        <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41692352</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41713514/" target="_blank" rel="noopener">Neo-DRATEC：可切除胸段食道鱗癌術前化放療「不同放射劑量」隨機試驗</a></h3>
+        <p class="take"><b>直接回答 neoadjuvant 加量是否有益</b>的隨機比較——與 CROSS/INT-0123 的劑量爭議一脈相承，值得對照既有食道整理頁。</p>
+        <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41713514</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41490475/" target="_blank" rel="noopener">HCC：SBRT 作為肝移植 bridging / downstaging 的系統回顧與統合分析</a></h3>
+        <p class="take">匯整 SBRT 在移植候選者橋接與降期的療效與安全性，<b>強化 SBRT 於移植路徑的定位</b>。</p>
+        <div class="cite"><span class="j">Liver Transpl</span><span>PMID 41490475</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41984885/" target="_blank" rel="noopener">HCC：術前 SBRT + 免疫治療正向重塑腫瘤微環境</a></h3>
+        <p class="take">轉譯研究，顯示 neoadjuvant SBRT 加免疫可改造 HCC 免疫微環境——為 SBRT＋IO 組合提供機轉支撐。</p>
+        <div class="cite"><span class="j">Clin Cancer Res</span><span>PMID 41984885</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier a"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42440420/" target="_blank" rel="noopener">頭頸 T1-2 低腫瘤量：單獨放療 vs 同步化放療 多中心世代研究</a></h3>
+        <p class="take"><b>低量疾病是否真的需要加同步化療</b>的去強化提問；世代資料非隨機，結論待前瞻驗證，但方向重要。</p>
+        <div class="cite"><span class="j">Clin Transl Radiat Oncol</span><span>PMID 42440420</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <span class="tier g"></span>
+      <div>
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42098120/" target="_blank" rel="noopener">ReACT 1.0：HPV ctDNA 導引風險適應治療（HPV⁺ 口咽癌）探索性二期</a></h3>
+        <p class="take">以循環腫瘤 DNA 動態<b>導引去強化</b>的二期試驗——延續 HPV⁺ OPC 減量的主線議題。</p>
+        <div class="cite"><span class="j">Nat Commun</span><span>PMID 42098120</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--t-green)"></i>🟢 支持／正向證據</span>
+    <span><i style="background:var(--t-red)"></i>🔴 反對／負向或風險</span>
+    <span><i style="background:var(--t-amber)"></i>🟡 混合／取捨</span>
+    <span><i style="background:var(--t-blue)"></i>🔹 背景／指引／方法</span>
+  </div>
+
+  <!-- PROSTATE -->
+  <div class="sec-head"><h2>攝護腺 RT</h2><span class="en">// 39 篇 · 其餘精選</span></div>
+  <p class="sec-note">指引與 SPPORT 已置頂。以下為本週其餘與放腫相關者。</p>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42442974/" target="_blank" rel="noopener">PROBASE：確認性 PSA 可改善早中年男性的攝護腺癌篩檢</a></h3>
+    <p class="take">篩檢流程中 confirmatory PSA 的價值——影響轉介與早期偵測策略。</p>
+    <div class="cite"><span class="j">Eur Urol</span><span>PMID 42442974</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42440347/" target="_blank" rel="noopener">PER3 生理時鐘基因型 × 攝護腺放療時段 交互影響晚期副作用</a></h3>
+    <p class="take">chronoradiobiology：照射時段可能與基因型交互作用影響晚期毒性——個人化排程的早期訊號。</p>
+    <div class="cite"><span class="j">Clin Cancer Res</span><span>PMID 42440347</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41698468/" target="_blank" rel="noopener">主動監測 vs 放療 的 Medicare 總成本隨時間變化</a></h3>
+    <p class="take">健康經濟角度比較 AS 與 RT 的長期成本，對政策與病人諮商有參考價值。</p>
+    <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41698468</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42440346/" target="_blank" rel="noopener">直立姿勢碳離子攝護腺放療可行性：仰臥 vs 直立劑量學比較</a></h3>
+    <p class="take">upright particle therapy 的劑量學初探——粒子治療佈局的前瞻方向。</p>
+    <div class="cite"><span class="j">Med Phys</span><span>PMID 42440346</span></div></div></div>
+
+  <!-- BREAST -->
+  <div class="sec-head"><h2>乳癌 RT</h2><span class="en">// 72 篇 · 其餘精選</span></div>
+  <p class="sec-note">三篇隨機／前瞻已置頂（SBRT＋雙免疫、SHIFT、RADCOMP）。以下為其餘臨床相關者。</p>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41763494/" target="_blank" rel="noopener">整合基因體與非基因體資料分層「對側乳癌」放療後風險</a></h3>
+    <p class="take">放療後對側乳癌風險的多維分層——影響照射野與長期監測的決策。</p>
+    <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41763494</span></div></div></div>
+  <div class="entry"><span class="tier r"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41842879/" target="_blank" rel="noopener">左側乳癌放射「急性心臟傷害」的劑量反應：心臟磁振研究</a></h3>
+    <p class="take">以 CMR 量化左側乳癌心臟劑量與急性傷害的關係——強化心臟劑量限制的臨床理由。</p>
+    <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41842879</span></div></div></div>
+  <div class="entry"><span class="tier a"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42174618/" target="_blank" rel="noopener">老年早期 ER⁺ 乳癌 BCS 後：單獨荷爾蒙 vs 荷爾蒙＋放療 統合分析</a></h3>
+    <p class="take">高齡去放療（omission）議題的最新彙整——與 PRIME II／CALGB 9343 對照參考。</p>
+    <div class="cite"><span class="j">World J Surg Oncol</span><span>PMID 42174618</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42456782/" target="_blank" rel="noopener">早期乳癌超大分割全乳照射：義大利多中心觀察研究</a></h3>
+    <p class="take">真實世界 ultra-hypofx 全乳照射的多中心經驗，補充 SHIFT 的臨床外推性。</p>
+    <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 42456782</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42229166/" target="_blank" rel="noopener">DCIS：BCS＋放療後 close margin 對局部復發的預後影響</a></h3>
+    <p class="take">DCIS 邊緣距離與 LRR 的關聯——邊緣判讀與再切除決策參考。</p>
+    <div class="cite"><span class="j">Eur J Surg Oncol</span><span>PMID 42229166</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41759681/" target="_blank" rel="noopener">乳房重建與放療整合：質子—光子辯論暴露的方法學落差（review）</a></h3>
+    <p class="take">重建情境下質子 vs 光子的證據品質評析——選 modality 前的批判性閱讀。</p>
+    <div class="cite"><span class="j">Int J Radiat Oncol Biol Phys</span><span>PMID 41759681</span></div></div></div>
+
+  <!-- ESOPHAGUS -->
+  <div class="sec-head"><h2>食道 RT</h2><span class="en">// 13 篇 · 其餘精選</span></div>
+  <p class="sec-note">Neo-DRATEC 已置頂。以下兩篇與你的食道整理頁直接相關。</p>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42458490/" target="_blank" rel="noopener">pT3N0M0 食道癌術後輔助治療：放療是否在化療之外再加乘？</a></h3>
+    <p class="take">術後 adjuvant RT 的邊際效益提問——可接到「術後輔助策略」主題。</p>
+    <div class="cite"><span class="j">Radiat Oncol</span><span>PMID 42458490</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42442351/" target="_blank" rel="noopener">JCOG2106A：食道鱗癌根治性化放療後 SCC-Ag／CEA 監測價值</a></h3>
+    <p class="take">definitive CRT 後腫瘤標記追蹤的前瞻資料——接到「監測與復發偵測」主題。</p>
+    <div class="cite"><span class="j">Dis Esophagus</span><span>PMID 42442351</span></div></div></div>
+
+  <!-- HCC -->
+  <div class="sec-head"><h2>HCC RT</h2><span class="en">// 9 篇 · 其餘精選</span></div>
+  <p class="sec-note">兩篇 SBRT 已置頂。以下為其餘放腫相關者。</p>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42314568/" target="_blank" rel="noopener">歐洲肝臟再照射（reirradiation）真實世界 pattern of care（EORTC 會員）</a></h3>
+    <p class="take">界定肝臟再照射的實務現況與限制——再照射決策的參考基準。</p>
+    <div class="cite"><span class="j">Clin Oncol (R Coll Radiol)</span><span>PMID 42314568</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42471954/" target="_blank" rel="noopener">HCC SBRT 後 MRI 影像判讀：scoping review</a></h3>
+    <p class="take">SBRT 後影像變化與腫瘤反應／假性進展的辨識——追蹤影像判讀實用。</p>
+    <div class="cite"><span class="j">Clin Transl Radiat Oncol</span><span>PMID 42471954</span></div></div></div>
+
+  <!-- HEAD & NECK -->
+  <div class="sec-head"><h2>頭頸 RT</h2><span class="en">// 80 篇 · 其餘精選</span></div>
+  <p class="sec-note">T1-2 去強化、RESCUE、ReACT 已置頂。以下為其餘臨床相關者。</p>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42446251/" target="_blank" rel="noopener">RESCUE：原發放療後復發 HNSCC 的救援性頸廓清（IReC 多中心世代）</a></h3>
+    <p class="take">salvage neck dissection 的角色、時機與結果——復發處置的多中心實證。</p>
+    <div class="cite"><span class="j">Head Neck</span><span>PMID 42446251</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42365828/" target="_blank" rel="noopener">可切除頭頸鱗癌「新輔助免疫治療」目標與反應標準共識</a></h3>
+    <p class="take">neoadjuvant IO 反應評估的標準化共識——判讀未來試驗與臨床整合的框架。</p>
+    <div class="cite"><span class="j">Cancer Treat Rev</span><span>PMID 42365828</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42379129/" target="_blank" rel="noopener">頭頸 IMPT：穩健優化下是否需要 plan adaptation？初期機構經驗劑量學</a></h3>
+    <p class="take">質子調控放療的重規劃需求評估——質子 workflow 佈建參考。</p>
+    <div class="cite"><span class="j">Clin Oncol (R Coll Radiol)</span><span>PMID 42379129</span></div></div></div>
+  <div class="entry"><span class="tier g"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42460130/" target="_blank" rel="noopener">口服 spermidine 保護放療後頷下腺功能：機轉與二期隨機試驗</a></h3>
+    <p class="take">支持性照護：減少唾液腺功能損傷的介入性二期資料。</p>
+    <div class="cite"><span class="j">MedComm</span><span>PMID 42460130</span></div></div></div>
+  <div class="entry"><span class="tier a"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42446784/" target="_blank" rel="noopener">頭頸癌預防性 vs 反應性 PEG 灌食管：存活與支持照護統合分析</a></h3>
+    <p class="take">PEG 置放時機的取捨——營養支持路徑決策。</p>
+    <div class="cite"><span class="j">Support Care Cancer</span><span>PMID 42446784</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42275728/" target="_blank" rel="noopener">高齡頭頸癌同步化放療的存活與毒性：大型四級中心回溯</a></h3>
+    <p class="take">老年 CCRT 的療效／毒性平衡——高齡族群治療強度決策參考。</p>
+    <div class="cite"><span class="j">Clin Oncol (R Coll Radiol)</span><span>PMID 42275728</span></div></div></div>
+
+  <!-- SUPPORTIVE / CROSS -->
+  <div class="sec-head"><h2>支持照護與跨癌別</h2><span class="en">// 黏膜炎 + Checkmate</span></div>
+  <p class="sec-note">「黏膜炎」10 篇多為機轉／動物研究，臨床可用者見下；「Checkmate」11 篇多屬免疫腫瘤（黑色素瘤／RCC／HCC），與放腫較相關者列出。</p>
+  <div class="entry"><span class="tier g"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42445442/" target="_blank" rel="noopener">頭頸癌放射性口腔黏膜炎：不同藥物的系統回顧與網絡統合分析</a></h3>
+    <p class="take">黏膜炎藥物療效的網絡比較——支持照護處方選擇的實用彙整。</p>
+    <div class="cite"><span class="j">Transl Cancer Res</span><span>PMID 42445442</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42098105/" target="_blank" rel="noopener">CheckMate 650：nivolumab＋ipilimumab 於化療難治 mCRPC 隨機部分結果</a></h3>
+    <p class="take">攝護腺免疫治療的隨機二期資料——mCRPC 系統治療佈局背景。</p>
+    <div class="cite"><span class="j">Nat Commun</span><span>PMID 42098105</span></div></div></div>
+  <div class="entry"><span class="tier b"></span><div>
+    <h3><a href="https://pubmed.ncbi.nlm.nih.gov/42008357/" target="_blank" rel="noopener">晚期 HCC 免疫治療的長期存活與「治癒分數」：RCT 與真實世界</a></h3>
+    <p class="take">HCC 免疫治療長尾存活的量化——與 SBRT＋IO 主題互為背景。</p>
+    <div class="cite"><span class="j">Clin Cancer Res</span><span>PMID 42008357</span></div></div></div>
+
+  <footer>
+    <div><b>本週 0 篇：</b>Doxepin（doxepin head and neck，5 年）、NPC PET（5 年）— 追蹤設定正常，僅無新命中。</div>
+    <div class="zero-row"><b>範圍說明：</b>共 234 篇命中，本週報為精選（放腫優先、practice-changing 置頂），非全清單。每篇連結直達 PubMed 可看完整摘要。</div>
+    <div class="zero-row"><b>臨床摘要層級：</b>各篇一句話取自標題／文獻型態層級，未逐篇連網補摘要；如需某篇濃縮成 v4 toggle 併入 Notion 主題頁，指定 PMID 即可。</div>
+    <div class="zero-row">產生於 2026-07-22 · 9 封 NCBI 警示信已讀取並可標記「claude 已處理」。</div>
+  </footer>
+
+</div>
+</body>
+</html>
