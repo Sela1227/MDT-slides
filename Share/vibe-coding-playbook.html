@@ -22,31 +22,16 @@ body{
   font-family:var(--sans); font-size:15px; line-height:1.75;
   -webkit-font-smoothing:antialiased;
 }
-a{color:var(--nord10)}
-
-/* ---------- 版頭 ---------- */
-header{
-  background:var(--nord0); color:var(--nord6);
-  padding:34px 28px 28px;
-}
+header{background:var(--nord0); color:var(--nord6); padding:30px 28px 26px}
 .wrap{max-width:1180px; margin:0 auto}
 .eyebrow{
   font-family:var(--mono); font-size:11px; letter-spacing:.22em;
   color:var(--nord8); text-transform:uppercase; margin:0 0 10px;
 }
 h1{margin:0; font-size:27px; font-weight:700; letter-spacing:.02em}
-h1 em{
-  font-style:normal; color:var(--brand);
-  font-family:var(--mono); font-size:22px; margin-left:10px;
-}
-.sub{margin:10px 0 0; color:var(--nord4); font-size:14px; max-width:64ch}
-.meta{
-  margin-top:18px; display:flex; gap:22px; flex-wrap:wrap;
-  font-family:var(--mono); font-size:11.5px; color:var(--nord3);
-}
-.meta b{color:var(--nord4); font-weight:400}
+h1 em{font-style:normal; color:var(--brand); font-family:var(--mono); font-size:22px; margin-left:10px}
+.sub{margin:12px 0 0; color:var(--nord4); font-size:13px; font-family:var(--mono)}
 
-/* ---------- 搜尋列 ---------- */
 .toolbar{
   position:sticky; top:0; z-index:20;
   background:rgba(236,239,244,.94); backdrop-filter:blur(8px);
@@ -61,16 +46,9 @@ h1 em{
 #q:focus{outline:2px solid var(--brand); outline-offset:1px; border-color:transparent}
 #count{font-family:var(--mono); font-size:12px; color:var(--nord3); white-space:nowrap}
 
-/* ---------- 主體 ---------- */
 main{max-width:1180px; margin:0 auto; padding:30px 28px 90px; display:flex; gap:38px; align-items:flex-start}
-
-/* 側邊骨幹：專案生命週期 */
-nav{
-  position:sticky; top:70px; width:216px; flex:0 0 216px;
-  border-left:1px solid var(--nord4); padding-left:0;
-}
+nav{position:sticky; top:70px; width:206px; flex:0 0 206px; border-left:1px solid var(--nord4)}
 nav ol{list-style:none; margin:0; padding:0}
-nav li{position:relative}
 nav a{
   display:block; padding:9px 0 9px 20px; text-decoration:none;
   color:var(--nord3); font-size:13.5px; line-height:1.45;
@@ -80,33 +58,21 @@ nav a:hover{color:var(--nord0)}
 nav a.on{color:var(--nord0); font-weight:700; border-left-color:var(--brand)}
 nav a .n{font-family:var(--mono); font-size:11px; color:var(--nord3); display:block; letter-spacing:.1em}
 nav a.on .n{color:var(--brand)}
-
 .content{flex:1; min-width:0}
 
-/* ---------- 章節 ---------- */
-section{margin-bottom:52px; scroll-margin-top:74px}
-.sec-head{border-bottom:2px solid var(--nord0); padding-bottom:10px; margin-bottom:8px}
+section{margin-bottom:46px; scroll-margin-top:74px}
+.sec-head{border-bottom:2px solid var(--nord0); padding-bottom:10px; margin-bottom:20px}
 .sec-num{font-family:var(--mono); font-size:11px; letter-spacing:.2em; color:var(--brand)}
 .sec-head h2{margin:3px 0 0; font-size:20px; font-weight:700}
-.sec-why{margin:10px 0 22px; color:var(--nord3); font-size:13.5px}
+.sec-head h2 span{font-family:var(--mono); font-size:12px; color:var(--nord3); font-weight:400; margin-left:10px}
 
-/* ---------- 卡片 ---------- */
-.card{
-  background:var(--surface); border:1px solid var(--nord4);
-  border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;
-}
-.card-top{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
-.card-top h3{margin:0; font-size:16px; font-weight:700; flex:1; min-width:200px}
-.trace{
-  font-family:var(--mono); font-size:10.5px; color:var(--nord3);
-  border:1px solid var(--nord4); border-radius:4px; padding:2px 7px; white-space:nowrap;
-}
-.when{margin:8px 0 14px; font-size:13.5px; color:var(--nord3)}
-.when b{color:var(--nord0); font-weight:700; font-size:12px; margin-right:6px}
+.card{background:var(--surface); border:1px solid var(--nord4); border-radius:var(--radius); padding:18px 22px 20px; margin-bottom:14px}
+.card h3{margin:0; font-size:16px; font-weight:700}
+.when{margin:6px 0 13px; font-size:13.5px; color:var(--nord3)}
 .prompt{
-  position:relative; background:var(--nord6); border:1px solid var(--nord5);
+  background:var(--nord6); border:1px solid var(--nord5);
   border-left:3px solid var(--nord10); border-radius:6px;
-  padding:16px 18px 16px 18px; font-size:14px; white-space:pre-wrap;
+  padding:16px 18px; font-size:14px; white-space:pre-wrap;
 }
 .ph{color:var(--brand); font-weight:700}
 .copy{
@@ -118,17 +84,13 @@ section{margin-bottom:52px; scroll-margin-top:74px}
 .copy.ok{border-color:var(--nord14); color:var(--nord14)}
 .copy:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
 
-.empty{padding:40px 0; color:var(--nord3); font-family:var(--mono); font-size:13px}
-footer{
-  border-top:1px solid var(--nord4); padding:24px 28px 60px;
-  font-size:12.5px; color:var(--nord3);
-}
-footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
-.gecko{color:var(--brand); font-weight:700}
+footer{border-top:1px solid var(--nord4); padding:22px 28px 60px; font-size:12.5px; color:var(--nord3)}
+footer .wrap{display:flex; justify-content:flex-end}
+.gecko{color:var(--brand); font-weight:700; font-family:var(--mono)}
 
 @media (max-width:880px){
   main{flex-direction:column; gap:0; padding:22px 18px 70px}
-  nav{position:static; width:100%; flex:none; border-left:0; border-bottom:1px solid var(--nord4); padding-bottom:8px; margin-bottom:26px}
+  nav{position:static; width:100%; flex:none; border-left:0; border-bottom:1px solid var(--nord4); padding-bottom:8px; margin-bottom:24px}
   nav ol{display:flex; gap:6px; overflow-x:auto; padding-bottom:6px}
   nav a{border-left:0; border-bottom:2px solid transparent; padding:6px 10px; white-space:nowrap}
   nav a.on{border-bottom-color:var(--brand)}
@@ -152,18 +114,13 @@ footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wr
   <div class="wrap">
     <p class="eyebrow">Prompt Playbook · rev 2026.07.24</p>
     <h1>Vibe Coding 提示詞手冊<em>40 式</em></h1>
-    <p class="sub">原始教材以「教學階段」排序；此版本改以<b>專案生命週期</b>重排——從需求對焦到交付治理，依你實際推動一個內部工具的順序走一遍。每式保留原冊編號可回溯。</p>
-    <div class="meta">
-      <span><b>來源</b> 華城電機教育訓練講義</span>
-      <span><b>重排軸線</b> 需求 → 資料 → 產出 → 串接 → LLM → 驗證 → 排程 → 治理</span>
-      <span><b>用法</b> 複製後把 <span style="color:#FA7A35">[方括號]</span> 換成你的情境</span>
-    </div>
+    <p class="sub">複製後把 <span style="color:#FA7A35">[方括號]</span> 換成你的情境</p>
   </div>
 </header>
 
 <div class="toolbar">
   <div class="wrap">
-    <input id="q" type="search" placeholder="搜尋關鍵字：Pandas、RAG、排程、除錯、Notion…" autocomplete="off">
+    <input id="q" type="search" placeholder="搜尋：Pandas、RAG、排程、除錯、Notion…" autocomplete="off">
     <span id="count"></span>
   </div>
 </div>
@@ -173,177 +130,172 @@ footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wr
   <div class="content" id="content"></div>
 </main>
 
-<footer>
-  <div class="wrap">
-    <span>生成是輕鬆的 80%，驗證才是工程的 20%。</span>
-    <span class="gecko">SELA</span>
-  </div>
-</footer>
+<footer><div class="wrap"><span class="gecko">SELA</span></div></footer>
 
 <script>
 const DATA = [
 {
-  id:"focus", num:"01", title:"需求對焦", why:"最貴的錯誤發生在寫第一行程式碼之前。這四式的唯一目的，是把腦中的模糊點子壓成 AI 聽得懂、你也驗得了的規格。",
+  id:"focus", num:"01", title:"需求對焦",
   items:[
-    {t:"大白話技術評估", src:"原冊 §1-1", when:"想做個小工具，但不知從何下手。",
-     p:`我完全不懂程式，但我想要做一個『[例如：每天早上自動去抓取特定網頁的商品價格，並整理成 Excel]』的小工具。請用『辦公室分工』的比喻，告訴我需要用到哪些技術或套件（例如：誰負責抓資料、誰負責存檔）？請以表格呈現：技術名稱、功能比喻、難易度。請不要給我任何程式碼。`},
-    {t:"無痛微型任務拆解", src:"原冊 §1-2", when:"目標太大不知道怎麼開始，需要 AI 幫忙切小塊。",
-     p:`我想要開發一個『[例如：自動回覆客戶常見問題的 Line 機器人]』。對於新手來說這太龐大了，請幫我把這個目標拆解成 5 個微型任務（Milestones）。第一個任務必須是『只要 15 分鐘就能在我的電腦上看到初步成功畫面』的最基本測試。請用 Checklist 格式條列每個任務的具體產出。`},
-    {t:"白板推演（邏輯防雷）", src:"原冊 §1-3", when:"寫程式前，先確保腦中的商業邏輯沒有漏洞。",
-     p:`我要設計一段處理『[例如：計算員工當月加班費與補休天數]』的邏輯。在寫任何程式碼之前，請先幫我把運算步驟翻譯成『人類可讀的 Step-by-Step 流程』。如果有任何我可能漏考慮的例外狀況（例如：跨月加班、國定假日），請在該步驟旁標註 ⚠️ 並給予建議。`},
-    {t:"指令擴寫器", src:"原冊 §6-17", when:"有想法，但不知道怎麼寫 Prompt 才能讓 AI 寫出好程式。",
-     p:`我想要讓 AI 幫我寫程式，但我只會用很口語的方式描述：『[例如：做一個可以把我講的話轉成文字檔的程式]』。這個描述太粗糙了。請幫我把這句話，擴寫成一個『結構嚴謹、包含上下文、技術限制與輸出要求』的專業 Vibe Coding Prompt。讓我可以把擴寫後的 Prompt 直接複製拿去問你。`}
+    {t:"大白話技術評估", when:"想做個小工具，但不知從何下手。",
+     p:`我完全不懂程式，但我想要做一個『[例如：每天早上自動匯出前一日治療排程，並整理成 Excel]』的小工具。請用『辦公室分工』的比喻，告訴我需要用到哪些技術或套件（例如：誰負責抓資料、誰負責存檔）？請以表格呈現：技術名稱、功能比喻、難易度。請不要給我任何程式碼。`},
+    {t:"無痛微型任務拆解", when:"目標太大不知道怎麼開始，需要 AI 幫忙切小塊。",
+     p:`我想要開發一個『[例如：自動彙整每週新病人待審名單的小工具]』。這個目標太龐大了，請幫我拆解成 5 個微型任務（Milestones）。第一個任務必須是『只要 15 分鐘就能在我的電腦上看到初步成功畫面』的最基本測試。請用 Checklist 格式條列每個任務的具體產出。`},
+    {t:"白板推演（邏輯防雷）", when:"寫程式前，先確保腦中的邏輯沒有漏洞。",
+     p:`我要設計一段處理『[例如：依分期與治療意圖判斷病人該進入哪一條臨床路徑]』的邏輯。在寫任何程式碼之前，請先幫我把運算步驟翻譯成『人類可讀的 Step-by-Step 流程』。如果有任何我可能漏考慮的例外狀況（例如：資料缺漏、狀態中途變更），請在該步驟旁標註 ⚠️ 並給予建議。`},
+    {t:"指令擴寫器", when:"有想法，但不知道怎麼寫 Prompt 才能讓 AI 寫出好程式。",
+     p:`我想要讓 AI 幫我寫程式，但我只會用很口語的方式描述：『[例如：做一個可以把口述內容轉成文字檔的程式]』。這個描述太粗糙了。請幫我把這句話，擴寫成一個『結構嚴謹、包含上下文、技術限制與輸出要求』的專業 Vibe Coding Prompt。讓我可以把擴寫後的 Prompt 直接複製拿去問你。`}
   ]
 },
 {
-  id:"data", num:"02", title:"資料清洗", why:"髒資料是所有分析失敗的共同起點。這五式處理從多檔整併、PDF 萃取、Regex 到跨出 Excel 極限的完整路徑。",
+  id:"data", num:"02", title:"資料清洗",
   items:[
-    {t:"多檔整併與資料清洗", src:"原冊 §2-4", when:"每個月都要把幾十個報表貼來貼去。",
-     p:`我需要一個 Python (Pandas) 腳本。任務：讀取資料夾中所有的 [Excel 檔]，將裡面的 [銷售額、產品名稱] 欄位合併。約束條件：
-1. 自動過濾掉 [銷售額為空值] 的資料。
+    {t:"多檔整併與資料清洗", when:"每個月都要把幾十個報表貼來貼去。",
+     p:`我需要一個 Python (Pandas) 腳本。任務：讀取資料夾中所有的 [月報 Excel 檔]，將裡面的 [治療人次、部位] 欄位合併。約束條件：
+1. 自動過濾掉 [人次為空值] 的資料。
 2. 將日期統一轉換為 [YYYY-MM-DD] 格式。
 3. 將最終結果輸出為 [乾淨的 CSV 檔]，方便我後續匯入 Power BI。
 請提供完整程式碼，並把『資料夾路徑』設定在最上方，用中文註解標示『👉 這裡請改成你的路徑』。`},
-    {t:"PDF 內文與表格萃取", src:"原冊 §2-5", when:"收到大量 PDF 發票或報告，需要抓取特定數值。",
-     p:`我手上有很多份 [PDF 格式的供應商報價單]。我需要用 Python 提取裡面含有『[總計金額]』與『[公司統編]』的段落或表格。請推薦最容易上手的套件（如 pdfplumber），並提供一段可以直接執行的程式碼。請在每一行代碼加上中文解釋，讓我能看懂它抓資料的邏輯。`},
-    {t:"人類聽得懂的 Regex", src:"原冊 §7-21", when:"要從幾千筆混亂的備註欄位中，精準抓出「手機號碼」或「統一編號」。",
-     p:`我有一欄 Excel 資料，裡面混雜了中英文和符號。我需要把裡面的『[例如：09 開頭的手機號碼]』全部萃取出來。工程師說要用『正規表達式 (Regex)』，但我完全看不懂那是什麼。請用白話文解釋 Regex 的運作原理，並給我一段 Python (Pandas) 程式碼幫我完成萃取。請在程式碼的 Regex 語法旁邊，用中文註解詳細翻譯這串符號的意思。`},
-    {t:"BI 匯入前置清洗", src:"原冊 §7-22", when:"系統匯出的報表格式極度不友善（合併儲存格、多餘表頭），導致 BI 工具無法讀取。",
-     p:`從我們 ERP 系統匯出的 Excel 報表格式很糟，有很多『[例如：合併儲存格、前三行是空白和標題、數值裡面混雜了貨幣符號 $ 和逗號]』。為了讓這份資料能順利匯入 Power BI，請給我一段 Python 腳本幫我『解除合併儲存格並向下填補』，且把貨幣欄位轉成純數字。請一步步說明清洗邏輯。`},
-    {t:"無痛升級輕量資料庫", src:"原冊 §9-29", when:"Excel 檔案超過 50 萬筆，每次開啟都要等 5 分鐘。",
-     p:`我的 Excel 資料太龐大了，跑得非常慢。工程師建議我改用『SQLite』。請用白話文解釋 SQLite 跟 Excel 最大的差別是什麼？並幫我寫一段 Python 程式碼，把我的 [巨量資料.csv] 匯入到 SQLite 資料庫檔案中，並示範如何用 Python 查詢『[例如：銷售額大於 5000 的訂單]』。`}
+    {t:"PDF 內文與表格萃取", when:"收到大量 PDF 報告，需要抓取特定欄位。",
+     p:`我手上有很多份 [PDF 格式的外院報告]。我需要用 Python 提取裡面含有『[病理分期]』與『[報告日期]』的段落或表格。請推薦最容易上手的套件（如 pdfplumber），並提供一段可以直接執行的程式碼。請在每一行代碼加上中文解釋，讓我能看懂它抓資料的邏輯。`},
+    {t:"人類聽得懂的 Regex", when:"要從幾千筆混亂的備註欄位中，精準抓出特定格式的代碼。",
+     p:`我有一欄 Excel 資料，裡面混雜了中英文和符號。我需要把裡面的『[例如：以 C 開頭的 ICD-10 診斷碼]』全部萃取出來。工程師說要用『正規表達式 (Regex)』，但我完全看不懂那是什麼。請用白話文解釋 Regex 的運作原理，並給我一段 Python (Pandas) 程式碼幫我完成萃取。請在程式碼的 Regex 語法旁邊，用中文註解詳細翻譯這串符號的意思。`},
+    {t:"BI 匯入前置清洗", when:"系統匯出的報表格式極度不友善，導致 BI 工具無法讀取。",
+     p:`從我們 [院內系統] 匯出的 Excel 報表格式很糟，有很多『[例如：合併儲存格、前三行是空白和標題、數值裡面混雜了單位與逗號]』。為了讓這份資料能順利匯入 Power BI，請給我一段 Python 腳本幫我『解除合併儲存格並向下填補』，且把數值欄位轉成純數字。請一步步說明清洗邏輯。`},
+    {t:"無痛升級輕量資料庫", when:"Excel 檔案破數十萬筆，每次開啟都要等好幾分鐘。",
+     p:`我的 Excel 資料太龐大了，跑得非常慢。工程師建議我改用『SQLite』。請用白話文解釋 SQLite 跟 Excel 最大的差別是什麼？並幫我寫一段 Python 程式碼，把我的 [歷年治療紀錄.csv] 匯入到 SQLite 資料庫檔案中，並示範如何用 Python 查詢『[例如：處方劑量大於 60 Gy 的療程]』。`}
   ]
 },
 {
-  id:"ui", num:"03", title:"產出介面", why:"腳本只有你會用，工具才是同事會用。這四式把終端機的黑底白字，包成別人願意打開的東西。",
+  id:"ui", num:"03", title:"產出介面",
   items:[
-    {t:"一鍵生成數據儀表板", src:"原冊 §5-13", when:"寫好了一段分析數據的程式，想加上簡單的網頁介面讓同事也能用。",
+    {t:"一鍵生成數據儀表板", when:"寫好了分析程式，想加上網頁介面讓同仁也能用。",
      p:`我有一段用 Pandas 處理數據並畫出圖表的 Python 程式碼：
 [貼上程式碼]
-我不想讓同事看黑底白字的終端機，請教我如何用 Streamlit 套件，在 20 行程式碼內把它變成一個有『檔案上傳按鈕』和『互動式圖表』的內部網頁。請提供完整的 app.py 程式碼，並教我怎麼啟動它。`},
-    {t:"快速搭建 AI 網頁介面", src:"原冊 §9-31", when:"寫好了一段程式，想讓不懂 Python 的主管也能在瀏覽器上操作。",
-     p:`我有一段簡單的 Python 函式，功能是『[例如：輸入一段文字，程式會回傳字數和關鍵字]』。我不想讓主管用終端機操作。聽說 Gradio 這個套件只要 5 行代碼就能生成網頁介面。請教我如何把我的函式包裝成 Gradio 網頁，並包含一個『文字輸入框』和一個『送出按鈕』。請提供完整代碼。`},
-    {t:"自動選擇最適圖表", src:"原冊 §7-23", when:"手上有數據，但不知道該畫長條圖、折線圖還是散佈圖。",
-     p:`我手邊有一組數據，包含『[例如：過去 12 個月各部門的行銷預算與實際業績]』。我想用 Python 的 matplotlib 或 plotly 把這組數據視覺化。請扮演專業的數據分析師，告訴我這組資料最適合用哪兩種圖表呈現？為什麼？並給我可以直接跑出這兩種圖表的程式碼。`},
-    {t:"文字報表轉簡報自動化", src:"原冊 §7-24", when:"每週都要把 Excel 裡的數據手動貼到 PowerPoint 裡。",
-     p:`我每週都要根據 [銷售.xlsx] 的數據，製作一份簡單的 PowerPoint 簡報，第一頁是『本週總業績』，第二頁是『各部門排名』。請教我如何使用 Python 的 python-pptx 套件，寫一個腳本自動讀取 Excel 並生成這份 PPT。請給我最基礎的範例代碼就好，並教我怎麼修改文字的大小跟顏色。`}
+我不想讓同仁看黑底白字的終端機，請教我如何用 Streamlit 套件，在 20 行程式碼內把它變成一個有『檔案上傳按鈕』和『互動式圖表』的內部網頁。請提供完整的 app.py 程式碼，並教我怎麼啟動它。`},
+    {t:"快速搭建網頁介面", when:"寫好了一段程式，想讓不懂 Python 的人也能在瀏覽器上操作。",
+     p:`我有一段簡單的 Python 函式，功能是『[例如：輸入一段報告文字，回傳關鍵欄位與字數]』。我不想讓使用者用終端機操作。聽說 Gradio 這個套件只要 5 行代碼就能生成網頁介面。請教我如何把我的函式包裝成 Gradio 網頁，並包含一個『文字輸入框』和一個『送出按鈕』。請提供完整代碼。`},
+    {t:"自動選擇最適圖表", when:"手上有數據，但不知道該畫長條圖、折線圖還是散佈圖。",
+     p:`我手邊有一組數據，包含『[例如：過去 12 個月各院區的治療人次與等候天數]』。我想用 Python 的 matplotlib 或 plotly 把這組數據視覺化。請扮演專業的數據分析師，告訴我這組資料最適合用哪兩種圖表呈現？為什麼？並給我可以直接跑出這兩種圖表的程式碼。`},
+    {t:"文字報表轉簡報自動化", when:"每週都要把 Excel 裡的數據手動貼到 PowerPoint 裡。",
+     p:`我每週都要根據 [月報.xlsx] 的數據，製作一份簡單的 PowerPoint 簡報，第一頁是『本月總量統計』，第二頁是『各院區排名』。請教我如何使用 Python 的 python-pptx 套件，寫一個腳本自動讀取 Excel 並生成這份 PPT。請給我最基礎的範例代碼就好，並教我怎麼修改文字的大小跟顏色。`}
   ]
 },
 {
-  id:"integrate", num:"04", title:"系統串接", why:"工具真正的價值在於接進既有流程。這七式從 API 觀念、容錯，一路到寄信、爬蟲、機器人與雲端看板。",
+  id:"integrate", num:"04", title:"系統串接",
   items:[
-    {t:"白話文 API 呼叫初體驗", src:"原冊 §3-8", when:"聽過 API 但不知道怎麼用。",
-     p:`我想練習串接 [例如：政府公開資料平台的天氣 API / 匯率 API]。請先用『去餐廳向服務生點菜』的比喻，簡單跟我解釋什麼是 Request（請求）、Response（回應）跟 JSON 格式。接著，給我一段最簡單的 Python requests 程式碼，把對方傳回來的數據抓下來，只印出我需要的『[例如：台北市的降雨機率]』就好。`},
-    {t:"API 斷線容錯防護網", src:"原冊 §3-9", when:"第三方服務不穩定，導致自己的程式跟著閃退。",
+    {t:"白話文 API 呼叫初體驗", when:"聽過 API 但不知道怎麼用。",
+     p:`我想練習串接 [例如：政府公開資料平台的統計 API]。請先用『去餐廳向服務生點菜』的比喻，簡單跟我解釋什麼是 Request（請求）、Response（回應）跟 JSON 格式。接著，給我一段最簡單的 Python requests 程式碼，把對方傳回來的數據抓下來，只印出我需要的『[例如：某一個縣市的指定欄位]』就好。`},
+    {t:"API 斷線容錯防護網", when:"第三方服務不穩定，導致自己的程式跟著閃退。",
      p:`這是我去呼叫外部 API 的程式碼：
 [貼上程式碼]
-如果對方伺服器剛好當機或網路斷線，我的程式就會直接跳紅字崩潰。請幫我加上 try...except 的安全網。要求：發生錯誤時不要閃退，而是溫柔地在畫面上顯示『⚠️ 目前無法連線到伺服器，請稍後再試』，並讓程式能繼續往下執行。`},
-    {t:"客製化 Email 批次發送機", src:"原冊 §2-6", when:"要發 100 封內容相似但姓名、金額不同的信件。",
-     p:`我有一個 Excel 檔，A 欄是客戶信箱，B 欄是客戶姓名，C 欄是本月應繳費用。請幫我寫一個 Python 腳本，透過 Gmail 自動寄信。信件內文須替換成專屬的姓名與費用。約束條件：
+如果對方伺服器剛好當機或網路斷線，我的程式就會直接跳紅字崩潰。請幫我加上 try...except 的安全網。要求：發生錯誤時不要閃退，而是在畫面上顯示『⚠️ 目前無法連線到伺服器，請稍後再試』，並讓程式能繼續往下執行。`},
+    {t:"客製化 Email 批次發送機", when:"要發 100 封內容相似但收件人、內容不同的信件。",
+     p:`我有一個 Excel 檔，A 欄是收件人信箱，B 欄是姓名，C 欄是本月待辦事項。請幫我寫一個 Python 腳本，透過 Gmail 自動寄信。信件內文須替換成專屬的姓名與內容。約束條件：
 1. 請詳細教我如何取得 Gmail 的『應用程式密碼』。
 2. 教我如何使用 .env 檔案把密碼藏起來，絕對不能將密碼明碼寫在程式裡。
 3. 每寄出一封信，請在畫面上印出『✅ 已成功發送給 XXX』。`},
-    {t:"安全友善的網頁資料抓取", src:"原冊 §2-7", when:"需要定期追蹤外部網站的公開數據（如股價、新聞、競品價格）。",
-     p:`我需要使用 BeautifulSoup 寫一個基礎網頁爬蟲，目標是抓取 [某股票資訊網站] 上的 [今日收盤價與成交量]。因為我是新手，請務必加上這兩個保護機制：
+    {t:"安全友善的網頁資料抓取", when:"需要定期追蹤外部網站的公開資訊。",
+     p:`我需要使用 BeautifulSoup 寫一個基礎網頁爬蟲，目標是抓取 [某公開資訊網站] 上的 [今日更新的公告標題與日期]。因為我是新手，請務必加上這兩個保護機制：
 1. 加入『User-Agent』偽裝成一般瀏覽器。
 2. 加入 time.sleep() 隨機暫停 1~3 秒，避免請求過快造成網站負擔或被封鎖。
 請提供完整代碼，並將結果存成一個 txt 檔。`},
-    {t:"企業溝通軟體機器人骨架", src:"原冊 §5-14", when:"想要做一個能自動回報每日進度的機器人。",
-     p:`我想在 [Line / Slack / Teams] 上建立一個簡單的機器人。目標：我每天早上定時執行這個 Python 腳本，機器人就會在群組發送『📊 今日工作匯報…』的文字。對於完全沒經驗的我，請給一份保母級教學。包含：去哪裡申請權限（Webhooks/Tokens），以及一段只要填入 Token 就能直接發送文字的最簡 Python 程式碼。`},
-    {t:"雲端筆記變資料庫", src:"原冊 §9-30", when:"想把程式抓到的資料，自動更新到團隊正在使用的 Notion 協作看板上。",
-     p:`我們團隊都在用 Notion。我想要用 Python 寫一個小工具，把程式計算好的『[例如：每日業績總結]』自動寫入 Notion 的某個 Database 裡面。對新手來說，Notion API 的文件很難懂。請給我一份保母級教學：
+    {t:"通訊軟體機器人骨架", when:"想要做一個能自動回報每日進度的機器人。",
+     p:`我想在 [Line / Slack / Teams] 上建立一個簡單的機器人。目標：我每天早上定時執行這個 Python 腳本，機器人就會在群組發送『📊 今日進度匯報…』的文字。對於完全沒經驗的我，請給一份保母級教學。包含：去哪裡申請權限（Webhooks/Tokens），以及一段只要填入 Token 就能直接發送文字的最簡 Python 程式碼。`},
+    {t:"雲端筆記變資料庫", when:"想把程式抓到的資料，自動更新到團隊正在使用的 Notion 看板上。",
+     p:`我們團隊都在用 Notion。我想要用 Python 寫一個小工具，把程式計算好的『[例如：每日進度總結]』自動寫入 Notion 的某個 Database 裡面。對新手來說，Notion API 的文件很難懂。請給我一份保母級教學：
 1. 怎麼申請 Integration Token？
 2. 怎麼取得 Database ID？
 3. 給我一段最簡單的 Python 新增資料代碼。`},
-    {t:"無需伺服器的表單接收", src:"原冊 §9-32", when:"想做一個意見回饋表單，但不會架設後端伺服器。",
-     p:`我想在公司內部發布一個簡單的 HTML 網頁表單，收集『[例如：便當訂購調查]』。但我不會寫後端伺服器來接收這些資料。請向我解釋什麼是『Webhook』或是『無伺服器表單（如 Formspree）』的概念？並給我一段前端 HTML 程式碼範例，讓我能直接把使用者填寫的資料轉寄到我的 Email 信箱裡。`}
+    {t:"無需伺服器的表單接收", when:"想做一個回饋表單，但不會架設後端伺服器。",
+     p:`我想在內部發布一個簡單的 HTML 網頁表單，收集『[例如：教育訓練報名調查]』。但我不會寫後端伺服器來接收這些資料。請向我解釋什麼是『Webhook』或是『無伺服器表單（如 Formspree）』的概念？並給我一段前端 HTML 程式碼範例，讓我能直接把使用者填寫的資料轉寄到我的 Email 信箱裡。`}
   ]
 },
 {
-  id:"llm", num:"05", title:"LLM 工作流", why:"把大模型從聊天視窗搬進流程裡：批次處理、強制格式輸出、以及 RAG 的第一步。",
+  id:"llm", num:"05", title:"LLM 工作流",
   items:[
-    {t:"批次 AI 翻譯與摘要", src:"原冊 §10-33", when:"收到 500 則英文客戶評論，需要全部翻譯成中文並總結情緒。",
-     p:`我有一個 Excel 檔案，裡面有 500 筆『[英文客訴留言]』。我想要用 Python 串接 [OpenAI API 或 Gemini API]，自動把每一筆留言翻譯成中文，並在旁邊標註『正面/負面』。請給我完整的程式碼，並教我如何加上 time.sleep() 以免超過 API 的免費呼叫頻率限制 (Rate Limit)。`},
-    {t:"LLM 任務路由員", src:"原冊 §10-34", when:"想讓 AI 自動幫忙把公司的信件分類給不同部門。",
-     p:`我要用 Python 與大語言模型做一個『信件分類器』。請幫我設計一個精準的 System Prompt，要求 AI 讀取信件內容後，只能回答『[業務部、客服部、技術部]』這三個詞的其中一個，絕對不能輸出其他廢話。並給我一段對應的 Python API 呼叫範例，確保程式能直接把 AI 的分類結果存下來。`},
-    {t:"本地文件問答雛形", src:"原冊 §10-35", when:"公司有幾百份 PDF 規章，想做一個能回答規章內容的小工具。",
-     p:`我常聽說 RAG（檢索增強生成）可以讓 AI 根據公司的內部文件回答問題。我完全沒有概念，請用『圖書館員找書』的比喻，向我解釋 RAG 的三個核心步驟（文本切割、向量化、搜尋）。接著，請推薦我適合新手建立 RAG 的 Python 套件（例如 LangChain 或 LlamaIndex），並告訴我學習的第一步該怎麼走。`}
+    {t:"批次翻譯與標註", when:"收到幾百則英文內容，需要全部翻譯並分類。",
+     p:`我有一個 Excel 檔案，裡面有 500 筆『[英文文獻摘要]』。我想要用 Python 串接 [Claude API 或其他 LLM API]，自動把每一筆翻譯成中文，並在旁邊標註『[與主題相關 / 不相關]』。請給我完整的程式碼，並教我如何加上 time.sleep() 以免超過 API 的呼叫頻率限制 (Rate Limit)。`},
+    {t:"LLM 任務路由員", when:"想讓 AI 自動幫忙把來信分類給不同單位。",
+     p:`我要用 Python 與大語言模型做一個『信件分類器』。請幫我設計一個精準的 System Prompt，要求 AI 讀取信件內容後，只能回答『[行政、臨床、資訊]』這三個詞的其中一個，絕對不能輸出其他文字。並給我一段對應的 Python API 呼叫範例，確保程式能直接把 AI 的分類結果存下來。`},
+    {t:"本地文件問答雛形（RAG）", when:"手上有幾百份 PDF 規章，想做一個能回答規章內容的小工具。",
+     p:`我常聽說 RAG（檢索增強生成）可以讓 AI 根據內部文件回答問題。我完全沒有概念，請用『圖書館員找書』的比喻，向我解釋 RAG 的三個核心步驟（文本切割、向量化、搜尋）。接著，請推薦我適合新手建立 RAG 的 Python 套件，並告訴我學習的第一步該怎麼走。`}
   ]
 },
 {
-  id:"verify", num:"06", title:"除錯與驗證", why:"生成很輕鬆，驗證才是工程。這五式的共同要求是：不要直接給我答案，教我看懂它為什麼錯。",
+  id:"verify", num:"06", title:"除錯與驗證",
   items:[
-    {t:"錯誤紅字翻譯官", src:"原冊 §4-10", when:"程式跑不動，出現一堆看不懂的 Error。",
+    {t:"錯誤紅字翻譯官", when:"程式跑不動，出現一堆看不懂的 Error。",
      p:`我執行程式時出現了以下錯誤：
 [貼上錯誤訊息]
 請不要直接把正確的程式碼丟給我！請按以下格式回答：
 1. 用白話文解釋電腦在抱怨什麼（例如：找不到檔案、格式不對）。
 2. 指出錯誤最可能發生在哪一行。
 3. 給我一個『修復這個錯誤的提示』，讓我自己試著修改看看。`},
-    {t:"Print 沿路撒麵包屑除錯法", src:"原冊 §4-11", when:"程式沒當機，但算出來的總金額（或數據）就是不對。",
+    {t:"Print 沿路撒麵包屑除錯法", when:"程式沒當機，但算出來的數字就是不對。",
      p:`這段程式碼沒有報錯，但最後輸出的結果是錯的：
 [貼上程式碼]
 我想要自己把問題抓出來。請教我如何在這段程式碼的『關鍵轉折處』，插入 print() 函數把變數印出來觀察（就像在迷宮裡撒麵包屑一樣）。請告訴我應該在哪幾行插入觀察點，以及該觀察什麼。`},
-    {t:"奧客防呆機制", src:"原冊 §4-12", when:"程式遇到不符規定的資料就死機。",
+    {t:"奧客防呆機制", when:"程式遇到不符規定的資料就死機。",
      p:`我寫了一段邏輯：[例如：讓使用者輸入檔案路徑，然後讀取檔案]。
 [貼上程式碼]
 請扮演一個不按牌理出牌的使用者，列出 3 種『可能的錯誤操作或無效輸入』（例如：檔案正在被其他程式開啟、輸入了亂碼）。針對每一種情況，請幫我在程式碼裡加上相對應的 if/else 防呆保護機制。`},
-    {t:"前人遺產翻譯機", src:"原冊 §11-36", when:"接手了一支離職同事寫的腳本，完全沒有註解。",
-     p:`我接手了離職同事留下來的一段 Python 腳本，完全沒有註解：
+    {t:"前人遺產翻譯機", when:"接手了一支別人寫的腳本，完全沒有註解。",
+     p:`我接手了一段沒有註解的 Python 腳本：
 [貼上程式碼]
 請扮演一位有耐心的前輩。
 1. 幫我總結這支程式到底在幹嘛？
 2. 在原本的程式碼中，每一行都加上極度囉嗦的中文註解，教我讀懂它的邏輯。
 3. 評估這支程式有沒有什麼明顯的潛在風險（例如檔案沒關閉）？`},
-    {t:"人類視角的效能優化", src:"原冊 §11-38", when:"程式可以跑，但是處理 10 萬筆資料要花一個小時。",
+    {t:"人類視角的效能優化", when:"程式可以跑，但是處理 10 萬筆資料要花一個小時。",
      p:`我用 Pandas 處理這段數據：
 [貼上程式碼]
 我是用 iterrows() 一筆一筆用 for 迴圈跑，結果速度慢到讓人崩潰。工程師告訴我要用『向量化 (Vectorization)』。請用『搬磚塊』的比喻，向我解釋迴圈和向量化的差別。並幫我把程式碼改寫成不需要 for 迴圈的高速版本。`}
   ]
 },
 {
-  id:"schedule", num:"07", title:"排程與檔案治理", why:"能自動跑的腳本才叫自動化。這四式讓機器在你不在的時候，安全地自己動起來。",
+  id:"schedule", num:"07", title:"排程與檔案治理",
   items:[
-    {t:"讓腳本每天定時起床", src:"原冊 §8-27", when:"寫好的自動發信腳本，希望電腦每天早上 9 點自己執行。",
+    {t:"讓腳本每天定時起床", when:"寫好的腳本，希望電腦每天早上 9 點自己執行。",
      p:`我已經寫好了一個名為 [report.py] 的腳本。我希望我的 [Windows / Mac] 電腦，每天早上 9 點能自動在背景執行它，不需要我手動去點擊。我完全不懂系統排程，請給我一份最傻瓜、附帶圖文解說步驟的教學（例如使用 Windows 工作排程器或 Mac crontab），教我怎麼設定。`},
-    {t:"資料夾哨兵（Watchdog 監控）", src:"原冊 §8-28", when:"只要有客戶上傳新檔案到特定資料夾，系統就要自動處理。",
+    {t:"資料夾哨兵（Watchdog 監控）", when:"只要有新檔案進到特定資料夾，系統就要自動處理。",
      p:`我想寫一個 Python『監控腳本』。目標：只要有一個新的 CSV 檔案被丟進 [C:\\Incoming] 資料夾，程式就會立刻發現，並在螢幕上印出『👀 發現新檔案：檔名』。請推薦合適的套件（如 watchdog），並給我一段簡單的監控範例程式碼。請用『辦公室櫃台收發信件』的比喻解釋它是怎麼運作的。`},
-    {t:"資料夾時光機（自動封存）", src:"原冊 §8-25", when:"共用資料夾塞滿了幾年前的舊檔案，手動整理太耗時。",
-     p:`我們的『[專案]』資料夾裡面有幾千個檔案。請幫我寫一個 Python 腳本，自動把『[例如：修改時間超過 365 天前]』的檔案，全部移動到一個叫做『Archive_2023』的新資料夾中，並且把它壓縮成一個 .zip 檔以節省空間。請務必加上 print() 告訴我它處理了哪些檔案，讓我安心。`},
-    {t:"批次檔名重構（含 Dry Run）", src:"原冊 §8-26", when:"辦完活動拿到幾百張照片，檔名全都是 IMG_001，需要按日期和活動名稱重新命名。",
-     p:`我有一個資料夾，裡面有 200 個檔案。我想要把檔名全部改成『[例如：2024_員工旅遊_001, 2024_員工旅遊_002…]』。請給我一段安全的 Python 重命名腳本。約束條件：在真正執行改名之前，請先設計一個『模擬模式（Dry Run）』，只把『原檔名 -> 新檔名』印在螢幕上讓我檢查，確認沒問題我再把註解拿掉執行。`}
+    {t:"資料夾時光機（自動封存）", when:"共用資料夾塞滿了幾年前的舊檔案，手動整理太耗時。",
+     p:`我們的『[年度計畫]』資料夾裡面有幾千個檔案。請幫我寫一個 Python 腳本，自動把『[例如：修改時間超過 365 天前]』的檔案，全部移動到一個叫做『[Archive_2025]』的新資料夾中，並且把它壓縮成一個 .zip 檔以節省空間。請務必加上 print() 告訴我它處理了哪些檔案，讓我安心。`},
+    {t:"批次檔名重構（含 Dry Run）", when:"幾百個檔案的檔名全都是 IMG_001，需要按日期與主題重新命名。",
+     p:`我有一個資料夾，裡面有 200 個檔案。我想要把檔名全部改成『[例如：2026_年度會議_001, 2026_年度會議_002…]』。請給我一段安全的 Python 重命名腳本。約束條件：在真正執行改名之前，請先設計一個『模擬模式（Dry Run）』，只把『原檔名 -> 新檔名』印在螢幕上讓我檢查，確認沒問題我再把註解拿掉執行。`}
   ]
 },
 {
-  id:"govern", num:"08", title:"交付與治理", why:"能移交、能稽核、能控成本，工具才算完成。這八式處理可讀性、依賴、危險操作的開關，以及你下一步該學什麼。",
+  id:"govern", num:"08", title:"交付與治理",
   items:[
-    {t:"為功能加上安全開關", src:"原冊 §11-40", when:"腳本包含危險操作（如刪除檔案、發送正式信件），測試時需要關閉。",
-     p:`這是一支會真正去『刪除舊檔案』並『寄信給全公司』的腳本。為了方便我日常測試，不想每次都真的寄信出去。請教我如何在程式最上方設計兩個簡單的開關變數（例如 ENABLE_DELETE = False），並在程式碼內部加入 if 判斷。當開關關閉時，程式只會在螢幕上印出『模擬模式：準備刪除 XXX』而不實際執行危險動作。`},
-    {t:"雲端計費與安全守門員", src:"原冊 §11-39", when:"準備執行一段會呼叫付費 API 或操作雲端服務的程式，擔心不小心花掉幾萬元。",
+    {t:"為功能加上安全開關", when:"腳本包含危險操作（如刪除檔案、正式發信），測試時需要關閉。",
+     p:`這是一支會真正去『刪除舊檔案』並『群發信件』的腳本。為了方便我日常測試，不想每次都真的寄信出去。請教我如何在程式最上方設計兩個簡單的開關變數（例如 ENABLE_DELETE = False），並在程式碼內部加入 if 判斷。當開關關閉時，程式只會在螢幕上印出『模擬模式：準備刪除 XXX』而不實際執行危險動作。`},
+    {t:"計費與安全守門員", when:"準備執行一段會呼叫付費 API 的程式，擔心不小心燒掉大筆費用。",
      p:`我準備要執行以下這段會呼叫外部付費 API 的程式碼：
 [貼上程式碼]
 但在按下 Enter 之前，我有點害怕。請扮演資安與財務守門員，幫我檢查：
-1. 這段程式碼有沒有無窮迴圈的風險，會不會一晚燒掉我幾十萬的 API 費用？
+1. 這段程式碼有沒有無窮迴圈的風險，會不會一個晚上燒掉大筆 API 費用？
 2. 有沒有把機密資料洩漏出去的風險？
 並教我如何加上一個『最多只呼叫 10 次就強制停止』的斷路器機制。`},
-    {t:"解決環境依賴", src:"原冊 §11-37", when:"寫好的腳本傳給同事，同事一按執行卻噴出 ModuleNotFoundError。",
+    {t:"解決環境依賴", when:"腳本傳給同事，對方一按執行卻噴出 ModuleNotFoundError。",
      p:`我寫了一支腳本傳給同事，但他的電腦出現『找不到 pandas』的錯誤。聽說業界標準是提供一份 requirements.txt。請用『食譜與食材清單』的比喻向我解釋這是什麼？並教我如何在我的電腦上用指令自動產生這份清單，以及同事拿到清單後，該輸入什麼指令來一鍵安裝所有依賴套件？`},
-    {t:"消除義大利麵程式碼", src:"原冊 §5-15", when:"條件判斷太多，層層嵌套看起來很吃力。",
+    {t:"消除義大利麵程式碼", when:"條件判斷太多，層層嵌套看起來很吃力。",
      p:`我的程式碼裡面有一大堆 if 包著 if，縮排到螢幕最右邊去了，很難看懂：
-[貼上代碼]
+[貼上程式碼]
 請教我業界常用的『提早 Return (Early Return)』技巧，幫我把這段邏輯重構成『平坦、好讀』的樣子，並向我解釋這種寫法為什麼能減少邏輯混亂。`},
-    {t:"消除重複勞動（封裝成 Function）", src:"原冊 §5-16", when:"同樣的程式碼區塊，在腳本裡複製貼上了好幾次。",
+    {t:"消除重複勞動（封裝成 Function）", when:"同樣的程式碼區塊，在腳本裡複製貼上了好幾次。",
      p:`這段程式碼中，[例如：轉換日期格式並計算天數的邏輯] 被我複製貼上了好幾次，看起來很笨重：
-[貼上代碼]
+[貼上程式碼]
 請向我解釋什麼是『DRY (Don't Repeat Yourself) 原則』，並幫我把重複的部分抽離出來，做成一個獨立的 Function（函式），讓主程式看起來更乾淨俐落。`},
-    {t:"官方文件白話文翻譯機", src:"原冊 §6-18", when:"想用一個新套件，但官方文件全部都是英文和專有名詞。",
+    {t:"官方文件白話文翻譯機", when:"想用一個新套件，但官方文件全部都是英文和專有名詞。",
      p:`我想使用 [套件名稱，例如：openpyxl] 來處理資料，但我看不懂這段官方文件：
 [貼上一段官方文件英文]
 請扮演我的白話文翻譯機。用最生活化的方式總結這段文件的核心觀念，並給我一個只有 5 行以內、最簡單的實用範例，不要長篇大論。`},
-    {t:"結對編程模式", src:"原冊 §6-19", when:"不想一次拿到幾百行代碼，想一步一步跟著 AI 做。",
+    {t:"結對編程模式", when:"不想一次拿到幾百行代碼，想一步一步跟著 AI 做。",
      p:`我要開發一個 [例如：自動追蹤庫存變化的警報器]。我們來進行 Pair Programming（結對編程）。請你當『導航員』，我當『駕駛員』。請你先給出架構設計與第一個小步驟的具體指示。等我回覆完成並貼上成果後，你審查沒問題，再告訴我下一個步驟。請下達你的第一個指示。`},
-    {t:"技術盲點掃描儀", src:"原冊 §6-20", when:"會寫一點簡單的自動化腳本了，不知道接下來該學什麼。",
-     p:`我目前已經能用 AI 寫出 [例如：用 Python 整理 Excel 和發送 Email]。如果我未來想利用 AI 做出 [例如：一個包含資料庫，能讓團隊登記資源的內部系統]，請指出我在技術版圖上還缺少哪三個最關鍵的觀念（例如：關聯式資料庫、後端框架）？請用非工程師能聽懂的語言向我介紹它們。`}
+    {t:"技術盲點掃描儀", when:"會寫一點簡單的自動化腳本了，不知道接下來該學什麼。",
+     p:`我目前已經能用 AI 寫出 [例如：用 Python 整理 Excel 和發送 Email]。如果我未來想利用 AI 做出 [例如：一個包含資料庫，能讓團隊登記與查詢資源的內部系統]，請指出我在技術版圖上還缺少哪三個最關鍵的觀念（例如：關聯式資料庫、後端框架）？請用非工程師能聽懂的語言向我介紹它們。`}
   ]
 }
 ];
@@ -360,11 +312,8 @@ DATA.forEach(sec => {
 
   const cards = sec.items.map(it => `
     <article class="card" data-text="${esc(it.t + ' ' + it.when + ' ' + it.p).replace(/"/g,'&quot;')}">
-      <div class="card-top">
-        <h3>${esc(it.t)}</h3>
-        <span class="trace">${esc(it.src)}</span>
-      </div>
-      <p class="when"><b>用在</b>${esc(it.when)}</p>
+      <h3>${esc(it.t)}</h3>
+      <p class="when">${esc(it.when)}</p>
       <div class="prompt">${mark(it.p)}</div>
       <button class="copy" type="button">複製提示詞</button>
     </article>`).join('');
@@ -373,14 +322,12 @@ DATA.forEach(sec => {
     <section id="${sec.id}">
       <div class="sec-head">
         <div class="sec-num">STAGE ${sec.num}</div>
-        <h2>${esc(sec.title)}<span style="font-family:var(--mono);font-size:12px;color:var(--nord3);font-weight:400;margin-left:10px">${sec.items.length} 式</span></h2>
+        <h2>${esc(sec.title)}<span>${sec.items.length} 式</span></h2>
       </div>
-      <p class="sec-why">${esc(sec.why)}</p>
       ${cards}
     </section>`);
 });
 
-/* 複製 */
 content.addEventListener('click', e => {
   const btn = e.target.closest('.copy');
   if (!btn) return;
@@ -391,7 +338,6 @@ content.addEventListener('click', e => {
   }).catch(() => { btn.textContent = '複製失敗，請手動選取'; });
 });
 
-/* 搜尋 */
 const q = document.getElementById('q');
 const countEl = document.getElementById('count');
 const cards = [...document.querySelectorAll('.card')];
@@ -414,13 +360,10 @@ function filter(){
 q.addEventListener('input', filter);
 filter();
 
-/* 導覽高亮 */
 const links = [...document.querySelectorAll('nav a')];
 const io = new IntersectionObserver(entries => {
   entries.forEach(en => {
-    if (en.isIntersecting) {
-      links.forEach(a => a.classList.toggle('on', a.dataset.id === en.target.id));
-    }
+    if (en.isIntersecting) links.forEach(a => a.classList.toggle('on', a.dataset.id === en.target.id));
   });
 }, {rootMargin:'-70px 0px -70% 0px'});
 sections.forEach(s => io.observe(s));
