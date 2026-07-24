@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>肺癌基因突變機轉與藥物 — 個管師深度教材</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9EDEF; --surface:#FFFFFF; --surface-2:#F3F5F6;
+  --ink:#23303A; --ink-2:#4A5C68; --muted:#7E8F9A; --line:#D3DBDF;
+  --slate:#2E3A44; --blue:#5B7A94; --olive:#71805A; --brick:#9C5B52; --gold:#A8873F;
+  --brand:#FA7A35;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"IBM Plex Sans","Microsoft JhengHei","微軟正黑體","Noto Sans TC",-apple-system,sans-serif;
+  --r:4px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:60px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+     font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* masthead */
+.masthead{background:var(--surface);border-bottom:1px solid var(--line)}
+.masthead .wrap{padding:46px 24px 34px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+         color:var(--muted);display:flex;gap:10px;align-items:center}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--brand)}
+h1{font-size:37px;font-weight:600;letter-spacing:-.02em;line-height:1.24;margin:14px 0 10px}
+h1 em{font-style:normal;color:var(--blue)}
+.lede{font-size:16px;color:var(--ink-2);max-width:64ch}
+.lede+.lede{margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);
+      background:var(--surface-2);color:var(--ink-2);padding:5px 10px;border-radius:var(--r)}
+.chip b{color:var(--ink);font-weight:600}
+
+/* nav */
+nav{position:sticky;top:0;z-index:30;background:rgba(233,237,239,.94);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:2px;overflow-x:auto;padding:0 24px;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{font-family:var(--mono);font-size:12px;color:var(--ink-2);text-decoration:none;
+      padding:13px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a:hover,nav a:focus-visible{color:var(--ink);border-bottom-color:var(--brand)}
+
+/* sections */
+section{padding:56px 0 6px}
+.sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.secno{font-family:var(--mono);font-size:12px;color:var(--brand);letter-spacing:.1em;
+       border:1px solid var(--brand);border-radius:var(--r);padding:2px 7px;flex:none}
+h2{font-size:24px;font-weight:600;letter-spacing:-.01em}
+.secsub{color:var(--ink-2);margin:8px 0 26px;max-width:72ch}
+h3{font-size:17px;font-weight:600;margin:34px 0 12px;display:flex;align-items:center;gap:9px}
+h3::before{content:"";width:3px;height:16px;background:var(--blue);flex:none}
+h4{font-size:14.5px;font-weight:600;margin:20px 0 8px}
+p+p{margin-top:11px}
+.body p{max-width:74ch}
+strong{font-weight:600;color:var(--ink)}
+code{font-family:var(--mono);font-size:13px;background:var(--surface-2);
+     padding:1px 5px;border-radius:3px;color:var(--ink)}
+
+/* figure */
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+     padding:24px 20px 18px;overflow-x:auto;margin:20px 0}
+.fig svg{display:block;width:100%;height:auto}
+.fig.wide svg{min-width:860px}
+.fig.mid svg{min-width:680px}
+.figcap{font-family:var(--mono);font-size:11.5px;color:var(--muted);
+        margin-top:14px;padding-top:12px;border-top:1px solid var(--line);line-height:1.7}
+.figcap b{color:var(--ink-2);font-weight:500}
+
+/* 三段式機轉卡 —— 本頁的核心結構裝置 */
+.mech{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+      overflow:hidden;margin:16px 0}
+.mech>div{padding:18px 20px 20px;border-left:1px solid var(--line)}
+.mech>div:first-child{border-left:0}
+.mech h5{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+         margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.mech h5::before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
+.m-ok h5{color:var(--olive)}   .m-ok h5::before{background:var(--olive)}
+.m-bad h5{color:var(--brick)}  .m-bad h5::before{background:var(--brick)}
+.m-fix h5{color:var(--blue)}   .m-fix h5::before{background:var(--blue)}
+.mech p{font-size:13.5px;line-height:1.72;color:var(--ink-2)}
+.mech p strong{color:var(--ink)}
+
+/* gene block */
+.gene{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+      padding:24px 26px 22px;margin:18px 0}
+.gene-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;
+         padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.gene-hd .g{font-family:var(--mono);font-size:22px;font-weight:600;letter-spacing:.01em}
+.gene-hd .zh{font-size:13.5px;color:var(--ink-2)}
+.gene-hd .pct{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.gene-hd .pct b{color:var(--blue);font-size:15px;font-weight:600}
+.gene .body{margin-top:14px}
+
+/* tables */
+.tbl{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+     overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:600px}
+thead th{background:var(--slate);color:#DCE3E7;font-family:var(--mono);font-size:11px;
+         letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+         text-align:left;padding:11px 14px;white-space:nowrap}
+tbody td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;line-height:1.65}
+tbody tr:hover{background:var(--surface-2)}
+td .d{font-family:var(--mono);font-weight:600;display:block}
+td .t2{font-size:11.5px;color:var(--muted)}
+.mn{font-family:var(--mono);font-size:12.5px}
+.gen1{color:var(--olive)} .gen2{color:var(--gold)} .gen3{color:var(--blue)} .gen4{color:var(--brick)}
+.grp td{background:var(--surface-2);font-family:var(--mono);font-size:11.5px;
+        letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;padding:8px 14px}
+
+/* notes */
+.note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brand);
+      border-radius:var(--r);padding:16px 20px;margin:16px 0}
+.note.warn{border-left-color:var(--brick)}
+.note.calm{border-left-color:var(--blue)}
+.note.good{border-left-color:var(--olive)}
+.note-t{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+        color:var(--muted);margin-bottom:8px}
+.note ul{margin:6px 0 0 18px}
+.note li{margin:5px 0}
+.note p{font-size:14px}
+
+/* 白話翻譯 */
+.say{background:var(--surface-2);border:1px dashed var(--line);border-radius:var(--r);
+     padding:14px 18px;margin:14px 0}
+.say .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+          color:var(--brand);margin-bottom:6px}
+.say q{font-size:14.5px;color:var(--ink);font-style:normal;quotes:"「" "」"}
+
+/* legend inline */
+.keys{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:11.5px;
+      color:var(--ink-2);margin-top:12px}
+.keys span{display:flex;align-items:center;gap:7px}
+.keys i{width:11px;height:11px;border-radius:2px;flex:none;display:block}
+
+footer{margin-top:66px;border-top:1px solid var(--line);background:var(--surface)}
+footer .wrap{padding:30px 24px 46px}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+footer h5{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+          color:var(--muted);margin-bottom:8px}
+footer p,footer li{font-size:13px;color:var(--ink-2);line-height:1.75}
+footer ul{list-style:none}
+.stamp{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+       font-family:var(--mono);font-size:11.5px;color:var(--muted);
+       display:flex;flex-wrap:wrap;gap:6px 20px}
+
+@media(max-width:760px){
+  .mech{grid-template-columns:1fr}
+  .mech>div{border-left:0;border-top:1px solid var(--line)}
+  .mech>div:first-child{border-top:0}
+}
+@media(max-width:640px){
+  h1{font-size:27px}
+  .wrap{padding:0 20px}
+  .masthead .wrap{padding:34px 20px 26px}
+  section{padding:42px 0 6px}
+  .gene{padding:20px 18px}
+}
+@media print{nav{display:none}body{background:#fff}section{break-inside:avoid}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">彰濱秀傳癌症中心 · 個管師深度教材</div>
+    <h1>肺癌基因突變<em>在做什麼</em></h1>
+    <p class="lede">
+      個管師不需要解讀基因報告，但需要知道報告上那些名詞<strong>代表細胞裡發生了什麼事</strong>——
+      為什麼這個位點有藥、那個沒有；為什麼同樣是 EGFR，exon 19 和 exon 20 的命運完全不同；
+      為什麼有驅動基因的病人，免疫治療反而效果差。
+    </p>
+    <p class="lede">
+      看懂機轉之後，衛教就不用背稿子了。
+    </p>
+    <div class="chips">
+      <span class="chip">主題　<b>機轉與藥理</b>，不是給付查表</span>
+      <span class="chip">範圍　<b>非小細胞肺癌</b></span>
+      <span class="chip">搭配　<b>《肺癌基因檢測與治療藥物》</b>查給付條件</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#signal">訊號路徑</a>
+    <a href="#types">變異型態</a>
+    <a href="#egfr">EGFR</a>
+    <a href="#alk">ALK</a>
+    <a href="#fusion">ROS1 / RET / NTRK</a>
+    <a href="#met">MET</a>
+    <a href="#downstream">BRAF / KRAS</a>
+    <a href="#her2">HER2</a>
+    <a href="#pdl1">PD-L1</a>
+    <a href="#summary">總表</a>
+    <a href="#say">白話句庫</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ══════ 01 訊號路徑 ══════ -->
+<section id="signal">
+  <div class="sechead"><span class="secno">01</span><h2>先看懂一件事：癌症是訊號壞掉</h2></div>
+  <p class="secsub">
+    肺癌所有的標靶藥，打的都是同一條線上的不同位置。先把這條線看懂，後面每一個基因就只是「壞在哪一段」的問題。
+  </p>
+
+  <div class="body">
+    <p>
+      正常細胞要不要分裂，是<strong>外面下指令、裡面傳指令</strong>決定的。
+      細胞膜上有一排「受體」，像門鈴；外面來的生長因子按下門鈴，受體就把訊號往細胞內傳，
+      一路傳到細胞核，細胞核才啟動分裂。沒人按門鈴，細胞就安靜待著。
+    </p>
+    <p>
+      癌細胞的問題是——<strong>門鈴自己一直在響</strong>。
+      不管是門鈴壞掉（受體突變）、還是有人把兩個門鈴焊在一起（融合）、
+      或是傳話的中繼站自己叫個不停（下游突變），結果都一樣：細胞收到「一直分裂」的假指令。
+    </p>
+    <p>
+      這就是<strong>驅動基因（driver mutation）</strong>——它是腫瘤生長的主要引擎。
+      腫瘤裡通常還有幾十上百個其他突變，但那些是搭便車的（passenger），拿掉也沒差。
+      找到驅動基因並把它關掉，腫瘤就會明顯縮小，這個現象叫<strong>致癌基因成癮（oncogene addiction）</strong>。
+      標靶藥能有戲劇性反應，靠的就是這件事。
+    </p>
+  </div>
+
+  <div class="fig wide">
+    <svg viewBox="0 0 900 548" role="img" aria-label="細胞生長訊號傳導路徑圖，標示肺癌各驅動基因所在位置">
+      <style>
+        .tt{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:12px;fill:#23303A}
+        .ts{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:11px;fill:#4A5C68}
+        .tm{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#7E8F9A;letter-spacing:.08em}
+        .gn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;fill:#23303A}
+        .gw{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;fill:#FFFFFF}
+      </style>
+
+      <!-- zones -->
+      <rect x="0" y="0" width="900" height="118" fill="#F3F5F6"/>
+      <text class="tm" x="16" y="22">細胞外</text>
+      <rect x="0" y="118" width="900" height="22" fill="#E4EAED"/>
+      <rect x="0" y="118" width="900" height="2" fill="#B9C6CD"/>
+      <rect x="0" y="138" width="900" height="2" fill="#B9C6CD"/>
+      <text class="tm" x="16" y="133" fill="#5B7A94">細胞膜</text>
+      <text class="tm" x="16" y="164">細胞質</text>
+
+      <!-- ligands -->
+      <circle cx="112" cy="58" r="9" fill="#A8873F"/>
+      <text class="ts" x="128" y="62">生長因子（門鈴按鈕）</text>
+      <path d="M112 70 V 108" stroke="#A8873F" stroke-width="1.2" stroke-dasharray="3 3"/>
+
+      <!-- ── receptors on membrane ── -->
+      <!-- EGFR -->
+      <rect x="86" y="104" width="52" height="52" rx="4" fill="#5B7A94"/>
+      <text class="gw" x="94" y="135">EGFR</text>
+      <text class="ts" x="80" y="176">單一受體</text>
+      <text class="ts" x="80" y="192">突變後自己活化</text>
+
+      <!-- HER2 -->
+      <rect x="176" y="104" width="50" height="52" rx="4" fill="#5B7A94" opacity=".72"/>
+      <text class="gw" x="182" y="135">HER2</text>
+      <text class="ts" x="172" y="176">EGFR 的家族成員</text>
+
+      <!-- MET -->
+      <rect x="264" y="104" width="48" height="52" rx="4" fill="#5B7A94" opacity=".72"/>
+      <text class="gw" x="274" y="135">MET</text>
+      <text class="ts" x="256" y="176">該回收卻回收不掉</text>
+
+      <!-- ALK/ROS1/RET/NTRK fusion -->
+      <rect x="352" y="104" width="128" height="52" rx="4" fill="#9C5B52"/>
+      <text class="gw" x="360" y="128">ALK · ROS1</text>
+      <text class="gw" x="360" y="146">RET · NTRK</text>
+      <text class="ts" x="352" y="176">融合蛋白：不用門鈴</text>
+      <text class="ts" x="352" y="192">自己就一直開著</text>
+
+      <!-- ── downstream ── -->
+      <path d="M112 156 V 210 H 300 V 226" fill="none" stroke="#7E8F9A" stroke-width="1.3"/>
+      <path d="M201 156 V 210" fill="none" stroke="#7E8F9A" stroke-width="1.3"/>
+      <path d="M288 156 V 210" fill="none" stroke="#7E8F9A" stroke-width="1.3"/>
+      <path d="M416 156 V 210 H 300" fill="none" stroke="#7E8F9A" stroke-width="1.3"/>
+      <polygon points="296,226 300,234 304,226" fill="#7E8F9A"/>
+
+      <!-- RAS -->
+      <rect x="252" y="234" width="96" height="38" rx="4" fill="#F8F0EE" stroke="#9C5B52" stroke-width="1.4"/>
+      <text class="gn" x="268" y="258">KRAS</text>
+      <text class="ts" x="356" y="252">總開關。RAS 一開，</text>
+      <text class="ts" x="356" y="268">上游的門鈴響不響都無所謂了</text>
+
+      <path d="M300 272 V 296" stroke="#7E8F9A" stroke-width="1.3"/>
+      <polygon points="296,296 300,304 304,296" fill="#7E8F9A"/>
+
+      <!-- BRAF -->
+      <rect x="252" y="304" width="96" height="38" rx="4" fill="#F8F0EE" stroke="#9C5B52" stroke-width="1.4"/>
+      <text class="gn" x="270" y="328">BRAF</text>
+      <text class="ts" x="356" y="332">V600E 讓它不聽 RAS 指揮</text>
+
+      <path d="M300 342 V 366" stroke="#7E8F9A" stroke-width="1.3"/>
+      <polygon points="296,366 300,374 304,366" fill="#7E8F9A"/>
+
+      <!-- MEK -->
+      <rect x="252" y="374" width="96" height="34" rx="4" fill="#F3F5F6" stroke="#D3DBDF"/>
+      <text class="gn" x="278" y="396">MEK</text>
+      <text class="ts" x="356" y="396">MEK 抑制劑作用點</text>
+
+      <path d="M300 408 V 430" stroke="#7E8F9A" stroke-width="1.3"/>
+      <polygon points="296,430 300,438 304,430" fill="#7E8F9A"/>
+      <rect x="252" y="438" width="96" height="32" rx="4" fill="#F3F5F6" stroke="#D3DBDF"/>
+      <text class="gn" x="280" y="459">ERK</text>
+
+      <!-- PI3K branch -->
+      <path d="M416 156 V 240 H 596" fill="none" stroke="#7E8F9A" stroke-width="1.3" stroke-dasharray="4 3"/>
+      <polygon points="596,236 604,240 596,244" fill="#7E8F9A"/>
+      <rect x="608" y="222" width="90" height="34" rx="4" fill="#F3F5F6" stroke="#D3DBDF"/>
+      <text class="gn" x="626" y="244">PI3K</text>
+      <path d="M653 256 V 282" stroke="#7E8F9A" stroke-width="1.3" stroke-dasharray="4 3"/>
+      <rect x="608" y="290" width="90" height="34" rx="4" fill="#F3F5F6" stroke="#D3DBDF"/>
+      <text class="gn" x="628" y="312">AKT</text>
+      <path d="M653 324 V 350" stroke="#7E8F9A" stroke-width="1.3" stroke-dasharray="4 3"/>
+      <rect x="608" y="358" width="90" height="34" rx="4" fill="#F3F5F6" stroke="#D3DBDF"/>
+      <text class="gn" x="620" y="380">mTOR</text>
+      <text class="tm" x="712" y="244">存活路徑</text>
+      <text class="ts" x="712" y="264">讓癌細胞</text>
+      <text class="ts" x="712" y="280">不容易凋亡</text>
+
+      <!-- nucleus -->
+      <ellipse cx="300" cy="508" rx="150" ry="32" fill="#EDF1F4" stroke="#5B7A94" stroke-width="1.4"/>
+      <text class="tt" x="238" y="504" font-weight="600">細胞核</text>
+      <text class="ts" x="200" y="524">開始分裂 · 存活 · 血管新生 · 轉移</text>
+      <path d="M300 470 V 478" stroke="#7E8F9A" stroke-width="1.3"/>
+      <path d="M653 392 V 486 H 448" fill="none" stroke="#7E8F9A" stroke-width="1.3" stroke-dasharray="4 3"/>
+    </svg>
+    <div class="figcap">
+      <b>圖 1｜訊號傳導路徑與各驅動基因的位置。</b>
+      藍色＝細胞膜上的受體（EGFR、HER2、MET）；紅褐色＝異常活化的節點（融合蛋白、KRAS、BRAF）。
+      愈往下游的突變愈難處理——因為即使把上游的受體關掉，下游還是自己開著。
+      這也是為什麼 EGFR 標靶藥效果好，而 KRAS 曾長期被視為無藥可打。
+    </div>
+  </div>
+
+  <div class="note calm">
+    <div class="note-t">個管師的一句話理解</div>
+    <p>
+      驅動基因＝<strong>腫瘤的引擎</strong>。標靶藥＝<strong>把引擎的鑰匙拔掉</strong>。
+      引擎在哪一段（受體？中繼站？），決定了要用哪一把鑰匙，也決定了拔掉之後效果有多好。
+    </p>
+  </div>
+</section>
+
+<!-- ══════ 02 變異型態 ══════ -->
+<section id="types">
+  <div class="sechead"><span class="secno">02</span><h2>報告上寫的那些字，是哪一種壞法</h2></div>
+  <p class="secsub">
+    「突變」「融合」「擴增」「跳讀」——這些不是同義詞，是四種完全不同的壞法。
+    壞法不同，<strong>檢測方法也不同</strong>，這是實務上最常出問題的地方。
+  </p>
+
+  <div class="fig mid">
+    <svg viewBox="0 0 780 432" role="img" aria-label="六種基因變異型態示意圖">
+      <style>
+        .ex{fill:#5B7A94}
+        .ex2{fill:#9C5B52}
+        .ex-x{fill:#D3DBDF}
+        .lb{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:12.5px;font-weight:600;fill:#23303A}
+        .sb{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:11px;fill:#4A5C68}
+        .eg{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#FA7A35;letter-spacing:.04em}
+        .in{font-family:"IBM Plex Mono",monospace;font-size:9px;fill:#FFF}
+      </style>
+
+      <!-- 1 point mutation -->
+      <text class="lb" x="10" y="26">① 點突變　Point mutation</text>
+      <text class="sb" x="240" y="26">一個字母換掉，蛋白質形狀就變了</text>
+      <g transform="translate(10,36)">
+        <rect class="ex" x="0" y="0" width="46" height="18" rx="2"/>
+        <rect class="ex" x="52" y="0" width="46" height="18" rx="2"/>
+        <rect x="104" y="0" width="46" height="18" rx="2" fill="#FA7A35"/>
+        <rect class="ex" x="156" y="0" width="46" height="18" rx="2"/>
+        <circle cx="127" cy="28" r="3" fill="#FA7A35"/>
+      </g>
+      <text class="eg" x="222" y="52">肺癌代表：EGFR L858R、BRAF V600E、KRAS G12C</text>
+
+      <!-- 2 deletion -->
+      <text class="lb" x="10" y="102">② 缺失　Deletion</text>
+      <text class="sb" x="200" y="102">少了一段，蛋白質被截短</text>
+      <g transform="translate(10,112)">
+        <rect class="ex" x="0" y="0" width="46" height="18" rx="2"/>
+        <rect class="ex-x" x="52" y="0" width="46" height="18" rx="2"/>
+        <line x1="55" y1="3" x2="95" y2="15" stroke="#9C5B52" stroke-width="1.4"/>
+        <line x1="95" y1="3" x2="55" y2="15" stroke="#9C5B52" stroke-width="1.4"/>
+        <rect class="ex" x="104" y="0" width="46" height="18" rx="2"/>
+        <rect class="ex" x="156" y="0" width="46" height="18" rx="2"/>
+      </g>
+      <text class="eg" x="222" y="128">肺癌代表：EGFR Exon 19 deletion（最常見的敏感型突變）</text>
+
+      <!-- 3 insertion -->
+      <text class="lb" x="10" y="178">③ 插入　Insertion</text>
+      <text class="sb" x="200" y="178">多塞一段進去，藥的口袋被撐歪</text>
+      <g transform="translate(10,188)">
+        <rect class="ex" x="0" y="0" width="46" height="18" rx="2"/>
+        <rect class="ex" x="52" y="0" width="46" height="18" rx="2"/>
+        <rect x="104" y="0" width="26" height="18" rx="2" fill="#A8873F"/>
+        <text class="in" x="110" y="13">＋＋</text>
+        <rect class="ex" x="136" y="0" width="46" height="18" rx="2"/>
+      </g>
+      <text class="eg" x="222" y="204">肺癌代表：EGFR Exon 20 insertion（一般 TKI 對它無效）</text>
+
+      <!-- 4 exon skipping -->
+      <text class="lb" x="10" y="254">④ 跳讀　Exon skipping</text>
+      <text class="sb" x="222" y="254">基因沒壞，但拼接時漏掉一段</text>
+      <g transform="translate(10,264)">
+        <rect class="ex" x="0" y="0" width="40" height="18" rx="2"/>
+        <rect class="ex-x" x="46" y="0" width="40" height="18" rx="2"/>
+        <rect class="ex" x="92" y="0" width="40" height="18" rx="2"/>
+        <path d="M20 18 Q 66 38 112 18" fill="none" stroke="#FA7A35" stroke-width="1.6"/>
+      </g>
+      <text class="eg" x="222" y="282">肺癌代表：MET exon 14 skipping（需 RNA 層次才驗得準）</text>
+
+      <!-- 5 fusion -->
+      <text class="lb" x="10" y="330">⑤ 融合／重組　Fusion</text>
+      <text class="sb" x="222" y="330">兩個不相干的基因被接在一起</text>
+      <g transform="translate(10,340)">
+        <rect class="ex2" x="0" y="0" width="70" height="18" rx="2"/>
+        <text class="in" x="14" y="13">EML4</text>
+        <rect class="ex" x="70" y="0" width="70" height="18" rx="2"/>
+        <text class="in" x="94" y="13">ALK</text>
+        <path d="M70 -6 V 24" stroke="#FA7A35" stroke-width="2"/>
+      </g>
+      <text class="eg" x="222" y="356">肺癌代表：EML4-ALK、CD74-ROS1、KIF5B-RET、NTRK 融合</text>
+
+      <!-- 6 amplification -->
+      <text class="lb" x="10" y="406">⑥ 擴增　Amplification</text>
+      <text class="sb" x="222" y="406">基因沒壞，但複製了太多份</text>
+      <g transform="translate(430,392)">
+        <rect class="ex" x="0" y="0" width="30" height="14" rx="2"/>
+        <rect class="ex" x="34" y="0" width="30" height="14" rx="2"/>
+        <rect class="ex" x="68" y="0" width="30" height="14" rx="2"/>
+        <rect class="ex" x="102" y="0" width="30" height="14" rx="2"/>
+      </g>
+      <text class="eg" x="580" y="404">MET 擴增、HER2 擴增</text>
+    </svg>
+    <div class="figcap">
+      <b>圖 2｜六種變異型態。</b>藍色方塊＝正常外顯子（exon），橘色＝變異處，紅褐色＝來自另一個基因的片段。
+      同樣說「基因有問題」，這六種的成因、後果與檢測方式都不一樣。
+    </div>
+  </div>
+
+  <h3>壞法決定檢測方法</h3>
+  <div class="tbl">
+    <table>
+      <thead>
+        <tr><th style="width:120px">變異型態</th><th style="width:200px">最適合的檢測</th><th>為什麼</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>點突變 / 缺失 / 插入</b></td>
+          <td class="mn">PCR、DNA-based NGS</td>
+          <td>DNA 序列本身改變，直接讀 DNA 就抓得到</td>
+        </tr>
+        <tr>
+          <td><b>融合</b></td>
+          <td class="mn">FISH、IHC 初篩、RNA-based NGS</td>
+          <td>斷點常落在很長的內含子（intron）區域，只讀 DNA 容易漏；RNA 已把內含子剪掉，融合點看得清楚</td>
+        </tr>
+        <tr>
+          <td><b>跳讀</b></td>
+          <td class="mn">RNA-based NGS 最準</td>
+          <td>DNA 上的變異可能只是剪接位點的小改變，看 RNA 才知道那一段真的被跳掉了</td>
+        </tr>
+        <tr>
+          <td><b>擴增</b></td>
+          <td class="mn">FISH、NGS 拷貝數分析</td>
+          <td>要數「幾份」，不是看「序列對不對」</td>
+        </tr>
+        <tr>
+          <td><b>蛋白質過度表現</b></td>
+          <td class="mn">IHC 免疫組織化學染色</td>
+          <td>基因可能完全正常，問題出在蛋白質做太多——PD-L1 就屬這一類</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <div class="note-t">實務上最常踩的坑</div>
+    <ul>
+      <li><strong>用 DNA 套組去找融合，報告陰性不等於真的沒有。</strong>
+          臨床高度懷疑（年輕、非吸菸、其他基因都陰性）時，要跟醫師確認是否需要補 RNA 或 FISH。</li>
+      <li><strong>「EGFR 陽性」四個字資訊不足。</strong>
+          exon 19 del 有藥、exon 20 ins 要用完全不同的藥、T790M 是抗藥型——不能混為一談。</li>
+      <li><strong>PD-L1 不是基因檢測。</strong>它是染色看蛋白質，跟前面五種完全不同邏輯，不要放在同一句話裡跟病人解釋。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════ 03 EGFR ══════ -->
+<section id="egfr">
+  <div class="sechead"><span class="secno">03</span><h2>EGFR — 台灣肺腺癌最重要的一個</h2></div>
+
+  <div class="gene">
+    <div class="gene-hd">
+      <span class="g">EGFR</span>
+      <span class="zh">表皮生長因子受體 · Epidermal Growth Factor Receptor</span>
+      <span class="pct">台灣肺腺癌　<b>約 55%</b></span>
+    </div>
+
+    <div class="mech">
+      <div class="m-ok">
+        <h5>正常在做什麼</h5>
+        <p>EGFR 是細胞膜上的門鈴。外面的生長因子接上來，<strong>兩個 EGFR 靠在一起（二聚化）</strong>，
+        互相把對方的尾巴磷酸化，訊號才往下傳。沒有生長因子，它就安靜。</p>
+      </div>
+      <div class="m-bad">
+        <h5>突變之後</h5>
+        <p>激酶區的突變讓 EGFR <strong>不需要生長因子就自己黏在一起、自己磷酸化</strong>。
+        門鈴按鈕壞在「一直被按住」的位置，訊號 24 小時不停往下送。</p>
+      </div>
+      <div class="m-fix">
+        <h5>藥怎麼介入</h5>
+        <p>TKI 是<strong>卡進 ATP 口袋的小分子</strong>。磷酸化需要 ATP 提供磷酸根，
+        藥把 ATP 該坐的位置佔走，訊號就斷了。這是所有「-tinib」結尾藥物的共同原理。</p>
+      </div>
+    </div>
+
+    <div class="body">
+      <h3>突變位置決定命運</h3>
+      <p>
+        EGFR 的激酶區由 <code>exon 18</code> 到 <code>exon 24</code> 編碼。
+        臨床上會驗的突變集中在 exon 18–21 這四段，而且<strong>位置不同，對藥的反應天差地遠</strong>。
+      </p>
+    </div>
+
+    <div class="fig mid">
+      <svg viewBox="0 0 760 250" role="img" aria-label="EGFR 激酶區外顯子與常見突變位置示意圖">
+        <style>
+          .exn{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:#FFF;font-weight:600}
+          .mt{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600}
+          .ds{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:11px;fill:#4A5C68}
+          .hd{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#7E8F9A;letter-spacing:.1em}
+        </style>
+
+        <text class="hd" x="10" y="20">EGFR 激酶區　EXON 18 – 21</text>
+
+        <!-- exon bar -->
+        <rect x="10" y="36" width="170" height="30" rx="3" fill="#7E8F9A"/>
+        <text class="exn" x="66" y="56">exon 18</text>
+        <rect x="184" y="36" width="180" height="30" rx="3" fill="#71805A"/>
+        <text class="exn" x="242" y="56">exon 19</text>
+        <rect x="368" y="36" width="190" height="30" rx="3" fill="#9C5B52"/>
+        <text class="exn" x="428" y="56">exon 20</text>
+        <rect x="562" y="36" width="188" height="30" rx="3" fill="#71805A"/>
+        <text class="exn" x="620" y="56">exon 21</text>
+
+        <!-- markers -->
+        <path d="M78 66 V 86" stroke="#7E8F9A" stroke-width="1.3"/>
+        <text class="mt" x="30" y="102" fill="#7E8F9A">G719X</text>
+        <text class="ds" x="30" y="118">少見型</text>
+        <text class="ds" x="30" y="132">反應中等</text>
+
+        <path d="M270 66 V 86" stroke="#71805A" stroke-width="1.6"/>
+        <text class="mt" x="206" y="102" fill="#71805A">Exon 19 del</text>
+        <text class="ds" x="206" y="118">最常見・敏感型</text>
+        <text class="ds" x="206" y="132">TKI 反應最好</text>
+
+        <path d="M420 66 V 86" stroke="#9C5B52" stroke-width="1.6"/>
+        <text class="mt" x="380" y="102" fill="#9C5B52">T790M</text>
+        <text class="ds" x="380" y="118">守門員突變</text>
+        <text class="ds" x="380" y="132">一二代抗藥</text>
+
+        <path d="M508 66 V 86" stroke="#9C5B52" stroke-width="1.6"/>
+        <text class="mt" x="470" y="160" fill="#9C5B52">Exon 20 ins</text>
+        <path d="M508 86 V 146" stroke="#9C5B52" stroke-width="1.3" stroke-dasharray="3 3"/>
+        <text class="ds" x="470" y="176">插入型・一般 TKI 無效</text>
+
+        <path d="M646 66 V 86" stroke="#71805A" stroke-width="1.6"/>
+        <text class="mt" x="600" y="102" fill="#71805A">L858R</text>
+        <text class="ds" x="600" y="118">第二常見・敏感型</text>
+        <text class="ds" x="600" y="132">反應略遜於 19 del</text>
+
+        <!-- legend -->
+        <line x1="10" y1="206" x2="750" y2="206" stroke="#D3DBDF"/>
+        <rect x="10" y="220" width="12" height="12" rx="2" fill="#71805A"/>
+        <text class="ds" x="30" y="230">敏感型（TKI 有效）</text>
+        <rect x="180" y="220" width="12" height="12" rx="2" fill="#9C5B52"/>
+        <text class="ds" x="200" y="230">抗藥型 / 難處理型</text>
+        <rect x="360" y="220" width="12" height="12" rx="2" fill="#7E8F9A"/>
+        <text class="ds" x="380" y="230">少見型</text>
+      </svg>
+      <div class="figcap">
+        <b>圖 3｜EGFR 常見突變的位置。</b>
+        同一個基因，綠色那兩段是「好消息」，紅褐色那兩段是「要換策略」。
+        報告上只寫「EGFR mutation positive」時，一定要問清楚是哪一段。
+      </div>
+    </div>
+
+    <div class="body">
+      <h4>為什麼 exon 19 del 比 L858R 反應好？</h4>
+      <p>
+        兩者都讓 EGFR 自己活化，但 exon 19 缺失把一整段拿掉，
+        蛋白質構型改變得更徹底，<strong>對藥的親和力比對 ATP 的親和力更高</strong>；
+        L858R 只是換掉一個胺基酸，改變較溫和。
+        臨床上 exon 19 del 病人的無惡化存活期通常比 L858R 略長，這是機轉上的原因。
+      </p>
+
+      <h4>T790M 為什麼叫「守門員突變」</h4>
+      <p>
+        T790 這個位置正好在 ATP 口袋的入口，像門口的守衛，決定什麼分子進得去。
+        突變成 M（甲硫胺酸）之後側鏈變大，<strong>把門擋住一半</strong>，
+        一二代 TKI 卡不進去；同時它還<strong>提高了 EGFR 對 ATP 的親和力</strong>，
+        讓 ATP 更容易搶贏藥物。兩個效應加起來，藥就失效了。
+      </p>
+      <p>
+        第三代的 osimertinib 分子設計得比較細長，能繞過變大的守衛，
+        而且是<strong>共價結合</strong>——接上去就不放開，不跟 ATP 搶親和力。
+        這就是為什麼它專治 T790M。
+      </p>
+
+      <h4>Exon 20 插入為什麼一般 TKI 打不到</h4>
+      <p>
+        插入突變發生在 C-helix 後方的環狀區。它<strong>把 EGFR 推到活化構型，
+        但沒有把藥物口袋撐大</strong>——換句話說，蛋白質被打開了，門卻沒變寬。
+        一般 TKI 進不去，要提高劑量到有效濃度時，正常組織的副作用已經受不了。
+      </p>
+      <p>
+        所以 exon 20 ins 走的是完全不同的路：<strong>amivantamab 是雙特異性抗體</strong>，
+        從細胞外面同時抓住 EGFR 和 MET，不走 ATP 口袋這條路，繞開了整個問題。
+      </p>
+    </div>
+
+    <h3>EGFR TKI 的四個世代</h3>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr><th style="width:74px">世代</th><th style="width:150px">代表藥</th>
+              <th style="width:130px">結合方式</th><th>特性</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mn gen1"><b>第一代</b></td>
+            <td><span class="d">Gefitinib</span><span class="d">Erlotinib</span></td>
+            <td>可逆、只打 EGFR</td>
+            <td>副作用較輕；藥可以離開受體，所以需要維持血中濃度</td>
+          </tr>
+          <tr>
+            <td class="mn gen2"><b>第二代</b></td>
+            <td><span class="d">Afatinib</span><span class="d">Dacomitinib</span></td>
+            <td>不可逆、泛 HER 家族</td>
+            <td>共價結合不放開，也打 HER2／HER4；效力強但腹瀉與皮疹較明顯</td>
+          </tr>
+          <tr>
+            <td class="mn gen3"><b>第三代</b></td>
+            <td><span class="d">Osimertinib</span></td>
+            <td>不可逆、對突變型有選擇性</td>
+            <td>能對付 T790M；對正常 EGFR 影響小，所以皮疹腹瀉反而比二代輕；穿腦效果好</td>
+          </tr>
+          <tr>
+            <td class="mn gen4"><b>抗體類</b></td>
+            <td><span class="d">Amivantamab</span></td>
+            <td>雙特異性抗體（EGFR × MET）</td>
+            <td>不走 ATP 口袋，從細胞外攔截；用於 exon 20 ins；輸注反應是特有的注意事項</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>用久了為什麼會失效</h3>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr><th style="width:170px">抗藥機轉</th><th style="width:90px">大約比例</th><th>發生了什麼</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mn">T790M</td><td>一二代後約 50–60%</td>
+              <td>守門員位置突變擋住藥物——這也是 osimertinib 二線適應症的由來</td></tr>
+          <tr><td class="mn">C797S</td><td>三代後常見</td>
+              <td>osimertinib 共價結合要靠的那個半胱胺酸被換掉，藥接不上去了</td></tr>
+          <tr><td class="mn">MET 擴增</td><td>約 15%</td>
+              <td>EGFR 這條路被堵住，癌細胞改走 MET 這條旁路（bypass）</td></tr>
+          <tr><td class="mn">HER2 擴增</td><td>少數</td>
+              <td>同樣是旁路活化，改用家族裡的另一個成員傳訊號</td></tr>
+          <tr><td class="mn">小細胞轉化</td><td>約 3–10%</td>
+              <td>腫瘤直接變成小細胞肺癌的型態，整個治療策略要換掉</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note calm">
+      <div class="note-t">為什麼惡化後醫師常要求再切片</div>
+      <p>
+        上面五種抗藥機轉，<strong>處理方式完全不同</strong>——T790M 換三代藥、
+        MET 擴增要考慮合併 MET 抑制劑、小細胞轉化要改成化療。
+        不重新取檢體就無從判斷。病人問「為什麼又要挨一針」，這就是答案。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 04 ALK ══════ -->
+<section id="alk">
+  <div class="sechead"><span class="secno">04</span><h2>ALK — 兩個基因被接錯</h2></div>
+
+  <div class="gene">
+    <div class="gene-hd">
+      <span class="g">ALK</span>
+      <span class="zh">間變性淋巴瘤激酶 · Anaplastic Lymphoma Kinase</span>
+      <span class="pct">台灣 NSCLC　<b>約 5%</b></span>
+    </div>
+
+    <div class="mech">
+      <div class="m-ok">
+        <h5>正常在做什麼</h5>
+        <p>ALK 在<strong>成人肺部幾乎不表現</strong>，主要是胚胎期神經發育用的。
+        正常肺細胞基本上不需要它。</p>
+      </div>
+      <div class="m-bad">
+        <h5>融合之後</h5>
+        <p>第 2 號染色體發生倒位，把 <code>EML4</code> 的前半段接到 <code>ALK</code> 的激酶區前面。
+        EML4 帶有<strong>捲曲螺旋結構（coiled-coil）</strong>，會讓蛋白質自動兩兩靠在一起——
+        於是 ALK 激酶<strong>不用任何門鈴，永遠開著</strong>。</p>
+      </div>
+      <div class="m-fix">
+        <h5>藥怎麼介入</h5>
+        <p>ALK 抑制劑同樣卡進 ATP 口袋。因為正常肺細胞不太需要 ALK，
+        <strong>治療窗相對寬</strong>，所以 ALK 抑制劑的療效通常又快又明顯。</p>
+      </div>
+    </div>
+
+    <div class="body">
+      <p>
+        這是<strong>融合型驅動基因</strong>的典型：問題不在某個字母寫錯，而在<strong>兩段本來不相干的基因被接在一起</strong>。
+        前半段（EML4）提供「自己聚合」的能力，後半段（ALK）提供激酶活性，
+        組合起來就是一台永遠不熄火的引擎。
+      </p>
+      <p>
+        ALK 融合好發於<strong>較年輕、非吸菸或輕度吸菸的腺癌病人</strong>，
+        而且<strong>腦轉移比例偏高</strong>——這一點直接影響用藥選擇。
+      </p>
+
+      <h3>穿腦能力為什麼是選藥重點</h3>
+      <p>
+        腦部有<strong>血腦屏障</strong>，屏障上有一種叫 <code>P-gp</code> 的幫浦，
+        會把「認得出來的外來分子」抽回血液裡。
+        Crizotinib 剛好是這個幫浦的受質，一進腦就被抽出去，所以腦部濃度低；
+        alectinib、brigatinib、lorlatinib 被設計成<strong>不容易被 P-gp 認出來</strong>，
+        腦內濃度高很多。這是二三代藥物在 CNS 表現明顯較好的物理原因。
+      </p>
+
+      <h3>ALK 抑制劑的世代</h3>
+      <div class="tbl">
+        <table>
+          <thead>
+            <tr><th style="width:74px">世代</th><th style="width:140px">藥</th>
+                <th style="width:140px">穿腦</th><th>特性與副作用重點</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="mn gen1"><b>第一代</b></td><td><span class="d">Crizotinib</span></td>
+                <td>差（P-gp 受質）</td>
+                <td>同時打 ALK／ROS1／MET；視覺異常（閃光、殘影）很典型，多在治療初期出現</td></tr>
+            <tr><td class="mn gen2"><b>第二代</b></td>
+                <td><span class="d">Alectinib</span><span class="d">Brigatinib</span><span class="d">Ceritinib</span></td>
+                <td>好</td>
+                <td>對多數一代抗藥突變仍有效；alectinib 常見水腫、便秘、肌肉痠痛與肝指數上升</td></tr>
+            <tr><td class="mn gen3"><b>第三代</b></td><td><span class="d">Lorlatinib</span></td>
+                <td>最好</td>
+                <td>能對付 <code>G1202R</code> 等難纏突變；特有副作用是<strong>血脂大幅上升</strong>與<strong>情緒／認知改變</strong>，追蹤時要主動問家屬</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note warn">
+        <div class="note-t">Lorlatinib 的追蹤要問家屬，不能只問病人</div>
+        <p>
+          情緒起伏、講話變慢、記憶變差這類中樞神經副作用，<strong>病人自己常常沒有病識感</strong>，
+          家屬反而會先察覺。電話追蹤時多問一句「家人有沒有覺得他跟以前不太一樣？」
+          可以早一步抓到需要調整劑量的個案。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 05 融合家族 ══════ -->
+<section id="fusion">
+  <div class="sechead"><span class="secno">05</span><h2>ROS1、RET、NTRK — 同一種壞法的近親</h2></div>
+  <p class="secsub">
+    這三個跟 ALK 是同一類：都是<strong>融合</strong>造成的持續活化。理解了 ALK，這三個就是換個名字。
+  </p>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">ROS1</span><span class="zh">ROS1 融合</span>
+      <span class="pct">台灣 NSCLC　<b>約 1–2%</b></span></div>
+    <div class="body">
+      <p>
+        ROS1 與 ALK 的<strong>激酶區在 ATP 結合位置上高度相似</strong>——這不是巧合，兩者演化上本來就是近親。
+        因此打 ALK 的 crizotinib 也打得到 ROS1，entrectinib 也是。
+        這是「一藥兩用」的分子基礎，不是臨床上碰運氣試出來的。
+      </p>
+      <p>
+        <strong>Repotrectinib</strong> 則是為了對付融合蛋白產生的抗藥突變（尤其是溶劑前緣突變）而設計，
+        分子比較小、比較緊湊，抗藥位置變大之後仍塞得進去——所以健保把它放在
+        crizotinib 或 entrectinib 惡化之後才給付。
+      </p>
+    </div>
+  </div>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">RET</span><span class="zh">RET 融合</span>
+      <span class="pct">台灣 NSCLC　<b>約 1–2%</b></span></div>
+    <div class="body">
+      <p>
+        RET 正常負責神經與腎臟發育。融合之後同樣是持續活化。
+        有專屬的選擇性抑制劑（selpercatinib、pralsetinib），療效明確，
+        但<strong>台灣健保目前未將肺癌納入給付</strong>——這是個管師要提前說明的事。
+      </p>
+      <div class="note warn">
+        <div class="note-t">驗到了卻沒有健保藥，怎麼說</div>
+        <p>
+          不要把「有藥」和「有健保」混在一起講。可以這樣分兩句：
+          「這個位點<strong>國際上是有專門的藥</strong>，效果不錯；但<strong>台灣健保目前還沒有給付在肺癌</strong>，
+          如果要用需要自費，我幫您問看看有沒有臨床試驗或藥廠的專案。」
+          然後<strong>實際去問</strong>——這句承諾要接得住。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">NTRK1/2/3</span><span class="zh">神經滋養性受體酪胺酸激酶融合</span>
+      <span class="pct">NSCLC　<b>&lt; 1%</b></span></div>
+    <div class="body">
+      <p>
+        NTRK 融合非常罕見，但它有個特殊地位：<strong>跨癌別（tumor-agnostic）適應症</strong>。
+        意思是不管長在肺、大腸、甲狀腺還是唾液腺，只要驗到 NTRK 融合，同一支藥都可能有效。
+        這是腫瘤治療觀念的一個轉折——<strong>從「長在哪裡」轉向「壞在哪裡」</strong>。
+      </p>
+      <p>
+        機轉上道理很單純：融合造成的持續活化，跟原本長在什麼器官無關，
+        所以只要把那個激酶關掉就有效。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 06 MET ══════ -->
+<section id="met">
+  <div class="sechead"><span class="secno">06</span><h2>MET exon 14 — 該回收的沒回收</h2></div>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">MET exon 14 skipping</span>
+      <span class="zh">跳讀式突變</span>
+      <span class="pct">台灣 NSCLC　<b>約 2–3%</b></span></div>
+
+    <div class="mech">
+      <div class="m-ok">
+        <h5>正常在做什麼</h5>
+        <p>MET 受體傳完訊號之後要被回收銷毀。<code>exon 14</code> 編碼的那一段裡有個
+        <strong>Y1003 標記位</strong>，回收系統（CBL）會認這個標記，
+        幫 MET 貼上「該丟了」的標籤送去分解。</p>
+      </div>
+      <div class="m-bad">
+        <h5>跳讀之後</h5>
+        <p>剪接出錯，exon 14 整段被跳過，<strong>Y1003 標記位不見了</strong>。
+        回收系統認不出來，MET 一直留在細胞膜上堆積，訊號持續不斷。
+        基因本身沒有「壞」，是<strong>剎車失靈</strong>。</p>
+      </div>
+      <div class="m-fix">
+        <h5>藥怎麼介入</h5>
+        <p>Tepotinib 是 MET 的 TKI，直接把堆積在膜上的 MET 激酶活性關掉。
+        既然無法讓細胞恢復回收能力，就從源頭把訊號切斷。</p>
+      </div>
+    </div>
+
+    <div class="fig mid">
+      <svg viewBox="0 0 720 230" role="img" aria-label="MET exon 14 跳讀導致受體無法被回收降解的機轉圖">
+        <style>
+          .st{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:11.5px;fill:#4A5C68}
+          .sh{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#7E8F9A;letter-spacing:.1em}
+          .sb2{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:12px;font-weight:600;fill:#23303A}
+        </style>
+
+        <!-- normal -->
+        <text class="sh" x="14" y="18">正常</text>
+        <rect x="14" y="30" width="300" height="1.5" fill="#B9C6CD"/>
+        <rect x="60" y="14" width="26" height="34" rx="3" fill="#5B7A94"/>
+        <circle cx="96" cy="44" r="6" fill="#A8873F"/>
+        <text class="st" x="106" y="48">Y1003 標記</text>
+        <path d="M96 54 V 74" stroke="#71805A" stroke-width="1.3"/>
+        <polygon points="92,74 96,82 100,74" fill="#71805A"/>
+        <rect x="52" y="86" width="106" height="26" rx="3" fill="#F1F4EC" stroke="#71805A"/>
+        <text class="st" x="64" y="103">回收系統認得</text>
+        <path d="M105 112 V 130" stroke="#71805A" stroke-width="1.3"/>
+        <polygon points="101,130 105,138 109,130" fill="#71805A"/>
+        <text class="sb2" x="52" y="156">受體被分解</text>
+        <text class="st" x="52" y="174">訊號適時停止</text>
+
+        <!-- divider -->
+        <line x1="356" y1="10" x2="356" y2="200" stroke="#D3DBDF" stroke-dasharray="4 4"/>
+
+        <!-- skipping -->
+        <text class="sh" x="386" y="18" fill="#9C5B52">EXON 14 跳讀</text>
+        <rect x="386" y="30" width="310" height="1.5" fill="#B9C6CD"/>
+        <rect x="432" y="14" width="26" height="34" rx="3" fill="#5B7A94"/>
+        <rect x="466" y="14" width="26" height="34" rx="3" fill="#5B7A94"/>
+        <rect x="500" y="14" width="26" height="34" rx="3" fill="#5B7A94"/>
+        <circle cx="470" cy="46" r="6" fill="none" stroke="#9C5B52" stroke-dasharray="2 2"/>
+        <line x1="465" y1="41" x2="475" y2="51" stroke="#9C5B52" stroke-width="1.4"/>
+        <text class="st" x="540" y="50">標記不見了</text>
+        <path d="M470 58 V 78" stroke="#9C5B52" stroke-width="1.3" stroke-dasharray="3 3"/>
+        <rect x="416" y="86" width="120" height="26" rx="3" fill="#F8F0EE" stroke="#9C5B52"/>
+        <text class="st" x="426" y="103">回收系統認不出</text>
+        <text class="sb2" x="416" y="140">MET 在膜上堆積</text>
+        <text class="st" x="416" y="158">訊號持續不停</text>
+        <text class="st" x="416" y="176" fill="#FA7A35">→ Tepotinib 關掉激酶活性</text>
+      </svg>
+      <div class="figcap">
+        <b>圖 4｜MET exon 14 跳讀的機轉。</b>
+        這是少數「不是基因寫錯，而是拼接漏掉」的類型，也是為什麼它<strong>要用 RNA 層次的檢測才驗得準</strong>。
+      </div>
+    </div>
+
+    <div class="body">
+      <p>
+        MET exon 14 跳讀好發於<strong>年紀較大的病人</strong>，
+        在肉瘤樣（sarcomatoid）組織型態中比例明顯偏高。
+        另外要區分：<strong>MET 擴增</strong>是另一回事（複製太多份），
+        它常出現在 EGFR TKI 治療後的抗藥機轉裡，兩者不要混淆。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 07 下游 ══════ -->
+<section id="downstream">
+  <div class="sechead"><span class="secno">07</span><h2>BRAF 與 KRAS — 壞在下游比較難處理</h2></div>
+  <p class="secsub">
+    前面講的都是細胞膜上的受體。這兩個在<strong>細胞質裡的傳話鏈上</strong>，
+    位置更靠下游——把上游的門鈴關掉也沒用，因為它們自己就一直在叫。
+  </p>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">BRAF V600E</span><span class="zh">絲胺酸／蘇胺酸激酶</span>
+      <span class="pct">NSCLC　<b>約 1–2%</b></span></div>
+
+    <div class="mech">
+      <div class="m-ok">
+        <h5>正常在做什麼</h5>
+        <p>BRAF 是 RAS 下游的中繼站。<strong>要等 RAS 先活化、兩個 BRAF 配對成雙</strong>，
+        才能把訊號傳給 MEK。整個過程有層層把關。</p>
+      </div>
+      <div class="m-bad">
+        <h5>V600E 之後</h5>
+        <p>第 600 號位置的纈胺酸換成麩胺酸，這個改變<strong>模仿了「已經被磷酸化」的狀態</strong>。
+        BRAF 於是<strong>單獨一個就能運作，完全不用等 RAS</strong>，把關全部失效。</p>
+      </div>
+      <div class="m-fix">
+        <h5>藥怎麼介入</h5>
+        <p>Dabrafenib 抑制 BRAF、trametinib 抑制下游的 MEK。<strong>兩個一起打</strong>，
+        既攔截主線，也堵住 BRAF 被抑制後細胞想繞路的可能。</p>
+      </div>
+    </div>
+
+    <div class="body">
+      <h4>為什麼一定要 BRAF ＋ MEK 兩支一起用</h4>
+      <p>
+        有兩個理由。第一，臨床上雙藥的反應率與持續時間明顯優於單用 BRAF 抑制劑。
+        第二個理由比較微妙：<strong>BRAF 抑制劑在某些細胞裡反而會促進 RAF 配對成雙，
+        把 MEK-ERK 路徑打得更開</strong>（稱為反常活化，paradoxical activation）。
+        加上 MEK 抑制劑之後，就算上面被反常活化，下游一樣被堵住。
+      </p>
+      <div class="note warn">
+        <div class="note-t">健保條文背後的邏輯</div>
+        <p>
+          第 9 節寫明：BRAF 雙藥「使用無效後則<strong>不再給付</strong>該適應症相關之免疫檢查點抑制劑」。
+          所以 BRAF V600E 陽性個案的<strong>治療順序必須在 MDT 就決定好</strong>，
+          不是等到惡化再想。這是個管師該在會前提出來的問題。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">KRAS G12C</span><span class="zh">總開關上的突變</span>
+      <span class="pct">台灣 NSCLC　<b>約 3–5%</b></span></div>
+
+    <div class="body">
+      <p>
+        KRAS 是整條路徑的總開關。正常時它像個計時器：接上 GTP 就開啟，
+        水解成 GDP 就關閉，開一下就自動關掉。
+        突變之後<strong>水解能力喪失，開關卡在「開」的位置</strong>。
+      </p>
+      <p>
+        KRAS 曾經被稱為 <strong>undruggable（無藥可打）</strong>，
+        因為它表面光滑、沒有明顯的凹槽可以讓小分子藥物抓住。
+        突破點在於 <code>G12C</code> 這個特定突變——它把第 12 位換成
+        <strong>半胱胺酸（cysteine）</strong>，而半胱胺酸帶有一個可以做<strong>共價結合</strong>的硫基。
+        Sotorasib、adagrasib 就是靠這個硫基「焊」上去，把 KRAS 鎖在關閉狀態。
+      </p>
+      <p>
+        所以「KRAS 有藥了」這句話要講精準：<strong>只有 G12C 這一種有藥</strong>，
+        其他 KRAS 突變（G12D、G12V 等）目前仍在開發階段。
+        而且台灣族群 KRAS G12C 比例明顯低於西方（西方肺腺癌可達 12–13%），
+        多見於吸菸者。台灣健保目前也<strong>尚未給付</strong>。
+      </p>
+
+      <div class="note calm">
+        <div class="note-t">為什麼 KRAS 突變的病人免疫治療反而可能有機會</div>
+        <p>
+          KRAS 突變常與吸菸相關，吸菸造成的<strong>突變負荷（TMB）較高</strong>，
+          腫瘤看起來比較「不像自己人」，免疫系統較容易辨識。
+          這跟 EGFR／ALK 陽性病人剛好相反——下一節會講為什麼。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 08 HER2 ══════ -->
+<section id="her2">
+  <div class="sechead"><span class="secno">08</span><h2>HER2 — 跟乳癌的 HER2 不是同一回事</h2></div>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">HER2 (ERBB2)</span><span class="zh">EGFR 家族第二成員</span>
+      <span class="pct">NSCLC　<b>約 2–3%</b></span></div>
+    <div class="body">
+      <p>
+        HER2 是 EGFR 的家族成員，特別的地方在於<strong>它沒有自己的配體</strong>——
+        它不接生長因子，專門當「最佳搭檔」，跟其他家族成員配對後把訊號放大。
+      </p>
+      <p>
+        關鍵差別在這裡：
+      </p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th style="width:110px"></th><th style="width:190px">乳癌／胃癌的 HER2</th><th>肺癌的 HER2</th></tr></thead>
+          <tbody>
+            <tr><td><b>主要變異</b></td><td>蛋白質<strong>過度表現</strong>或基因<strong>擴增</strong></td>
+                <td>多為 <strong>exon 20 插入突變</strong>（激酶區本身變異）</td></tr>
+            <tr><td><b>檢測方式</b></td><td>IHC（0 / 1+ / 2+ / 3+）＋ FISH</td>
+                <td>NGS 定序找突變</td></tr>
+            <tr><td><b>判讀標準</b></td><td>IHC 3+ 或 FISH 陽性</td>
+                <td>看有沒有特定的插入序列</td></tr>
+            <tr><td><b>台灣健保</b></td><td>Trastuzumab 等有給付</td>
+                <td><strong>未給付於肺癌</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note warn">
+        <div class="note-t">個管師最容易講錯的一句</div>
+        <p>
+          乳癌病友常聽過「HER2 陽性有標靶可以打」。肺癌病人若聽到自己 HER2 有變異，
+          很自然會套用這個印象。
+          要主動說明：<strong>肺癌的 HER2 變異型態不同、判讀方式不同、健保給付狀況也不同</strong>，
+          不能直接沿用乳癌的說法。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 09 PD-L1 ══════ -->
+<section id="pdl1">
+  <div class="sechead"><span class="secno">09</span><h2>PD-L1 — 完全不同的一套邏輯</h2></div>
+  <p class="secsub">
+    前面八節講的都是「腫瘤的引擎壞在哪」。PD-L1 完全不是這件事——
+    它跟腫瘤怎麼生長無關，而是<strong>腫瘤怎麼躲過免疫系統</strong>。
+  </p>
+
+  <div class="gene">
+    <div class="gene-hd"><span class="g">PD-L1</span><span class="zh">程序性死亡配體 1 · 免疫檢查點</span>
+      <span class="pct">TPS ≥ 50% 者　<b>約 25–30%</b></span></div>
+
+    <div class="mech">
+      <div class="m-ok">
+        <h5>正常在做什麼</h5>
+        <p>PD-1／PD-L1 是免疫系統的<strong>煞車</strong>。
+        免疫細胞打完仗要能停下來，否則會攻擊自己人。
+        正常組織表現 PD-L1，就是在跟 T 細胞說「我是自己人，別打」。</p>
+      </div>
+      <div class="m-bad">
+        <h5>腫瘤怎麼利用</h5>
+        <p>癌細胞學會<strong>大量表現 PD-L1</strong>，主動去按 T 細胞的煞車。
+        T 細胞明明認出了癌細胞，卻被強制熄火，攻擊不下去。
+        腫瘤等於掛了一張「自己人」的假名牌。</p>
+      </div>
+      <div class="m-fix">
+        <h5>藥怎麼介入</h5>
+        <p>免疫檢查點抑制劑是<strong>抗體，不是化療也不是標靶</strong>。
+        它擋在 PD-1 和 PD-L1 中間不讓兩者接觸，<strong>把煞車鬆開</strong>，
+        讓原本就在現場的 T 細胞恢復攻擊。</p>
+      </div>
+    </div>
+
+    <div class="fig mid">
+      <svg viewBox="0 0 700 260" role="img" aria-label="PD-1 與 PD-L1 免疫煞車機轉及抑制劑作用示意圖">
+        <style>
+          .ct{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:12px;font-weight:600;fill:#23303A}
+          .cs{font-family:"IBM Plex Sans","Noto Sans TC",sans-serif;font-size:11px;fill:#4A5C68}
+          .ch{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#7E8F9A;letter-spacing:.1em}
+          .cm{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:#FFF;font-weight:600}
+        </style>
+
+        <!-- LEFT: blocked -->
+        <text class="ch" x="14" y="18">沒有藥物時</text>
+        <ellipse cx="80" cy="110" rx="56" ry="46" fill="#EDF1F4" stroke="#5B7A94" stroke-width="1.4"/>
+        <text class="ct" x="56" y="106">T 細胞</text>
+        <text class="cs" x="46" y="124">免疫部隊</text>
+        <ellipse cx="266" cy="110" rx="60" ry="48" fill="#F8F0EE" stroke="#9C5B52" stroke-width="1.4"/>
+        <text class="ct" x="238" y="106">癌細胞</text>
+        <text class="cs" x="226" y="124">掛假名牌</text>
+
+        <rect x="132" y="96" width="30" height="28" rx="3" fill="#5B7A94"/>
+        <text class="cm" x="136" y="114">PD1</text>
+        <rect x="180" y="96" width="34" height="28" rx="3" fill="#9C5B52"/>
+        <text class="cm" x="183" y="114">PDL1</text>
+        <line x1="162" y1="110" x2="180" y2="110" stroke="#23303A" stroke-width="2.4"/>
+
+        <text class="cs" x="120" y="164">結合 → 煞車踩下</text>
+        <text class="ct" x="120" y="186" fill="#9C5B52">T 細胞失能，攻擊不下去</text>
+
+        <!-- divider -->
+        <line x1="352" y1="10" x2="352" y2="240" stroke="#D3DBDF" stroke-dasharray="4 4"/>
+
+        <!-- RIGHT: released -->
+        <text class="ch" x="378" y="18" fill="#71805A">給了免疫檢查點抑制劑</text>
+        <ellipse cx="444" cy="110" rx="56" ry="46" fill="#EDF1F4" stroke="#5B7A94" stroke-width="1.4"/>
+        <text class="ct" x="420" y="106">T 細胞</text>
+        <text class="cs" x="414" y="124">恢復戰力</text>
+        <ellipse cx="630" cy="110" rx="60" ry="48" fill="#F8F0EE" stroke="#9C5B52" stroke-width="1.4"/>
+        <text class="ct" x="602" y="106">癌細胞</text>
+
+        <rect x="496" y="96" width="30" height="28" rx="3" fill="#5B7A94"/>
+        <text class="cm" x="500" y="114">PD1</text>
+        <rect x="562" y="96" width="34" height="28" rx="3" fill="#9C5B52"/>
+        <text class="cm" x="565" y="114">PDL1</text>
+        <!-- antibody -->
+        <path d="M544 78 V 96 M536 70 L544 78 M552 70 L544 78" stroke="#FA7A35" stroke-width="2.4" fill="none"/>
+        <circle cx="544" cy="106" r="11" fill="#FFF" stroke="#FA7A35" stroke-width="2"/>
+        <text class="cs" x="528" y="66" fill="#FA7A35">抗體擋住</text>
+
+        <text class="cs" x="484" y="164">結合被阻斷 → 煞車鬆開</text>
+        <text class="ct" x="484" y="186" fill="#71805A">T 細胞重新攻擊癌細胞</text>
+
+        <!-- irAE note -->
+        <rect x="378" y="204" width="308" height="42" rx="4" fill="#FFF" stroke="#9C5B52" stroke-width="1.3"/>
+        <text class="cs" x="392" y="222" fill="#9C5B52">代價：煞車鬆開的是「全身的」免疫系統</text>
+        <text class="cs" x="392" y="238">→ 可能攻擊正常器官，這就是 irAE</text>
+      </svg>
+      <div class="figcap">
+        <b>圖 5｜PD-1／PD-L1 煞車機轉。</b>
+        理解這張圖，就能理解 irAE 為什麼會發生、為什麼可以出現在任何器官、
+        為什麼可能在<strong>停藥好幾個月後</strong>才冒出來——因為被鬆開的免疫系統不會隨著藥物代謝掉就立刻恢復原狀。
+      </div>
+    </div>
+
+    <div class="body">
+      <h3>為什麼有驅動基因的病人，免疫治療效果反而差</h3>
+      <p>
+        這是健保條文要求「非鱗狀需 EGFR／ALK／ROS-1 原生型」的<strong>生物學理由</strong>，
+        不是行政上的刁難。原因有兩層：
+      </p>
+      <p>
+        第一，<strong>突變負荷低</strong>。EGFR／ALK 陽性的病人多為非吸菸者，
+        腫瘤累積的突變數量少，產生的「新抗原」也少，免疫系統認不太出它是壞人。
+        免疫治療能鬆開煞車，但如果 T 細胞根本沒認出目標，鬆開煞車也沒用。
+      </p>
+      <p>
+        第二，<strong>免疫微環境偏「冷」</strong>。這類腫瘤周圍浸潤的 T 細胞本來就少，
+        現場沒有部隊，鬆開煞車一樣沒人衝鋒。
+      </p>
+      <p>
+        所以驅動基因陽性的病人，正確的做法是<strong>先用標靶</strong>——那才是他們的引擎。
+        免疫治療留到後線、或搭配化療使用。
+      </p>
+
+      <h3>TPS、TC/IC、CPS 差在哪</h3>
+      <div class="tbl">
+        <table>
+          <thead><tr><th style="width:110px">指標</th><th style="width:230px">怎麼算</th><th>用在哪</th></tr></thead>
+          <tbody>
+            <tr><td class="mn"><b>TPS</b></td>
+                <td>PD-L1 染色陽性的<strong>腫瘤細胞</strong>佔全部腫瘤細胞的百分比</td>
+                <td>肺癌 pembrolizumab、cemiplimab 用這個</td></tr>
+            <tr><td class="mn"><b>TC / IC</b></td>
+                <td>分開算<strong>腫瘤細胞（TC）</strong>與<strong>免疫細胞（IC）</strong>的陽性比例</td>
+                <td>atezolizumab、nivolumab 用這個</td></tr>
+            <tr><td class="mn"><b>CPS</b></td>
+                <td>（陽性腫瘤細胞＋陽性免疫細胞）÷ 全部腫瘤細胞 × 100</td>
+                <td>肺癌少用，主要見於胃癌、頭頸癌、泌尿道上皮癌</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        分母分子的定義不同，<strong>數字不能互相換算</strong>。
+        加上每支藥指定的抗體平台（22C3、28-8、SP263、SP142）也不同，
+        所以「同一份 PD-L1 報告拿去申請另一支藥」常常行不通。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 10 總表 ══════ -->
+<section id="summary">
+  <div class="sechead"><span class="secno">10</span><h2>一頁總表</h2></div>
+  <p class="secsub">把前面九節壓成一張表。給付條件請對照《肺癌基因檢測與治療藥物》。</p>
+
+  <div class="tbl">
+    <table>
+      <thead>
+        <tr><th style="width:130px">位點</th><th style="width:96px">壞法</th>
+            <th style="width:230px">機轉一句話</th><th style="width:150px">代表藥</th><th style="width:80px">台灣健保</th></tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><td colspan="5">細胞膜上的受體</td></tr>
+        <tr><td class="mn"><b>EGFR 19del / L858R</b></td><td>缺失 / 點突變</td>
+            <td>受體不用門鈴自己活化</td><td>Osimertinib 等五種</td><td class="gen1">有</td></tr>
+        <tr><td class="mn"><b>EGFR T790M</b></td><td>點突變</td>
+            <td>守門員變大擋住一二代藥</td><td>Osimertinib</td><td class="gen1">有</td></tr>
+        <tr><td class="mn"><b>EGFR exon20ins</b></td><td>插入</td>
+            <td>受體打開了但藥的口袋沒變寬</td><td>Amivantamab</td><td class="gen1">有</td></tr>
+        <tr><td class="mn"><b>HER2 exon20ins</b></td><td>插入</td>
+            <td>家族成員的激酶區變異</td><td>（跨癌別藥物）</td><td class="gen4">無</td></tr>
+        <tr><td class="mn"><b>MET exon14</b></td><td>跳讀</td>
+            <td>回收標記消失，受體堆積不散</td><td>Tepotinib</td><td class="gen1">有</td></tr>
+
+        <tr class="grp"><td colspan="5">融合造成的持續活化</td></tr>
+        <tr><td class="mn"><b>ALK</b></td><td>融合</td>
+            <td>EML4 帶著 ALK 自己聚合、永遠開著</td><td>Alectinib 等五種</td><td class="gen1">有</td></tr>
+        <tr><td class="mn"><b>ROS1</b></td><td>融合</td>
+            <td>與 ALK 近親，同一批藥打得到</td><td>Crizotinib / Entrectinib</td><td class="gen1">有</td></tr>
+        <tr><td class="mn"><b>NTRK</b></td><td>融合</td>
+            <td>跨癌別，壞在哪比長在哪重要</td><td>Larotrectinib</td><td class="gen2">條件嚴</td></tr>
+        <tr><td class="mn"><b>RET</b></td><td>融合</td>
+            <td>同樣是融合持續活化</td><td>Selpercatinib 等</td><td class="gen4">無</td></tr>
+
+        <tr class="grp"><td colspan="5">細胞質裡的下游節點</td></tr>
+        <tr><td class="mn"><b>BRAF V600E</b></td><td>點突變</td>
+            <td>模仿已活化狀態，不用等 RAS</td><td>Dabrafenib + Trametinib</td><td class="gen2">二線</td></tr>
+        <tr><td class="mn"><b>KRAS G12C</b></td><td>點突變</td>
+            <td>總開關卡在「開」，靠半胱胺酸才有藥可焊</td><td>Sotorasib 等</td><td class="gen4">無</td></tr>
+
+        <tr class="grp"><td colspan="5">免疫逃脫（不是驅動基因）</td></tr>
+        <tr><td class="mn"><b>PD-L1</b></td><td>蛋白質表現</td>
+            <td>腫瘤主動去按 T 細胞的煞車</td><td>Pembrolizumab 等</td><td class="gen1">依門檻</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="keys">
+    <span><i style="background:#71805A"></i>健保有給付</span>
+    <span><i style="background:#A8873F"></i>有條件給付</span>
+    <span><i style="background:#9C5B52"></i>肺癌未給付</span>
+  </div>
+</section>
+
+<!-- ══════ 11 白話句庫 ══════ -->
+<section id="say">
+  <div class="sechead"><span class="secno">11</span><h2>白話翻譯句庫</h2></div>
+  <p class="secsub">
+    機轉懂了之後，剩下的是怎麼講。以下不是逐字稿，是可以改寫的骨架——
+    重點在<strong>比喻要正確</strong>，不要為了好懂而說錯。
+  </p>
+
+  <div class="say">
+    <div class="lbl">為什麼要驗基因</div>
+    <q>癌細胞會一直長，通常是因為裡面有個開關卡住了。驗基因就是找出<strong>是哪一個開關</strong>卡住。找到了，就有專門的藥可以把它關掉，通常是口服的，副作用也比化療輕。</q>
+  </div>
+
+  <div class="say">
+    <div class="lbl">為什麼要等報告</div>
+    <q>報告要兩到四週。這段時間不是在拖，是因為<strong>選錯藥比晚一點開始更麻煩</strong>。醫師會評估您的狀況，如果不能等，會先安排其他治療。</q>
+  </div>
+
+  <div class="say">
+    <div class="lbl">驗不到驅動基因</div>
+    <q>沒驗到不代表沒得治。這種情況我們會看另一個指標叫 PD-L1，它看的是<strong>癌細胞有沒有在騙過免疫系統</strong>。如果分數夠高，免疫治療的效果會很好。</q>
+  </div>
+
+  <div class="say">
+    <div class="lbl">標靶藥為什麼會失效</div>
+    <q>癌細胞會學。原本的開關被關掉之後，它可能<strong>把開關改造成藥認不出來的樣子</strong>，或者<strong>改走另一條路</strong>。所以醫師會希望再取一次組織，看它是怎麼變的——知道怎麼變，才知道換哪一種藥。</q>
+  </div>
+
+  <div class="say">
+    <div class="lbl">皮疹是不是過敏</div>
+    <q>不是過敏，是<strong>藥有在作用的訊號</strong>。EGFR 這個開關皮膚上也有，藥打腫瘤的同時也影響到皮膚。研究上皮疹明顯的人效果常常還比較好。我們用保濕跟藥膏控制，<strong>不要自己停藥</strong>。</q>
+  </div>
+
+  <div class="say">
+    <div class="lbl">免疫治療的副作用為什麼那麼特別</div>
+    <q>免疫治療不是直接殺癌細胞，是<strong>把免疫系統的煞車鬆開</strong>。煞車鬆開之後，免疫系統偶爾會誤傷自己的器官——腸子、肝、肺、甲狀腺都可能。所以任何新出現的不舒服都要講，尤其是<strong>喘、拉肚子、很累</strong>。而且它可能<strong>停藥之後才出現</strong>，看其他科的時候記得說您用過免疫治療。</q>
+  </div>
+
+  <div class="say">
+    <div class="lbl">驗到了但健保沒給付</div>
+    <q>您這個位點<strong>國際上是有專門的藥</strong>，效果也不錯，但<strong>台灣健保目前還沒有給付在肺癌</strong>。我幫您查一下有沒有臨床試驗，或藥廠有沒有相關方案。如果考慮自費，我也可以請社工師一起評估。</q>
+  </div>
+
+  <div class="note good">
+    <div class="note-t">講解時的三個原則</div>
+    <ul>
+      <li><strong>比喻要一致。</strong>開關、引擎、煞車——一次談話裡固定用一組比喻，換來換去病人會亂。</li>
+      <li><strong>不要替醫師做治療決定。</strong>解釋機轉可以，「所以你應該用哪一種」要留給醫師。</li>
+      <li><strong>不確定就說不確定。</strong>「這部分我幫您問醫師」比講一個聽起來合理但錯的答案好太多。</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fg">
+      <div>
+        <h5>這份文件的定位</h5>
+        <p>
+          本頁講<strong>機轉與藥理</strong>，回答「為什麼」。
+          給付條件、事審代碼、線別限制請查《肺癌基因檢測與治療藥物》。
+          兩份搭配使用。
+        </p>
+      </div>
+      <div>
+        <h5>相關文件</h5>
+        <ul>
+          <li>《肺癌基因檢測與治療藥物》— 健保給付與事審</li>
+          <li>《C1. 肺癌照護指引》— 分期、治療原則、追蹤</li>
+          <li>《F. 臨床知識庫》— 各類治療方式與副作用通則</li>
+          <li>《H3. 抗癌藥物速查系統》— 給付條文全文</li>
+        </ul>
+      </div>
+      <div>
+        <h5>使用提醒</h5>
+        <p>
+          陽性率為台灣族群概略範圍，各研究與檢測平台差異不小，
+          <strong>僅供衛教說明，不作為個案判讀依據</strong>。
+          個別病人的檢測結果與治療決策，一律以主治醫師判斷為準。
+        </p>
+      </div>
+    </div>
+    <div class="stamp">
+      <span>彰濱秀傳癌症中心</span>
+      <span>個管師深度教材</span>
+      <span>肺癌基因突變機轉與藥物</span>
+      <span>V1.0.0</span>
+      <span>2026/07</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
