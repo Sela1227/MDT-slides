@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sela's Weekly Review · RT · 2026 W31</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1E2A33; --ink-soft:#4A5A66; --muted:#78888F; --paper:#fff;
+  --brand:#55672E; --brand-mid:#6D893D; --tint:#F7FAF2; --tint2:#EDF2E5;
+  --edge:#BCCFA1; --rule:#E5E7E4; --signal:#F36825;
+  --pos:#2E8B57; --neg:#C0392B; --amb:#C08A22;
+  --maxw:940px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#F4F5F2;color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Helvetica Neue",Arial,sans-serif;
+  font-size:15.5px;line-height:1.75;}
+.sheet{max-width:var(--maxw);margin:0 auto;background:var(--paper);
+  box-shadow:0 1px 3px rgba(30,42,51,.10),0 12px 40px rgba(30,42,51,.06);}
+.en{font-family:"Noto Serif TC",Georgia,"Times New Roman",serif;}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.82em;letter-spacing:.01em;}
+
+/* ---------- masthead ---------- */
+.mast{background:var(--brand);color:#fff;padding:30px 46px 26px;}
+.mast-top{display:flex;align-items:center;gap:16px;
+  border-bottom:1px solid rgba(255,255,255,.28);padding-bottom:14px;margin-bottom:20px;}
+.mark{width:34px;height:34px;flex:0 0 auto;display:block;border-radius:4px}
+.wordmark{font-size:13.5px;letter-spacing:.17em;font-weight:500;text-transform:uppercase;white-space:nowrap;}
+.vol{font-size:11px;letter-spacing:.22em;font-weight:500;color:rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.45);border-radius:2px;padding:2px 6px 2px 8px;
+  line-height:1.35;margin-left:2px;}
+.mast-meta{margin-left:auto;font-size:11.5px;letter-spacing:.18em;color:rgba(255,255,255,.82);
+  text-align:right;line-height:1.6}
+.mast h1{margin:0;font-size:31px;font-weight:600;letter-spacing:.14em;line-height:1.45;}
+.mast h1 .sub{font-size:15px;letter-spacing:.04em;color:rgba(255,255,255,.72);margin-left:12px;}
+.deck{margin:16px 0 0;padding-left:14px;border-left:3px solid rgba(255,255,255,.55);
+  font-size:14.5px;color:rgba(255,255,255,.94);line-height:1.7}
+.strip{margin-top:16px;font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.72);}
+.strip b{color:#fff;font-weight:600;letter-spacing:.06em}
+
+/* ---------- callout (本期導言) ---------- */
+.callout{background:var(--tint);border-left:4px solid var(--edge);
+  margin:0;padding:22px 30px 20px 26px;}
+.callout h2{margin:0 0 12px;font-size:15px;letter-spacing:.16em;font-weight:600;color:var(--brand);}
+.callout p{margin:0 0 9px;font-size:14.5px;color:var(--ink-soft);line-height:1.85}
+.callout p:last-child{margin-bottom:0}
+.callout .tag{display:inline-block;font-size:11px;letter-spacing:.1em;color:var(--brand-mid);
+  border:1px solid var(--edge);border-radius:2px;padding:1px 7px;margin-right:8px;vertical-align:.12em}
+
+/* ---------- sections ---------- */
+.body{padding:34px 46px 40px;}
+.sechead{display:flex;align-items:center;gap:12px;margin:0 0 4px;}
+.sechead .num{background:var(--brand);color:#fff;font-size:12px;line-height:1;
+  padding:5px 8px;border-radius:2px;font-weight:600;font-family:"IBM Plex Mono",monospace;}
+.sechead h2{margin:0;font-size:17px;letter-spacing:.18em;font-weight:600;}
+.sechead .count{margin-left:auto;font-size:11.5px;letter-spacing:.12em;color:var(--muted);}
+.secrule{height:1px;background:var(--rule);margin:12px 0 26px;}
+
+/* ---------- item ---------- */
+.item{margin:0 0 30px;padding:0 0 26px;border-bottom:1px solid var(--rule);}
+.item:last-child{border-bottom:0;margin-bottom:0;padding-bottom:6px}
+.tags{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:9px}
+.dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto;display:inline-block}
+.d-pos{background:var(--pos)}
+.d-neg{background:var(--neg);border-radius:1px}
+.d-mix{background:transparent;border:3px solid var(--amb)}
+.d-na{background:transparent;border:1.5px solid var(--muted)}
+.pill{font-size:11.5px;letter-spacing:.06em;color:#fff;padding:2px 9px;border-radius:2px}
+.t-eso{background:#0F7A83}.t-cross{background:#5C6B72}
+.tier{font-size:11.5px;letter-spacing:.06em;padding:2px 9px;border-radius:2px;
+  background:var(--signal);color:#fff}
+.tier.tr-2{background:transparent;color:#C4551C;border:1px solid #F0A97F}
+.tier.tr-3{background:transparent;color:var(--muted);border:1px solid #D6DAD3}
+.tier.tr-4{background:transparent;color:var(--muted);border:1px dashed #D6DAD3}
+.ev{font-size:11.5px;letter-spacing:.04em;color:var(--ink-soft);
+  border:1px solid var(--rule);padding:2px 9px;border-radius:2px;background:#FAFBF8}
+.ttl{margin:0 0 4px;font-size:17.5px;line-height:1.6;font-weight:600;letter-spacing:.01em}
+.ttl a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.ttl a:hover{color:var(--brand);border-bottom-color:var(--edge)}
+.ttl a:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.src-en{margin:0 0 14px;font-size:12.5px;color:var(--muted);line-height:1.55}
+
+/* 四欄：label / value */
+.fields{display:grid;grid-template-columns:74px 1fr;gap:2px 18px;margin:0 0 12px}
+.fld-l{font-size:12.5px;letter-spacing:.12em;color:var(--brand-mid);padding-top:5px;font-weight:500}
+.fld-v{font-size:14.5px;line-height:1.85;color:var(--ink-soft);padding:3px 0 7px;
+  border-bottom:1px dashed #EDEFEA}
+.fields>.fld-l:last-of-type+.fld-v{border-bottom:0}
+.fld-v b{color:var(--ink);font-weight:600}
+.fld-v.rt{background:var(--tint);border-left:2px solid var(--edge);
+  padding:8px 14px;margin:2px 0 0;border-bottom:0;color:var(--ink-soft)}
+.cite{margin:6px 0 0;font-size:12.5px;color:var(--muted);line-height:1.7}
+.cite a{color:var(--brand-mid);text-decoration:none}
+.cite a:hover{text-decoration:underline}
+.flag{display:inline-block;font-size:10.5px;letter-spacing:.06em;color:var(--brand-mid);
+  border:1px solid var(--edge);border-radius:2px;padding:0 5px;margin-left:6px}
+
+/* ---------- legend ---------- */
+.legend{background:#FAFBF8;border:1px solid var(--rule);padding:14px 20px;margin:6px 0 0;
+  font-size:12.5px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center}
+.legend b{font-weight:600;letter-spacing:.1em;color:var(--ink);margin-right:6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+
+/* ---------- appendix ---------- */
+details.appx{margin-top:34px;border-top:2px solid var(--brand);}
+details.appx>summary{cursor:pointer;list-style:none;padding:14px 0 12px;
+  font-size:13.5px;letter-spacing:.16em;font-weight:600;color:var(--brand);}
+details.appx>summary::-webkit-details-marker{display:none}
+details.appx>summary::after{content:" ▾";color:var(--muted)}
+details.appx[open]>summary::after{content:" ▴"}
+.appx-body{font-size:13.5px;color:var(--ink-soft);line-height:1.85;padding-bottom:8px}
+table.k{width:100%;border-collapse:collapse;margin:6px 0 20px;font-size:13px}
+table.k th{background:var(--brand);color:#fff;text-align:left;font-weight:500;
+  letter-spacing:.08em;padding:8px 12px;font-size:12.5px}
+table.k td{padding:8px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.k tr:nth-child(even) td{background:var(--tint)}
+.appx h3{margin:20px 0 6px;font-size:13.5px;letter-spacing:.12em;color:var(--ink)}
+.appx ul{margin:4px 0 16px;padding-left:20px}
+.appx li{margin:3px 0}
+.ok{color:var(--pos);font-weight:600}
+.warn{color:#C4551C;font-weight:600}
+
+/* ---------- menu-specific ---------- */
+.mrow{display:grid;grid-template-columns:26px 1fr;gap:0 14px;padding:14px 0;
+  border-bottom:1px solid var(--rule);align-items:start}
+.mrow:hover{background:#FCFDFB}
+.mrow input{width:17px;height:17px;margin-top:5px;accent-color:var(--signal);cursor:pointer}
+.mtags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:5px}
+.mttl{font-size:15px;line-height:1.6;margin:0 0 3px;font-weight:500}
+.mttl a{color:var(--ink);text-decoration:none}
+.mttl a:hover{color:var(--brand);text-decoration:underline}
+.mwhy{font-size:13px;color:var(--ink-soft);margin:0 0 4px;line-height:1.7}
+.msrc{font-size:11.5px;color:var(--muted)}
+.bar{position:sticky;bottom:0;background:rgba(255,255,255,.96);
+  border-top:2px solid var(--brand);padding:14px 46px;display:flex;gap:14px;
+  align-items:center;backdrop-filter:blur(6px)}
+.bar button{font:inherit;font-size:13.5px;letter-spacing:.08em;background:var(--brand);
+  color:#fff;border:0;border-radius:2px;padding:9px 20px;cursor:pointer}
+.bar button:hover{background:var(--brand-mid)}
+.bar button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.bar .n{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.bar .out{margin-left:auto;font-size:12px;color:var(--muted)}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--rule);padding:18px 46px 26px;display:flex;
+  gap:14px;align-items:center;font-size:11.5px;letter-spacing:.1em;color:var(--muted)}
+
+
+
+@media (max-width:720px){
+  .mast{padding:24px 20px 22px}.body{padding:26px 20px 32px}
+  .foot,.bar{padding-left:20px;padding-right:20px}
+  .mast h1{font-size:23px;letter-spacing:.1em}
+  .mast h1 .sub{display:block;margin:6px 0 0}
+  .fields{grid-template-columns:1fr;gap:0}
+  .fld-l{padding-top:10px}.fld-v{padding-top:0}
+  .mast-meta{font-size:10.5px}
+  body{font-size:15px}
+}
+@media print{
+  body{background:#fff}.sheet{box-shadow:none;max-width:none}
+  .bar{display:none}
+  .item{break-inside:avoid;page-break-inside:avoid}
+  .callout,.legend{break-inside:avoid}details.appx[open]>summary::after{content:""}
+  .mast{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+<div class="mast">
+  <div class="mast-top">
+    <svg class="mark" aria-hidden="true" focusable="false" viewBox="0 -10.08 628.8 628.8" xmlns="http://www.w3.org/2000/svg">
+ <title>SELA</title>
+ <rect y="-10.08" width="628.8" height="628.8" fill="#F36825"/>
+ <g transform="translate(0 608.64) scale(.024 -.024)" fill="#fff" fill-rule="evenodd">
+  <path d="m6925 23439c-320-7-441-17-685-60-551-96-927-210-1384-419-275-126-397-191-646-345-653-402-1283-1009-1711-1650-156-233-314-514-397-705-33-74-71-158-85-187-139-273-318-874-382-1283-14-91-28-171-30-178-3-8-12-98-20-200-8-103-20-239-25-302-6-63-15-259-19-435-12-430-13-9841-1-10060 30-560 61-818 145-1191 143-635 424-1275 818-1869 246-369 415-573 763-915 121-119 271-259 334-311 415-347 899-633 1475-872 209-87 625-213 895-271 129-28 468-70 695-86 106-8 2017-10 6470-8l6320 3 165 22c433 59 655 109 1085 245 272 86 487 173 750 304 526 263 978 577 1378 958 142 135 357 366 494 531 87 105 196 256 335 466 304 456 448 753 639 1318 85 250 119 378 160 591 66 354 93 605 119 1105 7 132 10 1888 10 5157 0 4845 0 4965-20 5310-22 385-26 427-71 693-64 379-234 962-373 1280-60 137-161 333-232 450-23 39-77 130-119 204-114 199-281 437-407 581-35 41-89 104-120 142-354 429-920 925-1308 1145-58 33-136 79-173 102-87 53-371 198-549 279-187 86-502 195-808 281-161 45-544 119-753 146-319 41-259 40-3479 40-2770 0-3098-1-3098-15 0-8 21-46 46-85 70-108 151-281 174-375 56-221 46-544-26-848-13-57-24-116-24-130v-27l2712 3c2750 3 3131 0 3448-33 187-20 411-58 553-94 279-73 730-241 917-343 366-201 724-462 970-708 219-219 522-598 657-822 144-238 308-584 376-794 136-414 201-727 239-1144 19-215 19-10249 0-10485-34-410-65-592-158-923-94-336-207-621-340-860-198-353-316-522-558-797-241-274-483-496-683-627-287-189-347-225-506-304-443-222-836-349-1300-418-358-54-8-51-6512-51-6491 0-6227-2-6543 50-581 96-1095 284-1527 558-118 75-298 204-380 271-245 200-569 531-733 749-299 397-514 814-670 1303-89 278-128 477-184 939-16 138-25 10165-8 10425 13 218 45 526 65 645 27 157 95 414 165 625 190 573 480 1066 900 1529 356 394 762 688 1286 934 156 73 260 112 492 186 536 170 785 197 1702 188 294-3 787-2 1095 1 353 5 570 3 587-3 21-7 31-6 42 5 8 8 43 83 79 165 81 183 132 284 205 395 144 223 306 390 507 521 169 111 232 146 393 214 301 127 356 160 306 179-21 8-3519 4-3919-5zm5160-20c-78-19-322-113-485-186-182-82-293-143-480-264-69-45-161-99-205-120-74-35-90-39-215-49-214-17-261-37-403-170-134-125-172-193-252-450-36-115-62-158-156-270-126-148-226-319-275-467-63-193-74-332-49-623 21-241 16-397-13-483-77-227-372-390-791-438-121-13-444-7-536 11-154 29-247 71-290 128-17 23-20 42-20 142 1 105 3 120 28 171 32 67 99 132 165 162 35 15 67 21 127 21 99-1 171-26 258-93 82-63 98-71 147-71 120 0 212 100 214 231 1 57-3 70-26 102-68 88-139 106-259 62-106-38-221-50-279-30-69 24-90 49-90 107 0 122 94 186 345 234 77 14 154 33 172 41 48 22 73 82 73 176 0 75-1 78-37 118-42 47-73 64-138 79-98 22-160-19-235-156-53-97-133-177-214-215-79-38-103-37-148 6-38 34-38 34-38 114 0 108 27 189 91 272 86 110 109 151 109 192 0 43-27 102-62 134-34 32-126 63-186 63-51 0-56-2-102-50-74-76-76-127-13-274 33-77 34-86 31-176-4-111-24-162-77-197-59-40-136-24-210 43-63 56-96 132-110 250s-34 173-80 223c-37 40-40 41-102 41-86 0-134-15-177-55l-37-33-3-96c-3-74 0-102 11-119 8-13 70-61 136-106 67-46 135-101 152-122 42-53 78-131 85-182 6-40 4-45-29-74-20-18-56-36-86-43-69-16-115 0-236 85-53 36-111 73-130 81-51 21-106 4-163-50l-45-43-5-86c-4-74-1-92 18-131 12-25 40-59 63-77 39-29 46-30 102-25 33 4 97 15 143 26s95 20 110 20c42-1 103-33 149-79 106-106 113-200 39-490-57-221-66-314-42-451 9-52 26-114 37-137 31-64 128-146 233-197 95-47 317-130 399-149 57-14 60-31 10-48-76-24-428-237-591-357-347-254-550-431-872-758-212-215-333-363-498-606-73-106-102-116-102-35 0 28-9 85-19 125-59 227-178 327-481 407-238 62-284 77-343 108-128 67-129 131-2 189 39 17 68 22 131 22 77 0 85-2 201-57 157-76 176-78 233-35 64 49 93 108 88 183-5 74-29 125-82 177-38 37-44 39-87 35-30-2-78-20-130-48-84-44-84-44-189-44-83 0-112 4-139 18-32 18-33 21-27 60 13 81 72 153 177 215 20 12 89 40 155 63 65 22 133 49 150 60 46 28 67 80 68 166 1 63-2 76-29 114-41 58-103 88-181 89-104 0-148-45-200-207-32-99-80-160-157-197-72-36-135-43-178-21-46 24-49 30-49 110 0 95 22 176 72 260 113 192 125 234 89 307-47 96-213 150-311 100-94-47-105-146-38-349 37-112 42-139 42-218 0-104-14-141-67-174-63-39-127-21-196 54-54 58-87 127-117 243-14 53-35 115-47 136-28 51-84 79-163 84-103 7-178-48-210-154-19-64-18-98 6-143 27-54 76-92 212-162 165-86 214-149 239-309 22-141-6-392-52-466-30-49-105-113-162-139-29-13-108-34-177-45-69-12-141-29-160-38-51-24-74-78-78-180-5-102 0-122 41-168 62-71 168-94 247-54 21 11 79 57 128 104 110 102 162 129 258 134 192 10 428-93 620-271 90-84 138-163 137-226-1-59-40-222-93-381-87-267-169-611-215-900-24-150-30-436-15-710 16-276 10-331-65-576-81-264-188-755-219-999-46-361-60-805-36-1125 28-361 133-834 276-1240 173-490 404-931 841-1605 169-260 236-356 619-880 72-99 166-234 209-300s124-190 180-275 119-186 140-225c21-38 64-115 96-171 98-169 236-486 293-675 110-365 109-745-2-1005-66-154-171-306-280-404-184-164-348-251-558-294-280-57-599 5-835 164-98 66-275 250-351 365-82 124-169 297-197 390-29 101-38 172-56 430-16 246-23 287-61 351-51 90-118 116-194 75-69-36-99-109-151-363-51-256-51-584 2-839 31-152 111-388 169-496 60-113 188-317 246-393 69-91 230-233 374-330 96-65 313-172 411-203 363-115 829-123 1194-21 323 90 650 287 895 540 134 139 163 174 248 311 176 280 293 583 353 913 16 92 24 601 10 733-23 226-87 535-156 757-91 289-406 943-640 1329-45 75-104 172-130 216-27 44-59 96-71 115-210 332-311 504-415 710-163 325-220 462-360 865-90 257-119 368-170 650-42 228-42 232-47 515-2 176 0 327 8 394 21 201 106 582 168 750 44 117 35 111 227 151 166 35 332 82 465 134 226 87 655 315 845 448 50 35 117 79 151 98 100 58 172 43 229-46 142-226 345-628 400-794 30-88 41-166 31-218-4-22-34-69-81-129-105-130-135-192-135-280 0-125 42-180 144-186 94-6 171 13 216 54 20 19 42 34 48 34s13-36 16-82c4-46 5-1782 2-3858-2-2076-1-3841 2-3922l5-148 1796 3 1796 2 5 505c3 278 4 552 1 610l-4 105h-1161-1161l-5 1105c-3 608-5 1106-4 1108s377 3 836 3c458-1 868 2 911 5l77 7v566c0 311-3 576-6 589l-7 23-896-4c-493-2-902-2-908 0-10 4-13 233-13 1099v1094l1168 2 1167 3v604 603l-1798 2c-1586 1-1799 3-1808 16-12 18-5 159 11 212 33 112 241 251 470 314 97 27 402 27 480 0 76-27 163-115 215-220 47-93 78-127 132-145 34-11 48-11 96 3 69 20 105 50 136 111 19 39 23 58 19 116-3 66-6 71-47 113-49 50-53 51-172 65-177 20-279 89-279 189 0 24 7 56 15 71 25 49 116 91 239 111 58 9 75 8 163-16 112-30 205-34 249-11 43 23 84 65 100 103 18 43 18 137 0 173-18 33-83 94-125 115-36 19-152 21-184 5-12-7-62-51-112-98-72-69-101-90-144-104-102-33-189-16-235 46-19 26-19 28-3 81 25 77 92 165 163 211 32 21 89 58 125 82 72 46 92 77 103 154 23 164-108 291-266 257-57-11-96-40-114-83-7-17-20-85-29-150-19-134-38-194-94-286-50-82-96-120-155-126-42-5-48-3-79 28-57 57-74 200-41 351 8 40 16 103 17 140 2 64 0 68-32 102-38 40-100 64-181 72-46 5-63 2-99-18-64-34-86-81-86-183 0-96 13-126 92-217 73-83 98-124 124-200 38-114 9-227-74-285-37-25-41-26-85-14-26 7-57 19-70 27-38 25-100 132-128 218-32 102-106 394-139 552-50 240-110 372-216 476-89 88-125 99-324 105-172 6-275-9-408-58-92-33-97-34-97-16 0 16 59 72 175 168 248 202 609 560 764 755 202 255 502 696 658 969 53 91 165 318 234 470 91 203 161 314 224 351 112 67 298-47 541-334 215-251 385-404 508-454 75-32 247-31 329 1 130 51 204 115 489 423 168 181 270 248 377 248 62 0 108-14 163-49 60-38 100-93 134-184 58-158 69-176 120-199 66-29 151-21 207 19 63 44 81 75 85 147 7 114-41 194-139 229-24 8-79 27-121 42-141 49-207 113-208 201 0 66 101 121 239 130 92 7 165-7 258-47 69-30 188-37 237-14 48 23 83 76 98 148 17 79 0 138-54 194-100 102-184 99-334-12-98-74-156-95-254-95-129 0-170 63-115 175 44 90 115 145 257 201 149 58 182 85 192 161 7 59 2 91-26 146-37 75-151 126-255 114-87-10-116-51-152-217-34-156-90-246-185-300-64-37-99-38-131-4-35 38-49 89-50 179 0 74 3 87 47 183 26 56 52 127 59 158 12 53 12 56-17 97-54 76-122 108-229 106-94-2-107-8-138-69-26-50-28-63-24-132 3-73 7-82 61-172 70-116 89-172 83-248-11-134-104-201-205-149-54 28-68 47-146 204-85 171-103 187-205 187-132-1-180-48-202-195-10-65-9-78 5-100 22-33 64-59 151-91 228-84 305-164 305-315 0-122-55-218-168-295-65-45-199-94-255-94-90 0-226 133-350 340-221 371-303 630-278 877 15 146 45 223 133 341 73 98 219 184 503 297 286 113 443 207 593 354 49 47 112 121 140 163 51 75 153 269 167 318 4 14 23 56 43 93 29 56 53 84 131 151 191 165 279 276 328 418 24 69 25 81 20 218-4 114-11 168-32 250-40 153-45 341-14 595 16 139 22 246 22 400 0 200-1 214-27 300-49 163-87 227-196 336-106 104-177 152-280 188-74 26-204 36-265 20zm9520-10669c-208-27-391-180-493-415-45-105-55-150-54-260 0-116 23-202 80-305 39-72 104-160 148-202 48-45 145-97 229-125 68-22 98-25 200-25 141 0 194 10 291 58 163 80 317 277 360 461 23 98 15 265-18 354-66 178-183 316-330 388-46 23-109 47-140 55-74 19-198 26-273 16zm200-145c101-21 229-87 290-150 140-143 178-419 85-605-72-144-236-266-390-291-179-30-365 49-483 203-77 102-91 150-91 303 0 109 4 140 23 195 55 157 171 274 326 328 99 35 140 38 240 17zm-314-181c-20-26-21-38-21-319 0-161 3-307 6-324 6-31 7-31 69-31 75 0 75 0 75 118 0 115 5 132 40 132 41 0 71-29 125-121 55-93 127-169 160-169 25 0 75 35 75 53 0 6-31 57-70 113-38 56-70 110-70 119s20 39 44 66c25 27 52 70 62 95 15 41 16 54 5 108-30 145-109 186-368 186-109 0-112-1-132-26zm260-114c19-6 46-21 58-34 20-22 22-31 16-71-10-67-32-85-106-85-95 0-99 5-99 110v90h48c26 0 63-5 83-10zm-7874 423-407-3 2-4013 3-4012h1670 1670v610 610l-1005-4c-553-1-1013 0-1022 4-17 7-18 179-18 3411v3404l-242-2c-134-2-426-4-651-5zm5384-3-685-5-27-180c-15-99-48-292-74-430-45-242-67-367-155-880-23-132-65-368-95-525-29-157-63-346-75-420s-32-191-46-260c-13-69-53-296-89-505-110-645-125-727-146-825-11-52-40-212-65-355s-58-336-75-430c-36-211-119-662-164-895-19-96-46-245-60-330-25-147-84-485-141-800-15-80-46-246-70-370-76-395-136-724-141-773l-6-47h616c339 0 626 4 639 9 21 8 25 21 46 162 13 85 32 199 43 254s33 183 49 285 50 309 76 460 54 338 63 415l16 140 698 3c554 2 697 0 697-10 0-7 12-76 25-153 80-444 233-1361 246-1470l11-100 662 3c363 2 663 6 665 8s-12 97-33 211c-20 115-45 267-57 338-11 72-34 202-50 290-34 181-51 274-103 565-20 113-66 354-101 535-36 182-72 380-80 440-9 61-20 126-25 145-9 34-56 292-105 570-13 74-41 230-64 345-22 116-72 395-110 620-100 583-111 643-127 705-7 31-25 125-38 210-26 158-98 561-135 750-11 58-37 200-56 315-20 116-45 255-55 310-20 99-50 263-154 845-55 306-118 677-133 780l-8 55h-160c-88 0-468-2-844-5zm159-1862c0-21 39-283 66-443 14-82 31-195 39-250 7-55 32-228 54-385 23-157 48-339 57-405 8-66 33-228 54-360 22-132 49-301 60-375 22-147 72-455 95-590 39-229 65-424 57-432-14-14-1008-6-1023 9-9 9-8 22 4 55 9 23 18 66 22 93 3 28 17 118 30 200 63 390 95 594 101 640 3 28 21 133 39 235 38 212 62 359 105 650 17 113 48 320 70 460 46 297 86 572 95 650 5 48 27 173 41 238 5 23 34 31 34 10z"/>
+ </g>
+</svg>
+    <span class="wordmark">Sela&rsquo;s Weekly Review</span>
+    <span class="vol">RT</span>
+    <span class="mast-meta">2026 W31<br>07/27 – 08/02</span>
+  </div>
+  <h1>放腫週覽</h1>
+  <p class="deck">本期最值得停下來的是那組<b>方向相反的訊號</b>——新輔助化學免疫的遠端控制較佳、化放療的局部控制較佳，兩者皆未達顯著。這通常不是雜訊，而是提示答案可能是併用。</p>
+  <div class="strip">收錄 <b>5</b> 則　·　進選單 10　·　命中 15　|　來源　NCBI 儲存搜尋 10 組　·　IJROBP Articles in Press</div>
+</div><div class="callout">
+  <h2>本 期 導 言</h2>
+  <p><span class="tag">跨篇線索</span>本期四篇食道癌條目可以排成一條光譜：SANO 次級分析問「達完全緩解後可不可以不開刀」，
+  多中心世代問「開刀前該用化免疫還是化放療」，真實世界研究問「已經轉移了還要不要加放療」。
+  三個問題共用同一個前提——<b>局部治療的角色正在被全身治療重新定位</b>，而回答它們的證據等級由高到低急遽下降。</p>
+  <p><span class="tag">值得記一筆</span>多中心世代的<b>兩個次要終點方向相反</b>（NCIT 遠端控制較佳、NCRT 局部控制較佳）。
+  這種型態通常不是雜訊，而是提示答案可能是併用而非二擇一——與其把它讀成「兩者等效」，
+  不如把它讀成「這個問題還沒被正確地問」。</p>
+  <p><span class="tag">本期缺口</span>攝護腺、乳癌、HCC、頭頸四組本週未有進入選單的條目；黏膜炎組 0 篇。此為正常波動，非漏抓。</p>
+</div><div class="body"><div class="sechead"><span class="num">01</span><h2>本 期 條 目</h2>
+<span class="count">依臨床重要性排序</span></div><div class="secrule"></div><div class="item">
+  <div class="tags">
+    <span class="dot d-pos" title="正向" aria-label="正向"></span>
+    <span class="pill t-eso">食道</span>
+    <span class="tier tr-1">① 可直接影響臨床決策或流程</span>
+    <span class="ev">Phase 3 次級分析 · 預先設定</span>
+  </div>
+  <p class="ttl"><a href="https://pubmed.ncbi.nlm.nih.gov/42507446/" target="_blank" rel="noopener">新輔助化放療後完全臨床緩解者，主動監測相較標準手術具成本效益</a></p>
+  <p class="src-en en">Surveillance vs Standard Surgery and Cost-Effectiveness After Neoadjuvant Chemoradiotherapy for Esophageal Cancer: Secondary Analysis of a Randomized Clinical Trial</p>
+  <div class="fields">
+    <div class="fld-l">設　計</div><div class="fld-v">SANO 非劣性叢集隨機試驗的<b>預先設定</b>成本效益次級分析；荷蘭 12 家醫院，nCRT 後達完全臨床緩解者 309 人（主動監測 198／標準手術 111），追蹤至 5 年，80% 完成追蹤，採 modified ITT。</div>
+    <div class="fld-l">結　果</div><div class="fld-v">5 年 QALY 主動監測 <b>2.99</b>（95% CI 2.73–3.26）vs 手術 2.88（2.69–3.06）；平均醫療費用 <b>€36,733 vs €45,106</b>，增量成本低 €8,374（95% CI 1,792–15,355）。以 €80,000/QALY 為門檻，iNMB €17,568（95% CI −725 至 37,497），bootstrap <b>97%</b> 落在具成本效益區。</div>
+    <div class="fld-l">但　書</div><div class="fld-v">增量 QALY 為 0.11，<b>95% CI −0.10 至 0.33 跨越 0</b>——真正穩健的是成本面，效果面未達統計顯著。iNMB 的 CI 下限亦跨 0。荷蘭給付與轉診結構與台灣差距大，金額不可直接外推；且母試驗的非劣性只在 2 年存活這個主要終點上成立。</div>
+    <div class="fld-l">放腫觀點</div><div class="fld-v rt">這是少數把「不開刀」的成本面補起來的隨機證據，對食道癌 nCRT 後的追蹤策略討論有直接用處。但要注意主動監測的成本優勢建立在<b>密集影像與內視鏡追蹤能被落實</b>的前提上（6/9/12/16/20/24/30/36/48/60 個月），本院若無法比照排程，省下的手術成本會被延遲手術與挽救治療吃掉。可作為 MDT 討論器官保留策略時的成本論據，但別當成療效論據。</div>
+  </div>
+  <p class="cite mono">Gangaram Panday SSG, et al. · JAMA Netw Open 2026;9(7):e2624615 · PMID 42507446 · <a href="https://doi.org/10.1001/jamanetworkopen.2026.24615" target="_blank" rel="noopener">DOI</a><span class="flag">PMC 全文</span></p>
+</div>
+<div class="item">
+  <div class="tags">
+    <span class="dot d-mix" title="混合取捨" aria-label="混合取捨"></span>
+    <span class="pill t-eso">食道</span>
+    <span class="tier tr-2">② 值得關注</span>
+    <span class="ev">回溯 · 多中心世代 · PSM</span>
+  </div>
+  <p class="ttl"><a href="https://pubmed.ncbi.nlm.nih.gov/42516383/" target="_blank" rel="noopener">新輔助化學免疫與化放療的 DFS／OS 無顯著差異，但局部與遠端控制方向相反</a></p>
+  <p class="src-en en">Neoadjuvant chemoimmunotherapy versus chemoradiotherapy for esophageal squamous cell carcinoma: a multicenter cohort study</p>
+  <div class="fields">
+    <div class="fld-l">設　計</div><div class="fld-v">中國 7 家中心 2012–2024 年<b>回溯</b>世代，局部晚期食道鱗癌接受新輔助化學免疫（NCIT，1,414 人）或新輔助化放療（NCRT，1,121 人）後手術；1:1 傾向分數配對後 1,258 人（每組 629），中位追蹤 32.7 個月。</div>
+    <div class="fld-l">結　果</div><div class="fld-v">DFS 未見顯著差異（HR 1.14，95% CI 0.94–1.38，P=.20）；OS 亦然（HR 0.98，95% CI 0.77–1.25，P=.89）。2 年 DFS 68.7% vs 72.0%，2 年 OS 81.3% vs 83.7%。<b>方向相反的兩個訊號</b>：NCIT 的遠端轉移無病存活有利趨勢（HR 0.87，0.69–1.11），NCRT 的局部區域無復發存活有利趨勢（HR 1.22，0.96–1.56），兩者皆未達顯著。</div>
+    <div class="fld-l">但　書</div><div class="fld-v"><b>本研究未做非劣性設計，「無顯著差異」不等於等效</b>——這個樣本未能偵測到差異，不代表差異不存在。回溯世代即使 PSM 也無法平衡未測量的混淆（分期精準度、內視鏡評估品質、各中心偏好），且跨 12 年的治療標準本身在變動。兩個次要方向相反且 CI 皆跨 1，不宜任一方向解讀。</div>
+    <div class="fld-l">放腫觀點</div><div class="fld-v rt">這正是<b>附錄 A 主線五</b>的典型：兩組病人是被各中心的偏好選出來的，不是同一群人的兩種安排。對放腫而言真正有訊息量的是那個方向相反的訊號——若 NCRT 的局部控制優勢與 NCIT 的遠端控制優勢都成立，答案可能是<b>兩者併用而非二擇一</b>，這也是目前數個前瞻試驗在問的問題。在隨機資料出來前，不應以本研究作為捨棄 NCRT 的依據。</div>
+  </div>
+  <p class="cite mono">Zhu Y, et al. · Front Immunol 2026;17:1882240 · PMID 42516383 · <a href="https://doi.org/10.3389/fimmu.2026.1882240" target="_blank" rel="noopener">DOI</a><span class="flag">PMC 全文</span></p>
+</div>
+<div class="item">
+  <div class="tags">
+    <span class="dot d-mix" title="混合取捨" aria-label="混合取捨"></span>
+    <span class="pill t-eso">食道</span>
+    <span class="tier tr-3">③ 假說生成</span>
+    <span class="ev">回溯 · 真實世界 · PSM</span>
+  </div>
+  <p class="ttl"><a href="https://pubmed.ncbi.nlm.nih.gov/42504461/" target="_blank" rel="noopener">第一線化學免疫加入放療與 IVB 期食道鱗癌較長存活相關，代價是淋巴球低下大幅上升</a></p>
+  <p class="src-en en">Efficacy analysis of first-line chemoimmunotherapy with or without radiotherapy in stage IVB esophageal squamous cell carcinoma: a real-world study</p>
+  <div class="fields">
+    <div class="fld-l">設　計</div><div class="fld-v">單中心<b>真實世界回溯</b>分析，1:1 傾向分數配對後 280 人：化學免疫加放療（ICRT）140 人 vs 單用化學免疫（ICT）140 人。同步與序貫放療之比較屬<b>事後分析</b>。</div>
+    <div class="fld-l">結　果</div><div class="fld-v">PFS 12.97 vs 8.17 個月（HR 0.61，P&lt;.001）；OS 25.27 vs 18.77 個月（HR 0.63，P=.012）。非區域淋巴結轉移者與放療劑量 ≥60 Gy 者 PFS 獲益較大。<b>毒性代價明確</b>：嚴重淋巴球低下 30.71% vs 3.57%。</div>
+    <div class="fld-l">但　書</div><div class="fld-v">回溯設計，只能寫「<b>與較長存活相關</b>」，不能寫成放療改善存活。IVB 期會被選去做放療的病人本身腫瘤負荷較低、體能較佳，這個選擇偏差 PSM 擋不住。劑量與時序的次群組皆為事後探索，不能當劑量建議。淋巴球低下差距近 9 倍，且該研究未報告後續感染與免疫治療效期的影響。</div>
+    <div class="fld-l">放腫觀點</div><div class="fld-v rt">寡轉移食道癌加做局部治療是本科每週都會遇到的會診情境，這篇提供了方向一致的訊號，但<b>證據等級不足以支撐常規化</b>。真正該帶走的是那個毒性數字：ICRT 的淋巴球低下 30.7% 直接衝擊免疫治療的效力前提，這在排照野與分次時就要納入考量（縮小照野、避開大血管與骨髓密集區）。建議在 MDT 以「個案化、以症狀控制或寡轉移減積為目的」提出，並主動說明淋巴球風險。</div>
+  </div>
+  <p class="cite mono">Zhang Y, et al. · Future Oncol 2026;22(18):2221-2231 · PMID 42504461 · <a href="https://doi.org/10.1080/14796694.2026.2701482" target="_blank" rel="noopener">DOI</a><span class="flag">PMC 全文</span></p>
+</div>
+<div class="item">
+  <div class="tags">
+    <span class="dot d-na" title="不適用（單臂）" aria-label="不適用（單臂）"></span>
+    <span class="pill t-eso">食道</span>
+    <span class="tier tr-3">③ 假說生成</span>
+    <span class="ev">Phase 2 · 單臂</span>
+  </div>
+  <p class="ttl"><a href="https://pubmed.ncbi.nlm.nih.gov/42446091/" target="_blank" rel="noopener">Nedaplatin 併紫杉醇同步化放療新輔助治療，pCR 30.3%</a></p>
+  <p class="src-en en">Neoadjuvant nedaplatin and paclitaxel regimen with concurrent radiotherapy for esophageal squamous cell carcinoma: a single-arm phase II clinical trial</p>
+  <div class="fields">
+    <div class="fld-l">設　計</div><div class="fld-v"><b>單臂</b>第二期試驗（ChiCTR1900024628），局部晚期食道鱗癌 49 人收案，兩週期 nedaplatin 加紫杉醇或白蛋白結合型紫杉醇，同步放療 41.4–50.4 Gy；主要終點為病理完全緩解率。併做治療前後切片的免疫組化。</div>
+    <div class="fld-l">結　果</div><div class="fld-v">49 人中 33 人接受手術，<b>pCR 30.3%</b>。術後淋巴結陽性者存活較差（HR 3.92，95% CI 1.30–11.80）。治療前後 FOXP3 高表現與較佳預後名目相關；治療後 TIGIT 上調與較差預後呈趨勢（HR 7.10，<b>95% CI 0.79–63.65</b>）。</div>
+    <div class="fld-l">但　書</div><div class="fld-v"><b>單臂、無同期對照，因此不標方向</b>——pCR 30.3% 無從得知是否優於現行方案。分母問題明顯：49 人收案但只有 33 人手術，pCR 以手術者計算會高估。生物標記皆為探索性，TIGIT 那項的 CI 上限達 63.65，事件數極少，點估計不可當效果量使用。</div>
+    <div class="fld-l">放腫觀點</div><div class="fld-v rt">劑量落在 41.4–50.4 Gy 的新輔助區間，與 CROSS 相容，對本院排程沒有新資訊。<b>值得留意的是收案 49 人卻僅 33 人手術</b>——中間流失的 16 人去了哪裡（疾病進展？拒絕手術？轉為根治性化放療？）是這篇對臨床最有用的資訊，但摘要未交代，需要看全文。生物標記部分屬假說生成，暫不改變任何做法。</div>
+  </div>
+  <p class="cite mono">Liu T, et al. · Future Oncol 2026;22(18):2189-2200 · PMID 42446091 · <a href="https://doi.org/10.1080/14796694.2026.2701490" target="_blank" rel="noopener">DOI</a><span class="flag">PMC 全文</span></p>
+</div><div style="height:34px"></div>
+<div class="sechead"><span class="num">02</span><h2>A i P 先 行</h2>
+<span class="count">尚未正式出版　·　結果不可得</span></div><div class="secrule"></div><div class="item">
+  <div class="tags">
+    <span class="dot d-na" title="不適用（AiP 階段）" aria-label="不適用（AiP 階段）"></span>
+    <span class="pill t-cross">跨癌別·良性</span>
+    <span class="tier tr-4">④ 速覽·未核實</span>
+    <span class="ev">配對世代（AiP 快訊資訊）</span>
+  </div>
+  <p class="ttl"><a href="https://www.redjournal.org/article/S0360-3016(26)04081-2/fulltext" target="_blank" rel="noopener">全髖關節置換前 20–28 小時放療 vs NSAID 預防異位骨化</a></p>
+  <p class="src-en en">Preoperative radiotherapy 20&ndash;28 hours before total hip arthroplasty versus NSAID prophylaxis for heterotopic ossification: A matched cohort study</p>
+  <div class="fields">
+    <div class="fld-l">設　計</div><div class="fld-v">配對世代研究（Clinical Investigation）。耶拿大學醫院放腫科。<b>設計細節僅依快訊欄目與標題推定，未經核實。</b></div>
+    <div class="fld-l">結　果</div><div class="fld-v"><b>AiP 階段不可得。</b>快訊摘要段只交代目的：評估在指引建議的術前 4 小時窗口之外、提前至術前 20–28 小時給予放療的有效性。</div>
+    <div class="fld-l">但　書</div><div class="fld-v">AiP 尚未進入 PubMed、亦未被檢索引擎索引，本刊物在此階段<b>不對結果做任何推測</b>。正式出版後會於 NCBI 週報再度出現，屆時以 PMID 版本為準。</div>
+    <div class="fld-l">放腫觀點</div><div class="fld-v rt">HO 預防照射的時間窗一直是排程上的痛點——指引的 4 小時窗口在實務上經常做不到，尤其是與骨科共用手術排程時。若這篇證實 20–28 小時仍有效，等於把這項會診從「當天硬插」變成「前一天排」。<b>列為待深讀，正式出版後優先處理。</b></div>
+  </div>
+  <p class="cite mono">R&ouml;mer M, et al. · Int J Radiat Oncol Biol Phys（Articles in Press）· 線上 2026-08-04 · PII S0360-3016(26)04081-2 <span class="flag">Open Access</span></p>
+</div><div class="legend">
+  <b>方向色</b>
+  <span><span class="dot d-pos"></span>正向</span>
+  <span><span class="dot d-neg"></span>負向或無加成</span>
+  <span><span class="dot d-mix"></span>混合取捨</span>
+  <span><span class="dot d-na"></span>不適用／無方向</span>
+  <span style="color:var(--muted)">圓點只表結果方向，不表證據品質；層級與證據等級另見標籤。</span>
+</div><details class="appx">
+<summary>編 務 附 錄</summary>
+<div class="appx-body appx">
+
+<h3>本期收錄與篩選</h3>
+<table class="k">
+<tr><th>來源</th><th>命中</th><th>進選單</th><th>你勾細讀</th><th>本刊收錄</th></tr>
+<tr><td>NCBI 儲存搜尋（10 組）</td><td>—（本樣張僅示範食道組 13 篇）</td><td>8</td><td>4</td><td>4</td></tr>
+<tr><td>IJROBP Articles in Press</td><td>2（08/05 快訊）</td><td>2</td><td>1</td><td>1</td></tr>
+</table>
+
+<h3>裁定剔除（食道組）</h3>
+<ul>
+<li><b>胸腔 AI vs 人工圈劃</b>（PMID 42541195）、<b>非共面 vs 共面計畫比較</b>（PMID 42034522）— 劑量學與自動圈劃，無臨床終點，留待技術專題。</li>
+<li><b>Tomotherapy／VMAT／DMLC-IMRT 胸腺瘤計畫比較</b>（PMID 42521563）— 同上，且癌別非本院主戰場。</li>
+<li><b>[18F]FDG PET/CT 參數與腫瘤標記相關性</b>（PMID 42516111）— 相關性分析，不改變處置。</li>
+<li><b>孟加拉 adaptive 3D-CRT 頭頸經驗</b>（PMID 42507086）— 資源限制情境，外推性低。</li>
+<li><b>吸菸歸因食道癌疾病負擔</b>（PMID 42503928）、<b>新輔助失敗後策略綜述</b>（PMID 42503975）— 流行病學與敘述性綜述。</li>
+<li><b>食道淋巴上皮癌合併下咽鱗癌個案</b>（PMID 42070222）— 個案報告。</li>
+<li><b>胃／食道胃接合部寡進展綜述</b>（PMID 42530766）— 敘述性綜述；<b>但主題與本院寡轉移政策直接相關，列入待追</b>。</li>
+</ul>
+
+<h3>組稿驗收</h3>
+<ul>
+<li>識別碼溯源 (a)：5 筆全數來自本期真值表 <span class="ok">通過</span></li>
+<li>同則內配對 (b)：標題連結識別碼 == cite 行識別碼 <span class="ok">通過</span></li>
+<li>識別碼↔題名配對 (c)：對真值表逐則比對 <span class="ok">通過</span></li>
+<li>識別碼逐字比對 (d)：PMID 與 DOI 逐字取自 <code>get_article_metadata</code>；PII 取自快訊 <code>&lt;a&gt;</code> 錨點 <span class="ok">通過</span></li>
+<li>外部題名核對 (e)：4 筆帶 PMID 者全數核對 <span class="ok">通過</span>；AiP 該筆<span class="warn">不適用</span>（無 PMID，結構性缺層）</li>
+<li>追蹤轉址／個資外洩 (f)：全檔搜尋 <code>click.notification</code>／<code>webuser</code>／<code>subscriptionID</code>／<code>utm_</code> <span class="ok">為零</span></li>
+<li>四要素齊全：每則皆有方向圓點（帶 title）、癌別 pill（恰一個）、證據等級 tag、標題＋citation <span class="ok">通過</span></li>
+<li>方向色有據：3 個非空心圓點皆已讀過摘要 <span class="ok">通過</span>；2 個空心均註明理由 <span class="ok">通過</span></li>
+</ul>
+
+<h3>缺漏盤點</h3>
+<ul>
+<li>NCBI：<b>本週實收 10 封（非手冊記載的 9 組）</b>——除既有九組外另有一組 <code>NPC</code>（08/03 寄達），與 <code>NPC PET</code> 為不同儲存搜尋。<span class="warn">手冊需更新</span>。</li>
+<li>IJROBP：07/29–08/05 共 8 封，其中 07/29–08/02 已帶處理標籤；08/03–08/05 為本輪新增。連續無缺口。</li>
+</ul>
+
+<h3>已知限制</h3>
+<ul>
+<li>本期三篇為回溯或單臂，結論句一律採「與⋯⋯相關」措辭，未使用因果語言。兩篇 PSM 研究落在附錄 A 主線五的範圍：比較的是被各中心偏好選出來的兩群人。</li>
+<li><b>PubMed 摘要會吃掉下標與斜體標籤</b>（實測：<code>P</code> 值符號遺失、<code>V20</code> 變成 <code>V</code>）。本期不含劑量學數值引用，未受影響；日後涉及 V／D 參數者一律回原文確認。</li>
+<li>AiP 條目結構性缺少外部題名核對層（無 PMID、未被索引）。正式出版後以 PMID 版本回頭驗證 PII 是否指對。</li>
+<li>選單為標題層推定，偽陽性為設計上接受的成本；未進選單者僅留於年度總帳，不進累積檔。</li>
+</ul>
+
+<h3>資料來源</h3>
+<p>文獻書目與摘要根據 PubMed 取得（<code>get_article_metadata</code>），各篇 DOI 連結已附於條目 citation 行。
+IJROBP Articles in Press 條目來自 Elsevier 快訊，連結已解碼為 canonical URL。
+本刊物為個人研讀用途，非醫療建議。</p>
+
+</div>
+</details></div>
+<div class="foot">
+  <span>Sela&rsquo;s Weekly Review　·　RT　·　2026 W31　·　產出 2026-08-06</span>
+</div>
+</div>
+</body>
+</html>
