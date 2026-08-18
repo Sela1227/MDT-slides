@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<!--
+  泌尿道癌多專科團隊會議 — HTML 投影片（5 頁）
+  115年8月5日 / 115年01-06月討論率與115年品質指標選定
+  ────────────────────────────────────
+  規範第一條：嚴格禁止使用任何 emoji 字元。
+  ────────────────────────────────────
+  依 mdt-metrics-slides-template-prompt.md 規格製作
+  癌別代碼 uro　主色 --ca 改一行即可換色
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>泌尿道癌多專科團隊會議 — 115年8月5日</title>
+<style>
+:root{
+  --dk:#3A4550; --acc:#4A7C8E; --lt:#9BAAB6; --cr:#EFF1F4;
+  --ca:#4F7B6B;
+  --ink:#2C3540; --mid:#637281; --line:#E2E7EB;
+  --ok:#2E5940; --ok-bg:#E5EFEA;
+  --warn:#8A5A1F; --warn-bg:#F4EDE0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#111;
+  font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased}
+
+.slide{position:absolute;inset:0;display:none;background:#fff;flex-direction:column}
+.slide.on{display:flex}
+
+/* ── 封面 ───────────────────────────── */
+.cover{background:var(--dk);justify-content:center;padding:7vh 7vw;gap:clamp(10px,2vh,26px)}
+.cv-eyebrow{font-size:clamp(12px,1.25vw,19px);letter-spacing:.28em;color:var(--lt);font-weight:500}
+.cv-title{font-size:clamp(30px,4.8vw,72px);font-weight:800;color:#fff;line-height:1.16;letter-spacing:-.01em}
+.cv-sub{font-size:clamp(15px,1.85vw,28px);color:rgba(255,255,255,.7);font-weight:500}
+.cv-cols{margin-top:3vh;padding-top:3.2vh;border-top:1px solid rgba(255,255,255,.16);
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2vh 6vw;max-width:62em}
+.cv-row{font-size:clamp(15px,1.7vw,27px);color:rgba(255,255,255,.68);line-height:1.6}
+.cv-row b{color:rgba(255,255,255,.94);font-weight:600;margin-right:1.1em}
+
+/* ── 內容頁 ─────────────────────────── */
+.hd{background:var(--dk);color:#fff;padding:clamp(12px,2vh,26px) 3.2vw;flex-shrink:0;
+  display:flex;align-items:center;gap:2vw;border-bottom:5px solid var(--ca)}
+.hd-t{font-size:clamp(18px,2.4vw,36px);font-weight:700;flex:1;line-height:1.25}
+.hd-tag{font-size:clamp(11px,1.2vw,18px);font-weight:600;color:#fff;background:rgba(255,255,255,.14);
+  padding:.45em 1.1em;border-radius:2px;white-space:nowrap;letter-spacing:.05em}
+.bd{flex:1;overflow:hidden;display:flex;flex-direction:column;
+  padding:clamp(16px,3.2vh,44px) 3.2vw clamp(52px,7.5vh,84px);
+  gap:clamp(11px,2vh,28px);min-height:0}
+.grow{flex:1;min-height:0;display:flex;flex-direction:column}
+.grow>.tb{height:100%}
+
+/* ── 參數列 ─────────────────────────── */
+.params{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);flex-shrink:0}
+.param{flex:1;background:var(--cr);padding:clamp(11px,1.9vh,25px) 1.5vw;border-top:3px solid var(--ca)}
+.param-k{font-size:clamp(11px,1.15vw,17px);color:var(--mid);letter-spacing:.06em;margin-bottom:.55em}
+.param-v{font-size:clamp(19px,2.25vw,35px);font-weight:800;color:var(--ink);line-height:1.25;
+  font-variant-numeric:tabular-nums}
+
+/* ── 表格 ───────────────────────────── */
+.tb{width:100%;border-collapse:collapse;font-size:clamp(15px,1.75vw,28px)}
+.tb thead th{background:var(--dk);color:#fff;font-weight:600;text-align:left;
+  padding:clamp(9px,1.4vh,19px) 1.2vw;font-size:clamp(13px,1.45vw,22px);letter-spacing:.04em}
+.tb thead th.num{text-align:right}
+.tb tbody td{padding:clamp(9px,1.3vh,18px) 1.2vw;border-bottom:1px solid var(--line);
+  color:var(--ink);vertical-align:middle}
+.tb tbody tr:nth-child(even) td{background:var(--cr)}
+.tb td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.tb td.lbl{font-weight:600;border-left:4px solid var(--ca)}
+.tb tbody tr.sum td{background:var(--dk);color:#fff;font-weight:700;border-bottom:none}
+.tb tbody tr.sum td.lbl{border-left:4px solid var(--ca);font-weight:700}
+
+.pill{display:inline-block;font-size:clamp(13px,1.45vw,22px);font-weight:700;
+  padding:.35em 1.1em;border-radius:2px;white-space:nowrap}
+.p-ok{background:var(--ok-bg);color:var(--ok)}
+.p-watch{background:var(--warn-bg);color:var(--warn)}
+
+/* ── KPI 卡 ─────────────────────────── */
+.kpis{display:flex;gap:clamp(8px,1.2vw,20px);flex:1;min-height:0}
+.kpi{flex:1;background:var(--cr);border-top:6px solid var(--ca);
+  padding:clamp(12px,2.4vh,32px) clamp(10px,1.5vw,26px);
+  display:flex;flex-direction:column;align-items:center;text-align:center}
+.kpi-k{font-size:clamp(20px,2.5vw,40px);font-weight:800;color:var(--ink);letter-spacing:.02em}
+.kpi-n{font-size:clamp(38px,6.4vw,108px);font-weight:800;color:var(--acc);line-height:1;
+  margin:auto 0;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.kpi-d{font-size:clamp(14px,1.6vw,25px);color:var(--mid);line-height:1.55;
+  padding-top:.9em;border-top:1px solid var(--line);width:100%}
+
+/* ── 指標三欄（grid 跨卡對齊，見坑 #4）── */
+.cards{display:grid;grid-template-rows:auto auto minmax(0,1fr);
+  grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);
+  column-gap:clamp(8px,1.3vw,22px);flex:1;min-height:0}
+.card{display:contents}
+.card-h{background:var(--ca);color:#fff;padding:clamp(10px,1.5vh,21px) clamp(12px,1.5vw,26px);
+  min-width:0;display:flex;flex-direction:column;justify-content:center}
+.card-n{font-size:clamp(12px,1.3vw,20px);letter-spacing:.2em;font-weight:700;color:rgba(255,255,255,.75)}
+.card-n em{font-style:normal;background:rgba(255,255,255,.2);padding:.15em .7em;margin-left:.7em;
+  letter-spacing:.08em;border-radius:2px}
+.card-t{font-size:clamp(14px,1.55vw,24px);font-weight:700;line-height:1.35;margin-top:.4em}
+
+.card-s{background:#fff;min-width:0;text-align:center;border-bottom:1px solid var(--line);
+  padding:clamp(10px,1.6vh,22px) clamp(10px,1.3vw,22px)}
+.s-y{font-size:clamp(11px,1.2vw,18px);color:var(--mid);letter-spacing:.1em;margin-bottom:.4em}
+.s-n{font-size:clamp(30px,4.3vw,70px);font-weight:800;color:var(--acc);line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.s-n.na{font-size:clamp(22px,3vw,48px);color:var(--mid)}
+.s-x{font-size:clamp(12px,1.3vw,20px);color:var(--mid);margin-top:.55em;line-height:1.45}
+.s-f{margin-top:.55em}
+
+.card-b{background:var(--cr);min-height:0;min-width:0;
+  padding:clamp(11px,1.9vh,26px) clamp(12px,1.5vw,26px);
+  display:flex;flex-direction:column}
+.card-defs{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;
+  gap:clamp(8px,1.3vh,18px)}
+.dl-k{font-size:clamp(12px,1.3vw,20px);font-weight:700;color:var(--acc);letter-spacing:.1em;margin-bottom:.4em}
+.dl-v{font-size:clamp(13px,1.42vw,22px);color:var(--ink);line-height:1.55}
+.card-f{flex-shrink:0;margin-top:clamp(9px,1.4vh,19px);padding-top:clamp(9px,1.4vh,19px);
+  border-top:1px solid var(--line);font-size:clamp(12px,1.3vw,19px);color:var(--mid);line-height:1.55}
+.card-f b{color:var(--ink);font-weight:700;letter-spacing:.08em;display:block;margin-bottom:.35em;
+  font-size:.95em}
+
+/* ── 候選指標頁 ─────────────────────── */
+.cnd-t{background:var(--ca);color:#fff;flex-shrink:0;
+  padding:clamp(12px,2.1vh,29px) clamp(14px,2vw,34px)}
+.cnd-tag{font-size:clamp(12px,1.3vw,20px);letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.8)}
+.cnd-name{font-size:clamp(18px,2.15vw,34px);font-weight:700;line-height:1.35;margin-top:.4em}
+.cnd-cols{display:grid;grid-template-rows:auto minmax(0,1fr);
+  grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);
+  column-gap:clamp(8px,1.3vw,22px);flex:1;min-height:0}
+.cnd-c{display:contents}
+.cnd-ch{background:var(--acc);color:#fff;font-size:clamp(13px,1.4vw,22px);font-weight:700;
+  letter-spacing:.14em;padding:.55em 1.1em;min-width:0}
+.cnd-cb{background:var(--cr);min-width:0;min-height:0;overflow:hidden;
+  padding:clamp(11px,1.9vh,26px) clamp(12px,1.5vw,26px)}
+.cnd-k{font-size:clamp(11px,1.2vw,18px);font-weight:700;color:var(--acc);letter-spacing:.1em;
+  margin-bottom:.4em}
+.cnd-k+.cnd-v{margin-bottom:clamp(9px,1.5vh,20px)}
+.cnd-v{font-size:clamp(14px,1.55vw,24px);color:var(--ink);line-height:1.6}
+.cnd-foot{display:flex;gap:clamp(8px,1.3vw,22px);flex-shrink:0}
+.cnd-why{flex:2.2;background:var(--cr);border-left:6px solid var(--ca);
+  padding:clamp(11px,1.9vh,25px) clamp(12px,1.6vw,28px)}
+.cnd-num{flex:1;background:var(--dk);color:#fff;text-align:center;
+  padding:clamp(11px,1.9vh,25px) clamp(10px,1.3vw,22px)}
+.cnd-num .s-y{color:var(--lt)}
+.cnd-num .cnd-big{font-size:clamp(26px,3.5vw,56px);font-weight:800;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:#fff}
+.cnd-num .cnd-sub{font-size:clamp(11px,1.2vw,18px);color:rgba(255,255,255,.7);margin-top:.5em}
+
+/* ── 條列 ───────────────────────────── */
+.res{display:flex;flex-direction:column;gap:clamp(9px,1.6vh,22px);flex:1;min-height:0}
+.res-i{flex:1;min-height:0;display:flex;gap:clamp(12px,1.8vw,32px);align-items:center;
+  background:var(--cr);border-left:6px solid var(--ca);padding:clamp(12px,2.2vh,30px) clamp(14px,2vw,36px)}
+.res-n{font-size:clamp(24px,3.1vw,52px);font-weight:800;color:var(--ca);line-height:1;flex-shrink:0;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.res-t{flex:1}
+.res-k{font-size:clamp(17px,2vw,32px);font-weight:700;color:var(--ink);margin-bottom:.4em;line-height:1.3}
+.res-v{font-size:clamp(14px,1.6vw,25px);color:var(--mid);line-height:1.6}
+
+.big{font-size:clamp(20px,2.55vw,41px);font-weight:600;color:var(--ink);line-height:1.55;
+  border-left:6px solid var(--ca);background:var(--cr);
+  padding:clamp(14px,2.4vh,32px) clamp(14px,2vw,34px);flex-shrink:0}
+
+/* ── 結論列 ─────────────────────────── */
+.concl{flex-shrink:0;display:flex;align-items:center;gap:clamp(12px,1.6vw,28px);
+  background:var(--dk);color:#fff;padding:clamp(11px,2vh,27px) clamp(14px,2vw,34px)}
+.concl-l{font-size:clamp(11px,1.2vw,18px);font-weight:700;letter-spacing:.24em;color:var(--lt);flex-shrink:0}
+.concl-v{font-size:clamp(13px,1.5vw,24px);line-height:1.6;color:rgba(255,255,255,.94)}
+.note{font-size:clamp(13px,1.5vw,23px);color:var(--mid);line-height:1.65;flex-shrink:0;
+  padding-top:1.3vh;border-top:1px solid var(--line)}
+
+/* ── 導覽 ───────────────────────────── */
+.bar{position:fixed;top:0;left:0;height:4px;background:var(--ca);z-index:20;transition:width .25s}
+.nav{position:fixed;right:2.2vw;bottom:1.6vh;display:flex;align-items:center;gap:8px;z-index:20}
+.nb{width:clamp(30px,2.5vw,38px);height:clamp(30px,2.5vw,38px);border-radius:50%;border:1px solid var(--line);
+  background:rgba(255,255,255,.92);color:var(--dk);cursor:pointer;font-size:clamp(11px,1vw,14px);
+  display:flex;align-items:center;justify-content:center;transition:background .15s}
+.nb:hover{background:var(--cr)}
+.nb:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.ni{font-size:clamp(10px,.95vw,13px);color:var(--mid);font-variant-numeric:tabular-nums;
+  background:rgba(255,255,255,.92);padding:.4em .85em;border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){.bar{transition:none}}
+</style>
+</head>
+<body>
+<div style="position:relative;width:100%;height:100%">
+
+<!-- 1 封面 -->
+<div class="slide cover on">
+  <div class="cv-eyebrow">彰濱秀傳紀念醫院　癌症中心</div>
+  <div class="cv-title">泌尿道癌多專科團隊會議</div>
+  <div class="cv-sub">115年01-06月多專科討論率　與　115年院內品質指標選定</div>
+  <div class="cv-cols">
+    <div class="cv-row"><b>地點</b>7樓　愛書人會議室</div>
+    <div class="cv-row"><b>主席</b>楊哲學　醫師</div>
+    <div class="cv-row"><b>紀錄</b>陳美文　癌登師（代）</div>
+    <div class="cv-row"><b>與會</b>如出席名單</div>
+  </div>
+</div>
+
+<!-- 2 出席率 -->
+<div class="slide">
+  <div class="hd"><div class="hd-t">115年01-06月　核心科別出席率</div><div class="hd-tag">本院閾值 90%</div></div>
+  <div class="bd">
+    <div class="params">
+      <div class="param"><div class="param-k">會議頻率設定</div><div class="param-v">每月 2 次</div></div>
+      <div class="param"><div class="param-k">應召開次數 A</div><div class="param-v">12</div></div>
+      <div class="param"><div class="param-k">實際開會次數</div><div class="param-v">12</div></div>
+      <div class="param"><div class="param-k">新診斷個案數 B</div><div class="param-v">33 例</div></div>
+    </div>
+    <div class="grow"><table class="tb">
+      <thead><tr>
+        <th style="width:40%">核心科別</th>
+        <th class="num">出席次數 E</th>
+        <th class="num">出席率 E/A</th>
+        <th style="width:16%">判定</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="lbl">腫瘤外科</td><td class="num">12</td><td class="num">100%</td><td><span class="pill p-ok">達標</span></td></tr>
+        <tr><td class="lbl">腫瘤內科</td><td class="num">12</td><td class="num">100%</td><td><span class="pill p-ok">達標</span></td></tr>
+        <tr><td class="lbl">病理科</td><td class="num">12</td><td class="num">100%</td><td><span class="pill p-ok">達標</span></td></tr>
+        <tr><td class="lbl">影像診斷科</td><td class="num">12</td><td class="num">100%</td><td><span class="pill p-ok">達標</span></td></tr>
+        <tr><td class="lbl">放射腫瘤科</td><td class="num">12</td><td class="num">100%</td><td><span class="pill p-ok">達標</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="concl">
+      <div class="concl-l">決議</div>
+      <div class="concl-v">五大核心科別出席率皆為 100%，遠高於評鑑要求之 80% 及院內標準之 90%。維持團隊閾值 ≧90%，持續監測。</div>
+    </div>
+    <div class="note">核心成員（指科別）出席率　評鑑條文 ≧80%　本院閾值 ≧90%　　涵蓋癌別：攝護腺癌 21 例、膀胱癌 10 例、腎臟癌 2 例，個案數為 Class 1~3。</div>
+  </div>
+</div>
+
+<!-- 3 討論率 -->
+<div class="slide">
+  <div class="hd"><div class="hd-t">115年01-06月　討論率與優先討論率</div><div class="hd-tag">閾值 30% / 50%</div></div>
+  <div class="bd">
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-k">攝護腺癌</div>
+        <div class="kpi-n">47.62%</div>
+        <div class="kpi-d">提交 10 / 新診斷 21　優先討論率 100%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-k">膀胱癌</div>
+        <div class="kpi-n">70.00%</div>
+        <div class="kpi-d">提交 7 / 新診斷 10　優先討論率 100%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-k">腎臟癌</div>
+        <div class="kpi-n">100.00%</div>
+        <div class="kpi-d">提交 2 / 新診斷 2　優先討論率 100%</div>
+      </div>
+    </div>
+    <div class="grow"><table class="tb">
+      <thead><tr>
+        <th style="width:22%">癌別</th>
+        <th class="num">新診斷 B</th>
+        <th class="num">提交 C</th>
+        <th class="num">討論率 C/B</th>
+        <th class="num">優先 D</th>
+        <th class="num">優先討論率 D/C</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="lbl">攝護腺癌</td><td class="num">21</td><td class="num">10</td><td class="num">47.62%</td><td class="num">10</td><td class="num">100.00%</td></tr>
+        <tr><td class="lbl">膀胱癌</td><td class="num">10</td><td class="num">7</td><td class="num">70.00%</td><td class="num">7</td><td class="num">100.00%</td></tr>
+        <tr><td class="lbl">腎臟癌</td><td class="num">2</td><td class="num">2</td><td class="num">100.00%</td><td class="num">2</td><td class="num">100.00%</td></tr>
+        <tr class="sum"><td class="lbl">合計</td><td class="num">33</td><td class="num">19</td><td class="num">57.58%</td><td class="num">19</td><td class="num">100.00%</td></tr>
+      </tbody>
+    </table></div>
+    <div class="concl">
+      <div class="concl-l">決議</div>
+      <div class="concl-v">三癌別討論率皆順利通過評鑑與院內閾值建議之 30% 門檻；提交討論之個案優先討論率達 100%，遠超評鑑建議之 50% 門檻。維持討論率閾值 ≧30%、優先討論率閾值 ≧50%，持續監測。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4 品質指標 -->
+<div class="slide">
+  <div class="hd"><div class="hd-t">114年度院內品質指標　監測結果與定義</div><div class="hd-tag">對照 113年 CCAP 閾值</div></div>
+  <div class="bd">
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-h">
+          <div class="card-n">指標 1<em>攝護腺癌　品質＋核心</em></div>
+          <div class="card-t">新診斷之攝護腺癌病人治療前有做肛診檢查的比率（排除無法作肛診的病人）</div>
+        </div>
+        <div class="card-s">
+          <div class="s-y">114年01-12月</div>
+          <div class="s-n" style="color:var(--warn)">97.37%</div>
+          <div class="s-x">37 / 38　CCAP 閾值 97.83%</div>
+          <div class="s-f"><span class="pill p-watch">未達閾值 0.46%</span></div>
+        </div>
+        <div class="card-b">
+          <div class="card-defs">
+            <div>
+              <div class="dl-k">分子</div>
+              <div class="dl-v">新診斷之攝護腺癌病人治療前有做肛診檢查的比率</div>
+            </div>
+            <div>
+              <div class="dl-k">分母</div>
+              <div class="dl-v">本院新診斷所有攝護腺腺癌（adenocarcinoma）的人數（納入 class 0 + class 1）</div>
+            </div>
+          </div>
+          <div class="card-f"><b>選取原因</b>肛診檢查的結果關係到病人診斷的臨床期別與所採取的治療方式。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <div class="card-n">指標 2<em>攝護腺癌　品質指標</em></div>
+          <div class="card-t">臨床期別第三期接受放射線治療時合併使用荷爾蒙治療的比率</div>
+        </div>
+        <div class="card-s">
+          <div class="s-y">114年01-12月</div>
+          <div class="s-n">100.00%</div>
+          <div class="s-x">4 / 4　閾值 96.73%</div>
+          <div class="s-f"><span class="pill p-ok">優於閾值 3.27%</span></div>
+        </div>
+        <div class="card-b">
+          <div class="card-defs">
+            <div>
+              <div class="dl-k">分子</div>
+              <div class="dl-v">分母中，合併使用荷爾蒙治療的人數</div>
+            </div>
+            <div>
+              <div class="dl-k">分母</div>
+              <div class="dl-v">臨床期別第三期之攝護腺腺癌（adenocarcinoma）病人接受放射線治療的人數</div>
+            </div>
+          </div>
+          <div class="card-f"><b>選取原因</b>接受放射線治療之臨床期別 T3 的病人，建議也接受荷爾蒙治療。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <div class="card-n">指標 3<em>膀胱癌　品質＋核心</em></div>
+          <div class="card-t">接受膀胱切除術（cystectomy）治療者，完成病理期別的比率</div>
+        </div>
+        <div class="card-s">
+          <div class="s-y">114年01-12月</div>
+          <div class="s-n na">無個案</div>
+          <div class="s-x">0 / 0　CCAP 閾值 100%</div>
+          <div class="s-f"><span class="pill p-watch">分母為 0　無法評估</span></div>
+        </div>
+        <div class="card-b">
+          <div class="card-defs">
+            <div>
+              <div class="dl-k">分子</div>
+              <div class="dl-v">分母中，完成病理期別的人數</div>
+            </div>
+            <div>
+              <div class="dl-k">分母</div>
+              <div class="dl-v">膀胱癌病人接受膀胱切除術（cystectomy）治療的人數</div>
+            </div>
+          </div>
+          <div class="card-f"><b>選取原因</b>膀胱癌病理期別為決定後續治療程序之重要依據。</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="note">指標 1 未達 CCAP 閾值，差距 0.46%（38 案中 37 案完成肛診），為本次待留意項目。指標 3 分子分母均為 0，年度無符合條件個案，無法計算比率。</div>
+  </div>
+</div>
+
+<!-- 5 候選指標 -->
+<div class="slide">
+  <div class="hd"><div class="hd-t">候選指標　膀胱癌品質指標替代方案</div><div class="hd-tag">待與會醫師決定</div></div>
+  <div class="bd">
+    <div class="cnd-t">
+      <div class="cnd-tag">膀胱癌　指標編號 1　正向指標</div>
+      <div class="cnd-name">膀胱癌之經尿道腫瘤切除術（TURBT）標本有描述並看到固有肌肉層（muscularis propria）的比率</div>
+    </div>
+    <div class="cnd-cols">
+      <div class="cnd-c">
+        <div class="cnd-ch">分子</div>
+        <div class="cnd-cb">
+          <div class="cnd-k">納入條件</div>
+          <div class="cnd-v">分母中，標本有描述並看到固有肌肉層（muscularis propria）的人數</div>
+          <div class="cnd-k">排除條件</div>
+          <div class="cnd-v">無</div>
+        </div>
+      </div>
+      <div class="cnd-c">
+        <div class="cnd-ch">分母</div>
+        <div class="cnd-cb">
+          <div class="cnd-k">納入條件</div>
+          <div class="cnd-v">膀胱癌接受經尿道腫瘤切除術（TURBT）的人數</div>
+          <div class="cnd-k">排除條件</div>
+          <div class="cnd-v">無</div>
+        </div>
+      </div>
+    </div>
+    <div class="cnd-foot">
+      <div class="cnd-why">
+        <div class="cnd-k">選取理由</div>
+        <div class="cnd-v">在活體切片中，組織的描述應詳載肌肉是否有受到侵犯，關係到病人之預後。</div>
+      </div>
+      <div class="cnd-num">
+        <div class="s-y">114年01-12月</div>
+        <div class="cnd-big">16.67%</div>
+        <div class="cnd-sub">2 / 12　CCAP 閾值 84.20%</div>
+      </div>
+    </div>
+    <div class="note">現行指標 3（完成病理期別）114年分子分母均為 0；膀胱癌指標 3（根除術後骨盆腔淋巴結 ≧10 顆）同為 0 / 0，亦無個案。本候選指標分母有 12 例，為膀胱癌三項指標中唯一可實際監測者。</div>
+  </div>
+</div>
+
+<!-- 6 提議 -->
+<div class="slide">
+  <div class="hd"><div class="hd-t">提議　115年度院內品質指標</div><div class="hd-tag">續用三項</div></div>
+  <div class="bd">
+    <div class="big">經泌尿道癌多專科團隊會議評估，既有之三項院內品質指標均具臨床照護重要性。為維持照護品質監測之延續性，提議 115 年度持續沿用並監測此三項指標。</div>
+    <div class="res">
+      <div class="res-i"><div class="res-n">1</div><div class="res-t">
+        <div class="res-k">攝護腺癌　新診斷病人治療前接受肛診檢查的比率</div>
+        <div class="res-v">114年監測值 97.37%（37/38），略低於 CCAP 閾值，115年列為重點追蹤。</div></div></div>
+      <div class="res-i"><div class="res-n">2</div><div class="res-t">
+        <div class="res-k">攝護腺癌　臨床期別第三期接受放射線治療時合併荷爾蒙治療的比率</div>
+        <div class="res-v">114年監測值 100%（4/4）。</div></div></div>
+      <div class="res-i"><div class="res-n">3</div><div class="res-t">
+        <div class="res-k">膀胱癌　接受膀胱切除術治療者完成病理期別的比率</div>
+        <div class="res-v">114年度分子、分母均為 0，因年度個案數不足無法評估實際照護品質。是否改採「TURBT 標本固有肌肉層描述率」（詳見前頁），提請與會醫師討論決定。</div></div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="bar" id="bar"></div>
+<div class="nav">
+  <button class="nb" id="prev" title="上一頁　←">&#9664;</button>
+  <span class="ni" id="ni">1 / 6</span>
+  <button class="nb" id="next" title="下一頁　→">&#9654;</button>
+  <button class="nb" id="fs" title="全螢幕　F">&#9974;</button>
+</div>
+
+<script>
+var S=document.querySelectorAll('.slide'),N=S.length,c=0;
+function go(i){
+  if(i<0)i=0; if(i>N-1)i=N-1;
+  S[c].classList.remove('on'); c=i; S[c].classList.add('on');
+  document.getElementById('ni').textContent=(c+1)+' / '+N;
+  document.getElementById('bar').style.width=((c+1)/N*100)+'%';
+}
+function toggleFS(){
+  var el=document.documentElement;
+  if(!document.fullscreenElement){ el.requestFullscreen && el.requestFullscreen(); }
+  else { document.exitFullscreen && document.exitFullscreen(); }
+}
+document.getElementById('prev').addEventListener('click',function(){go(c-1)});
+document.getElementById('next').addEventListener('click',function(){go(c+1)});
+document.getElementById('fs').addEventListener('click',toggleFS);
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(c+1);}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(c-1);}
+  else if(e.key==='Home'){go(0);}
+  else if(e.key==='End'){go(N-1);}
+  else if(e.key==='f'||e.key==='F'){toggleFS();}
+});
+go(0);
+</script>
+</body>
+</html>
