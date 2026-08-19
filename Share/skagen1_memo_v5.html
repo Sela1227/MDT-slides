@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Skagen Trial 1 — 跨科 MDT Memo</title>
+<style>
+  @page {
+    size: A4;
+    margin: 12mm 13mm 12mm 13mm;
+    @bottom-left { content: "彰濱秀傳癌症中心　放射腫瘤科　│　跨科 MDT Memo";
+      font-family: "Noto Sans CJK TC"; font-size: 7.4pt; letter-spacing: 1.4px; color: #7d97a8; }
+    @bottom-right { content: counter(page) " / " counter(pages);
+      font-family: "Noto Sans CJK TC"; font-size: 7.4pt; letter-spacing: 1.4px; color: #7d97a8; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+         font-size: 9pt; line-height: 1.58; color: #1f2933; print-color-adjust: exact;
+         word-break: keep-all; line-break: strict; hyphens: none; }
+  .nb { white-space: nowrap; }
+
+  @media screen {
+    html { background: #e8edef; }
+    body { font-size: 11pt; max-width: 900px; margin: 36px auto 64px;
+           padding: 40px 46px 50px; background: #fff; box-shadow: 0 2px 20px rgba(44,83,112,.12); }
+  }
+
+  /* ── 抬頭 ── */
+  .hero { margin-bottom: 8px; page-break-inside: avoid; }
+  .h-rail { background: #2c5370; border-left: 7px solid #a9c3d4; padding: 13px 20px 15px; }
+  .h-top { display: flex; align-items: baseline; padding-bottom: 8px; margin-bottom: 11px;
+           border-bottom: 1px solid rgba(255,255,255,.24); }
+  .h-ser { font-size: 7.8pt; letter-spacing: 3.2px; color: #cfdde7; }
+  .h-no { margin-left: auto; font-size: 7.4pt; letter-spacing: 2.4px; color: #9bb2c0; }
+  .hero h1 { font-size: 18.5pt; font-weight: 700; letter-spacing: 1.6px; color: #fff; line-height: 1.3; }
+  .h-sub { font-size: 10.4pt; letter-spacing: 1.4px; color: #a9c3d4; margin-top: 5px; font-weight: 400; }
+  .h-key { font-size: 10.4pt; font-weight: 700; color: #fff; margin-top: 12px; padding-left: 12px;
+           border-left: 3px solid #a9c3d4; line-height: 1.55; }
+  .h-lim { font-size: 8.8pt; color: #cfdde7; margin-top: 7px; padding-left: 15px; line-height: 1.5; }
+  .h-note { background: #f1f6fa; border-left: 7px solid #dde5eb; padding: 6px 20px;
+            font-size: 7.6pt; color: #4a6274; line-height: 1.5; }
+  .h-note .k { font-size: 7.2pt; letter-spacing: 1.4px; color: #7d97a8; margin-right: 6px; }
+  .h-note .k2 { margin-left: 14px; }
+
+  /* ── 影響框 ── */
+  .impact { page-break-inside: avoid; border-left: 4px solid #2c5370; background: #f5f9fc;
+            padding: 10px 15px 11px; margin-bottom: 10px; }
+  .i-hd { font-size: 11pt; font-weight: 700; letter-spacing: 2px; color: #2c5370; margin-bottom: 9px; }
+  .i-row { display: flex; gap: 12px; margin-bottom: 4px; font-size: 9pt; line-height: 1.55; }
+  .i-row:last-child { margin-bottom: 0; }
+  .i-lab { width: 88px; flex: none; font-weight: 900; color: #2c5370; font-size: 9pt; }
+  .no { color: #a04a3f; }
+  .i-txt { flex: 1; }
+  .src { width: 62px; flex: none; text-align: center; font-size: 7.2pt; letter-spacing: .6px;
+         padding: 1px 0; height: 15px; line-height: 13px; font-weight: 700; }
+  .src.t { background: #2c5370; color: #fff; }
+  .src.g { background: #fff; color: #5b7386; border: 1px solid #a9c3d4; }
+  .src.h { background: #e5ecf2; color: #2c5370; border: 1px solid #a9c3d4; }
+
+
+  /* ── 章節 ── */
+  .sh { font-size: 11.2pt; font-weight: 700; color: #2c5370; letter-spacing: 1.6px;
+        margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1.5px solid #3d6a87;
+        display: flex; align-items: center; gap: 9px; page-break-after: avoid; }
+  .sh .n { background: #3d6a87; color: #fff; font-size: 8.4pt; font-weight: 900; min-width: 20px; height: 20px;
+           display: inline-flex; align-items: center; justify-content: center; letter-spacing: 0; }
+
+  .grid2 { display: flex; gap: 13px; align-items: flex-start; }
+  .grid2 > .col { flex: 1; min-width: 0; }
+
+  .card { border: 1px solid #dde5eb; padding: 8px 11px; page-break-inside: avoid; }
+  .lead { font-size: 10pt; font-weight: 900; color: #2c5370; margin-bottom: 3px; letter-spacing: .4px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9.4pt; }
+  th { background: #3d6a87; color: #fff; text-align: left; padding: 6px 10px; font-size: 8.4pt;
+       font-weight: 500; letter-spacing: 1px; }
+  td { padding: 6px 10px; border-bottom: 1px solid #e2e9ee; vertical-align: middle; }
+  tr:nth-child(even) td { background: #f7fafc; }
+  td.pct { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.hi { font-weight: 900; color: #2c5370; }
+
+  .call { padding: 8px 12px; margin-top: 8px; font-size: 9pt; line-height: 1.6; page-break-inside: avoid; }
+  .call .l { font-weight: 900; }
+  .pt { background: #f1f6fa; border-left: 4px solid #3d6a87; } .pt .l { color: #2c5370; }
+  .cf { background: #f7f8f9; border-left: 4px solid #9bb2c0; } .cf .l { color: #5b7386; }
+
+  .stopbox { background: #fbf3f2; border: 1px solid #d9b3ad; border-left: 4px solid #a04a3f; padding: 10px 12px; }
+  .stop-item { margin-bottom: 7px; font-size: 9pt; line-height: 1.56; }
+  .stop-item:last-child { margin-bottom: 0; }
+  .stop-item b { color: #8c3d33; display: block; font-size: 9.4pt; margin-bottom: 1px; letter-spacing: .3px; }
+
+  .fig { font-size: 9pt; line-height: 1.62; font-variant-numeric: tabular-nums; }
+
+  ul { list-style: none; margin: 0; }
+  li { padding-left: 15px; position: relative; margin-bottom: 4px; line-height: 1.55; }
+  li:last-child { margin-bottom: 0; }
+  li::before { content: "·"; position: absolute; left: 4px; color: #3d6a87; font-weight: 900; font-size: 13pt; top: -2px; }
+
+  b { font-weight: 900; }
+  .act { background: #2c5370; padding: 9px 13px 10px; margin-top: 7px; page-break-inside: avoid; }
+  .act-hd { font-size: 9pt; font-weight: 700; letter-spacing: 2px; color: #cfdde7; margin-bottom: 4px; }
+  .act-grid { display: flex; gap: 16px; }
+  .act-col { flex: 1; min-width: 0; color: #fff; font-size: 8.5pt; line-height: 1.5; }
+  .act-lab { font-size: 7.4pt; letter-spacing: 1.6px; color: #a9c3d4; margin-bottom: 2px; }
+  .act-col b { color: #fff; }
+  .act-tag { font-size: 7.4pt; color: #a9c3d4; }
+  .act-refs { margin-top: 7px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,.22);
+              font-size: 6.9pt; color: #9bb2c0; line-height: 1.4; }
+  .act-refs b { color: #cfdde7; }
+
+  .fn { font-size: 7.6pt; color: #6b7280; line-height: 1.45; margin-top: 6px; }
+  .refs { font-size: 7pt; line-height: 1.38; color: #5b7386; padding-top: 0; margin-top: 5px; }
+
+  /* ── 窄螢幕（須置於樣式表最末，否則被後方基礎規則覆蓋）── */
+  @media screen and (max-width: 720px) {
+    body { max-width: none; margin: 0; padding: 18px 14px 36px; box-shadow: none; font-size: 11pt; }
+    .hero h1 { font-size: 16pt; }
+    .grid2 { flex-direction: column; gap: 12px; }
+    .grid2 > * { width: 100%; min-width: 0; }
+    /* 窄版：標記跟著標籤走，不跟著內容走；否則標記會貼到下一列的標籤 */
+    .i-row { display: grid; grid-template-columns: 1fr auto;
+             grid-template-areas: "lab src" "txt txt";
+             column-gap: 10px; row-gap: 3px;
+             margin-bottom: 11px; padding-bottom: 9px; border-bottom: 1px solid #dde5eb; }
+    .i-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .i-lab { grid-area: lab; width: auto; align-self: center; }
+    .src   { grid-area: src; align-self: center; }
+    .i-txt { grid-area: txt; }
+    .act-grid { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="h-rail">
+    <div class="h-top"><span class="h-ser">彰濱秀傳癌症中心　跨科 MDT MEMO</span><span class="h-no">乳癌　2026-08</span></div>
+    <h1>高風險乳癌完整區域淋巴照射</h1>
+    <div class="h-sub">DBCG Skagen Trial 1　│　<span class="nb">40 Gy/15 fx</span> 對 <span class="nb">50 Gy/25 fx</span></div>
+    <div class="h-key">需完整區域淋巴照射時，<span class="nb">40 Gy/15 次（3 週）</span>可取代 <span class="nb">50 Gy/25 次（5 週）</span>，且未增加手臂淋巴水腫。</div>
+    <div class="h-lim">本試驗證明的是<b>毒性非劣性</b>，不是腫瘤控制等效性。</div>
+  </div>
+  <div class="h-note">
+    <span class="k">依據</span>Offersen BV, et al. J Clin Oncol 2026 Jul 23.
+    <span class="nb">DOI 10.1200/JCO-25-02705</span>（NCT02384733）
+    <span class="k k2">性質</span>跨科 MDT memo
+  </div>
+</div>
+
+<div class="impact">
+  <div class="i-hd">這篇對 MDT 的實際影響</div>
+  <div class="i-row">
+    <div class="i-lab">可改之處</div>
+    <div class="i-txt">需區域淋巴照射者，可由 <span class="nb">50 Gy/25 fx</span> 改為 <b><span class="nb">40 Gy/15 fx</span></b>，<b>未增加手臂淋巴水腫</b>。</div>
+    <div class="src t">試驗</div>
+  </div>
+  <div class="i-row">
+    <div class="i-lab">常見疑慮</div>
+    <div class="i-txt"><b>腋窩廓清後：</b>次族群<b>亦未見 40 Gy 增加水腫</b>（<span class="nb">10.1% 對 12.3%</span>）。</div>
+    <div class="src t">試驗</div>
+  </div>
+  <div class="i-row">
+    <div class="i-lab">未涵蓋</div>
+    <div class="i-txt"><b class="no">淋巴結 boost</b>、<b class="no">殘存 gross nodal disease</b>、<b class="no"><span class="nb">26 Gy/5 fx</span> 區域照野</b>。</div>
+    <div class="src t">試驗</div>
+  </div>
+  <div class="i-row">
+    <div class="i-lab">指引現況</div>
+    <div class="i-txt">本試驗發表後之國際指引更新狀態<b>未查得</b>，採用前需另行確認。</div>
+    <div class="src g">指引</div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="col">
+    <div class="sh"><span class="n">1</span>誰適用</div>
+    <div class="card">
+      <div class="lead">Phase III 隨機試驗，<span class="nb">n = 2,908</span></div>
+      <div class="fig">乳房切除 48%、腋窩淋巴廓清 75%、前導性化療 35%，<span class="nb">多數接受內乳照射</span>。<br><b>這不是低風險全乳照射試驗，而是<span class="nb">高風險 locoregional 族群</span>。</b></div>
+      <div class="fn"><b>試驗排除需要淋巴結 boost 的病人。</b>中位追蹤：毒性 4.1 年、存活 5.25 年。</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="sh"><span class="n">2</span>有什麼改變</div>
+    <table>
+      <tr><th>3 年手臂淋巴水腫</th><th class="pct">50 Gy/25 fx</th><th class="pct">40 Gy/15 fx</th></tr>
+      <tr><td><b>全體</b></td><td class="pct">9.4%</td><td class="pct hi">8.0%</td></tr>
+      <tr><td>腋窩淋巴廓清</td><td class="pct">12.3%</td><td class="pct hi">10.1%</td></tr>
+      <tr><td>僅前哨切片</td><td class="pct">2.1%</td><td class="pct">2.4%</td></tr>
+    </table>
+    <div class="call pt"><span class="l">全體正式達成非劣性。</span>水腫的主要分層因子是<b>腋窩處置範圍</b>，不是放療分次；<span class="nb">此為風險分層陳述</span>，<b><span class="nb">非手術策略建議</span></b>。</div>
+    <div class="fn">3 年為盛行率；正式檢定用預指定 <span class="nb">HR 0.99（0.82–1.19，界限 1.543）</span>。前哨切片 <span class="nb">HR 1.08（0.62–1.89）</span>，<b>事件過少無法判定，非「40 Gy 較差」</b>。</div>
+  </div>
+</div>
+
+<div class="grid2" style="margin-top:8px;">
+  <div class="col">
+    <div class="sh"><span class="n">3</span>安不安全</div>
+    <div class="card">
+      <div class="lead">乳癌死亡曾出現短期訊號</div>
+      <div class="fig">
+        <span class="nb">第 5 年　40 Gy <b>7.2%</b> 對 50 Gy <b>5.1%</b>（＋2.1%）</span><br>
+        <span class="nb">第 8 年　40 Gy <b>8.9%</b> 對 50 Gy <b>8.8%</b>（＋0.1%）</span><br>
+        <span class="nb">全期 HR 1.25（95% CI 0.93–1.66）</span>
+      </div>
+      <div class="call cf"><span class="l">數據：</span>5 年差異於 8 年<b>收斂</b>，全期 <span class="nb">HR 之 CI 跨 1</span>，且<b>未伴隨局部區域復發增加</b>（8 年 2.9% 對 3.2%）；<b><span class="nb">仍待 10 年追蹤</span></b>。</div>
+      <div class="fn"><b>作者判讀</b>此訊號可能為暫時性。其餘 13 項毒性終點無一項偏向 50 Gy；<span class="nb">法國 <b>HypoG-01</b></span> 亦獨立證實水腫非劣性。</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="sh"><span class="n">4</span>哪些病人不能套用</div>
+    <div class="stopbox">
+      <div class="stop-item"><b>① 淋巴結 boost ／殘存 gross nodal disease</b>本試驗納入條件已排除，無資料可循。</div>
+      <div class="stop-item"><b>② <span class="nb">26 Gy/5 fx</span> 完整區域照野</b>不能替 5 次療程的區域照野背書；直接證據僅 FAST-Forward nodal 子試驗（<span class="nb">n = 469</span>）。</div>
+      <div class="stop-item"><b>③ 極晚期毒性</b>心臟事件、臂神經叢病變、次發癌症屬 10–20 年問題，<span class="nb">追蹤 4–5 年不足以定論</span>。</div>
+    </div>
+  </div>
+</div>
+
+<div class="act">
+  <div class="act-hd">MDT 行動</div>
+  <div class="act-grid">
+    <div class="act-col">
+      <div class="act-lab">治療選擇</div>
+      符合條件者<b>可於乳癌 MDT 提出改採 <span class="nb">40 Gy/15 fx</span></b>；<span class="nb">需 nodal boost 者維持個案討論</span>。<span class="act-tag">〔提案討論，尚未成為科內共識〕</span>
+    </div>
+    <div class="act-col">
+      <div class="act-lab">病人說法</div>
+      「放療由 25 次改為 15 次，<b>不會增加手臂水腫的機會</b>；<span class="nb">水腫評估與復健依原術後計畫進行</span>。」
+    </div>
+  </div>
+  <div class="act-refs"><b>依據</b> Offersen BV, <i>J Clin Oncol</i> 2026, <span class="nb">DOI 10.1200/JCO-25-02705</span> · <b>對照</b> HypoG-01, <i>Lancet</i> <span class="nb">2026;407:976-987</span> · <b>§4②</b> <i>Radiother Oncol</i> <span class="nb">2025;207:110915</span></div>
+</div>
+
+
+
+</body>
+</html>
