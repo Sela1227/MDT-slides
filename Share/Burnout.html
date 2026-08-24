@@ -103,6 +103,11 @@
     body { max-width: none; margin: 0; padding: 20px 16px 40px; border-radius: 0; box-shadow: none; font-size: 11pt; }
     .sec { overflow-x: auto; }
     table { min-width: 620px; }
+    /* 窄螢幕：解除列印版斷行保護，避免長字串凸出容器 */
+    .nb { white-space: normal; }
+    .h-note, .refs, .sm { overflow-wrap: anywhere; }
+    .hero h1 { letter-spacing: 2px; }
+    .h-en { display: block; margin-left: 0; margin-top: 4px; }
     .hero .h-rail { padding: 14px 14px 15px; }
     .hero h1 { font-size: 15pt; }
     .grid2 { flex-direction: column; gap: 10px; }
