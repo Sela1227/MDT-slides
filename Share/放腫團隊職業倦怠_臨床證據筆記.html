@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>放射腫瘤團隊職業倦怠 — 臨床證據筆記</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 15mm 15mm 15mm;
+    @bottom-left { content: "彰濱秀傳癌症中心　│　個管師教育訓練資料";
+      font-family: "Noto Sans CJK TC"; font-size: 7.2pt; letter-spacing: 1.4px; color: #7d97a8; }
+    @bottom-right { content: counter(page) " / " counter(pages);
+      font-family: "Noto Sans CJK TC"; font-size: 7.2pt; letter-spacing: 1.4px; color: #7d97a8; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+         font-size: 10pt; line-height: 1.66; color: #1f2933;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact;
+         word-break: keep-all; line-break: strict; hyphens: none; }
+  .nb { white-space: nowrap; }
+
+  .hero { margin-bottom: 11px; page-break-inside: avoid; }
+  .h-rail { background: #2c5370; border-left: 6px solid #a9c3d4; padding: 13px 20px 13px; }
+  .h-top { display: flex; align-items: baseline; padding-bottom: 9px; margin-bottom: 12px;
+           border-bottom: 1px solid rgba(255,255,255,.22); }
+  .h-ser { font-size: 8pt; letter-spacing: 3.2px; color: #cfdde7; }
+  .h-no { margin-left: auto; font-size: 7.8pt; letter-spacing: 2.4px; color: #9bb2c0; }
+  .hero h1 { font-size: 17pt; font-weight: 400; letter-spacing: 4.5px; color: #fff; line-height: 1.5; }
+  .h-en { font-family: "Noto Serif CJK TC", serif; font-style: italic; font-size: 9.4pt;
+          letter-spacing: .8px; color: #a9c3d4; margin-left: 12px; }
+  .h-key { font-size: 9.4pt; color: #eef4f8; margin-top: 8px; padding-left: 11px;
+           border-left: 2px solid #6d90a8; line-height: 1.6; }
+  .h-scope { font-size: 8.2pt; letter-spacing: 1.6px; color: #9bb2c0; margin-top: 6px; }
+  .h-note { background: #f1f6fa; border-left: 6px solid #dde5eb; padding: 5px 20px;
+            font-size: 7.9pt; color: #4a6274; line-height: 1.65; }
+  .h-note .k { font-size: 7.2pt; letter-spacing: 1.6px; color: #7d97a8; margin-right: 7px; }
+  .h-note .k2 { margin-left: 14px; }
+
+  .sec { margin-bottom: 15px; }
+  .sh { font-size: 12.5pt; font-weight: 700; color: #2c5370; letter-spacing: 2.2px;
+        margin-bottom: 9px; padding-bottom: 5px;
+        border-bottom: 1.5px solid #3d6a87; display: flex; align-items: baseline; gap: 9px; page-break-after: avoid; }
+  .sh .n { background: #3d6a87; color: #fff; font-size: 8.4pt; font-weight: 900; min-width: 20px; height: 20px;
+           border-radius: 0; display: inline-flex; align-items: center; justify-content: center; }
+
+  .card { border: 1px solid #dde5eb; border-radius: 0; padding: 11px 14px; margin-bottom: 9px; page-break-inside: avoid; }
+  .grid2 { display: flex; gap: 11px; margin-bottom: 11px; } .grid2 > * { flex: 1; min-width: 0; margin-bottom: 0; }
+  thead { display: table-header-group; }
+  h4 { font-size: 9.6pt; font-weight: 700; color: #2c5370; letter-spacing: 1.2px; margin-bottom: 7px;
+       padding-bottom: 4px; border-bottom: 1px solid #e2e9ee; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9.2pt; }
+  th { background: #3d6a87; color: #fff; text-align: left; padding: 8px 10px; font-size: 8.4pt;
+       font-weight: 500; letter-spacing: 1.1px; line-height: 1.5; }
+  td { padding: 6px 8px; border-bottom: 1px solid #e2e9ee; vertical-align: top; line-height: 1.5; }
+  tr:nth-child(even) td { background: #f7fafc; }
+  tr { page-break-inside: avoid; }
+  .ok { color: #2c5370; font-weight: 900; } .no { color: #a04a3f; font-weight: 900; }
+  td.pct { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .call { border-radius: 0; padding: 10px 13px; margin: 8px 0; font-size: 9.4pt; line-height: 1.62; page-break-inside: avoid; }
+  .call .l { font-weight: 900; }
+  .key { background: #fbf3f2; border-left: 4px solid #a04a3f; } .key .l { color: #8c3d33; }
+  .pt  { background: #f1f6fa; border-left: 4px solid #3d6a87; } .pt .l { color: #2c5370; }
+  .cf  { background: #f7f8f9; border-left: 4px solid #9bb2c0; } .cf .l { color: #5b7386; }
+
+  ul { list-style: none; margin: 4px 0; }
+  li { padding-left: 16px; position: relative; margin-bottom: 5px; line-height: 1.62; }
+  li::before { content: "·"; position: absolute; left: 4px; color: #3d6a87; font-weight: 900; font-size: 13pt; top: -1px; }
+  .chk li { margin-bottom: 9px; }
+  .chk li::before { content: "☐"; color: #6b7280; font-size: 10.5pt; left: 0; top: 0; }
+
+  .refs { font-size: 7.5pt; line-height: 1.42; padding: 8px 12px; margin-top: 4px; }
+  .refs ul { columns: 2; column-gap: 16px; }
+  .refs li { margin-bottom: 2px; line-height: 1.42; padding-left: 12px; }
+  .refs li::before { top: -2px; }
+  .refs h4 { font-size: 8.8pt; margin-bottom: 4px; padding-bottom: 3px; }
+  .refs .sm { font-size: 7.4pt; margin-top: 5px !important; }
+
+  .verdict { page-break-inside: avoid; border-left: 4px solid #2c5370; background: #f5f9fc; padding: 9px 13px; margin-bottom: 11px; }
+  .v-hd { font-size: 9.4pt; font-weight: 700; letter-spacing: 2.4px; color: #2c5370; margin-bottom: 7px; }
+  .v-row { display: flex; gap: 12px; margin-bottom: 5px; font-size: 9.3pt; line-height: 1.68; }
+  .v-row:last-child { margin-bottom: 0; }
+  .v-lab { width: 66px; flex: none; color: #5b7386; font-size: 8.6pt; letter-spacing: 1px; padding-top: 1px; }
+  .v-txt { flex: 1; }
+
+  p.body { font-size: 9.4pt; line-height: 1.72; margin: 9px 0; }
+  b { font-weight: 900; }
+  .sm { font-size: 8.6pt; color: #6b7280; line-height: 1.65; }
+  .lead { font-size: 9.8pt; color: #374151; margin-bottom: 9px; line-height: 1.66; }
+
+  @media print {
+    body { max-width: none; margin: 0; padding: 0; background: none; }
+    .card, .call { break-inside: avoid-page; }
+  }
+  @media screen {
+    html { background: #e8edef; }
+    body { font-size: 11.2pt; max-width: 880px; margin: 36px auto 64px;
+           padding: 46px 52px 56px; background: #fff; border-radius: 2px;
+           box-shadow: 0 2px 20px rgba(19, 78, 74, .10); }
+  }
+  @media screen and (max-width: 720px) {
+    body { max-width: none; margin: 0; padding: 20px 16px 40px; border-radius: 0; box-shadow: none; font-size: 11pt; }
+    .sec { overflow-x: auto; }
+    table { min-width: 620px; }
+    .hero .h-rail { padding: 14px 14px 15px; }
+    .hero h1 { font-size: 15pt; }
+    .grid2 { flex-direction: column; gap: 10px; }
+    .grid2 > * { width: 100%; min-width: 0; }
+    table { font-size: 9pt; }
+    td, th { padding: 7px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="h-rail">
+    <div class="h-top"><span class="h-ser">彰濱秀傳癌症中心 臨床證據筆記</span><span class="h-no">品質管理　·　2026-08</span></div>
+    <h1>放射腫瘤團隊職業倦怠<span class="h-en">burnout in radiation oncology</span><br>盛行率、結構性成因與介入證據</h1>
+    <div class="h-key">職業倦怠通常表現為情緒耗竭（EE）、去人格化（DP）與個人成就感降低；各研究的量表與判定門檻並不一致。本回顧核心立場：倦怠源於制度設計與資源配置，個人韌性只是輔助。</div>
+    <div class="h-scope">涵蓋：醫學生→住院醫師→主治→領導職之職涯連續體、護理／治療師／物理師／劑量師、性別差異、<span class="nb">三域介入模型</span></div>
+  </div>
+  <div class="h-note">
+    <span class="k">資料依據</span>Igwe T, et al. IJROBP 2026（Journal Pre-proof）　<span class="nb">DOI 10.1016/j.ijrobp.2026.07.054</span>
+    <span class="k k2">文件性質</span>敘述性回顧之整理筆記（非系統性回顧）　原回顧檢索範圍 2010/1–2025/8　·　本筆記整理日期 2026-08-24
+  </div>
+</div>
+
+<div class="verdict">
+  <div class="v-hd">本院判讀</div>
+  <div class="v-row"><div class="v-lab">原文支持</div><div class="v-txt">美國放腫各職涯階段與各職類皆有可觀比例的倦怠訊號；兩項領導職調查的壓力源一致集中於預算、人事、認證與行政責任；結構性因素（給付下降、EHR 負擔、人力缺口、生產力誘因）是作者論述的主要驅動；女性住院醫師與教職調查均顯示 mentorship 不足、性別偏見與職涯機會不均。</div></div>
+  <div class="v-row"><div class="v-lab">原文未證明</div><div class="v-txt">領導職為獨立危險因子（缺乏對照與多變項分析）；性別因素對倦怠盛行率的獨立影響量；放腫專屬介入可持續降低 MBI 倦怠或離職率（現有研究止於可行性、接受度與橫斷面相關）；各研究盛行率不可橫向比較（量表、切點、回覆率異質）；美國給付制度成因不能直接外推至台灣。</div></div>
+  <div class="v-row"><div class="v-lab">本院行動</div><div class="v-txt">採用其<b>三域框架與部門監測指標</b>（附錄檢核表）作為品質管理工具；引用數字前先查本筆記 §2 的研究限制欄；正式引用前確認 Version of Record 是否已出版。</div></div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">1</span>文獻性質與可信度</div>
+  <div class="lead">敘述性回顧：PubMed 2010/1–2025/8，僅納美國研究，排除病人端心理健康文獻，並明言由文獻與作者專業經驗共同構成。無 PRISMA 流程、無雙人篩選、無品質評讀、無合併效應量。</div>
+  <div class="call cf"><span class="l">證據邊界：</span>本文為 <b>Journal Pre-proof</b>，尚未完成 copyediting；Table 1 列 Kusano overall burnout 為 <span class="nb">10（30%）</span>，若以 66 名回覆者為分母應為 <span class="nb">15.2%</span>——可能為排版錯誤、分析分母不同或缺漏值未交代；Shanafelt 2023 列多處欄位標「x」、回覆率不可考。<b>定稿或原始研究確認前不宜引用該 overall 比例</b>；定稿版可能修正，引用前應比對。</div>
+  <div class="call key"><span class="l">使用限制：</span>本篇適合作為<b>領域現況與部門治理的論述基礎</b>，不能用來精確估算盛行率，也不能據此判定何種介入最有效。內文與 Table 1 的倦怠百分比因切點定義不同（「中／高度」vs 作者自訂 overall burnout），不可互相換算或橫向比較。</div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">2</span>職涯連續體盛行率（各列切點不同，禁止橫向比較）</div>
+  <table>
+    <thead><tr><th style="width:14%;">族群／調查</th><th style="width:12%;">樣本與回覆率</th><th style="width:25%;">主要數字</th><th style="width:19%;">主要壓力源</th><th>研究限制／解讀注意</th></tr></thead>
+    <tr><td><b>醫學生</b><br><span class="sm">綜述</span></td><td>—</td><td>40–50%（全體美國醫學生）</td><td>長工時、低自主性、學貸、社會支持不足</td><td>放腫意向學生之專屬盛行率原文明言缺乏資料</td></tr>
+    <tr><td>住院醫師 BERRNS 2016<br><span class="sm">MBI-HSS</span></td><td><span class="nb">232/733</span>（31.7%）</td><td>高度倦怠 33.1%；EE 高分 28.3%、DP 17.1%</td><td>相關因子：週工時 <span class="nb">＞60 小時</span>、值班週週末到班</td><td>左列為單變項相關因子，非自陳排序</td></tr>
+    <tr><td>住院醫師滿意度 2016<br><span class="sm">自編問卷</span></td><td>215（29.3%）</td><td>75.6% 認為可平衡；69.7% 願重選同計畫</td><td>高年資不滿或與就業市場相關（作者推測）</td><td>自編問卷，非標準倦怠量表</td></tr>
+    <tr><td>住院醫師 2022<br><span class="sm">自陳頻率</span></td><td>回覆率 <b class="no">11.1%</b></td><td>59% 每月數次倦怠；6% 每日</td><td>就業市場、生育力、生活成本</td><td><b>會議摘要</b>＋極低回覆率，雙重降級</td></tr>
+    <tr><td>主治 Shanafelt 2023<br><span class="sm">MBI</span></td><td>RO 子群 <b class="no nb">n = 51</b></td><td>47.9% 至少一項症狀（2011 以來最高）；WLI 滿意 <span class="nb">28.9% 對 2020 年 53.8%</span>（p=0.02）</td><td>未識別——原文自承樣本過小無法分析</td><td>樣本過小，估計不穩定</td></tr>
+    <tr><td>主治 2012 Workforce<br><span class="sm">10 點 Likert</span></td><td><span class="nb">1,047/3,618</span>（29%）</td><td>約半數 always／often／occasionally；年會診量與頻率<span class="nb">正相關</span></td><td>文件負擔、給付下降、病人保險（前三）</td><td>2017／2023 報告未再納入倦怠題項，縱貫斷鏈</td></tr>
+    <tr><td><b>科主任</b> 2012<br><span class="sm">MBI-HSS</span></td><td>回覆率 76%</td><td>75% 中度倦怠；25% 考慮兩年內<span class="nb">卸任</span></td><td>預算赤字、師資招募與留任</td><td>回覆率較高，惟 2012 年、限學術科主任；切點不一致見 §1</td></tr>
+    <tr><td><b>計畫主持人</b> 2015<br><span class="sm">MBI</span></td><td>回覆率 53%</td><td>89% 中／高度倦怠；85% 預計任職 <span class="nb">＜5 年</span></td><td>認證要求、行政職務、住院醫師士氣</td><td>保護時間<b>與較低 EE 相關</b>（橫斷面，非因果）</td></tr>
+  </table>
+  <div class="call pt"><span class="l">結論：</span>兩項領導職調查均顯示相當程度的倦怠訊號，壓力源一致集中於<b>預算、人事、認證與行政責任</b>；配置行政保護時間與較低 EE 相關。惟缺乏對照組與多變項分析，尚不能確認領導職本身為獨立危險因子。</div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">3</span>跨職類團隊與流失循環</div>
+  <div class="grid2">
+    <div class="card"><h4>各職類訊號</h4>
+      <ul>
+        <li>腫瘤護理：文獻最高 62%；RO 單機構 41%</li>
+        <li>放射治療師：職缺率 <span class="nb">＞13%</span>；56.9% 每月數次感到不被重視；約 25% 離職者列倦怠為原因</li>
+        <li>醫學物理師（AAPM 會員）：<span class="nb">339/1,962（回覆率 17%）</span>，59.9% <span class="nb">至少一域高分</span>；含 RO 工作者，非純放腫物理師盛行率</li>
+        <li>單機構：物理師 36%、劑量師 41%</li>
+      </ul>
+    </div>
+    <div class="card"><h4>惡性循環（作者概念模型）</h4>
+      <p class="body" style="margin:2px 0;">任一職類流失 → 工作轉移至其餘成員 → 系統性工作量上升 → 更多倦怠 → 再流失。<b>單一職類的留任問題是全團隊的風險</b>，不是該職類自己的問題。</p>
+      <p class="sm" style="margin-top:6px;">此為論述性框架，非縱貫資料驗證。</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">4</span>性別不平等</div>
+  <div class="lead">2017–18 女性住院醫師調查（<span class="nb">n = 125</span>，回覆率 74%，品質尚可）：僅 5% 無任何倦怠症狀；51% 缺 mentorship、52% 感受性別偏見、27% 曾受不當性言語；僅 52% 同意放腫是「家庭友善」專科。教職層級：女性較少感受到公平的職涯機會、薪資、領導職與發言重視；因家庭減量工作後更易被期待補做並被視為投入不足。</div>
+  <div class="call key"><span class="l">隱形勞務陷阱：</span>學術科部 61% 已設 wellness leader，其中 <b>70.6% 為女性</b>，且此類工作常未獲額外補償、也未正式納入升等與晉升評價——立意良善的 wellness 建置可能反向再製性別負擔。本院設置類似角色時，<b>應配置明確工時、職務補償或納入績效與升遷評價</b>。</div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">5</span>結構性成因：哪些可外推、哪些不可</div>
+  <div class="grid2">
+    <div class="card"><h4>美國制度特有（不可直接外推）</h4>
+      <ul>
+        <li>Medicare RO 專科 code 給付 2010–2020 調整後<b>下降 29%</b> → RVU 目標上調 → 工時上升（論述串接，非單一研究證明之因果）</li>
+        <li>Prior authorization 行政負擔</li>
+        <li>生產力計酬與 hypofractionation／radiation omission 的誘因衝突 → moral injury</li>
+        <li>住院醫師 match 名額縮減與就業市場焦慮</li>
+      </ul>
+    </div>
+    <div class="card"><h4>機制層可參考（不依賴美國給付制度）</h4>
+      <ul>
+        <li>EHR 侵入下班時間：2019–2022 訊息量 +19%、病人發起 +34%、總時數 +16%、<b class="nb">非典型工時工作 +12%</b>（多門診腫瘤專科合併資料，非 RO 子群）</li>
+        <li>文件與重複輸入負擔</li>
+        <li>領導職行政超載且無保護時間</li>
+        <li>跨職類人力缺口的連鎖轉嫁</li>
+        <li>遠距工作（居家勾畫、訊息處理）不必然改善<span class="nb">生活品質</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="call cf"><span class="l">證據邊界：</span>COVID-19 段落的定位是「放大既有脆弱性」而非成因。本回顧<b>設計上僅納入美國研究</b>，故未提供台灣或亞洲 RO 團隊資料——這不代表相關研究不存在；本院引用任何盛行率時應註明為美國資料，如需在地數據應另行檢索台灣與亞洲文獻或執行本院員工調查。</div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">6</span>介入證據（Stanford 三域模型）</div>
+  <div class="lead">作者立場：三域須同時處理，制度性因素優先於個人調適。只提供正念課程而不處理人力、工時與行政負擔，等於把制度問題歸責於個人。</div>
+  <table>
+    <thead><tr><th style="width:17%;">域</th><th>介入項目</th><th style="width:38%;">證據等級</th></tr></thead>
+    <tr><td><b>組織文化</b></td><td>領導示範界線、完整休假、彈性排班、心理求助正常化、mentorship、Balint group、Radiation Reflection Rounds</td><td>RRR：6 院區 269 人參與、<span class="nb">106 人回覆（39%）</span>評分 <span class="nb">≥4.1/5</span>——證明可行與接受度，<b>未證明降低 MBI 或離職率</b></td></tr>
+    <tr><td><b>工作效率</b></td><td>標準化模板、語音辨識、EHR 訓練、AI scribe、AI 勾畫、授權非核心工作、穩定團隊、APP 與助理職</td><td>EHR 訓練 pilot 僅 6 人（估每年省 37 小時）；AI scribe 為 <b>medRxiv preprint</b> 未經 peer review；AI 勾畫須同步處理驗證、QA 與覆核時間，否則只是換一種檢查工作</td></tr>
+    <tr><td><b>個人韌性</b></td><td>正念、壓力管理、運動、保密諮商、專業教練、sacred moments 反思</td><td>正念與倦怠負相關（單機構、單變項）；coaching 為 pilot 會議摘要；sacred moments 為 <span class="nb">n = 13</span> 質性研究——均屬探索性、觀察性、質性或先導研究，尚不足以證明介入效果</td></tr>
+  </table>
+  <div class="call pt"><span class="l">給付政策層：</span>ASTRO ROCR（case rate）被提出以矯正「高療程量才有收入」的誘因錯置，惟其對醫師福祉之長期效果尚無資料。此層與台灣健保支付制度討論的對應概念為包裹式支付，屬政策參考而非本院可直接行動項。</div>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">7</span>本院應用</div>
+  <p class="body">這篇可用的是<b>框架而非數字</b>：職涯連續體視角（風險不是均勻分布，領導職與訓練期各有高峰）、三域介入模型、wellness 無給勞務的性別陷阱、跨職類流失循環。部門年度品質檢討時，以附錄檢核表的結構性指標取代「辦了幾場紓壓活動」作為監測面向（wellness 職務之補償與認列見 §4）。</p>
+</div>
+
+<div class="sec">
+  <div class="sh"><span class="n">附</span>部門倦怠風險監測指標</div>
+  <table style="margin-bottom:11px;">
+    <thead><tr><th style="width:16%;">頻率</th><th>指標</th></tr></thead>
+    <tr><td><b>每月–每季</b></td><td>各職類缺員率與離職率　·　跨院區支援頻率　·　未休完特休比例　·　下班後 EHR／勾畫工時（抽樣估計）　·　人均新診與治療量趨勢　·　病假、加班與臨時代班趨勢</td></tr>
+    <tr><td><b>每半年</b></td><td>心理安全感與「感到被重視」調查　·　工作量可負荷性　·　<b>離職意向</b>（不只已發生的離職率）</td></tr>
+    <tr><td><b>每年</b></td><td>重複輸入／可授權工作盤點　·　醫師非臨床行政工時比例　·　科主任與教學負責人保護時間　·　wellness 職務之補償與升遷認列　·　wellness 職務性別分布　·　mentorship 涵蓋各職類與性別</td></tr>
+  </table>
+  <div class="card"><h4>執行原則</h4>
+    <ul class="chk">
+      <li>調查一律匿名並設<b>最低群組人數</b>；本院團隊規模小，不細分職類報分數（人數過少可反推個人），採全團隊彙總或由院級單位保管原始資料</li>
+      <li>非預期事件與 near miss 檢討時，納入人力負荷因素之判讀</li>
+      <li>離職面談納入倦怠因素紀錄；心理諮商管道保密且可近</li>
+    </ul>
+  </div>
+  <div class="card refs"><h4>出處與延伸閱讀</h4>
+    <ul>
+      <li><b>本文依據：</b>Igwe T, Huang D, Amoateng EJ, et al. Burnout among U.S. radiation oncologists and suggested interventions—a narrative review. <i>Int J Radiat Oncol Biol Phys.</i> 2026（Pre-proof）. <span class="nb">DOI 10.1016/j.ijrobp.2026.07.054</span></li>
+      <li><b>§2 住院醫師：</b>Ramey SJ, et al. <i>IJROBP</i> 2017;99:530-538（BERRNS）；Small CJ, et al. <i>IJROBP</i> 2023;117(S):e544-e545（會議摘要）</li>
+      <li><b>§2 主治：</b>Shanafelt TD, et al. <i>Mayo Clin Proc</i> 2025;100:1142-1158；Pohar S, et al. <i>IJROBP</i> 2013;87:1135-1140</li>
+      <li><b>§2 領導職：</b>Kusano AS, et al. <i>IJROBP</i> 2014;88:363-368；Aggarwal S, et al. <i>IJROBP</i> 2015;93:746-753</li>
+      <li><b>§3 物理師：</b>Schofield D, et al. <i>J Appl Clin Med Phys</i> 2025;26:e70121</li>
+      <li><b>§4 性別：</b>Osborn VW, et al. <i>IJROBP</i> 2019;104:999-1008；Keenan BP, et al. <i>The Oncologist</i> 2023;29:e351-e359</li>
+      <li><b>§5 EHR：</b>Holmgren AJ, et al. <i>JNCI</i> 2025;117:1253-1259</li>
+      <li><b>§6 介入：</b>Hopkins B, et al. <i>Pract Radiat Oncol</i> 2025;15:e315-e318（RRR）；Lukac PJ, et al. medRxiv 2025（preprint）；Saint K, et al. <i>Adv Radiat Oncol</i> 2024;9:101617</li>
+    </ul>
+    <p class="sm">製表：放射腫瘤科　·　整理日期 2026-08-24（原回顧檢索範圍 2010/1–2025/8）　·　本筆記數字均出自上列原始文獻於 Igwe 回顧中之引述；正式引用前應回溯原始文獻並確認 Igwe 定稿版。</p>
+  </div>
+</div>
+
+</body>
+</html>
