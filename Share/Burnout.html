@@ -13,6 +13,7 @@
     @bottom-right { content: counter(page) " / " counter(pages);
       font-family: "Noto Sans CJK TC"; font-size: 7.2pt; letter-spacing: 1.4px; color: #7d97a8; }
   }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
          font-size: 10pt; line-height: 1.66; color: #1f2933;
@@ -102,13 +103,17 @@
   }
   @media screen and (max-width: 720px) {
     body { max-width: none; margin: 0; padding: 20px 16px 40px; border-radius: 0; box-shadow: none; font-size: 11pt; }
+    body { word-break: normal; }
     .sec { overflow-x: auto; }
-    table { min-width: 620px; }
+    table.wide { min-width: 620px; }
     /* 窄螢幕：解除列印版斷行保護，避免長字串凸出容器 */
     body { word-break: normal; }
     .nb { white-space: normal; }
     .h-note, .refs, .sm { overflow-wrap: anywhere; }
     .hero h1 { letter-spacing: 2px; }
+    .h-top { flex-wrap: wrap; row-gap: 2px; }
+    .h-ser { letter-spacing: 1.2px; }
+    .h-no { letter-spacing: 1px; }
     .h-en { display: block; margin-left: 0; margin-top: 4px; }
     .hero .h-rail { padding: 14px 14px 15px; }
     .hero h1 { font-size: 15pt; }
@@ -150,7 +155,7 @@
 
 <div class="sec">
   <div class="sh"><span class="n">2</span>職涯連續體盛行率（各列切點不同，禁止橫向比較）</div>
-  <table>
+  <table class="wide">
     <thead><tr><th style="width:14%;">族群／調查</th><th style="width:12%;">樣本與回覆率</th><th style="width:25%;">主要數字</th><th style="width:19%;">主要壓力源</th><th>研究限制／解讀注意</th></tr></thead>
     <tr><td><b>醫學生</b><br><span class="sm">綜述</span></td><td>—</td><td>40–50%（全體美國醫學生）</td><td>長工時、低自主性、學貸、社會支持不足</td><td>放腫意向學生之專屬盛行率原文明言缺乏資料</td></tr>
     <tr><td>住院醫師 BERRNS 2016<br><span class="sm">MBI-HSS</span></td><td><span class="nb">232/733</span>（31.7%）</td><td>高度倦怠 33.1%；EE 高分 28.3%、DP 17.1%</td><td>相關因子：週工時 <span class="nb">＞60 小時</span>、值班週週末到班</td><td>左列為單變項相關因子，非自陳排序</td></tr>
@@ -215,7 +220,7 @@
 <div class="sec">
   <div class="sh"><span class="n">6</span>介入證據（Stanford 三域模型）</div>
   <div class="lead">作者立場：三域須同時處理，制度性因素優先於個人調適。只提供正念課程而不處理人力、工時與行政負擔，等於把制度問題歸責於個人。</div>
-  <table>
+  <table class="wide">
     <thead><tr><th style="width:17%;">域</th><th>介入項目</th><th style="width:38%;">證據等級</th></tr></thead>
     <tr><td><b>組織文化</b></td><td>領導示範界線、完整休假、彈性排班、心理求助正常化、mentorship、Balint group、Radiation Reflection Rounds</td><td>RRR：6 院區 269 人參與、<span class="nb">106 人回覆（39%）</span>評分 <span class="nb">≥4.1/5</span>——證明可行與接受度，<b>未證明降低 MBI 或離職率</b></td></tr>
     <tr><td><b>工作效率</b></td><td>標準化模板、語音辨識、EHR 訓練、AI scribe、AI 勾畫、授權非核心工作、穩定團隊、APP 與助理職</td><td>EHR 訓練 pilot 僅 6 人（估每年省 37 小時）；AI scribe 為 <b>medRxiv preprint</b> 未經 peer review；AI 勾畫須同步處理驗證、QA 與覆核時間，否則只是換一種檢查工作</td></tr>
