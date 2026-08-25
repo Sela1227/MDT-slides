@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代購 畫面配置稿</title>
+<style>
+  :root{--s50:#FAF6EF;--s100:#F3EBDD;--s200:#E8D9C0;--s300:#DCC8A6;--s500:#C9A977;--s700:#8A6A38;--s800:#5B4733;
+        --green:#15803d;--green-bg:#dcfce7;--amber:#b45309;--rose:#be123c;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:#EBE4D6;color:var(--s800);padding:22px 12px 70px;}
+  .wrap{max-width:430px;margin:0 auto;}
+  h1{font-size:19px;margin:2px 0 4px;}
+  .sub{font-size:12.5px;color:rgba(91,71,51,.6);margin:0 0 8px;line-height:1.6;}
+  .step{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;margin:26px 0 4px;}
+  .step span{background:var(--s800);color:#fff;font-size:11px;padding:3px 9px;border-radius:999px;flex-shrink:0;}
+  .note{font-size:12px;color:rgba(91,71,51,.6);margin:0 0 10px;line-height:1.55;}
+  .phone{background:var(--s50);border:1px solid var(--s200);border-radius:20px;padding:13px;box-shadow:0 2px 10px rgba(65,51,31,.07);}
+  .card{background:#fff;border:1px solid var(--s100);border-radius:14px;box-shadow:0 1px 2px rgba(65,51,31,.04);}
+  .icon{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .muted{color:rgba(91,71,51,.5);}
+  .pin{position:absolute;background:var(--rose);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;box-shadow:0 1px 4px rgba(0,0,0,.2);white-space:nowrap;z-index:2;}
+  .btn-p{background:var(--s800);color:#fff;border:none;border-radius:12px;min-height:42px;padding:0 16px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:5px;}
+  .btn-s{background:var(--s100);color:var(--s800);border:none;border-radius:11px;min-height:34px;padding:0 12px;font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;}
+  .cat{display:flex;flex-direction:column;align-items:center;gap:4px;border:1.5px solid var(--s300);border-radius:13px;padding:11px 4px;font-size:12.5px;color:var(--s800);background:#fff;flex:1;}
+  .cat.on{background:var(--s800);border-color:var(--s800);color:#fff;}
+  .inp{border:1px solid var(--s300);border-radius:10px;padding:8px 11px;background:#fff;font-size:13.5px;color:var(--s800);}
+  .tool{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;color:var(--s700);background:var(--s50);border:1px solid var(--s100);border-radius:12px;padding:10px 4px;}
+  .menu-item{display:flex;justify-content:space-between;align-items:flex-start;background:var(--s50);border-radius:11px;padding:11px 12px;font-size:13.5px;margin-bottom:7px;gap:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>代購・畫面與按鈕配置</h1>
+  <p class="sub">核心：代購團＝團主自己的菜單。品項備齊前後都能加能改（已送出訂單吃快照、不受影響）。上限／折扣／收款明細／候補等既有功能<b>全部通用</b>。</p>
+
+  <!-- ① 開團 -->
+  <div class="step"><span>1</span>開團：類別多一顆「代購」，不用選店家</div>
+  <p class="note">選了代購，店家選單消失，換成一行提示。其餘欄位（截止、上限、候補…）照舊。</p>
+  <div class="phone">
+    <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:rgba(91,71,51,.8);">類別</div>
+    <div style="position:relative;">
+      <span class="pin" style="top:-9px;right:0;">新增</span>
+      <div style="display:flex;gap:8px;">
+        <div class="cat"><svg class="icon"><path d="M7 8h10l-1.5 12h-7z M8 8V6a4 4 0 0 1 8 0v2"/></svg>飲料</div>
+        <div class="cat"><svg class="icon"><path d="M5 11h14l-1.5 7h-11zM5 11a7 7 0 0 1 14 0"/></svg>餐點</div>
+        <div class="cat"><svg class="icon"><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/><path d="M4 5h2l2.2 10h9.6L20 8H7"/></svg>團購</div>
+        <div class="cat on"><svg class="icon"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg>代購</div>
+      </div>
+    </div>
+    <div style="background:var(--s100);border-radius:11px;padding:9px 12px;font-size:12.5px;color:rgba(91,71,51,.75);margin-top:10px;">
+      <svg class="icon" style="vertical-align:-3px;"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 7.5v.5"/></svg>
+      代購由你自訂品項與價格——開團後進團按「管理品項」新增，加好再分享連結
+    </div>
+  </div>
+
+  <!-- ② 管理品項 -->
+  <div class="step"><span>2</span>團主：工具多「管理品項」→ 底部視窗（新增／改／下架）</div>
+  <p class="note">位置在團主工具第一顆（代購團才出現）。上方新增表單、下方現有品項列表；改＝點品項展開同一表單。</p>
+  <div class="phone">
+    <div class="card" style="padding:10px 12px;margin-bottom:10px;">
+      <div style="font-size:12.5px;font-weight:600;color:rgba(91,71,51,.8);margin-bottom:8px;">團主工具</div>
+      <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">
+        <span class="pin" style="top:-8px;left:2px;">新增・代購團限定</span>
+        <div class="tool" style="border-color:var(--s800);border-width:1.5px;"><svg class="icon"><path d="M4 6h16M4 12h16M4 18h10"/></svg>管理品項</div>
+        <div class="tool"><svg class="icon"><path d="M9 12a4 4 0 0 1 4-4h3a4 4 0 0 1 0 8h-1"/><path d="M15 12a4 4 0 0 1-4 4H8a4 4 0 0 1 0-8h1"/></svg>複製連結</div>
+        <div class="tool"><svg class="icon"><rect x="4" y="4" width="7" height="7" rx="1.4"/><rect x="13" y="13" width="7" height="7" rx="1.4"/><rect x="13" y="4" width="7" height="7" rx="1.4"/><rect x="4" y="13" width="7" height="7" rx="1.4"/></svg>QR Code</div>
+      </div>
+    </div>
+    <div class="card" style="padding:13px;border-radius:16px 16px 12px 12px;">
+      <div style="display:flex;justify-content:center;margin-bottom:6px;"><div style="width:36px;height:4px;border-radius:99px;background:var(--s200);"></div></div>
+      <div style="font-weight:700;margin-bottom:10px;">管理品項</div>
+      <div style="background:var(--s50);border-radius:12px;padding:10px;margin-bottom:12px;">
+        <div style="display:flex;gap:7px;margin-bottom:7px;">
+          <span class="inp" style="flex:1;color:rgba(91,71,51,.4);">品名（例：草莓大福）</span>
+          <span class="inp" style="width:76px;color:rgba(91,71,51,.4);">$ 價格</span>
+        </div>
+        <span class="inp" style="display:block;color:rgba(91,71,51,.4);margin-bottom:8px;">說明（選填，例：6 入一盒）</span>
+        <button class="btn-p" style="width:100%;min-height:38px;"><svg class="icon"><path d="M12 5v14M5 12h14"/></svg>新增品項</button>
+      </div>
+      <div class="menu-item">
+        <div><b>草莓大福</b><div class="muted" style="font-size:11.5px;margin-top:2px;">6 入一盒</div></div>
+        <div style="display:flex;align-items:center;gap:6px;"><b>$180</b>
+          <span class="btn-s">改</span><span class="btn-s" style="color:var(--rose);background:#fdf2f4;">下架</span></div>
+      </div>
+      <div class="menu-item">
+        <div><b>芋泥布丁</b></div>
+        <div style="display:flex;align-items:center;gap:6px;"><b>$65</b>
+          <span class="btn-s">改</span><span class="btn-s" style="color:var(--rose);background:#fdf2f4;">下架</span></div>
+      </div>
+      <p class="muted" style="font-size:11px;margin:6px 0 0;">改價／下架不影響已送出的訂單（吃快照）</p>
+    </div>
+  </div>
+
+  <!-- ③ 團員視角 -->
+  <div class="step"><span>3</span>團員：看到的就是一般點餐畫面，零學習成本</div>
+  <p class="note">品項列表多一行「說明」；點品項開既有的簡化下單視窗（數量＋備註）。上限提醒、候補、收款照舊。</p>
+  <div class="phone">
+    <div style="font-size:12px;font-weight:700;color:rgba(91,71,51,.55);margin-bottom:7px;">品項</div>
+    <div class="menu-item"><div><b>草莓大福</b><div class="muted" style="font-size:11.5px;margin-top:2px;">6 入一盒</div></div><b>$180</b></div>
+    <div class="menu-item"><div><b>芋泥布丁</b></div><b>$65</b></div>
+    <div class="card" style="padding:12px;margin-top:10px;">
+      <b style="font-size:15px;">草莓大福</b><span class="muted" style="font-size:12px;">・$180</span>
+      <div style="display:flex;align-items:center;gap:10px;margin:10px 0;">
+        <span style="width:34px;height:34px;border-radius:99px;background:var(--s100);display:inline-flex;align-items:center;justify-content:center;">−</span><b>1</b>
+        <span style="width:34px;height:34px;border-radius:99px;background:var(--s100);display:inline-flex;align-items:center;justify-content:center;">+</span>
+        <span class="inp" style="flex:1;color:rgba(91,71,51,.4);font-size:12px;">備註（選填）</span>
+      </div>
+      <button class="btn-p" style="width:100%;">加入購物車</button>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:20px;">技術面（不影響你看到的畫面）：系統自動幫團主建隱藏的「個人店家」＋每團一份自訂菜單，店家列表／後台／推薦／熱門全部過濾個人店家。</p>
+</div>
+</body>
+</html>
