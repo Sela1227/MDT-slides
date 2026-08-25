@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>缺貨候補 畫面配置稿</title>
+<style>
+  :root{--s50:#FAF6EF;--s100:#F3EBDD;--s200:#E8D9C0;--s300:#DCC8A6;--s500:#C9A977;--s700:#8A6A38;--s800:#5B4733;
+        --green:#15803d;--green-bg:#dcfce7;--amber:#b45309;--amber-bg:#fef3c7;--rose:#be123c;--rose-bg:#fdf2f4;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:#EBE4D6;color:var(--s800);padding:22px 12px 70px;}
+  .wrap{max-width:430px;margin:0 auto;}
+  h1{font-size:19px;margin:2px 0 4px;}
+  .sub{font-size:12.5px;color:rgba(91,71,51,.6);margin:0 0 20px;line-height:1.6;}
+  .step{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;margin:26px 0 4px;}
+  .step span{background:var(--s800);color:#fff;font-size:11px;padding:3px 9px;border-radius:999px;flex-shrink:0;}
+  .note{font-size:12px;color:rgba(91,71,51,.6);margin:0 0 10px;line-height:1.55;}
+  .phone{background:var(--s50);border:1px solid var(--s200);border-radius:20px;padding:13px;box-shadow:0 2px 10px rgba(65,51,31,.07);}
+  .card{background:#fff;border:1px solid var(--s100);border-radius:15px;box-shadow:0 1px 2px rgba(65,51,31,.04);}
+  .icon{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .muted{color:rgba(91,71,51,.5);}
+  .pin{position:absolute;background:var(--rose);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;box-shadow:0 1px 4px rgba(0,0,0,.2);white-space:nowrap;}
+  .chip-bk{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;background:var(--s50);border:1px dashed var(--s300);color:var(--s700);border-radius:999px;padding:3px 9px;}
+  .btn-add-bk{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--s700);border:1.5px dashed var(--s300);border-radius:999px;padding:5px 11px;background:transparent;}
+  .btn-p{background:var(--s800);color:#fff;border:none;border-radius:12px;min-height:42px;padding:0 16px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;flex:1;}
+  .btn-s{background:var(--s100);color:var(--s800);border:none;border-radius:12px;min-height:42px;padding:0 14px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;}
+  .seg{display:inline-flex;background:var(--s100);border-radius:10px;padding:3px;gap:2px;}
+  .seg b{padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;color:rgba(91,71,51,.55);}
+  .seg b.on{background:var(--s800);color:#fff;}
+  .menu-item{display:flex;justify-content:space-between;align-items:center;background:var(--s50);border-radius:11px;padding:11px 12px;font-size:13.5px;margin-bottom:7px;}
+  pre{background:#fff;border:1px solid var(--s100);border-radius:13px;padding:13px;font-size:11.5px;line-height:1.7;overflow-x:auto;color:var(--s800);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>缺貨候補・畫面與按鈕配置</h1>
+  <p class="sub">紅色小標＝這次新增的按鈕/元素位置。畫面 3 可以實際點按走流程。</p>
+
+  <!-- ① 團主設定 -->
+  <div class="step"><span>1</span>團主設定（開團表單／修改設定，同一款）</div>
+  <p class="note">放在「每單上限」正下方——同屬帳務/規則區。開關打開才浮出候補數。</p>
+  <div class="phone">
+    <div style="font-size:13px;font-weight:600;margin-bottom:6px;color:rgba(91,71,51,.8);">每單金額上限（選填）</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+      <span class="muted">$</span><span style="border:1px solid var(--s300);border-radius:10px;padding:7px 12px;background:#fff;width:90px;">140</span>
+    </div>
+    <div style="position:relative;">
+      <span class="pin" style="top:-9px;right:0;">新增</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(91,71,51,.8);">缺貨候補</div>
+          <div class="muted" style="font-size:11.5px;">讓大家為品項填候補，臨時沒貨照候補買</div>
+        </div>
+        <div style="width:44px;height:26px;border-radius:99px;background:var(--s800);position:relative;"><div style="width:20px;height:20px;border-radius:99px;background:#fff;position:absolute;top:3px;right:3px;"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="muted" style="font-size:12.5px;">每個品項最多可填</span>
+        <span class="seg"><b>1</b><b class="on">2</b><b>3</b></span>
+        <span class="muted" style="font-size:12.5px;">個候補</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 購物車入口 -->
+  <div class="step"><span>2</span>購物車：候補入口在「品項客製列下方」</div>
+  <p class="note">虛線圓角小鈕，明顯是「選填的附加動作」，不搶主流程。只在團有開候補＋訂單可編輯時出現。</p>
+  <div class="phone">
+    <div class="card" style="padding:13px;">
+      <div style="display:flex;justify-content:space-between;font-size:14px;">
+        <div>
+          <div style="font-weight:600;">波霸紅茶（L）</div>
+          <div class="muted" style="font-size:12px;margin-top:2px;">半糖/少冰 <span style="background:var(--s100);border-radius:5px;padding:1px 6px;font-size:11px;">+珍珠</span></div>
+        </div>
+        <b>$50</b>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:9px;">
+        <span style="width:32px;height:32px;border-radius:99px;background:var(--s100);display:inline-flex;align-items:center;justify-content:center;">−</span>
+        <b style="font-size:13px;">1</b>
+        <span style="width:32px;height:32px;border-radius:99px;background:var(--s100);display:inline-flex;align-items:center;justify-content:center;">+</span>
+        <svg class="icon" style="margin-left:auto;color:#e8837c;"><path d="M5 7h14M9 7V5h6v2m-8 0l1 12h8l1-12"/></svg>
+      </div>
+      <div style="position:relative;margin-top:10px;">
+        <span class="pin" style="top:-8px;left:118px;">新增</span>
+        <button class="btn-add-bk"><svg class="icon" style="width:13px;height:13px;"><path d="M12 5v14M5 12h14"/></svg> 缺貨候補（0/2）</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 候補模式（互動）-->
+  <div class="step"><span>3</span>候補模式：點入口 → 頂部提示條 → 點菜單（可實際點按）</div>
+  <p class="note">進入候補模式後購物車自動收合，<b>提示條釘在畫面頂端</b>（跟著捲動），點菜單任何品項就是在選候補；右側「取消」隨時退出。</p>
+  <div class="phone" x-ignore id="demo3">
+    <div id="bk-banner" style="display:none;background:var(--s800);color:#fff;border-radius:12px;padding:9px 12px;font-size:12.5px;margin-bottom:10px;align-items:center;gap:8px;">
+      <svg class="icon" style="color:#fff;"><path d="M9 12a4 4 0 0 1 4-4h3M15 12a4 4 0 0 1-4 4H8"/></svg>
+      <span>正在為「波霸紅茶」選 <b>候補 1</b>・點選下方菜單品項</span>
+      <span style="margin-left:auto;text-decoration:underline;cursor:pointer;" onclick="bkExit()">取消</span>
+    </div>
+    <button id="bk-start" class="btn-add-bk" style="margin-bottom:10px;" onclick="bkStart()"><svg class="icon" style="width:13px;height:13px;"><path d="M12 5v14M5 12h14"/></svg> 缺貨候補（0/2）　← 點我試流程</button>
+    <div style="font-size:12px;font-weight:700;color:rgba(91,71,51,.55);margin-bottom:7px;">菜單・青茶系列</div>
+    <div class="menu-item" onclick="bkPick(this)" style="cursor:pointer;"><span>青草茶</span><b>$35</b></div>
+    <div class="menu-item" onclick="bkPick(this)" style="cursor:pointer;"><span>冬瓜青茶</span><b>$40</b></div>
+    <div id="bk-sheet" style="display:none;margin-top:10px;border-top:2px dashed var(--s300);padding-top:10px;">
+      <div style="background:#fff;border-radius:16px 16px 12px 12px;border:1px solid var(--s100);padding:13px;">
+        <div style="display:flex;justify-content:center;margin-bottom:6px;"><div style="width:36px;height:4px;border-radius:99px;background:var(--s200);"></div></div>
+        <div style="position:relative;">
+          <span class="pin" style="top:-4px;right:0;">標題變化</span>
+          <div style="font-size:11.5px;color:var(--s700);background:var(--s50);border-radius:8px;padding:5px 9px;display:inline-block;margin-bottom:6px;">候補 1・「波霸紅茶」缺貨時改買</div>
+        </div>
+        <div style="font-weight:700;font-size:16px;" id="bk-item-name">青草茶</div>
+        <div style="display:flex;gap:6px;margin:10px 0;">
+          <span style="border:1px solid var(--s300);border-radius:99px;padding:6px 14px;font-size:12.5px;background:var(--s800);color:#fff;">半糖</span>
+          <span style="border:1px solid var(--s300);border-radius:99px;padding:6px 14px;font-size:12.5px;">微糖</span>
+          <span style="border:1px solid var(--s300);border-radius:99px;padding:6px 14px;font-size:12.5px;">無糖</span>
+        </div>
+        <div class="muted" style="font-size:11.5px;margin-bottom:10px;">（糖冰尺寸加料全部照常可選——同一個客製視窗）</div>
+        <div style="position:relative;display:flex;gap:8px;">
+          <span class="pin" style="top:-9px;right:8px;">按鈕文案變化</span>
+          <button class="btn-s" style="flex:1;" onclick="bkExit()">取消</button>
+          <button class="btn-p" onclick="bkDone()">設為候補 1</button>
+        </div>
+      </div>
+    </div>
+    <div id="bk-done" style="display:none;background:var(--green-bg);color:var(--green);border-radius:11px;padding:9px 12px;font-size:12.5px;margin-top:10px;">已設定候補 1：青草茶（見畫面 4）</div>
+  </div>
+
+  <!-- ④ 已填候補的樣子 -->
+  <div class="step"><span>4</span>購物車：已填候補＝品項下方的虛線標籤列（含價差）</div>
+  <p class="note">順位號＋名稱＋糖冰＋<b>價差</b>；點 × 刪除、還有名額就接著顯示「＋候補」。</p>
+  <div class="phone">
+    <div class="card" style="padding:13px;">
+      <div style="display:flex;justify-content:space-between;font-size:14px;">
+        <div>
+          <div style="font-weight:600;">波霸紅茶（L）</div>
+          <div class="muted" style="font-size:12px;margin-top:2px;">半糖/少冰 <span style="background:var(--s100);border-radius:5px;padding:1px 6px;font-size:11px;">+珍珠</span></div>
+        </div>
+        <b>$50</b>
+      </div>
+      <div style="position:relative;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;">
+        <span class="pin" style="top:-9px;right:0;">價差直接標</span>
+        <span class="chip-bk"><b>1</b> 青草茶 半糖/去冰 <span style="color:var(--green);">-$15</span> <svg class="icon" style="width:12px;height:12px;"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+        <span class="chip-bk"><b>2</b> 冬瓜青茶 微糖 <span style="color:var(--amber);">-$10</span> <svg class="icon" style="width:12px;height:12px;"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 收款明細 -->
+  <div class="step"><span>5</span>單據呈現（核對單／收款明細同邏輯）</div>
+  <p class="note">候補縮排列在主品項下；任何訂單有候補時，結尾自動加價差提醒。</p>
+  <pre>☐ 陳小美：$50
+   - 波霸紅茶(L) 半糖/少冰 +珍珠 $50
+     候補1: 青草茶 半糖/去冰 $35（價差 -$15 需退）
+     候補2: 冬瓜青茶 微糖 $40（價差 -$10 需退）
+
+※ 若以候補出貨，請依價差向該員補收/退還</pre>
+
+  <p class="sub" style="margin-top:20px;">按鈕原則：候補一律「虛線樣式」＝選填附加；主流程按鈕（加入購物車/結單）完全不動。</p>
+</div>
+<script>
+function bkStart(){document.getElementById('bk-banner').style.display='flex';document.getElementById('bk-start').style.opacity='.35';}
+function bkPick(el){if(document.getElementById('bk-banner').style.display!=='flex')return;
+  document.getElementById('bk-item-name').textContent=el.querySelector('span').textContent;
+  document.getElementById('bk-sheet').style.display='block';}
+function bkDone(){document.getElementById('bk-sheet').style.display='none';document.getElementById('bk-banner').style.display='none';
+  document.getElementById('bk-start').style.opacity='1';document.getElementById('bk-done').style.display='block';}
+function bkExit(){document.getElementById('bk-sheet').style.display='none';document.getElementById('bk-banner').style.display='none';
+  document.getElementById('bk-start').style.opacity='1';}
+</script>
+</body>
+</html>
