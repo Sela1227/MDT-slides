@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>泌尿腫瘤國際研討會 — 籌辦進度報告 2026/08/28</title>
+<style>
+  :root{
+    --navy:#14364f; --navy-2:#28506e; --gold:#7b6a3f; --gold-line:#b5943c;
+    --cream:#f7efdb; --ink:#1c2430; --ink-2:#4a5866; --ink-3:#828d99;
+    --line:#dde3e9; --ok:#2e6f52; --warn:#9a6f18; --stop:#9c463a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%; overflow:hidden; background:#0d1c28;}
+  body{
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    color:var(--ink); line-height:1.6;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  #viewport{position:relative; width:100%; height:100%; overflow:hidden;}
+  #stageWrap{
+    position:absolute; left:50%; top:50%; transform-origin:center center;
+    width:1280px; height:720px; margin:-360px 0 0 -640px;
+  }
+  .slide{
+    position:absolute; top:0; right:0; bottom:0; left:0; background:#fff;
+    padding:44px 58px 34px; display:none; flex-direction:column;
+  }
+  .slide.active{display:flex;}
+
+  /* ---------- slide chrome ---------- */
+  .rule{height:4px; background:var(--navy); margin:-44px -58px 0; }
+  .eyebrow{
+    font-size:12px; letter-spacing:3px; color:var(--gold);
+    font-weight:600; margin:20px 0 7px;
+  }
+  h2{
+    font-size:27px; color:var(--navy); font-weight:700; letter-spacing:.5px;
+    line-height:1.25;
+  }
+  .lede{font-size:14px; color:var(--ink-3); margin-top:7px;}
+  .body{flex:1; margin-top:18px; min-height:0;}
+  .pagenum{
+    position:absolute; right:58px; bottom:22px;
+    font-size:12px; color:var(--ink-3); letter-spacing:1.5px;
+  }
+  .slug{
+    position:absolute; left:58px; bottom:22px;
+    font-size:12px; color:var(--ink-3); letter-spacing:1px;
+  }
+
+  /* ---------- cover ---------- */
+  .cover{justify-content:center; padding:0 78px;}
+  .cover .eyebrow{font-size:13px; letter-spacing:4px; margin:0 0 20px;}
+  .cover h1{
+    font-size:46px; line-height:1.28; color:var(--navy);
+    font-weight:700; letter-spacing:1.5px;
+  }
+  .cover .en{
+    font-size:16px; color:var(--ink-2); margin-top:14px; letter-spacing:.4px;
+  }
+  .cover .bar{width:74px; height:4px; background:var(--gold-line); margin:30px 0 26px;}
+  .cover .facts{font-size:16px; color:var(--ink-2); line-height:2;}
+  .cover .facts b{color:var(--navy);}
+  .cover .stamp{
+    position:absolute; right:78px; bottom:64px; text-align:right;
+  }
+  .cover .stamp .d{font-size:13px; color:var(--ink-3); letter-spacing:2px;}
+  .cover .stamp .n{font-size:34px; color:var(--gold); font-weight:700; line-height:1.2;}
+
+  /* ---------- status cards ---------- */
+  .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; height:100%;
+         align-content:start; padding-top:14px;}
+  .card{border:1px solid var(--line); border-top:4px solid var(--navy-2); padding:22px 20px 24px;}
+  .card.done{border-top-color:var(--ok);}
+  .card.doing{border-top-color:var(--gold-line);}
+  .card .lbl{font-size:12px; letter-spacing:2px; color:var(--ink-3);}
+  .card .val{font-size:31px; font-weight:700; color:var(--navy); margin:10px 0 8px; line-height:1.15;}
+  .card .sub{font-size:13.5px; color:var(--ink-2); line-height:1.75;}
+
+  /* ---------- tables ---------- */
+  table{width:100%; border-collapse:collapse; font-size:15px;}
+  thead th{
+    background:var(--navy); color:#fff; font-weight:500; text-align:left;
+    font-size:12.5px; letter-spacing:1.4px; padding:9px 13px;
+  }
+  td{padding:var(--pad,11px) 13px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .t-topic{font-weight:600; color:var(--navy);}
+  .t-sub{font-size:12.5px; color:var(--ink-2); margin-top:3px; line-height:1.55;}
+  .t-time{white-space:nowrap; color:var(--navy); font-weight:600; font-size:14px;}
+  tr.focus td{background:var(--cream);}
+
+  .pill{
+    display:inline-block; padding:2px 9px 3px; border-radius:2px;
+    font-size:12.5px; font-weight:600; white-space:nowrap; border:1px solid;
+  }
+  .p-ok{color:var(--ok); border-color:#a8ccb8; background:#f0f7f3;}
+  .p-go{color:var(--warn); border-color:#e0c88a; background:#fdf7e8;}
+  .p-wait{color:var(--ink-3); border-color:var(--line); background:#f7f8fa;}
+  .p-no{color:var(--stop); border-color:#dcb3ac; background:#fbf1ef;}
+
+  .tnote{font-size:12.5px; color:var(--ink-3); margin-top:12px;}
+
+  /* ---------- gantt ---------- */
+  table.gantt{font-size:12.5px;}
+  table.gantt th{padding:6px 3px; text-align:center; font-size:11px; letter-spacing:0;}
+  table.gantt th.wk-now{background:var(--gold); color:#fff;}
+  table.gantt th:first-child{text-align:left; width:30px; padding-left:10px;}
+  table.gantt th:nth-child(2){text-align:left; width:290px;}
+  table.gantt td{padding:0; border-bottom:1px solid #eef1f4;}
+  table.gantt td.no{padding:4px 6px 4px 10px; color:var(--ink-3); font-size:11.5px;}
+  table.gantt td.task{padding:4px 10px 4px 3px; font-size:12.5px; line-height:1.4;}
+  .cell{height:19px; border-left:1px solid #f2f4f6;}
+  .cell.on{background:#dde8f0;}
+  .cell.now{background:#f5f7f9;}
+  .cell.on.now{background:var(--cream); box-shadow:inset 0 0 0 1px #e2d1a4;}
+
+  /* ---------- budget ---------- */
+  .budget{display:grid; grid-template-columns:1.25fr 1fr; gap:34px;}
+  .money{font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap;}
+  tfoot td{font-weight:700; color:var(--navy); border-top:2px solid var(--navy); border-bottom:none;}
+
+  /* ---------- closing ---------- */
+  .closing{align-items:center; justify-content:center; text-align:center;}
+  .closing .big{font-size:40px; color:var(--navy); font-weight:700; letter-spacing:6px;}
+  .closing .sm{font-size:15px; color:var(--ink-3); margin-top:22px; line-height:2;}
+
+  /* ---------- nav ---------- */
+  #nav{
+    position:fixed; right:20px; bottom:18px; display:flex; align-items:center;
+    gap:12px; z-index:20; font-size:13px; color:#8fa4b5; letter-spacing:1px;
+  }
+  #nav button{
+    width:34px; height:34px; border:1px solid #35516a; background:rgba(255,255,255,.05);
+    color:#c3d3e0; font-size:15px; cursor:pointer; border-radius:2px; line-height:1;
+  }
+  #nav button:hover{background:rgba(255,255,255,.14);}
+  #nav button:focus-visible{outline:2px solid var(--gold-line); outline-offset:2px;}
+  #hint{
+    position:fixed; left:20px; bottom:22px; font-size:12px; 
+    color:#5d7385; letter-spacing:1px; z-index:20;
+  }
+  .zone{position:fixed; top:0; height:100%; width:14%; z-index:10; cursor:pointer;}
+  .zone.l{left:0;} .zone.r{right:0;}
+
+  @media print{
+    @page{size:A4 landscape; margin:8mm;}
+    html,body{overflow:visible; background:#fff; display:block; height:auto;}
+    #viewport{position:static; width:auto; height:auto;}
+    #stageWrap{position:static; width:auto; height:auto; margin:0; transform:none!important;}
+    .slide{position:relative; display:flex!important; height:180mm; width:100%;
+           break-after:page; margin:0 0 4mm;}
+    .cover .stamp{position:absolute; right:20mm; bottom:20mm;}
+    #nav,#hint,.zone{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="viewport">
+<div id="stageWrap">
+
+  <!-- 1 封面 -->
+  <div class="slide cover">
+    <div class="eyebrow">兩院癌醫聯合會議 ── 籌辦進度報告</div>
+    <h1>泌尿腫瘤治療的<br>新角色、新疆界、新未來</h1>
+    <div class="en">International Symposium on Genitourinary Oncology</div>
+    <div class="bar"></div>
+    <div class="facts">
+      <b>2026 年 10 月 31 日（六）</b>　09:00 – 16:00<br>
+      濱秀國際會議廳・彰濱秀傳紀念醫院<br>
+      定位：泌尿道癌為主、放射治療為輔
+    </div>
+    <div class="stamp">
+      <div class="d">距 活 動</div>
+      <div class="n">64 天</div>
+      <div class="d" style="margin-top:14px">報告日 2026 / 08 / 28<br>癌症中心・放射腫瘤科</div>
+    </div>
+  </div>
+
+  <!-- 2 進度總覽 -->
+  <div class="slide">
+    <div class="rule"></div>
+    <div class="eyebrow">O V E R V I E W</div>
+    <h2>進度總覽</h2>
+    <div class="lede">距活動 64 天，前置作業進入第 3 週。</div>
+    <div class="body">
+      <div class="cards">
+        <div class="card done">
+          <div class="lbl">經　費</div>
+          <div class="val">已核准</div>
+          <div class="sub">總預算 NT$ 367,275<br>癌防深耕支應 35,000</div>
+        </div>
+        <div class="card doing">
+          <div class="lbl">講　者</div>
+          <div class="val">3 / 6<br><span style="font-size:16px">已允諾</span></div>
+          <div class="sub">2 席洽談中、1 席待確認<br>1 席婉拒，已啟動改邀</div>
+        </div>
+        <div class="card doing">
+          <div class="lbl">學分申請</div>
+          <div class="val">進行中</div>
+          <div class="sub">泌尿科、放腫科、NP、<br>放射師、護理共 4 學會</div>
+        </div>
+        <div class="card">
+          <div class="lbl">前置作業</div>
+          <div class="val">第 3 週</div>
+          <div class="sub">共 17 項工作項目<br>本週為 8/28 週次</div>
+        </div>
+      </div>
+    </div>
+    <div class="slug">泌尿腫瘤國際研討會・進度報告</div>
+    <div class="pagenum"></div>
+  </div>
+
+  <!-- 3 本期重點 -->
+  <div class="slide">
+    <div class="rule"></div>
+    <div class="eyebrow">W H A T ' S　N E W</div>
+    <h2>本期重點進度</h2>
+    <div class="lede">相較上次報告的變動事項。</div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th style="width:132px">項目</th><th>說明</th><th style="width:120px">狀態</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="t-topic">經費核定</td>
+            <td>總預算 NT$ 367,275 已核准。
+              <div class="t-sub">癌防深耕計畫支應 35,000 元（鐘點費 10,000／餐費 21,000／計程車費 4,000），發票與佐證資料送癌防協助核銷。</div>
+            </td>
+            <td><span class="pill p-ok">已核准</span></td>
+          </tr>
+          <tr>
+            <td class="t-topic">國際講者</td>
+            <td>Dr. I-Chow Hsu（UCSF）── 正在錯開檔期。
+              <div class="t-sub">機票為單項最大支出（預估 150,335 元），檔期一經確認即應優先訂票。</div>
+            </td>
+            <td><span class="pill p-go">檔期協調中</span></td>
+          </tr>
+          <tr>
+            <td class="t-topic">院外講者</td>
+            <td>歐宴泉院長（童綜合）、王紹全主任（中山附醫泌尿科）── 均已允諾。
+              <div class="t-sub">蔡郁棻主任（義大）因路途遙遠婉拒；Ra-223 / Lu-177 場次改邀臺北榮總 魏子鈞醫師，洽談中。</div>
+            </td>
+            <td><span class="pill p-ok">2 席允諾</span></td>
+          </tr>
+          <tr>
+            <td class="t-topic">體系內講者</td>
+            <td>趙梓淵主任（高雄秀傳）── 已允諾；張正雄院長 ── 場次與主題方向待最後確認。
+              <div class="t-sub">最後一席未定，影響會議手冊送印與學分申請送件時程。</div>
+            </td>
+            <td><span class="pill p-wait">1 席待確認</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slug">泌尿腫瘤國際研討會・進度報告</div>
+    <div class="pagenum"></div>
+  </div>
+
+  <!-- 4 講者邀約 -->
+  <div class="slide">
+    <div class="rule"></div>
+    <div class="eyebrow">S P E A K E R S</div>
+    <h2>講者邀約狀況</h2>
+    <div class="lede">6 場專題演講，每場 50 分鐘（含問答）。</div>
+    <div class="body">
+      <table style="--pad:9px">
+        <thead>
+          <tr>
+            <th style="width:112px">時間</th>
+            <th>主題方向</th>
+            <th style="width:262px">講者</th>
+            <th style="width:124px">邀約狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="t-time">09:05–09:55</td>
+            <td><span class="t-topic">Keynote：攝護腺癌近接治療與 UCSF 經驗</span></td>
+            <td>Dr. I-Chow Hsu<div class="t-sub">University of California, San Francisco</div></td>
+            <td><span class="pill p-go">檔期協調中</span></td>
+          </tr>
+          <tr>
+            <td class="t-time">10:10–11:00</td>
+            <td><span class="t-topic">攝護腺癌機械人手術</span></td>
+            <td>歐宴泉 院長<div class="t-sub">童綜合醫院 研發創新中心</div></td>
+            <td><span class="pill p-ok">已允諾</span></td>
+          </tr>
+          <tr>
+            <td class="t-time">11:00–11:50</td>
+            <td><span class="t-topic">泌尿癌的藥物治療</span></td>
+            <td>王紹全 主任<div class="t-sub">中山醫學大學附設醫院 泌尿科</div></td>
+            <td><span class="pill p-ok">已允諾</span></td>
+          </tr>
+          <tr>
+            <td class="t-time">13:00–13:50</td>
+            <td><span class="t-topic">NGS 與免疫療法</span></td>
+            <td>張正雄 院長<div class="t-sub">彰濱秀傳癌症醫院</div></td>
+            <td><span class="pill p-wait">待確認</span></td>
+          </tr>
+          <tr class="focus">
+            <td class="t-time">13:50–14:40</td>
+            <td><span class="t-topic">Ra-223 / Lu-177 於泌尿癌之應用</span>
+              <div class="t-sub">原邀蔡郁棻主任（義大醫院）因路途遙遠婉拒</div>
+            </td>
+            <td>魏子鈞 醫師<div class="t-sub">臺北榮民總醫院</div></td>
+            <td><span class="pill p-no">改邀洽談中</span></td>
+          </tr>
+          <tr>
+            <td class="t-time">15:00–15:50</td>
+            <td><span class="t-topic">放射線治療在泌尿癌</span></td>
+            <td>趙梓淵 主任<div class="t-sub">高雄秀傳紀念醫院 放射腫瘤科</div></td>
+            <td><span class="pill p-ok">已允諾</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tnote">※ 上列為提供講者之主題方向，正式講題待各講者確認後定稿。另含報到、開場、二次中場休息與午餐時段，不在此表列。</div>
+    </div>
+    <div class="slug">泌尿腫瘤國際研討會・進度報告</div>
+    <div class="pagenum"></div>
+  </div>
+
+  <!-- 5 甘特圖 -->
+  <div class="slide">
+    <div class="rule"></div>
+    <div class="eyebrow">T I M E L I N E</div>
+    <h2>前置作業時程</h2>
+    <div class="lede">17 項工作項目，金色欄位為本週（8/28）；學分申請涵蓋泌尿科、放腫科醫師、NP、放射師與護理師。</div>
+    <div class="body">
+      <table class="gantt">
+        <thead>
+          <tr>
+            <th>#</th><th>項目</th>
+            <th>8/14</th><th>8/21</th><th class="wk-now">8/28</th><th>9/4</th><th>9/11</th><th>9/18</th>
+            <th>9/25</th><th>10/2</th><th>10/9</th><th>10/16</th><th>10/23</th><th>10/30</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="no">1</td><td class="task">確認講師名單</td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on now"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">2</td><td class="task">學分申請（醫師、NP、放射師、護理師）</td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">3</td><td class="task">申請議程海報</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">4</td><td class="task">製作問卷邀請學員</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">5</td><td class="task">與會名單確認（含學員、講師及院內出席長官）</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">6</td><td class="task">訂餐點（午餐、點心、水、飲料），打統編</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">7</td><td class="task">禮品、製作感謝狀</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">8</td><td class="task">簽到單（含通訊錄、組別、餐點葷素）</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">9</td><td class="task">確認講者簡報資料</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">10</td><td class="task">會議手冊送印</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">11</td><td class="task">申請 8 位講者停車券</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">12</td><td class="task">文具用品（原子筆等）</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">13</td><td class="task">活動說明 PPT</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">14</td><td class="task">時間提醒牌（A3）</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">15</td><td class="task">行前通知單發送</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">16</td><td class="task">準備輕快音樂、院歌</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+          <tr><td class="no">17</td><td class="task">製作名牌（長官、學員、工作人員）</td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell now"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell on"></div></td><td><div class="cell"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slug">泌尿腫瘤國際研討會・進度報告</div>
+    <div class="pagenum"></div>
+  </div>
+
+  <!-- 6 經費 -->
+  <div class="slide">
+    <div class="rule"></div>
+    <div class="eyebrow">B U D G E T</div>
+    <h2>經費概況</h2>
+    <div class="lede">總額 NT$ 367,275，已核准；實際開銷以發票為主。</div>
+    <div class="body">
+      <div class="budget">
+        <table>
+          <thead><tr><th>科目</th><th class="money" style="width:130px">金額 (TWD)</th></tr></thead>
+          <tbody>
+            <tr><td>講者演講費（9 位）</td><td class="money">68,000</td></tr>
+            <tr><td>國外講者機票</td><td class="money">150,335</td></tr>
+            <tr><td>講者交通與接送</td><td class="money">20,800</td></tr>
+            <tr><td>講者住宿（四天三夜）</td><td class="money">15,000</td></tr>
+            <tr><td>學員餐飲</td><td class="money">20,500</td></tr>
+            <tr><td>工作人員支援費（10 人）</td><td class="money">17,640</td></tr>
+            <tr><td>禮品、背板、看板、手冊</td><td class="money">25,000</td></tr>
+            <tr><td>雜費（改票、學分申請等）</td><td class="money">50,000</td></tr>
+          </tbody>
+          <tfoot><tr><td>合　計</td><td class="money">367,275</td></tr></tfoot>
+        </table>
+        <div>
+          <table>
+            <thead><tr><th>癌防深耕計畫支應</th><th class="money" style="width:120px">金額 (TWD)</th></tr></thead>
+            <tbody>
+              <tr><td>講座鐘點費</td><td class="money">10,000</td></tr>
+              <tr><td>餐費</td><td class="money">21,000</td></tr>
+              <tr><td>計程車費</td><td class="money">4,000</td></tr>
+            </tbody>
+            <tfoot><tr><td>小　計</td><td class="money">35,000</td></tr></tfoot>
+          </table>
+          <div class="tnote">機票占總預算約 41%，為單項最大支出。</div>
+        </div>
+      </div>
+    </div>
+    <div class="slug">泌尿腫瘤國際研討會・進度報告</div>
+    <div class="pagenum"></div>
+  </div>
+
+  <!-- 7 結尾 -->
+  <div class="slide closing">
+    <div class="rule"></div>
+    <div class="big">敬 請 指 教</div>
+    <div class="sm">
+      泌尿腫瘤治療的新角色、新疆界、新未來<br>
+      2026 年 10 月 31 日（六）・濱秀國際會議廳<br>
+      彰濱秀傳紀念醫院　癌症中心・放射腫瘤科
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="zone l" id="zoneL" aria-hidden="true"></div>
+<div class="zone r" id="zoneR" aria-hidden="true"></div>
+
+<div id="hint">← → 翻頁　·　F 全螢幕</div>
+<div id="nav">
+  <button id="prev" aria-label="上一頁">‹</button>
+  <span id="counter">1 / 7</span>
+  <button id="next" aria-label="下一頁">›</button>
+</div>
+
+<script>
+  /* ---------- 翻頁 ---------- */
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const counter = document.getElementById("counter");
+  let idx = 0;
+
+  slides.forEach((s, i) => {
+    const p = s.querySelector(".pagenum");
+    if (p) p.textContent = (i + 1) + " / " + slides.length;
+  });
+
+  function show(n){
+    idx = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+    counter.textContent = (idx + 1) + " / " + slides.length;
+    location.hash = idx + 1;
+  }
+  const nextFn = () => show(idx + 1);
+  const prevFn = () => show(idx - 1);
+
+  document.getElementById("next").onclick = nextFn;
+  document.getElementById("prev").onclick = prevFn;
+  document.getElementById("zoneR").onclick = nextFn;
+  document.getElementById("zoneL").onclick = prevFn;
+
+  document.addEventListener("keydown", e => {
+    if (["ArrowRight","ArrowDown","PageDown"," "].includes(e.key)) { e.preventDefault(); nextFn(); }
+    else if (["ArrowLeft","ArrowUp","PageUp"].includes(e.key)) { e.preventDefault(); prevFn(); }
+    else if (e.key === "Home") show(0);
+    else if (e.key === "End") show(slides.length - 1);
+    else if (e.key === "f" || e.key === "F") {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+
+  /* ---------- 自動縮放 ---------- */
+  const wrap = document.getElementById("stageWrap");
+  function fit(){
+    const k = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    wrap.style.transform = "scale(" + k + ")";
+  }
+  window.addEventListener("resize", fit);
+  fit();
+
+  const start = parseInt(location.hash.replace("#", ""), 10);
+  show(isNaN(start) ? 0 : start - 1);
+</script>
+</body>
+</html>
