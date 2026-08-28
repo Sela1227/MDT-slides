@@ -93,13 +93,22 @@
 
   .pill{
     display:inline-block; padding:2px 9px 3px; border-radius:2px;
-    font-size:12.5px; font-weight:600; white-space:nowrap; border:1px solid;
+    font-size:12.5px; font-weight:600; border:1px solid; line-height:1.4; text-align:center;
   }
   .p-ok{color:var(--ok); border-color:#a8ccb8; background:#f0f7f3;}
   .p-go{color:var(--warn); border-color:#e0c88a; background:#fdf7e8;}
   .p-wait{color:var(--ink-3); border-color:var(--line); background:#f7f8fa;}
   .p-no{color:var(--stop); border-color:#dcb3ac; background:#fbf1ef;}
 
+  .ln{font-size:14.5px; color:var(--ink); padding:3px 0;}
+  .ln + .ln{border-top:1px dotted #e6eaee;}
+  .ln b{color:var(--navy);}
+  .dim{color:var(--ink-2); font-size:13.5px;}
+  .alt{margin-top:7px; padding-top:6px; border-top:1px dashed #d6c9a6;
+       font-size:12.5px; color:var(--ink-2); line-height:1.6;}
+  .alt-tag{display:inline-block; margin-right:6px; padding:1px 6px 2px;
+       background:#efe3c4; color:var(--gold); font-size:11px;
+       font-weight:700; letter-spacing:1px; border-radius:2px;}
   .tnote{font-size:12.5px; color:var(--ink-3); margin-top:12px;}
 
   /* ---------- gantt ---------- */
@@ -175,7 +184,8 @@
     <div class="stamp">
       <div class="d">距 活 動</div>
       <div class="n">64 天</div>
-      <div class="d" style="margin-top:14px">報告日 2026 / 08 / 28<br>癌症中心・放射腫瘤科</div>
+      <div class="d" style="margin-top:16px; line-height:1.9">報告日　2026 / 08 / 28<br>
+        報告者　<b style="color:var(--navy); font-size:15px; letter-spacing:0">彰濱秀傳 放射腫瘤科　林伯儒 醫師</b></div>
     </div>
   </div>
 
@@ -195,7 +205,7 @@
         <div class="card doing">
           <div class="lbl">講　者</div>
           <div class="val">3 / 6<br><span style="font-size:16px">已允諾</span></div>
-          <div class="sub">2 席洽談中、1 席待確認<br>1 席婉拒，已啟動改邀</div>
+          <div class="sub">2 席洽談中、1 席待確認<br>國際講者出席形式未定</div>
         </div>
         <div class="card doing">
           <div class="lbl">學分申請</div>
@@ -227,31 +237,40 @@
         <tbody>
           <tr>
             <td class="t-topic">經費核定</td>
-            <td>總預算 NT$ 367,275 已核准。
-              <div class="t-sub">癌防深耕計畫支應 35,000 元（鐘點費 10,000／餐費 21,000／計程車費 4,000），發票與佐證資料送癌防協助核銷。</div>
+            <td>總預算 <b>NT$ 367,275</b> 已核准。
+              <div class="t-sub">癌防深耕計畫支應 35,000 元：講座鐘點費 10,000、餐費 21,000、計程車費 4,000；發票與佐證資料送癌防協助核銷。</div>
             </td>
             <td><span class="pill p-ok">已核准</span></td>
           </tr>
           <tr>
-            <td class="t-topic">國際講者</td>
-            <td>Dr. I-Chow Hsu（UCSF）── 正在錯開檔期。
-              <div class="t-sub">機票為單項最大支出（預估 150,335 元），檔期一經確認即應優先訂票。</div>
+            <td class="t-topic">講者已允諾<div class="t-sub" style="font-weight:400">3 席</div></td>
+            <td>
+              <div class="ln"><b>歐宴泉 院長</b>　童綜合醫院 研發創新中心</div>
+              <div class="ln"><b>王紹全 主任</b>　中山醫學大學附設醫院 泌尿科</div>
+              <div class="ln"><b>趙梓淵 主任</b>　高雄秀傳紀念醫院 放射腫瘤科</div>
             </td>
-            <td><span class="pill p-go">檔期協調中</span></td>
+            <td><span class="pill p-ok">已允諾</span></td>
           </tr>
           <tr>
-            <td class="t-topic">院外講者</td>
-            <td>歐宴泉院長（童綜合）、王紹全主任（中山附醫泌尿科）── 均已允諾。
-              <div class="t-sub">蔡郁棻主任（義大）因路途遙遠婉拒；Ra-223 / Lu-177 場次改邀臺北榮總 魏子鈞醫師，洽談中。</div>
+            <td class="t-topic">協調中<div class="t-sub" style="font-weight:400">2 席</div></td>
+            <td>
+              <div class="ln"><b>Dr. I-Chow Hsu</b>　UCSF
+                <div class="t-sub">仍在錯開檔期，日期未定；實體來台或線上連線亦尚未表態。</div>
+              </div>
+              <div class="ln"><b>魏子鈞 醫師</b>　臺北榮民總醫院
+                <div class="t-sub">接替原邀講者，已發出邀請，洽談中。</div>
+              </div>
             </td>
-            <td><span class="pill p-ok">2 席允諾</span></td>
+            <td><span class="pill p-go">洽談中</span></td>
           </tr>
           <tr>
-            <td class="t-topic">體系內講者</td>
-            <td>趙梓淵主任（高雄秀傳）── 已允諾；張正雄院長 ── 場次與主題方向待最後確認。
-              <div class="t-sub">最後一席未定，影響會議手冊送印與學分申請送件時程。</div>
+            <td class="t-topic">尚待確認<div class="t-sub" style="font-weight:400">1 席</div></td>
+            <td>
+              <div class="ln"><b>張正雄 院長</b>　彰濱秀傳癌症醫院
+                <div class="t-sub">場次與講題方向待洽談確認。</div>
+              </div>
             </td>
-            <td><span class="pill p-wait">1 席待確認</span></td>
+            <td><span class="pill p-wait">待確認</span></td>
           </tr>
         </tbody>
       </table>
@@ -267,7 +286,7 @@
     <h2>講者邀約狀況</h2>
     <div class="lede">6 場專題演講，每場 50 分鐘（含問答）。</div>
     <div class="body">
-      <table style="--pad:9px">
+      <table style="--pad:7px">
         <thead>
           <tr>
             <th style="width:112px">時間</th>
@@ -280,8 +299,8 @@
           <tr>
             <td class="t-time">09:05–09:55</td>
             <td><span class="t-topic">Keynote：攝護腺癌近接治療與 UCSF 經驗</span></td>
-            <td>Dr. I-Chow Hsu<div class="t-sub">University of California, San Francisco</div></td>
-            <td><span class="pill p-go">檔期協調中</span></td>
+            <td>Dr. I-Chow Hsu<div class="t-sub">University of California, San Francisco<br>實體或線上出席形式尚未確定</div></td>
+            <td><span class="pill p-go">檔期／形式<br>協調中</span></td>
           </tr>
           <tr>
             <td class="t-time">10:10–11:00</td>
@@ -297,7 +316,9 @@
           </tr>
           <tr>
             <td class="t-time">13:00–13:50</td>
-            <td><span class="t-topic">NGS 與免疫療法</span></td>
+            <td><span class="t-topic">NGS 與免疫療法</span>
+              <div class="t-sub">（是否能涵蓋明年的攝護腺癌篩檢）</div>
+            </td>
             <td>張正雄 院長<div class="t-sub">彰濱秀傳癌症醫院</div></td>
             <td><span class="pill p-wait">待確認</span></td>
           </tr>
@@ -306,7 +327,9 @@
             <td><span class="t-topic">Ra-223 / Lu-177 於泌尿癌之應用</span>
               <div class="t-sub">原邀蔡郁棻主任（義大醫院）因路途遙遠婉拒</div>
             </td>
-            <td>魏子鈞 醫師<div class="t-sub">臺北榮民總醫院</div></td>
+            <td>魏子鈞 醫師<div class="t-sub">臺北榮民總醫院</div>
+              <div class="alt"><span class="alt-tag">備案</span>洪光威 副院長（核子醫學科）<br>＋ 劉育昌 醫師（放射腫瘤科）</div>
+            </td>
             <td><span class="pill p-no">改邀洽談中</span></td>
           </tr>
           <tr>
@@ -317,7 +340,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="tnote">※ 上列為提供講者之主題方向，正式講題待各講者確認後定稿。另含報到、開場、二次中場休息與午餐時段，不在此表列。</div>
+      <div class="tnote">※ 上列為提供講者之主題方向，正式講題待各講者確認後定稿；備案人選僅供內部規劃，不列入對外議程。另含報到、開場、二次中場休息與午餐時段，不在此表列。</div>
     </div>
     <div class="slug">泌尿腫瘤國際研討會・進度報告</div>
     <div class="pagenum"></div>
@@ -395,7 +418,6 @@
             </tbody>
             <tfoot><tr><td>小　計</td><td class="money">35,000</td></tr></tfoot>
           </table>
-          <div class="tnote">機票占總預算約 41%，為單項最大支出。</div>
         </div>
       </div>
     </div>
